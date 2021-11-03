@@ -131,10 +131,7 @@ const Login = () => {
                 mt: 3
               }}
             >
-              {platform === 'Amplify' && <AmplifyLogin />}
-              {platform === 'Auth0' && <Auth0Login />}
               {platform === 'Firebase' && <FirebaseLogin />}
-              {platform === 'JWT' && <JWTLogin />}
             </Box>
             <Divider sx={{ my: 3 }} />
             <NextLink
