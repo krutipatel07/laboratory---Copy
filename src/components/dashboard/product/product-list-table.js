@@ -8,9 +8,9 @@ import {
   CardContent,
   Divider,
   Grid,
+  Item,
   IconButton,
   InputAdornment,
-  LinearProgress,
   MenuItem,
   Switch,
   Table,
@@ -88,18 +88,31 @@ export const ProductListTable = (props) => {
   return (
     <div {...other}>
       <Scrollbar>
-        <Table sx={{ minWidth: 1200 }}>
+      <Box sx={{ flexGrow: 1 }}>
+        <Grid container spacing={3}>
+          <Grid item xs>
+            <Item>xs</Item>
+          </Grid>
+          <Grid item xs={6}>
+            <Item>xs=6</Item>
+          </Grid>
+          <Grid item xs>
+            <Item>xs</Item>
+          </Grid>
+        </Grid>
+      </Box>
+        {/* <Table sx={{ minWidth: 1200 }}>
           <TableHead>
             <TableRow>
               <TableCell />
               <TableCell width="25%">
-                Name
+                Title
               </TableCell>
               <TableCell width="25%">
-                Stock
+                Client
               </TableCell>
               <TableCell>
-                Price
+                Budget
               </TableCell>
               <TableCell>
                 sku
@@ -205,23 +218,11 @@ export const ProductListTable = (props) => {
                       </Box>
                     </TableCell>
                     <TableCell width="25%">
-                      <LinearProgress
-                        value={product.quantity}
-                        variant="determinate"
-                        color={product.quantity >= 10 ? 'success' : 'error'}
-                        sx={{
-                          height: 8,
-                          width: 36
-                        }}
-                      />
                       <Typography
                         color="textSecondary"
                         variant="body2"
                       >
-                        {product.quantity}
-                        {' '}
-                        in stock
-                        {product.variants > 1 && ` in ${product.variants} variants`}
+                        {product.client}
                       </Typography>
                     </TableCell>
                     <TableCell>
@@ -451,9 +452,9 @@ export const ProductListTable = (props) => {
               );
             })}
           </TableBody>
-        </Table>
+        </Table> */}
       </Scrollbar>
-      <TablePagination
+      {/* <TablePagination
         component="div"
         count={productsCount}
         onPageChange={onPageChange}
@@ -461,7 +462,7 @@ export const ProductListTable = (props) => {
         page={page}
         rowsPerPage={rowsPerPage}
         rowsPerPageOptions={[5, 10, 25]}
-      />
+      /> */}
     </div>
   );
 };

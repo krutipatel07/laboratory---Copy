@@ -19,7 +19,8 @@ class CustomerApi {
         state: 'Ohio',
         totalAmountSpent: 300.00,
         totalOrders: 3,
-        updatedAt: subDays(subHours(now, 7), 1).getTime()
+        updatedAt: subDays(subHours(now, 7), 1).getTime(),
+        role: 'client'
       },
       {
         id: '5e887b209c28ac3dd97f6db5',
@@ -35,7 +36,8 @@ class CustomerApi {
         state: 'Georgia',
         totalAmountSpent: 0.00,
         totalOrders: 0,
-        updatedAt: subDays(subHours(now, 1), 2).getTime()
+        updatedAt: subDays(subHours(now, 1), 2).getTime(),
+        role: 'client'
       },
       {
         id: '5e887b7602bdbc4dbb234b27',
@@ -51,7 +53,8 @@ class CustomerApi {
         state: 'Ohio',
         totalAmountSpent: 5600.00,
         totalOrders: 6,
-        updatedAt: subDays(subHours(now, 4), 2).getTime()
+        updatedAt: subDays(subHours(now, 4), 2).getTime(),
+        role: 'client'
       },
       {
         id: '5e86809283e28b96d2d38537',
@@ -67,7 +70,8 @@ class CustomerApi {
         state: 'Madrid',
         totalAmountSpent: 500.00,
         totalOrders: 1,
-        updatedAt: subDays(subHours(now, 11), 2).getTime()
+        updatedAt: subDays(subHours(now, 11), 2).getTime(),
+        role: 'client'
       },
       {
         id: '5e86805e2bafd54f66cc95c3',
@@ -83,7 +87,8 @@ class CustomerApi {
         totalAmountSpent: 0.00,
         totalOrders: 0,
         state: 'California',
-        updatedAt: subDays(subHours(now, 7), 3).getTime()
+        updatedAt: subDays(subHours(now, 7), 3).getTime(),
+        role: 'client'
       },
       {
         id: '5e887a1fbefd7938eea9c981',
@@ -99,7 +104,8 @@ class CustomerApi {
         state: 'California',
         totalAmountSpent: 0.00,
         totalOrders: 0,
-        updatedAt: subDays(subHours(now, 5), 4).getTime()
+        updatedAt: subDays(subHours(now, 5), 4).getTime(),
+        role: 'architect'
       },
       {
         id: '5e887d0b3d090c1b8f162003',
@@ -115,7 +121,8 @@ class CustomerApi {
         state: 'Nevada',
         totalAmountSpent: 100.00,
         totalOrders: 4,
-        updatedAt: subDays(subHours(now, 15), 4).getTime()
+        updatedAt: subDays(subHours(now, 15), 4).getTime(),
+        role: 'client'
       },
       {
         id: '5e88792be2d4cfb4bf0971d9',
@@ -131,7 +138,8 @@ class CustomerApi {
         state: 'California',
         totalAmountSpent: 1000.00,
         totalOrders: 2,
-        updatedAt: subDays(subHours(now, 2), 5).getTime()
+        updatedAt: subDays(subHours(now, 2), 5).getTime(),
+        role: 'architect'
       },
       {
         id: '5e8877da9a65442b11551975',
@@ -146,7 +154,9 @@ class CustomerApi {
         state: 'Utah',
         totalAmountSpent: 0.00,
         totalOrders: 0,
-        updatedAt: subDays(subHours(now, 8), 6).getTime()
+        updatedAt: subDays(subHours(now, 8), 6).getTime(),
+        role: 'client'
+
       },
       {
         id: '5e8680e60cba5019c5ca6fda',
@@ -162,7 +172,8 @@ class CustomerApi {
         state: 'Utah',
         totalAmountSpent: 200.00,
         totalOrders: 7,
-        updatedAt: subDays(subHours(now, 1), 9).getTime()
+        updatedAt: subDays(subHours(now, 1), 9).getTime(),
+        role: 'client'
       }
     ];
 

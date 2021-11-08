@@ -13,11 +13,11 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Menu as MenuIcon } from '../../icons/menu';
-import { AccountPopover } from './account-popover';
-import { ContactsPopover } from './contacts-popover';
-import { ContentSearchDialog } from './content-search-dialog';
-import { NotificationsPopover } from './notifications-popover';
-import { LanguagePopover } from './language-popover';
+import { AccountPopover } from '../dashboard/account-popover';
+import { ContactsPopover } from '../dashboard/contacts-popover';
+import { ContentSearchDialog } from '../dashboard/content-search-dialog';
+import { NotificationsPopover } from '../dashboard/notifications-popover';
+import { LanguagePopover } from '../dashboard/language-popover';
 import { Bell as BellIcon } from '../../icons/bell';
 import { UserCircle as UserCircleIcon } from '../../icons/user-circle';
 import { Search as SearchIcon } from '../../icons/search';
@@ -29,7 +29,7 @@ const languages = {
   es: '/static/icons/es_flag.svg'
 };
 
-const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
+const WorkspaceNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   ...(theme.palette.mode === 'light'
     ? {
@@ -244,20 +244,12 @@ const AccountButton = () => {
   );
 };
 
-export const DashboardNavbar = (props) => {
+export const WorkspaceNavbar = (props) => {
   const { onOpenSidebar, ...other } = props;
 
   return (
     <>
-      <DashboardNavbarRoot
-        sx={{
-          left: {
-            lg: 280
-          },
-          width: {
-            lg: 'calc(100% - 280px)'
-          }
-        }}
+      <WorkspaceNavbarRoot
         {...other}>
         <Toolbar
           disableGutters
@@ -285,11 +277,11 @@ export const DashboardNavbar = (props) => {
           <NotificationsButton />
           <AccountButton />
         </Toolbar>
-      </DashboardNavbarRoot>
+      </WorkspaceNavbarRoot>
     </>
   );
 };
 
-DashboardNavbar.propTypes = {
+WorkspaceNavbar.propTypes = {
   onOpenSidebar: PropTypes.func
 };

@@ -8,43 +8,18 @@ import {
   Button,
   Card,
   CardContent,
-  FormControlLabel,
   FormHelperText,
   Grid,
-  MenuItem,
-  Switch,
   TextField,
-  Typography
+  Typography,
+  InputAdornment,
 } from '@mui/material';
+import { Search as SearchIcon } from '../../../icons/search';
 import { FileDropzone } from '../../file-dropzone';
 import { QuillEditor } from '../../quill-editor';
+import MemberList from './product-createForm-memberList.js'
 
-const categoryOptions = [
-  {
-    label: 'Healthcare',
-    value: 'healthcare'
-  },
-  {
-    label: 'Makeup',
-    value: 'makeup'
-  },
-  {
-    label: 'Dress',
-    value: 'dress'
-  },
-  {
-    label: 'Skincare',
-    value: 'skincare'
-  },
-  {
-    label: 'Jewelry',
-    value: 'jewelry'
-  },
-  {
-    label: 'Blouse',
-    value: 'blouse'
-  }
-];
+
 
 export const ProductCreateForm = (props) => {
   const router = useRouter();
@@ -126,7 +101,7 @@ export const ProductCreateForm = (props) => {
                 error={Boolean(formik.touched.name && formik.errors.name)}
                 fullWidth
                 helperText={formik.touched.name && formik.errors.name}
-                label="Product Name"
+                label="Project title"
                 name="name"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
@@ -146,7 +121,7 @@ export const ProductCreateForm = (props) => {
                 onChange={(value) => {
                   formik.setFieldValue('description', value);
                 }}
-                placeholder="Write something"
+                placeholder="..."
                 sx={{ height: 400 }}
                 value={formik.values.description}
               />
@@ -173,14 +148,14 @@ export const ProductCreateForm = (props) => {
               xs={12}
             >
               <Typography variant="h6">
-                Images
+                Project Assets
               </Typography>
               <Typography
                 color="textSecondary"
                 variant="body2"
                 sx={{ mt: 1 }}
               >
-                Images will appear in the store front of your website.
+                You will be able to view and edit these from the project workspace.
               </Typography>
             </Grid>
             <Grid
@@ -188,6 +163,33 @@ export const ProductCreateForm = (props) => {
               md={8}
               xs={12}
             >
+              <Typography
+                color="textSecondary"
+                sx={{
+                  mb: 2,
+                  mt: 3
+                }}
+                variant="subtitle2"
+              >
+                Images
+              </Typography>
+              <FileDropzone
+                accept="image/*"
+                files={files}
+                onDrop={handleDrop}
+                onRemove={handleRemove}
+                onRemoveAll={handleRemoveAll}
+              />
+              <Typography
+                color="textSecondary"
+                sx={{
+                  mb: 2,
+                  mt: 3
+                }}
+                variant="subtitle2"
+              >
+                Notes and Documents
+              </Typography>
               <FileDropzone
                 accept="image/*"
                 files={files}
@@ -211,7 +213,7 @@ export const ProductCreateForm = (props) => {
               xs={12}
             >
               <Typography variant="h6">
-                Pricing
+                Budget
               </Typography>
             </Grid>
             <Grid
@@ -222,7 +224,7 @@ export const ProductCreateForm = (props) => {
               <TextField
                 error={Boolean(formik.touched.oldPrice && formik.errors.oldPrice)}
                 fullWidth
-                label="Old price"
+                label="Min"
                 name="oldPrice"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
@@ -232,7 +234,7 @@ export const ProductCreateForm = (props) => {
               <TextField
                 error={Boolean(formik.touched.newPrice && formik.errors.newPrice)}
                 fullWidth
-                label="New Price"
+                label="Max"
                 name="newPrice"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
@@ -240,12 +242,6 @@ export const ProductCreateForm = (props) => {
                 type="number"
                 value={formik.values.newPrice}
               />
-              <Box sx={{ mt: 2 }}>
-                <FormControlLabel
-                  control={<Switch />}
-                  label="Keep selling when stock is empty"
-                />
-              </Box>
             </Grid>
           </Grid>
         </CardContent>
@@ -262,7 +258,14 @@ export const ProductCreateForm = (props) => {
               xs={12}
             >
               <Typography variant="h6">
-                Category
+                Collaborators
+              </Typography>
+              <Typography
+                color="textSecondary"
+                variant="body2"
+                sx={{ mt: 1 }}
+              >
+                These are the people you will work together with on this project.
               </Typography>
             </Grid>
             <Grid
@@ -271,46 +274,21 @@ export const ProductCreateForm = (props) => {
               xs={12}
             >
               <TextField
-                error={Boolean(formik.touched.category && formik.errors.category)}
                 fullWidth
-                label="Category"
-                name="category"
+                label="Add collaborators"
+                name="memberSearch"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
-                select
-                value={formik.values.category}
-              >
-                {categoryOptions.map((option) => (
-                  <MenuItem
-                    key={option.value}
-                    value={option.value}
-                  >
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-              <TextField
-                disabled
-                error={Boolean(formik.touched.barcode && formik.errors.barcode)}
-                fullWidth
-                label="Barcode"
-                name="barcode"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                sx={{ mt: 2 }}
-                value={formik.values.barcode}
+                InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <SearchIcon fontSize="small" />
+                      </InputAdornment>
+                    )
+                  }}
+                  placeholder="enter name or email"
               />
-              <TextField
-                disabled
-                error={Boolean(formik.touched.sku && formik.errors.sku)}
-                fullWidth
-                label="SKU"
-                name="sku"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                sx={{ mt: 2 }}
-                value={formik.values.sku}
-              />
+              <MemberList/>
             </Grid>
           </Grid>
         </CardContent>

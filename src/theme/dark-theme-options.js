@@ -1,6 +1,7 @@
 // Colors
 
 const neutral = {
+  0: '#000000',
   100: '#F3F4F6',
   200: '#E5E7EB',
   300: '#D1D5DB',
@@ -14,13 +15,14 @@ const neutral = {
 
 const background = {
   default: '#0B0F19',
-  paper: neutral[900]
+  paper: neutral[900],
+  hover: neutral[800]
 };
 
 const divider = '#2D3748';
 
 const primary = {
-  main: '#7582EB',
+  main: '#F0C88E',
   light: '#909BEF',
   dark: '#515BA4',
   contrastText: neutral[900]

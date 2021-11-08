@@ -13,11 +13,11 @@ import { UserCircle as UserCircleIcon } from '../../icons/user-circle';
 import { Users as UsersIcon } from '../../icons/users';
 import { Logo } from '../logo';
 import { Scrollbar } from '../scrollbar';
-import { DashboardSidebarSection } from './dashboard-sidebar-section';
+import { WorkspaceSidebarSection } from './workspace-sidebar-section';
 
 const getSections = (t) => [
   {
-    title: t('Workspace'),
+    title: t('Budget'),
     items: [
       {
         title: t('Collaborators'),
@@ -56,7 +56,7 @@ const getSections = (t) => [
     ]
   },
   {
-    title: t('Communicate'),
+    title: t('Floor'),
     items: [
       
       {
@@ -102,7 +102,7 @@ const getSections = (t) => [
     ]
   },
   {
-    title: t('Organize'),
+    title: t('Rooms'),
     items: [
       {
         title: t('Kanban'),
@@ -147,7 +147,17 @@ const getSections = (t) => [
     ]
   },
   {
-    title: t('General'),
+    title: t('Adjacencies'),
+    items: [
+      {
+        title: t('Account'),
+        path: '/dashboard/account',
+        icon: <UserCircleIcon fontSize="small" />
+      }
+    ]
+  },
+  {
+    title: t('Number of designs'),
     items: [
       {
         title: t('Account'),
@@ -158,7 +168,7 @@ const getSections = (t) => [
   }
 ];
 
-export const DashboardSidebar = (props) => {
+export const WorkspaceSidebar = (props) => {
   const { onClose, open } = props;
   const router = useRouter();
   const { t } = useTranslation();
@@ -254,7 +264,7 @@ export const DashboardSidebar = (props) => {
           />
           <Box sx={{ flexGrow: 1 }}>
             {sections.map((section) => (
-              <DashboardSidebarSection
+              <WorkspaceSidebarSection
                 key={section.title}
                 path={router.asPath}
                 sx={{
@@ -346,7 +356,7 @@ export const DashboardSidebar = (props) => {
   );
 };
 
-DashboardSidebar.propTypes = {
+WorkspaceSidebar.propTypes = {
   onClose: PropTypes.func,
   open: PropTypes.bool
 };

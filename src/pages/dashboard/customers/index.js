@@ -18,10 +18,8 @@ import { CustomerListTable } from '../../../components/dashboard/customer/custom
 import { withAuthGuard } from '../../../hocs/with-auth-guard';
 import { withDashboardLayout } from '../../../hocs/with-dashboard-layout';
 import { useMounted } from '../../../hooks/use-mounted';
-import { Download as DownloadIcon } from '../../../icons/download';
 import { Plus as PlusIcon } from '../../../icons/plus';
 import { Search as SearchIcon } from '../../../icons/search';
-import { Upload as UploadIcon } from '../../../icons/upload';
 import { gtm } from '../../../lib/gtm';
 
 const tabs = [
@@ -30,16 +28,12 @@ const tabs = [
     value: 'all'
   },
   {
-    label: 'Accepts Marketing',
-    value: 'hasAcceptedMarketing'
+    label: 'Clients',
+    value: 'client'
   },
   {
-    label: 'Prospect',
+    label: 'Architects',
     value: 'isProspect'
-  },
-  {
-    label: 'Returning',
-    value: 'isReturning'
   }
 ];
 
@@ -212,7 +206,7 @@ const CustomerList = () => {
     <>
       <Head>
         <title>
-          Dashboard: Customer List | Material Kit Pro
+          Dashboard: Collaborator List | Maket Labratory v1.0
         </title>
       </Head>
       <Box
@@ -231,7 +225,7 @@ const CustomerList = () => {
             >
               <Grid item>
                 <Typography variant="h4">
-                  Customers
+                  Collaborators
                 </Typography>
               </Grid>
               <Grid item>
@@ -243,45 +237,8 @@ const CustomerList = () => {
                 </Button>
               </Grid>
             </Grid>
-            <Box
-              sx={{
-                m: -1,
-                mt: 3
-              }}
-            >
-              <Button
-                startIcon={<UploadIcon fontSize="small" />}
-                sx={{ m: 1 }}
-              >
-                Import
-              </Button>
-              <Button
-                startIcon={<DownloadIcon fontSize="small" />}
-                sx={{ m: 1 }}
-              >
-                Export
-              </Button>
-            </Box>
           </Box>
           <Card>
-            <Tabs
-              indicatorColor="primary"
-              onChange={handleTabsChange}
-              scrollButtons="auto"
-              sx={{ px: 3 }}
-              textColor="primary"
-              value={currentTab}
-              variant="scrollable"
-            >
-              {tabs.map((tab) => (
-                <Tab
-                  key={tab.value}
-                  label={tab.label}
-                  value={tab.value}
-                />
-              ))}
-            </Tabs>
-            <Divider />
             <Box
               sx={{
                 alignItems: 'center',

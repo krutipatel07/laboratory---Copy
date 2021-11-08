@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
 import NextLink from 'next/link';
-import numeral from 'numeral';
 import PropTypes from 'prop-types';
 import {
   Avatar,
   Box,
   Button,
   Checkbox,
-  IconButton,
   Link,
   Table,
   TableBody,
@@ -15,12 +13,11 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Typography
+  Typography,
 } from '@mui/material';
-import { ArrowRight as ArrowRightIcon } from '../../../icons/arrow-right';
-import { PencilAlt as PencilAltIcon } from '../../../icons/pencil-alt';
 import { getInitials } from '../../../utils/get-initials';
 import { Scrollbar } from '../../scrollbar';
+import { SeverityPill } from '../../severity-pill';
 
 export const CustomerListTable = (props) => {
   const {
@@ -107,14 +104,8 @@ export const CustomerListTable = (props) => {
               <TableCell>
                 Location
               </TableCell>
-              <TableCell>
-                Orders
-              </TableCell>
-              <TableCell>
-                Spent
-              </TableCell>
               <TableCell align="right">
-                Actions
+                Role
               </TableCell>
             </TableRow>
           </TableHead>
@@ -175,34 +166,12 @@ export const CustomerListTable = (props) => {
                   <TableCell>
                     {`${customer.city}, ${customer.state}, ${customer.country}`}
                   </TableCell>
-                  <TableCell>
-                    {customer.totalOrders}
-                  </TableCell>
-                  <TableCell>
-                    <Typography
-                      color="success.main"
-                      variant="subtitle2"
-                    >
-                      {numeral(customer.totalAmountSpent).format(`${customer.currency}0,0.00`)}
-                    </Typography>
-                  </TableCell>
                   <TableCell align="right">
-                    <NextLink
-                      href="/dashboard/customers/1/edit"
-                      passHref
-                    >
-                      <IconButton component="a">
-                        <PencilAltIcon fontSize="small" />
-                      </IconButton>
-                    </NextLink>
-                    <NextLink
-                      href="/dashboard/customers/1"
-                      passHref
-                    >
-                      <IconButton component="a">
-                        <ArrowRightIcon fontSize="small" />
-                      </IconButton>
-                    </NextLink>
+                    <SeverityPill
+                        color={customer.role == 'client' ? 'info' : 'primary'}
+                        >
+                        {customer.role}
+                    </SeverityPill>
                   </TableCell>
                 </TableRow>
               );

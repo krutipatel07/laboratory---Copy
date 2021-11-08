@@ -151,4 +151,4 @@ const Register = () => {
   );
 };
 
-export default withGuestGuard(Register);
+export default Register;

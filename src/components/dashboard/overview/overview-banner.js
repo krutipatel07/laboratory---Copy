@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { Box, Button, Card, Chip, Typography } from '@mui/material';
 
 export const OverviewBanner = (props) => {
-  const { onDismiss, ...other } = props;
+  const { onDismiss, title, blurb, ...other } = props;
 
   return (
     <Card
@@ -46,14 +46,14 @@ export const OverviewBanner = (props) => {
           sx={{ mt: 2 }}
           variant="h4"
         >
-          Welcome to Material Kit Pro v5!
+          {props.title}
         </Typography>
         <Typography
           color="inherit"
           sx={{ mt: 1 }}
           variant="subtitle2"
         >
-          Your dashboard has been improved! Explore new features like Notifications, Search, Jobs Platform and more.
+          {props.blurb}
         </Typography>
         <Box sx={{ mt: 2 }}>
           <Button
