@@ -19,7 +19,7 @@ const Home = () => {
     <>
       <Head>
         <title>
-          Material Kit Pro
+          Maket Laboratory v1.0
         </title>
       </Head>
       <main>

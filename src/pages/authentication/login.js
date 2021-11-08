@@ -170,4 +170,4 @@ const Login = () => {
   );
 };
 
-export default withGuestGuard(Login);
+export default Login;

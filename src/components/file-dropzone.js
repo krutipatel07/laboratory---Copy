@@ -97,10 +97,10 @@ export const FileDropzone = (props) => {
               {`Drop file${(maxFiles && maxFiles === 1) ? '' : 's'}`}
               {' '}
               <Link underline="always">
-                browse
+                 or select
               </Link>
               {' '}
-              thorough your machine
+              from your machine
             </Typography>
           </Box>
         </Box>

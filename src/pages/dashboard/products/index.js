@@ -12,6 +12,7 @@ import { Download as DownloadIcon } from '../../../icons/download';
 import { Upload as UploadIcon } from '../../../icons/upload';
 import { Plus as PlusIcon } from '../../../icons/plus';
 import { gtm } from '../../../lib/gtm';
+import ProjectGrid from '../../../components/dashboard/product/product-grid.js';
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -109,7 +110,7 @@ const ProductList = () => {
     <>
       <Head>
         <title>
-          Dashboard: Product List | Material Kit Pro
+          Dashboard: Product List | Maket Laboratory v1.0
         </title>
       </Head>
       <Box
@@ -128,7 +129,7 @@ const ProductList = () => {
             >
               <Grid item>
                 <Typography variant="h4">
-                  Products
+                  Projects
                 </Typography>
               </Grid>
               <Grid item>
@@ -146,36 +147,9 @@ const ProductList = () => {
                 </NextLink>
               </Grid>
             </Grid>
-            <Box
-              sx={{
-                m: -1,
-                mt: 3
-              }}
-            >
-              <Button
-                startIcon={<UploadIcon fontSize="small" />}
-                sx={{ m: 1 }}
-              >
-                Import
-              </Button>
-              <Button
-                startIcon={<DownloadIcon fontSize="small" />}
-                sx={{ m: 1 }}
-              >
-                Export
-              </Button>
-            </Box>
           </Box>
           <Card>
-            <ProjectListFilters onChange={handleFiltersChange} />
-            <ProductListTable
-              onPageChange={handlePageChange}
-              onRowsPerPageChange={handleRowsPerPageChange}
-              page={page}
-              products={paginatedProducts}
-              productsCount={filteredProducts.length}
-              rowsPerPage={rowsPerPage}
-            />
+            <ProjectGrid/>
           </Card>
         </Container>
       </Box>

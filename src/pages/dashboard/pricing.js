@@ -17,7 +17,7 @@ const Pricing = () => {
     <>
       <Head>
         <title>
-          Pricing | Material Kit Pro
+          Pricing | Maket Laboratory v1.0
         </title>
       </Head>
       <Box
@@ -47,15 +47,14 @@ const Pricing = () => {
                 xs={12}
               >
                 <Typography variant="h3">
-                  Start today. Boost up your services!
+                  Start today. Unleash your creativity!
                 </Typography>
                 <Typography
                   color="textSecondary"
                   sx={{ my: 2 }}
                   variant="body1"
                 >
-                  Join 3,000+ developers &amp; designers using Devias to
-                  power modern web projects.
+                  Join the new age of architecture.
                 </Typography>
                 <Switch />
                 <Badge
@@ -123,14 +122,14 @@ const Pricing = () => {
               <PricingPlan
                 cta="Start Free Trial"
                 currency="$"
-                description="To familiarize yourself with our tools."
+                description="For the learners."
                 features={[
                   'Create contracts',
                   'Chat support',
                   'Email alerts'
                 ]}
                 image="/static/pricing/plan1.svg"
-                name="Startup"
+                name="Student"
                 price="0"
                 sx={{
                   height: '100%',
@@ -147,7 +146,7 @@ const Pricing = () => {
               <PricingPlan
                 cta="Start Free Trial"
                 currency="$"
-                description="To familiarize yourself with our tools."
+                description="For the doers."
                 features={[
                   'All previous',
                   'Highlights reporting',
@@ -157,7 +156,7 @@ const Pricing = () => {
                 image="/static/pricing/plan2.svg"
                 name="Standard"
                 popular
-                price="4.99"
+                price="50.00"
                 sx={{
                   height: '100%',
                   maxWidth: 460,
@@ -173,7 +172,7 @@ const Pricing = () => {
               <PricingPlan
                 cta="Contact Us"
                 currency="$"
-                description="To familiarize yourself with our tools."
+                description="For the big players."
                 features={[
                   'All previous',
                   'Unlimited contacts',
@@ -183,7 +182,7 @@ const Pricing = () => {
                 ]}
                 image="/static/pricing/plan3.svg"
                 name="Business"
-                price="29.99"
+                price="250.00"
                 sx={{
                   height: '100%',
                   maxWidth: 460,

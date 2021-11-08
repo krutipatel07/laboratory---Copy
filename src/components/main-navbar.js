@@ -102,7 +102,7 @@ export const MainNavbar = (props) => {
             </NextLink>
             <Button
               component="a"
-              href="https://material-ui.com/store/items/devias-kit-pro"
+              href="/dashboard/pricing"
               size="medium"
               sx={{ ml: 2 }}
               target="_blank"

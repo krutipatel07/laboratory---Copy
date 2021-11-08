@@ -1,14 +1,12 @@
 import NextLink from 'next/link';
-import { Avatar, Box, Button, Container, Typography } from '@mui/material';
+import { Box, Button, Container, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { CheckCircleOutlined as CheckCircleOutlinedIcon } from '../../icons/check-circle-outlined';
-import { Users as UsersIcon } from '../../icons/users';
-import { Star as StarIcon } from '../../icons/star';
-import { Template as TemplateIcon } from '../../icons/template';
+import { ArrowRight as ArrowRight } from '../../icons/arrow-right';
+
 
 export const HomeHero = (props) => {
   const theme = useTheme();
-
+  
   return (
     <Box
       sx={{
@@ -34,7 +32,7 @@ export const HomeHero = (props) => {
           align="center"
           variant="h1"
         >
-          Material Kit Pro v5.0
+          Maket Laboratory v1.0
         </Typography>
         <Typography
           align="center"
@@ -42,8 +40,8 @@ export const HomeHero = (props) => {
           variant="subtitle1"
           sx={{ py: 3 }}
         >
-          A professional kit that comes with ready-to-use MUI© components developed with one
-          common goal in mind, help you build faster &amp; beautiful applications.
+          A generative and collaborative design tool for architects with one
+          common goal in mind, help you communicate with your clients &amp; enhance your creative abilities.
         </Typography>
         <Box
           sx={{
@@ -63,13 +61,7 @@ export const HomeHero = (props) => {
             }
           }}
         >
-          <Typography
-            color="textSecondary"
-            variant="caption"
-          >
-            Available For:
-          </Typography>
-          {['JavaScript', 'TypeScript', 'Figma', 'Sketch'].map((item) => (
+          {['Generate', 'Collaborate'].map((item) => (
             <Box
               key={item}
               sx={{
@@ -78,15 +70,18 @@ export const HomeHero = (props) => {
                 m: 2
               }}
             >
-              <CheckCircleOutlinedIcon
-                color="success"
-                sx={{ mr: 1 }}
-              />
               <Typography variant="subtitle2">
-                {item}
+                {item == 'Iterate' ? item : item}
               </Typography>
+              <ArrowRight
+                color="success"
+                sx={{ ml: 3 }}
+              />
             </Box>
           ))}
+          <Typography variant="subtitle2">
+                Iterate
+              </Typography>
         </Box>
         <Box
           sx={{
@@ -102,19 +97,7 @@ export const HomeHero = (props) => {
           }}
         >
           <NextLink
-            href="/browse"
-            passHref
-          >
-            <Button
-              component="a"
-              size="large"
-              variant="outlined"
-            >
-              Browse Components
-            </Button>
-          </NextLink>
-          <NextLink
-            href="/dashboard"
+            href="/authentication/register"
             passHref
           >
             <Button
@@ -122,7 +105,19 @@ export const HomeHero = (props) => {
               size="large"
               variant="contained"
             >
-              Live Demo
+              Sign up
+            </Button>
+          </NextLink>
+          <NextLink
+            href="/authentication/login"
+            passHref
+          >
+            <Button
+              component="a"
+              size="large"
+              variant="outlined"
+            >
+              Log in
             </Button>
           </NextLink>
         </Box>
@@ -166,142 +161,6 @@ export const HomeHero = (props) => {
             px: 3
           }}
         >
-          <Box
-            sx={{
-              alignItems: 'center',
-              display: 'flex',
-              flexDirection: 'column'
-            }}
-          >
-            <Avatar
-              sx={{
-                backgroundColor: 'primary.main',
-                height: 40,
-                mb: 2,
-                width: 40
-              }}
-              variant="rounded"
-            >
-              <UsersIcon fontSize="small" />
-            </Avatar>
-            <Typography
-              sx={{
-                color: 'textPrimary',
-                textAlign: 'center'
-              }}
-              variant="h4"
-            >
-              4.5k+
-            </Typography>
-            <Typography
-              sx={{ color: 'textPrimary' }}
-              variant="overline"
-            >
-              Happy customers
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              alignItems: 'center',
-              display: 'flex',
-              flexDirection: 'column'
-            }}
-          >
-            <Avatar
-              sx={{
-                backgroundColor: 'secondary.main',
-                height: 40,
-                mb: 2,
-                width: 40
-              }}
-              variant="rounded"
-            >
-              <StarIcon fontSize="small" />
-            </Avatar>
-            <Typography
-              sx={{
-                color: 'textPrimary',
-                textAlign: 'center'
-              }}
-              variant="h4"
-            >
-              4.9/5
-            </Typography>
-            <Typography
-              sx={{ color: 'textPrimary' }}
-              variant="overline"
-            >
-              CUSTOMER Rating
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              alignItems: 'center',
-              display: 'flex',
-              flexDirection: 'column'
-            }}
-          >
-            <Avatar
-              sx={{
-                backgroundColor: 'warning.main',
-                height: 40,
-                mb: 2,
-                width: 40
-              }}
-              variant="rounded"
-            >
-              <TemplateIcon fontSize="small" />
-            </Avatar>
-            <Typography
-              sx={{
-                color: 'textPrimary',
-                textAlign: 'center'
-              }}
-              variant="h4"
-            >
-              UX
-            </Typography>
-            <Typography
-              sx={{ color: 'textPrimary' }}
-              variant="overline"
-            >
-              complete flows
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              alignItems: 'center',
-              display: 'flex',
-              flexDirection: 'column'
-            }}
-          >
-            <Avatar
-              sx={{
-                backgroundColor: 'info.main',
-                height: 40,
-                mb: 2,
-                width: 40
-              }}
-              variant="rounded"
-            >
-              <UsersIcon fontSize="small" />
-            </Avatar>
-            <Typography
-              sx={{
-                color: 'textPrimary',
-                textAlign: 'center'
-              }}
-              variant="h4"
-            >
-              $10k+
-            </Typography>
-            <Typography
-              sx={{ color: 'textPrimary' }}
-              variant="overline"
-            >
-              In people hours saved
-            </Typography>
-          </Box>
         </Container>
       </Box>
     </Box>
