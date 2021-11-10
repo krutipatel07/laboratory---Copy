@@ -33,7 +33,7 @@ const Account = () => {
     <>
       <Head>
         <title>
-          Dashboard: Account | Material Kit Pro
+          Dashboard: Account | Maket Colaboratory
         </title>
       </Head>
       <Box

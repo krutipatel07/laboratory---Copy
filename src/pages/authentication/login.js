@@ -33,7 +33,7 @@ const Login = () => {
     <>
       <Head>
         <title>
-          Login | Material Kit Pro
+          Login | Maket Colaboratory
         </title>
       </Head>
       <Box
@@ -45,7 +45,6 @@ const Login = () => {
           minHeight: '100vh'
         }}
       >
-        <AuthBanner />
         <Container
           maxWidth="sm"
           sx={{
@@ -82,7 +81,7 @@ const Login = () => {
               color="textSecondary"
               variant="caption"
             >
-              The app authenticates via {platform}
+              The app authenticates via Firebase
             </Typography>
             <img
               alt="Auth platform"
@@ -117,13 +116,6 @@ const Login = () => {
               <Typography variant="h4">
                 Log in
               </Typography>
-              <Typography
-                color="textSecondary"
-                sx={{ mt: 2 }}
-                variant="body2"
-              >
-                Sign in on the internal platform
-              </Typography>
             </Box>
             <Box
               sx={{
@@ -131,7 +123,10 @@ const Login = () => {
                 mt: 3
               }}
             >
+              {platform === 'Amplify' && <AmplifyLogin />}
+              {platform === 'Auth0' && <Auth0Login />}
               {platform === 'Firebase' && <FirebaseLogin />}
+              {platform === 'JWT' && <JWTLogin />}
             </Box>
             <Divider sx={{ my: 3 }} />
             <NextLink

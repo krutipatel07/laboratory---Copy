@@ -22,6 +22,10 @@ import { Bell as BellIcon } from '../../icons/bell';
 import { UserCircle as UserCircleIcon } from '../../icons/user-circle';
 import { Search as SearchIcon } from '../../icons/search';
 import { Users as UsersIcon } from '../../icons/users';
+import NextLink from 'next/link';
+import { Logo } from '../logo';
+
+
 
 const languages = {
   en: '/static/icons/uk_flag.svg',
@@ -259,6 +263,20 @@ export const WorkspaceNavbar = (props) => {
             px: 2
           }}
         >
+        <NextLink
+                href="/"
+                passHref
+              >
+                <a>
+                  <Logo
+                    sx={{
+                      height: 42,
+                      width: 42,
+                    }}
+                    variant="primary"
+                  />
+                </a>
+              </NextLink>
           <IconButton
             onClick={onOpenSidebar}
             sx={{

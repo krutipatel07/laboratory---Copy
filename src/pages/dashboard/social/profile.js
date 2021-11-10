@@ -77,7 +77,7 @@ export const SocialProfile = () => {
     <>
       <Head>
         <title>
-          Dashboard: Social Profile | Material Kit Pro
+          Dashboard: Social Profile | Maket Colaboratory
         </title>
       </Head>
       <Box

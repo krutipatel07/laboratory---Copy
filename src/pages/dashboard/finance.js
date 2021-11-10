@@ -23,7 +23,7 @@ const Finance = () => {
     <>
       <Head>
         <title>
-          Dashboard: Finance | Material Kit Pro
+          Dashboard: Finance | Maket Colaboratory
         </title>
       </Head>
       <Box

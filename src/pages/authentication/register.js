@@ -4,7 +4,10 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, Card, Container, Divider, Link, Typography } from '@mui/material';
 import { AuthBanner } from '../../components/authentication/auth-banner';
+import { AmplifyRegister } from '../../components/authentication/amplify-register';
+import { Auth0Register } from '../../components/authentication/auth0-register';
 import { FirebaseRegister } from '../../components/authentication/firebase-register';
+import { JWTRegister } from '../../components/authentication/jwt-register';
 import { Logo } from '../../components/logo';
 import { withGuestGuard } from '../../hocs/with-guest-guard';
 import { useAuth } from '../../hooks/use-auth';
@@ -112,14 +115,7 @@ const Register = () => {
                 </a>
               </NextLink>
               <Typography variant="h4">
-                Register
-              </Typography>
-              <Typography
-                color="textSecondary"
-                sx={{ mt: 2 }}
-                variant="body2"
-              >
-                Register on the internal platform
+                Sign Up
               </Typography>
             </Box>
             <Box
@@ -128,7 +124,10 @@ const Register = () => {
                 mt: 3
               }}
             >
+              {platform === 'Amplify' && <AmplifyRegister />}
+              {platform === 'Auth0' && <Auth0Register />}
               {platform === 'Firebase' && <FirebaseRegister />}
+              {platform === 'JWT' && <JWTRegister />}
             </Box>
             <Divider sx={{ my: 3 }} />
             <NextLink
@@ -137,12 +136,16 @@ const Register = () => {
                 : '/authentication/login'}
               passHref
             >
+            <Typography variant="body2">
+                Aleady have an account?
+              
               <Link
                 color="textSecondary"
                 variant="body2"
               >
-                Having an account
+                  Login
               </Link>
+              </Typography>
             </NextLink>
           </Card>
         </Container>

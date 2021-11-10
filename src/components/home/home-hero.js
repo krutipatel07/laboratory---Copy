@@ -32,7 +32,7 @@ export const HomeHero = (props) => {
           align="center"
           variant="h1"
         >
-          Maket Laboratory v1.0
+          Maket Colaboratory v1.0
         </Typography>
         <Typography
           align="center"
@@ -41,7 +41,7 @@ export const HomeHero = (props) => {
           sx={{ py: 3 }}
         >
           A generative and collaborative design tool for architects with one
-          common goal in mind, help you communicate with your clients &amp; enhance your creative abilities.
+          common goal in mind, help you communicate with your clients &amp; unleash your creative abilities.
         </Typography>
         <Box
           sx={{

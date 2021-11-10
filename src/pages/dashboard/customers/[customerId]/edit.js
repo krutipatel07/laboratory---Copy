@@ -45,7 +45,7 @@ const CustomerEdit = () => {
     <>
       <Head>
         <title>
-          Dashboard: Customer Edit | Material Kit Pro
+          Dashboard: Customer Edit | Maket Colaboratory
         </title>
       </Head>
       <Box

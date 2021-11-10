@@ -14,6 +14,7 @@ import { Users as UsersIcon } from '../../icons/users';
 import { Logo } from '../logo';
 import { Scrollbar } from '../scrollbar';
 import { DashboardSidebarSection } from './dashboard-sidebar-section';
+import DesignServicesIcon from '@mui/icons-material/DesignServices';
 
 const getSections = (t) => [
   {
@@ -40,16 +41,16 @@ const getSections = (t) => [
       },
       {
         title: t('Projects'),
-        path: '/dashboard/products',
-        icon: <ShoppingBagIcon fontSize="small" />,
+        path: '/dashboard/projects',
+        icon: <DesignServicesIcon fontSize="small" />,
         children: [
           {
             title: t('List'),
-            path: '/dashboard/products'
+            path: '/dashboard/projects'
           },
           {
             title: t('Create'),
-            path: '/dashboard/products/new'
+            path: '/dashboard/projects/new'
           }
         ]
       },
@@ -208,8 +209,9 @@ export const DashboardSidebar = (props) => {
                   <Logo
                     sx={{
                       height: 42,
-                      width: 42
+                      width: 42,
                     }}
+                    variant="light"
                   />
                 </a>
               </NextLink>

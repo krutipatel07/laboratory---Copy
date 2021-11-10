@@ -20,7 +20,7 @@ const Analytics = () => {
     <>
       <Head>
         <title>
-          Dashboard: Analytics | Material Kit Pro
+          Dashboard: Analytics | Maket Colaboratory
         </title>
       </Head>
       <Box

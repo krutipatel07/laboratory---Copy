@@ -70,45 +70,18 @@ export const MainNavbar = (props) => {
                 underline="none"
                 variant="subtitle2"
               >
-                Live Demo
-              </Link>
-            </NextLink>
-            <NextLink
-              href="/browse"
-              passHref
-            >
-              <Link
-                color="textSecondary"
-                sx={{ ml: 2 }}
-                underline="none"
-                variant="subtitle2"
-              >
-                Components
-              </Link>
-            </NextLink>
-            <NextLink
-              href="/docs/welcome"
-              passHref
-            >
-              <Link
-                color="textSecondary"
-                component="a"
-                sx={{ ml: 2 }}
-                underline="none"
-                variant="subtitle2"
-              >
-                Documentation
+                About us
               </Link>
             </NextLink>
             <Button
               component="a"
-              href="/dashboard/pricing"
+              href="/authentication/register"
               size="medium"
               sx={{ ml: 2 }}
               target="_blank"
               variant="contained"
             >
-              Buy Now
+              Sign up
             </Button>
           </Box>
         </Toolbar>

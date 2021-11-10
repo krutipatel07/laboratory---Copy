@@ -17,7 +17,7 @@ const AuthorizationRequired = () => {
     <>
       <Head>
         <title>
-          Error: Authorization Required | Material Kit Pro
+          Error: Authorization Required | Maket Colaboratory
         </title>
       </Head>
       <Box
@@ -43,8 +43,7 @@ const AuthorizationRequired = () => {
             sx={{ mt: 0.5 }}
             variant="subtitle2"
           >
-            You either tried some shady route or you
-            came here by mistake. Whichever it is, try using the
+            We don't trust the route you gave us. Try using the
             navigation.
           </Typography>
           <Box

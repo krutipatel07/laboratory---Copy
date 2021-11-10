@@ -167,7 +167,7 @@ const InvoiceList = () => {
     <>
       <Head>
         <title>
-          Dashboard: Invoice List | Material Kit Pro
+          Dashboard: Invoice List | Maket Colaboratory
         </title>
       </Head>
       <Box

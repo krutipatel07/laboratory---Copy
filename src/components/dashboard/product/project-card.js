@@ -9,6 +9,8 @@ import IconButton from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PeopleIcon from '@mui/icons-material/People';
 import Box from '@mui/material/Box';
+import NextLink from 'next/link';
+
 
 
 const ProductCard = (props) => {
@@ -19,31 +21,36 @@ const ProductCard = (props) => {
     } = props;
     
   return (
-    <Card sx={{
-          maxWidth: 400, 
-          minWidth: 400,
-          backgroundColor: 'background.paper',
-          '&:hover': {
-            backgroundColor: 'background.hover',
-          } }}
-          variant="elevation">
-      <CardContent>
-        <Typography gutterBottom variant="subtitle1" component="div" color="text.primary">
-          {title}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-            {description}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-            <IconButton aria-label="share">
-            <PeopleIcon />
-            </IconButton>
-            <Typography>
-            {members}
-            </Typography>
-      </CardActions>
-    </Card>
+    <NextLink
+        href="/workspace"
+        passHref
+      >
+      <Card sx={{
+            maxWidth: 400, 
+            minWidth: 400,
+            backgroundColor: 'background.paper',
+            '&:hover': {
+              backgroundColor: 'background.hover',
+            } }}
+            variant="elevation">
+        <CardContent>
+          <Typography gutterBottom variant="subtitle1" component="div" color="text.primary">
+            {title}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+              {description}
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing>
+              <IconButton aria-label="share">
+              <PeopleIcon />
+              </IconButton>
+              <Typography>
+              {members}
+              </Typography>
+        </CardActions>
+      </Card>
+      </NextLink>
   );
 };
 

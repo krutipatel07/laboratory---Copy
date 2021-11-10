@@ -16,7 +16,7 @@ const Contact = () => {
     <>
       <Head>
         <title>
-          Contact | Material Kit Pro
+          Contact | Maket Colaboratory
         </title>
       </Head>
       <Box

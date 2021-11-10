@@ -18,7 +18,7 @@ import { withWorkspaceLayout } from '../../hocs/with-workspace-layout';
 import { useMounted } from '../../hooks/use-mounted';
 import { Plus as PlusIcon } from '../../icons/plus';
 import { gtm } from '../../lib/gtm';
-import ProjectGrid from '../../components/dashboard/product/product-grid.js';
+import DesignGrid from '../../components/workspace/design-grid.js';
 import { OverviewBanner } from '../../components/dashboard/overview/overview-banner';
 import { Search as SearchIcon } from '../../icons/search';
 
@@ -139,7 +139,7 @@ const ProductList = () => {
     <>
       <Head>
         <title>
-          Dashboard: Product List | Maket CoLaboratory v1.0
+          Workspace | Maket Colaboratory
         </title>
       </Head>
       <Box
@@ -170,7 +170,7 @@ const ProductList = () => {
                 </InputAdornment>
               )
             }}
-            placeholder="Search customers"
+            placeholder="Search designs by name"
           />
         </Box>
         <Box
@@ -181,7 +181,7 @@ const ProductList = () => {
           }}
         >
           <TextField
-            defaultValue=""
+            defaultValue="$500,000"
             width="50%"
             placeholder="Budget"
           />
@@ -194,7 +194,7 @@ const ProductList = () => {
           }}
         >
           <TextField
-            defaultValue=""
+            defaultValue="2"
             width="50%"
             placeholder="Floors"
           />
@@ -207,7 +207,7 @@ const ProductList = () => {
           }}
         >
           <TextField
-            defaultValue=""
+            defaultValue="4-beds, 3-baths"
             width="50%"
             placeholder="Rooms"
           />
@@ -220,10 +220,19 @@ const ProductList = () => {
           }}
         >
           <TextField
-            defaultValue=""
+            defaultValue="bed1-bath1, kitchen-garage, bed3-living"
             width="50%"
             placeholder="Adjacencies"
           />
+        </Box>
+        <Box
+        >
+          <Button
+            component="a"
+            variant="contained"
+          >
+            Generate
+          </Button>
         </Box>
       </Box>
       <Box
@@ -258,24 +267,10 @@ const ProductList = () => {
                 </Typography>
               </Grid>
               <Grid item>
-                <NextLink
-                  href="/dashboard/products/new"
-                  passHref
-                >
-                  <Button
-                    component="a"
-                    startIcon={<PlusIcon fontSize="small" />}
-                    variant="contained"
-                  >
-                    Add
-                  </Button>
-                </NextLink>
               </Grid>
             </Grid>
           </Box>
-          <Card>
-            <ProjectGrid/>
-          </Card>
+          <DesignGrid/>
         </Container>
       </Box>
     </>

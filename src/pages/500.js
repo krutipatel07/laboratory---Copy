@@ -17,7 +17,7 @@ const ServerError = () => {
     <>
       <Head>
         <title>
-          Error: Server Error | Material Kit Pro
+          Error: Server Error | Maket Colaboratory
         </title>
       </Head>
       <Box
@@ -43,8 +43,7 @@ const ServerError = () => {
             sx={{ mt: 0.5 }}
             variant="subtitle2"
           >
-            You either tried some shady route or you
-            came here by mistake. Whichever it is, try using the
+            We don't trust the route you gave us. Try using the
             navigation.
           </Typography>
           <Box

@@ -91,7 +91,7 @@ let threads = [
       {
         id: '5e867f0a5bc0ff2bfa07bfa6',
         attachments: [],
-        body: 'Hey, nice projects! I really liked the one in react. What\'s your quote on kinda similar project?',
+        body: 'Hey, I saw your changes on Variant_4! I really like your ideas. Will that change the budget estimate at all?',
         contentType: 'text',
         createdAt: subDays(subHours(now, 10), 4).getTime(),
         authorId: '5e86805e2bafd54f66cc95c3'
@@ -99,7 +99,7 @@ let threads = [
       {
         id: '5e867f167d5f78109ae9f2a4',
         attachments: [],
-        body: 'I would need to know more details, but my hourly rate stats at $35/hour. Thanks!',
+        body: 'I am glad you like them, and the budget won\'t change at all don\'t worry.',
         contentType: 'text',
         createdAt: subDays(subHours(now, 2), 4).getTime(),
         authorId: '5e86809283e28b96d2d38537'
@@ -107,7 +107,7 @@ let threads = [
       {
         id: '5e867f1c9ca72084693528f4',
         attachments: [],
-        body: 'Well it\'s a really easy one, I\'m sure we can make it half of the price.',
+        body: 'Ok thats great. Maybe we can schedule a call for next week if that works for you?',
         contentType: 'text',
         createdAt: subHours(now, 5).getTime(),
         authorId: '5e86805e2bafd54f66cc95c3'
@@ -115,7 +115,7 @@ let threads = [
       {
         id: '5e867f22fd2e27a09849b4db',
         attachments: [],
-        body: 'Then why don\'t you make it if it\'s that easy? Sorry I\'m not interetes, have fantastic day Adam!',
+        body: 'Sounds great. I will put together a 3D of Variant_4 for the meeting',
         contentType: 'text',
         createdAt: subHours(now, 3).getTime(),
         authorId: '5e86809283e28b96d2d38537'
@@ -123,17 +123,9 @@ let threads = [
       {
         id: '5e867f28a34d45ac6eb5c41f',
         attachments: [],
-        body: 'Last offer, $25 per hour',
+        body: 'Perfect. I\'m excited to see it',
         contentType: 'text',
         createdAt: subHours(now, 2).getTime(),
-        authorId: '5e86805e2bafd54f66cc95c3'
-      },
-      {
-        id: '5e867f2dba984a3f78b33526',
-        attachments: [],
-        body: '/static/mock-images/chat/media_1.png',
-        contentType: 'image',
-        createdAt: subHours(now, 1).getTime(),
         authorId: '5e86805e2bafd54f66cc95c3'
       }
     ],
@@ -150,7 +142,7 @@ let threads = [
       {
         id: '5e867fc180837d901bd9bca1',
         attachments: [],
-        body: 'Hey, would you like to collaborate?',
+        body: 'Hey, thanks for adding me to the project.',
         contentType: 'text',
         createdAt: subDays(subMinutes(now, 6), 3).getTime(),
         authorId: '5e8680e60cba5019c5ca6fda'
@@ -158,7 +150,7 @@ let threads = [
       {
         id: '5e8d6fb695df7971237fc173',
         attachments: [],
-        body: 'Hi, Merrile!',
+        body: 'Hi, Nasimiyu! I\'m happy to have you here. I think we\'ll make some really great progress by collaborating together on this project.',
         contentType: 'text',
         createdAt: subDays(subMinutes(now, 5), 3).getTime(),
         authorId: '5e86809283e28b96d2d38537'
@@ -166,7 +158,7 @@ let threads = [
       {
         id: '58825a290eb4d4271a54f188',
         attachments: [],
-        body: 'Hello everyone 😀',
+        body: 'Hey! Yea, we are very excited to help you design your dream home Nasimiyu!',
         contentType: 'text',
         createdAt: subDays(subMinutes(now, 2), 1).getTime(),
         authorId: '5e8891ab188cd2855e6029b7'

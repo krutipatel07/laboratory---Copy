@@ -50,7 +50,7 @@ export const ProductCreateForm = (props) => {
       try {
         // NOTE: Make API request
         toast.success('Product created!');
-        router.push('/dashboard/products');
+        router.push('/dashboard/projects');
       } catch (err) {
         console.error(err);
         toast.error('Something went wrong!');

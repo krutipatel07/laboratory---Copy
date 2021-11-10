@@ -19,19 +19,12 @@ const Home = () => {
     <>
       <Head>
         <title>
-          Maket Laboratory v1.0
+        Maket Colaboratory
         </title>
       </Head>
       <main>
         <HomeHero />
         <Divider />
-        <HomeDevelopers />
-        <Divider />
-        <HomeDesigners />
-        <HomeTestimonials />
-        <HomeFeatures />
-        <Divider />
-        <HomeClients />
       </main>
     </>
   );

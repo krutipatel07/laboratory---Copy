@@ -93,13 +93,19 @@ export const Footer = (props) => (
           }}
           xs={12}
         >
-          <Logo />
+          <Logo 
+            sx={{
+              height: 100,
+              width: 100,
+            }}
+            variant="primary"
+          />
           <Typography
             color="textSecondary"
             sx={{ mt: 1 }}
             variant="caption"
           >
-            © 2021 Devias.
+            © 2021 Maket
           </Typography>
         </Grid>
         {sections.map((section, index) => (

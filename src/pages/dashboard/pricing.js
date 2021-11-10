@@ -17,7 +17,7 @@ const Pricing = () => {
     <>
       <Head>
         <title>
-          Pricing | Maket Laboratory v1.0
+          Pricing | Maket Colaboratory
         </title>
       </Head>
       <Box
