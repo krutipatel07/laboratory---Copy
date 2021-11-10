@@ -41,7 +41,7 @@ const Overview = () => {
     <>
       <Head>
         <title>
-          Dashboard: Overview | Maket Laboratory v1.0
+          Dashboard: Overview | Maket Colaboratory
         </title>
       </Head>
       <Box
