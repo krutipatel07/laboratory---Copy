@@ -14,7 +14,8 @@ export default function MembersList() {
     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar alt="Cao Yu" src="../../../static/mock-images/avatars/avatar-cao-yu.png" />
+          <Avatar alt="Cao Yu" 
+          src="../../../static/mock-images/avatars/avatar-cao-yu.png" />
         </ListItemAvatar>
         <ListItemText
           primary="Cao Yu"
@@ -31,7 +32,8 @@ export default function MembersList() {
       </ListItem>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar alt="Travis Howard" src="../../../static/mock-images/avatars/avatar-fran_perez.png" />
+          <Avatar alt="Travis Howard" 
+          src="../../../static/mock-images/avatars/avatar-fran_perez.png" />
         </ListItemAvatar>
         <ListItemText
           primary="Fram Perez"
@@ -48,7 +50,8 @@ export default function MembersList() {
       </ListItem>
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
-          <Avatar alt="Penjani Inyene" src="../../../static/mock-images/avatars/avatar-penjani_inyene.png" />
+          <Avatar alt="Penjani Inyene" 
+          src="../../../static/mock-images/avatars/avatar-penjani_inyene.png" />
         </ListItemAvatar>
         <ListItemText
           primary="Penjani Inyene"

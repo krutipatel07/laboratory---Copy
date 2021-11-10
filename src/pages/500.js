@@ -43,7 +43,7 @@ const ServerError = () => {
             sx={{ mt: 0.5 }}
             variant="subtitle2"
           >
-            We don't trust the route you gave us. Try using the
+            We don&apos;t trust the route you gave us. Try using the
             navigation.
           </Typography>
           <Box
