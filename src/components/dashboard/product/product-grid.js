@@ -22,6 +22,7 @@ export default function ProjectGrid() {
             title="Rustic Vancouver Cottage"
             description="Modern cottage on the coast for a family of 4."
             members = {2}
+            link="/workspace"
           />
         </Grid>
         <Grid item 
@@ -30,6 +31,7 @@ export default function ProjectGrid() {
                 title="Modern Montreal Bungalow"
                 description="Modern cottage on the coast for a family of 4."
                 members = {3}
+                link="/workspace"
             />
         </Grid>
         <Grid item 
@@ -38,6 +40,7 @@ export default function ProjectGrid() {
             title="Seaside Vacation Home"
             description="Vacation home for a family of 4"
             members = {2}
+            link="/workspace"
             />
         </Grid>
         <Grid item 
@@ -46,6 +49,7 @@ export default function ProjectGrid() {
             title="Manitoba Country Getaway"
             description="Farmhouse for family of 6"
             members = {2}
+            link="/workspace"
             />
         </Grid>
         <Grid item 
@@ -54,6 +58,7 @@ export default function ProjectGrid() {
             title="Contemporary Family Home in Laval"
             description="Functional home for a new family with 2 dogs and a baby."
             members = {2}
+            link="/workspace"
             />
         </Grid>
         <Grid item 
@@ -62,6 +67,7 @@ export default function ProjectGrid() {
             title="Lakeside Cottage"
             description="Summer cottage for a family of 3 in the lake country of Ontario."
             members = {2}
+            link="/workspace"
             />
         </Grid>
         <Grid item 
@@ -70,6 +76,7 @@ export default function ProjectGrid() {
             title="Penticton Mansion"
             description="Large Modern home for an adventurous family "
             members = {2}
+            link="/workspace"
             />
         </Grid>
       </Grid>

@@ -17,16 +17,17 @@ const ProductCard = (props) => {
     const {
         title,
         description,
-        members
+        members,
+        link
     } = props;
     
   return (
     <NextLink
-        href="/workspace"
+        href={link}
         passHref
       >
       <Card sx={{
-            maxWidth: 400, 
+            maxWidth: 300, 
             minWidth: 400,
             backgroundColor: 'background.paper',
             '&:hover': {
@@ -34,10 +35,15 @@ const ProductCard = (props) => {
             } }}
             variant="elevation">
         <CardContent>
-          <Typography gutterBottom variant="subtitle1" component="div" color="text.primary">
+          <Typography gutterBottom 
+          variant="subtitle1" 
+          component="div" 
+          color="text.primary">
             {title}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography 
+          variant="body2" 
+          color="text.secondary">
               {description}
           </Typography>
         </CardContent>
