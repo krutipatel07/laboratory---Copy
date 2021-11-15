@@ -33,7 +33,7 @@ const Register = () => {
     <>
       <Head>
         <title>
-          Register | Material Kit Pro
+          Register | Maket Colaboratory
         </title>
       </Head>
       <Box

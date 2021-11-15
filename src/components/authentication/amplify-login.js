@@ -11,8 +11,8 @@ export const AmplifyLogin = (props) => {
   const { login } = useAuth();
   const formik = useFormik({
     initialValues: {
-      email: 'demo@devias.io',
-      password: 'Password123!',
+      email: 'build@maket.ca',
+      password: 'maket123',
       submit: null
     },
     validationSchema: Yup.object({
@@ -101,11 +101,11 @@ export const AmplifyLogin = (props) => {
           <div>
             You can use
             {' '}
-            <b>demo@devias.io</b>
+            <b>builder@maket.ca</b>
             {' '}
             and password
             {' '}
-            <b>Password123!</b>
+            <b>maket123</b>
           </div>
         </Alert>
       </Box>

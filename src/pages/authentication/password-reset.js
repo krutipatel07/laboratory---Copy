@@ -30,7 +30,7 @@ const PasswordReset = () => {
     <>
       <Head>
         <title>
-          Password Reset | Material Kit Pro
+          Password Reset | Maket Colaboratory
         </title>
       </Head>
       <Box

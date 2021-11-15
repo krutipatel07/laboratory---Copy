@@ -6,9 +6,9 @@ const users = [
   {
     id: '5e86809283e28b96d2d38537',
     avatar: '/static/mock-images/avatars/avatar-anika_visser.png',
-    email: 'demo@devias.io',
+    email: 'builder@maket.ca',
     name: 'Anika Visser',
-    password: 'Password123!',
+    password: 'maket123',
     plan: 'Premium'
   }
 ];

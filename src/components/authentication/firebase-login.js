@@ -150,11 +150,11 @@ export const FirebaseLogin = (props) => {
             <div>
               You can use
               {' '}
-              <b>demo@devias.io</b>
+              <b>builder@maket.ca</b>
               {' '}
               and password
               {' '}
-              <b>Password123!</b>
+              <b>maket123</b>
             </div>
           </Alert>
         </Box>

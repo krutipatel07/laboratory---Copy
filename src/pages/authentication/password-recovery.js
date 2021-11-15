@@ -27,7 +27,7 @@ const PasswordRecovery = () => {
     <>
       <Head>
         <title>
-          Password Recovery | Material Kit Pro
+          Password Recovery | Maket Colaboratory
         </title>
       </Head>
       <Box
