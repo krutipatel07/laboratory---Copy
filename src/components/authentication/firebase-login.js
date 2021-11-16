@@ -51,6 +51,11 @@ export const FirebaseLogin = (props) => {
     console.log("handleGoogleClick called");
     try {
       await signInWithGoogle();
+
+      if (isMounted()) {
+        const returnUrl = router.query.returnUrl || '/dashboard/projects';
+        router.push(returnUrl);
+      }
     } catch (err) {
       console.error(err);
     }
