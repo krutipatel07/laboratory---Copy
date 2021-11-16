@@ -41,6 +41,7 @@ export const FirebaseRegister = (props) => {
         .oneOf([true], 'This field must be checked')
     }),
     onSubmit: async (values, helpers) => {
+      console.log("createUserWithEmailAndPassword called");
       try {
         await createUserWithEmailAndPassword(values.email, values.password);
 
@@ -61,6 +62,8 @@ export const FirebaseRegister = (props) => {
   });
 
   const handleGoogleClick = async () => {
+    console.log("handleGoogelClick called");
+
     try {
       await signInWithGoogle();
     } catch (err) {

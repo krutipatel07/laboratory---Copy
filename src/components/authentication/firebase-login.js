@@ -27,6 +27,7 @@ export const FirebaseLogin = (props) => {
         .required('Password is required')
     }),
     onSubmit: async (values, helpers) => {
+      console.log("onSubmit called");
       try {
         await signInWithEmailAndPassword(values.email, values.password);
 
@@ -47,6 +48,7 @@ export const FirebaseLogin = (props) => {
   });
 
   const handleGoogleClick = async () => {
+    console.log("handleGoogleClick called");
     try {
       await signInWithGoogle();
     } catch (err) {

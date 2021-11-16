@@ -3,7 +3,6 @@ import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { Box, Card, Container, Divider, Link, Typography } from '@mui/material';
-import { AuthBanner } from '../../components/authentication/auth-banner';
 import { AmplifyLogin } from '../../components/authentication/amplify-login';
 import { Auth0Login } from '../../components/authentication/auth0-login';
 import { FirebaseLogin } from '../../components/authentication/firebase-login';
