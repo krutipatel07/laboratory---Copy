@@ -11,10 +11,16 @@ import { withMainLayout } from '../hocs/with-main-layout';
 import { gtm } from '../lib/gtm';
 import clientPromise from '../lib/mongodb'
 
-const Home = ({isConnected}) => {
+
+const dbName= "laboratory";
+const collectionName = "projects";
+
+const Home = ({data}) => {
   useEffect(() => {
     gtm.push({ event: 'page_view' });
   }, []);
+
+  console.log(data);
 
   return (
     <>
@@ -35,8 +41,14 @@ export default withMainLayout(Home);
 
 export async function getServerSideProps(context) {
   let isConnected;
+  let data;
   try {
     const client = await clientPromise
+    const db = client.db(dbName);
+    console.log(db); 
+    data = await db.collection(collectionName).find({}).limit(20).toArray();
+    data = JSON.parse(JSON.stringify(data));
+    console.log(data); 
     isConnected = true;
   }
   catch(e) {
@@ -45,25 +57,6 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { isConnected },
+    props: { data },
   }
-}import { connectToDatabase } from "../../lib/mongodb";
-
-export default async (req, res) => {
-  // const { db } = await connectToDatabase();
-
-  const databasesList = await client.db().admin().listDatabases();
-
-  // const movies = await db
-  //   .collection("movies")
-  //   .find({})
-  //   .sort({ metacritic: -1 })
-  //   .limit(20)
-  //   .toArray();
-
-  // const movies ={
-  //   movie: "movie"
-  // }
-
-  res.json(movies);
-};
+}
