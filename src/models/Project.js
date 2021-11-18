@@ -11,11 +11,11 @@ const ProjectSchema = new Schema(
             type: String,
             required: 'You must enter project title!',
             minlength: 1,
-            maxlength: 280
+            maxlength: 50
         },
         description: {
             type: String,
-            maxlength: 280
+            maxlength: 300
         },
         assets: {
             images:

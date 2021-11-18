@@ -9,8 +9,9 @@ import { HomeFeatures } from '../components/home/home-features';
 import { HomeTestimonials } from '../components/home/home-testimonials';
 import { withMainLayout } from '../hocs/with-main-layout';
 import { gtm } from '../lib/gtm';
+import clientPromise from '../lib/mongodb'
 
-const Home = () => {
+const Home = ({isConnected}) => {
   useEffect(() => {
     gtm.push({ event: 'page_view' });
   }, []);
@@ -31,3 +32,38 @@ const Home = () => {
 };
 
 export default withMainLayout(Home);
+
+export async function getServerSideProps(context) {
+  let isConnected;
+  try {
+    const client = await clientPromise
+    isConnected = true;
+  }
+  catch(e) {
+    console.log(e);
+    isConnected = false
+  }
+
+  return {
+    props: { isConnected },
+  }
+}import { connectToDatabase } from "../../lib/mongodb";
+
+export default async (req, res) => {
+  // const { db } = await connectToDatabase();
+
+  const databasesList = await client.db().admin().listDatabases();
+
+  // const movies = await db
+  //   .collection("movies")
+  //   .find({})
+  //   .sort({ metacritic: -1 })
+  //   .limit(20)
+  //   .toArray();
+
+  // const movies ={
+  //   movie: "movie"
+  // }
+
+  res.json(movies);
+};

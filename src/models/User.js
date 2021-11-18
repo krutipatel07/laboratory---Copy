@@ -2,12 +2,12 @@ const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
 const Role = {
-  ADMIN = 'ADMIN',
-  USER = 'USER'
+  ARCHITECTURE = 'ARCHITECTURE',
+  CLIENT = 'CLIENT'
 }
 const Tier = {
-  ADMIN = 'ADMIN',
-  USER = 'USER'
+  PROFESSIONAL = 'PROFESSIONAL',
+  STUDENT = 'STUDENT'
 }
 
 const userSchema = new Schema(
@@ -32,12 +32,12 @@ const userSchema = new Schema(
     role: {
       type: String,
       enum : Role,
-      default: Role.USER
+      default: Role.ARCHITECTURE
     },
     tier: {
       type: String,
       enum : Tier,
-      default: Tier.USER
+      default: Tier.PROFESSIONAL
     },
     projects: [
       {
@@ -53,7 +53,8 @@ const userSchema = new Schema(
   },
   {
     toJSON: {
-      virtuals: true
+      virtuals: true,
+      getters: true
     }
   }
 );
