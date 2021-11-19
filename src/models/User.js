@@ -2,12 +2,12 @@ const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
 const Role = {
-  ARCHITECTURE = 'ARCHITECTURE',
-  CLIENT = 'CLIENT'
+  ARCHITECTURE : 'ARCHITECTURE',
+  CLIENT : 'CLIENT'
 }
 const Tier = {
-  PROFESSIONAL = 'PROFESSIONAL',
-  STUDENT = 'STUDENT'
+  PROFESSIONAL : 'PROFESSIONAL',
+  STUDENT : 'STUDENT'
 }
 
 const userSchema = new Schema(
