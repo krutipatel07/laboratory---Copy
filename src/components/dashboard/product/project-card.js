@@ -18,7 +18,8 @@ const ProductCard = (props) => {
         title,
         description,
         members,
-        link
+        link,
+        image
     } = props;
     
   return (
@@ -37,9 +38,9 @@ const ProductCard = (props) => {
         <CardMedia
         component="img"
         alt="green iguana"
-        height="140"
+        height="160"
         //image="/static/images/cards/contemplative-reptile.jpg"
-        src="https://images.unsplash.com/photo-1519681393784-d120267933ba?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3270&q=80"
+        src={image}
       />
         <CardContent>
           <Typography gutterBottom 

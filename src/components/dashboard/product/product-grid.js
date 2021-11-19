@@ -19,63 +19,70 @@ export default function ProjectGrid() {
         <Grid item 
         xs>
           <ProductCard
-            title="Rustic Vancouver Cottage"
-            description="Modern cottage on the coast for a family of 4."
+            title="Annex"
+            description="Modern home on the coast for a family of 4."
             members = {2}
+            image ="https://mattamy.secure.footprint.net/-/media/images/mattamywebsite/canada/calgary/carrington/plans/annex/elevations---will-need-to-be-expanded/elevationcraftsman_carrington_annex_main.jpg?sc_lang=en-ca"
             link="/workspace"
           />
         </Grid>
         <Grid item 
         xs>
             <ProductCard
-                title="Modern Montreal Bungalow"
-                description="Modern cottage on the coast for a family of 4."
+                title="Kanata"
+                description="Modern home in the city."
                 members = {3}
+                image ="https://mattamy.secure.footprint.net/-/media/images/mattamywebsite/canada/calgary/cityscape/plans/caspian/exterior-styles-images/elevationprairie_cityscape_caspian_main.jpg?sc_lang=en-ca"
                 link="/workspace"
             />
         </Grid>
         <Grid item 
         xs>
             <ProductCard
-            title="Seaside Vacation Home"
+            title="Vanier End"
             description="Vacation home for a family of 4"
             members = {2}
+            image ="https://mattamy.secure.footprint.net/-/media/images/mattamywebsite/canada/calgary/cityscape/plans/thames/exterior-styles-images/elevationprairie_cityscape_thames_main.jpg?sc_lang=en-ca"
             link="/workspace"
             />
         </Grid>
         <Grid item 
         xs>
             <ProductCard
-            title="Manitoba Country Getaway"
+            title="Caspian"
             description="Farmhouse for family of 6"
             members = {2}
+            image ="https://mattamy.secure.footprint.net/-/media/images/mattamywebsite/canada/calgary/cityscape/plans/hurley/exterior-styles-images/elevationcraftsman_cityscape_hurley_main.jpg?sc_lang=en-ca"
             link="/workspace"
             />
         </Grid>
         <Grid item 
         xs>
             <ProductCard
-            title="Contemporary Family Home in Laval"
-            description="Functional home for a new family with 2 dogs and a baby."
+            title="Thames"
+            description="Home for a new family with 2 dogs and a baby."
             members = {2}
+            image ="https://mattamy.secure.footprint.net/-/media/images/mattamywebsite/canada/calgary/cityscape/plans/whistler/elevations/prairie_cityscape_whistler_main.jpg"
             link="/workspace"
             />
         </Grid>
         <Grid item 
         xs>
             <ProductCard
-            title="Lakeside Cottage"
-            description="Summer cottage for a family of 3 in the lake country of Ontario."
+            title="Hurley"
+            description="Summer home for a family of 3 in the lake country of Ontario."
             members = {2}
+            image ="https://mattamy.secure.footprint.net/-/media/images/mattamywebsite/canada/calgary/carrington/plans/vanier-end/exterior-styles-images/elevationprairie_carrington_vanierend_main.jpg?sc_lang=en-ca"
             link="/workspace"
             />
         </Grid>
         <Grid item 
         xs>
             <ProductCard
-            title="Penticton Mansion"
+            title="Yukon"
             description="Large Modern home for an adventurous family "
             members = {2}
+            image ="https://mattamy.secure.footprint.net/-/media/images/mattamywebsite/canada/calgary/carrington/plans/graydon-corner/exterior-styles-images/elevationcraftsman_carrington_graydoncorner_main.jpg?sc_lang=en-ca"
             link="/workspace"
             />
         </Grid>

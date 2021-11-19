@@ -181,6 +181,7 @@ const ProductList = () => {
           }}
         >
           <TextField
+            defaultValue="$500,000"
             width="50%"
             placeholder="Budget"
           />
