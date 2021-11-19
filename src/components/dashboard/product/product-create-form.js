@@ -18,6 +18,7 @@ import { Search as SearchIcon } from '../../../icons/search';
 import { FileDropzone } from '../../file-dropzone';
 import { QuillEditor } from '../../quill-editor';
 import MemberList from './product-createForm-memberList.js'
+import createProject from "../../../pages/api/createProject"
 
 
 
@@ -48,7 +49,6 @@ export const ProductCreateForm = (props) => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        // NOTE: Make API request
         toast.success('Product created!');
         router.push('/dashboard/projects');
       } catch (err) {
