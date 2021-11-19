@@ -10,15 +10,18 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import PeopleIcon from '@mui/icons-material/People';
 import Box from '@mui/material/Box';
 import NextLink from 'next/link';
+import DesignServicesIcon from '@mui/icons-material/DesignServices';
+import CommentIcon from '@mui/icons-material/Comment';
 
 
 
-const ProductCard = (props) => {
+const VariantCard = (props) => {
     const {
         title,
-        description,
         members,
-        link
+        comments,
+        link,
+        image
     } = props;
     
   return (
@@ -35,11 +38,13 @@ const ProductCard = (props) => {
             } }}
             variant="elevation">
         <CardMedia
+        sx={{
+            objectFit:"fill",
+            }}
         component="img"
         alt="green iguana"
-        height="140"
-        //image="/static/images/cards/contemplative-reptile.jpg"
-        src="https://images.unsplash.com/photo-1519681393784-d120267933ba?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=3270&q=80"
+        height="200"
+        src={image}
       />
         <CardContent>
           <Typography gutterBottom 
@@ -48,18 +53,19 @@ const ProductCard = (props) => {
           color="text.primary">
             {title}
           </Typography>
-          <Typography 
-          variant="body2" 
-          color="text.secondary">
-              {description}
-          </Typography>
         </CardContent>
-        <CardActions disableSpacing>
+        <CardActions>
               <IconButton aria-label="share">
-              <PeopleIcon />
+              <DesignServicesIcon />
               </IconButton>
               <Typography>
               {members}
+              </Typography>
+              <IconButton aria-label="share" sx={{marginLeft: 50}}>
+              <CommentIcon/>
+              </IconButton>
+              <Typography>
+              {comments}
               </Typography>
         </CardActions>
       </Card>
@@ -67,4 +73,4 @@ const ProductCard = (props) => {
   );
 };
 
-export default ProductCard
+export default VariantCard

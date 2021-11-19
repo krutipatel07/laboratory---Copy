@@ -217,7 +217,7 @@ const ProductList = () => {
         >
           <img
             alt=""
-            src={`/static/floorplan.png`}
+            src={"https://upload.wikimedia.org/wikipedia/commons/9/9a/Sample_Floorplan.jpg"}
           />
         </Box>
       </Box>
