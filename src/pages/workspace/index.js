@@ -181,7 +181,6 @@ const ProductList = () => {
           }}
         >
           <TextField
-            defaultValue="$500,000"
             width="50%"
             placeholder="Budget"
           />
@@ -194,7 +193,6 @@ const ProductList = () => {
           }}
         >
           <TextField
-            defaultValue="2"
             width="50%"
             placeholder="Floors"
           />
@@ -207,7 +205,6 @@ const ProductList = () => {
           }}
         >
           <TextField
-            defaultValue="4-beds, 3-baths"
             width="50%"
             placeholder="Rooms"
           />
@@ -220,7 +217,6 @@ const ProductList = () => {
           }}
         >
           <TextField
-            defaultValue="bed1-bath1, kitchen-garage, bed3-living"
             width="50%"
             placeholder="Adjacencies"
           />
