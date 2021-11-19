@@ -217,7 +217,7 @@ const ProductList = () => {
         >
           <img
             alt=""
-            src={"https://upload.wikimedia.org/wikipedia/commons/9/9a/Sample_Floorplan.jpg"}
+            src={"https://drummondhouseplans.com/assets/_entemp_/plan-house-3290-1st-level-500px-71387195.jpg"}
           />
         </Box>
       </Box>

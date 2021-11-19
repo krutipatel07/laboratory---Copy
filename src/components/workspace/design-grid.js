@@ -22,7 +22,7 @@ export default function DesignGrid() {
             title="Variant_1"
             members = {2}
             comments = {12}
-            image={"https://media.istockphoto.com/photos/residential-building-blueprint-plan-real-estate-housing-project-picture-id1288292255"}
+            image={"https://drummondhouseplans.com/assets/_entemp_/plan-house-3290-1st-level-500px-71387195.jpg"}
             link="/workspace/variant"
           />
         </Grid>
@@ -32,7 +32,7 @@ export default function DesignGrid() {
                 title="Variant_2"
                 members = {3}
                 comments = {6}
-                image={"https://upload.wikimedia.org/wikipedia/commons/9/9a/Sample_Floorplan.jpg"}
+                image={"https://drummondhouseplans.com/assets/_entemp_/plan-house-3287-1st-level-500px-1b1fd892.jpg"}
                 link="/workspace/variant"
             />
         </Grid>
@@ -42,7 +42,7 @@ export default function DesignGrid() {
             title="Variant_3"
             members = {2}
             comments = {34}
-            image={"https://www.houseplanshelper.com/images/how-to-read-floor-plans-compass-mark.jpg"}
+            image={"https://drummondhouseplans.com/assets/_entemp_/plan-house-3992-1st-level-500px-7caa7172.jpg"}
             link="/workspace/variant"
             />
         </Grid>
@@ -52,7 +52,7 @@ export default function DesignGrid() {
             title="Variant_4"
             members = {2}
             comments = {2}
-            image={"https://media.istockphoto.com/photos/modern-interior-design-floor-plan-3d-render-picture-id1210637949?b=1&k=20&m=1210637949&s=170667a&w=0&h=_AYB0vxwWWVFSUjaNpVb3X88ybQLLXtdNJUW8IllR1E="}
+            image={"https://drummondhouseplans.com/assets/_entemp_/plan-house-3153-v3-1st-level-500px-c742b6b0.jpg"}
             link="/workspace/variant"
             />
         </Grid>
@@ -62,7 +62,7 @@ export default function DesignGrid() {
             title="Variant_5"
             members = {2}
             comments = {21}
-            image={"https://static.turbosquid.com/Preview/001152/874/ZK/3D-floor-plan_DHQ.jpg"}
+            image={"https://drummondhouseplans.com/assets/_entemp_/plan-house-3942-1st-level-500px-9c90faf8.jpg"}
             link="/workspace/variant"
             />
         </Grid>
@@ -72,7 +72,7 @@ export default function DesignGrid() {
             title="Variant_6"
             members = {2}
             comments = {4}
-            image={"https://static.turbosquid.com/Preview/001201/665/78/floor-plan-3D_DHQ.jpg"}
+            image={"https://drummondhouseplans.com/assets/_entemp_/plan-house-3284-cjg1-1st-level-500px-7e30a2db.jpg"}
             link="/workspace/variant"
             />
         </Grid>
@@ -82,7 +82,7 @@ export default function DesignGrid() {
             title="Variant_7"
             members = {2}
             comments = {7}
-            image={"https://static.turbosquid.com/Preview/2020/04/05__05_53_16/2bed001.png8E58081D-9D5B-4C44-8042-F1BB1E4A0FB4DefaultHQ.jpg"}
+            image={"https://media.istockphoto.com/photos/modern-interior-design-floor-plan-3d-render-picture-id1210637949?b=1&k=20&m=1210637949&s=170667a&w=0&h=_AYB0vxwWWVFSUjaNpVb3X88ybQLLXtdNJUW8IllR1E="}
             link="/workspace/variant"
             />
         </Grid>
@@ -92,7 +92,7 @@ export default function DesignGrid() {
             title="Variant_8"
             members = {10}
             comments = {47}
-            image={"https://static.turbosquid.com/Preview/2016/12/13__16_39_23/cgcos_fp2_05.jpgA66FA8A4-FAA2-4EA7-B73D-22F549864621Zoom.jpg"}
+            image={"https://static.turbosquid.com/Preview/001152/874/ZK/3D-floor-plan_DHQ.jpg"}
             link="/workspace/variant"
             />
         </Grid>
@@ -102,7 +102,7 @@ export default function DesignGrid() {
             title="Variant_9"
             members = {1}
             comments = {16}
-            image={"https://online.visual-paradigm.com/repository/images/4605071b-3b7a-4891-bdc5-43975736c2ab/floor-plan-design/office-floor-plan.png"}
+            image={"https://static.turbosquid.com/Preview/001201/665/78/floor-plan-3D_DHQ.jpg"}
             link="/workspace/variant"
             />
         </Grid>
