@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const mongoose = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
 const Role = {
@@ -10,7 +10,7 @@ const Tier = {
   STUDENT : 'STUDENT'
 }
 
-const userSchema = new Schema(
+const UserSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -41,7 +41,7 @@ const userSchema = new Schema(
     },
     projects: [
       {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Project'
       }
     ],
@@ -58,10 +58,8 @@ const userSchema = new Schema(
   }
 );
 
-userSchema.virtual('projectCount').get(function() {
+UserSchema.virtual('projectCount').get(function() {
   return this.projects.length;
 });
 
-const User = model('User', userSchema);
-
-module.exports = User;
+module.exports = mongoose.models.User || mongoose.model('User', UserSchema);

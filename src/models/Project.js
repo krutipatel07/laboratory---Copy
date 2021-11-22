@@ -1,7 +1,7 @@
-const { Schema, model } = require('mongoose');
+const mongoose = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
-const ProjectSchema = new Schema(
+const ProjectSchema = new mongoose.Schema(
     {
         owner: {
             type: Number,
@@ -35,13 +35,13 @@ const ProjectSchema = new Schema(
         },
         collaborators: [
           {
-            type: Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
           }
         ],
         designs: [
           {
-            type: Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'Design'
           }
         ],
@@ -58,6 +58,4 @@ const ProjectSchema = new Schema(
   }
 );
 
-const Project = model('Project', ProjectSchema);
-
-module.exports = Project;
+module.exports = mongoose.models.Project || mongoose.model('Project', ProjectSchema);
