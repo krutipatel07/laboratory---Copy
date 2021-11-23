@@ -18,8 +18,7 @@ import { Search as SearchIcon } from '../../../icons/search';
 import { FileDropzone } from '../../file-dropzone';
 import { QuillEditor } from '../../quill-editor';
 import MemberList from './product-createForm-memberList.js'
-import createProject from "../../../pages/api/createProject"
-
+import axios from 'axios'
 
 
 export const ProductCreateForm = (props) => {
@@ -49,6 +48,14 @@ export const ProductCreateForm = (props) => {
     }),
     onSubmit: async (values, helpers) => {
       try {
+        axios.post("/api/projects", {
+          owner: "3",
+          title: values.name,
+          description: values.description,
+          budget: values.newPrice
+        })
+        .catch(error => console.log(error));
+
         toast.success('Product created!');
         router.push('/dashboard/projects');
       } catch (err) {
