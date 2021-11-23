@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { Box,
@@ -21,6 +21,11 @@ import { gtm } from '../../lib/gtm';
 import DesignGrid from '../../components/workspace/design-grid.js';
 import { OverviewBanner } from '../../components/dashboard/overview/overview-banner';
 import { Search as SearchIcon } from '../../icons/search';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { SettingsSystemDaydreamRounded } from '@mui/icons-material';
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -65,6 +70,13 @@ const applyPagination = (products, page, rowsPerPage) => products.slice(page * r
   page * rowsPerPage + rowsPerPage);
 
 const ProductList = () => {
+  const [state, setState] = React.useState({
+    floor: " ",
+    budget: " ",
+    bed: " ",
+    bath: " "
+  });
+
   const isMounted = useMounted();
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(0);
@@ -131,6 +143,51 @@ const ProductList = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
   };
 
+  const handleChange = (event) => {
+    const value = event.target.value;
+    setState({
+      ...state,
+      [event.target.name]: value
+    });
+  };
+
+  // useEffect(() => {
+  //   const value = window.localStorage.getItem(key);
+  //   if (value !== null) {
+  //     setValue(JSON.parse(value));
+  //   }
+  // }, [key]);
+
+  // useEffect(() => {
+  //   window.localStorage.setItem(key, JSON.stringify(state));
+  // }, [key, state]);
+
+  // return [state, setState];
+
+
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    // alert("generate clicked")
+    const { floor, budget, bed, bath } = state
+
+    // setState(event.target.value)
+
+    // if (typeof window !== "undefined") {
+
+    //   localStorage.setItem(key, value)
+      
+    //   }
+    // alert(`
+    //   ____Your Details____\n
+    //   Floor : ${floor}
+    //   Budget : ${budget}
+    //   Bed : ${bed}
+    //   Bath : ${bath}
+    // `)
+  };
+
+
+
   // Usually query is done on backend with indexing solutions
   const filteredProducts = applyFilters(products, filters);
   const paginatedProducts = applyPagination(filteredProducts, page, rowsPerPage);
@@ -142,7 +199,8 @@ const ProductList = () => {
           Workspace | Maket Colaboratory
         </title>
       </Head>
-      <Box
+      <Box component="form"
+        method="POST"
         sx={{
           alignItems: 'center',
           display: 'flex',
@@ -184,9 +242,34 @@ const ProductList = () => {
             defaultValue="$500,000"
             width="50%"
             placeholder="Budget"
+            type="number"
+            name="budget"
+            value={state.budget}
+            onChange={handleChange}
           />
         </Box>
-        <Box
+
+        <Box 
+        component="form"
+          sx={{flexGrow: 1, m: 1.5 }}>
+          <FormControl fullWidth>
+            <InputLabel id="floor_select_label">Floor</InputLabel>
+            <Select
+              labelId="floor_select_label"
+              id="floor_select"
+              name='floor'
+              value={state.floor}
+              label="Floor"
+              onChange={handleChange}
+            >
+              <MenuItem value={1}>One</MenuItem>
+              <MenuItem value={2}>Two</MenuItem>
+              <MenuItem value={3}>Three</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+
+        {/* <Box
           component="form"
           sx={{
             flexGrow: 1,
@@ -195,9 +278,10 @@ const ProductList = () => {
         >
           <TextField
             width="50%"
-            placeholder="Floors"
+            placeholder="Bed"
           />
-        </Box>
+        </Box> */}
+
         <Box
           component="form"
           sx={{
@@ -205,10 +289,52 @@ const ProductList = () => {
             m: 1.5
           }}
         >
-          <TextField
-            width="50%"
-            placeholder="Rooms"
-          />
+          <FormControl fullWidth>
+            <InputLabel id="bed_select_label">Bed</InputLabel>
+            <Select
+              labelId="bed_select_label"
+              id="bed_select"
+              name='bed'
+              value={state.bed}
+              label="Bed"
+              onChange={handleChange}
+            >
+              <MenuItem value={1}>1</MenuItem>
+              <MenuItem value={2}>2</MenuItem>
+              <MenuItem value={3}>3</MenuItem>
+              <MenuItem value={4}>4</MenuItem>
+              <MenuItem value={5}>5</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+
+        <Box
+          component="form"
+          sx={{
+            flexGrow: 1,
+            m: 1.5
+          }}
+        >
+          <FormControl fullWidth>
+            <InputLabel id="bath_select_label">Bath</InputLabel>
+            <Select
+              labelId="bath_select_label"
+              id="bath_select"
+              name='bath'
+              value={state.bath}
+              label="Bath"
+              onChange={handleChange}
+            >
+              <MenuItem value={1}>1</MenuItem>
+              <MenuItem value={1.5}>1.5</MenuItem>
+              <MenuItem value={2}>2</MenuItem>
+              <MenuItem value={2.5}>2.5</MenuItem>
+              <MenuItem value={3}>3</MenuItem>
+              <MenuItem value={3.5}>3.5</MenuItem>
+              <MenuItem value={4}>4</MenuItem>
+              <MenuItem value={4.5}>4.5</MenuItem>
+            </Select>
+          </FormControl>
         </Box>
         <Box
           component="form"
@@ -227,6 +353,9 @@ const ProductList = () => {
           <Button
             component="a"
             variant="contained"
+            onClick={handleSubmit}
+            type="submit"
+            // value={state}
           >
             Generate
           </Button>

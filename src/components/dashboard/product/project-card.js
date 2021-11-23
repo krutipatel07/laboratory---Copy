@@ -30,6 +30,7 @@ const ProductCard = (props) => {
       <Card sx={{
             maxWidth: 300, 
             minWidth: 400,
+            margin: "auto",
             backgroundColor: 'background.paper',
             '&:hover': {
               backgroundColor: 'background.hover',
