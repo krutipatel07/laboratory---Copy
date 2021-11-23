@@ -168,6 +168,9 @@ const ProductList = () => {
   const handleSubmit = (event) => {
     event.preventDefault()
     // alert("generate clicked")
+    window.localStorage.setItem("saved_data", JSON.stringify(state))
+    let  savedItem = JSON.parse(localStorage.getItem("saved_data"));
+    console.log(savedItem);
     const { floor, budget, bed, bath } = state
 
     // setState(event.target.value)
