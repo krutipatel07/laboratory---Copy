@@ -9,6 +9,14 @@ import axios from 'axios'
 export default function ProjectGrid() {
 
   const [projectsData, setProjectsData] = useState();
+  const images = ["https://mattamy.secure.footprint.net/-/media/images/mattamywebsite/canada/calgary/carrington/plans/annex/elevations---will-need-to-be-expanded/elevationcraftsman_carrington_annex_main.jpg?sc_lang=en-ca",
+                  "https://mattamy.secure.footprint.net/-/media/images/mattamywebsite/canada/calgary/cityscape/plans/caspian/exterior-styles-images/elevationprairie_cityscape_caspian_main.jpg?sc_lang=en-ca",
+                  "https://mattamy.secure.footprint.net/-/media/images/mattamywebsite/canada/calgary/cityscape/plans/thames/exterior-styles-images/elevationprairie_cityscape_thames_main.jpg?sc_lang=en-ca",
+                  "https://mattamy.secure.footprint.net/-/media/images/mattamywebsite/canada/calgary/cityscape/plans/hurley/exterior-styles-images/elevationcraftsman_cityscape_hurley_main.jpg?sc_lang=en-ca",
+                  "https://mattamy.secure.footprint.net/-/media/images/mattamywebsite/canada/calgary/cityscape/plans/whistler/elevations/prairie_cityscape_whistler_main.jpg",
+                  "https://mattamy.secure.footprint.net/-/media/images/mattamywebsite/canada/calgary/carrington/plans/vanier-end/exterior-styles-images/elevationprairie_carrington_vanierend_main.jpg?sc_lang=en-ca",
+                  "https://mattamy.secure.footprint.net/-/media/images/mattamywebsite/canada/calgary/carrington/plans/graydon-corner/exterior-styles-images/elevationcraftsman_carrington_graydoncorner_main.jpg?sc_lang=en-ca"
+                ]
 
   useEffect(() => {
     axios.get("/api/projects")
@@ -35,6 +43,7 @@ export default function ProjectGrid() {
                   title={project.title}
                   description={(project.description.replace("<p>", "").replace("</p>", ""))}
                   members = {project.owner}
+                  image={images[i]}
                   link="/workspace"
                 />
               </Grid>

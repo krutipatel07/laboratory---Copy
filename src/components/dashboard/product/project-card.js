@@ -18,7 +18,8 @@ const ProductCard = (props) => {
         title,
         description,
         members,
-        link
+        link,
+        image
     } = props;
     
   return (
@@ -29,11 +30,18 @@ const ProductCard = (props) => {
       <Card sx={{
             maxWidth: 300, 
             minWidth: 400,
+            margin: "auto",
             backgroundColor: 'background.paper',
             '&:hover': {
               backgroundColor: 'background.hover',
             } }}
             variant="elevation">
+        <CardMedia
+        component="img"
+        alt="green iguana"
+        height="160"
+        src={image}
+      />
         <CardContent>
           <Typography gutterBottom 
           variant="subtitle1" 
