@@ -53,7 +53,7 @@ export default async (req, res) => {
     
     
         default:
-            res.status(404).json({ success: false, message: error})
+            res.status(404).json({ success: false })
             break;
     }
 }
