@@ -11,8 +11,6 @@ import PeopleIcon from '@mui/icons-material/People';
 import Box from '@mui/material/Box';
 import NextLink from 'next/link';
 
-
-
 const ProductCard = (props) => {
     const {
         title,

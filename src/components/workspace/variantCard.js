@@ -124,14 +124,6 @@ const VariantCard = (props) => {
         src={image}
       />
 
-        {/* <CardContent>
-          <Typography gutterBottom 
-          variant="subtitle1" 
-          component="div" 
-          color="text.primary">
-            {title}
-          </Typography>
-        </CardContent> */}
         <CardActions>
           <Stack direction="row" spacing={2}>
             <ColorButton variant="contained" >New Comments</ColorButton>

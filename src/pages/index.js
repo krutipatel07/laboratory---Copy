@@ -9,18 +9,11 @@ import { HomeFeatures } from '../components/home/home-features';
 import { HomeTestimonials } from '../components/home/home-testimonials';
 import { withMainLayout } from '../hocs/with-main-layout';
 import { gtm } from '../lib/gtm';
-import clientPromise from '../lib/mongodb'
 
-
-const dbName= "laboratory";
-const collectionName = "projects";
-
-const Home = ({data}) => {
+const Home = () => {
   useEffect(() => {
     gtm.push({ event: 'page_view' });
   }, []);
-
-  console.log(data);
 
   return (
     <>
@@ -38,25 +31,3 @@ const Home = ({data}) => {
 };
 
 export default withMainLayout(Home);
-
-export async function getServerSideProps(context) {
-  let isConnected;
-  let data;
-  try {
-    const client = await clientPromise
-    const db = client.db(dbName);
-    console.log(db); 
-    data = await db.collection(collectionName).find({}).limit(20).toArray();
-    data = JSON.parse(JSON.stringify(data));
-    console.log(data); 
-    isConnected = true;
-  }
-  catch(e) {
-    console.log(e);
-    isConnected = false
-  }
-
-  return {
-    props: { data },
-  }
-}

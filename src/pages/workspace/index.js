@@ -151,45 +151,12 @@ const ProductList = () => {
     });
   };
 
-  // useEffect(() => {
-  //   const value = window.localStorage.getItem(key);
-  //   if (value !== null) {
-  //     setValue(JSON.parse(value));
-  //   }
-  // }, [key]);
-
-  // useEffect(() => {
-  //   window.localStorage.setItem(key, JSON.stringify(state));
-  // }, [key, state]);
-
-  // return [state, setState];
-
-
   const handleSubmit = (event) => {
     event.preventDefault()
-    // alert("generate clicked")
     window.localStorage.setItem("saved_data", JSON.stringify(state))
     let  savedItem = JSON.parse(localStorage.getItem("saved_data"));
-    console.log(savedItem);
     const { floor, budget, bed, bath } = state
-
-    // setState(event.target.value)
-
-    // if (typeof window !== "undefined") {
-
-    //   localStorage.setItem(key, value)
-      
-    //   }
-    // alert(`
-    //   ____Your Details____\n
-    //   Floor : ${floor}
-    //   Budget : ${budget}
-    //   Bed : ${bed}
-    //   Bath : ${bath}
-    // `)
   };
-
-
 
   // Usually query is done on backend with indexing solutions
   const filteredProducts = applyFilters(products, filters);
@@ -271,19 +238,6 @@ const ProductList = () => {
             </Select>
           </FormControl>
         </Box>
-
-        {/* <Box
-          component="form"
-          sx={{
-            flexGrow: 1,
-            m: 1.5
-          }}
-        >
-          <TextField
-            width="50%"
-            placeholder="Bed"
-          />
-        </Box> */}
 
         <Box
           component="form"
