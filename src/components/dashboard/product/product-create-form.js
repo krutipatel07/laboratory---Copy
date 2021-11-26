@@ -55,7 +55,7 @@ export const ProductCreateForm = (props) => {
         var user_filter = users.filter( user => user.email === values.memberSearch);
 
         let collaborators;
-        user_filter.length?  collaborators = user_filter[0].id : collaborators = null;
+        user_filter.length?  collaborators = user_filter[0].id : collaborators = [];
 
         axios.post("/api/projects", {
           owner: "3",
