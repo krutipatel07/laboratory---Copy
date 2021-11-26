@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
+const CommentSchema = require('./Comment');
 
 const ProjectSchema = new mongoose.Schema(
     {
         owner: {
             type: Number,
-            required: true
+            required: true,
+            unique: true
         },
         title: {
             type: String,
@@ -49,7 +51,8 @@ const ProjectSchema = new mongoose.Schema(
           type: Date,
           default: Date.now,
           get: timestamp => dateFormat(timestamp)
-        }
+        },
+        comments: [CommentSchema]
   },
   {
     toJSON: {

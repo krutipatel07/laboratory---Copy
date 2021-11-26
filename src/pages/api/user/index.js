@@ -9,7 +9,8 @@ export default async (req, res) => {
     switch (method) { 
         case 'GET':
             try {
-                const users = await User.find({});
+                const users = await User.find({})
+                .populate('projects');
                 res.status(200).json({ success: true, data: users})                
             } catch (error) {
                 res.status(404).json({ success: false, message: error})
