@@ -47,12 +47,22 @@ export const ProductCreateForm = (props) => {
       sku: Yup.string().max(255)
     }),
     onSubmit: async (values, helpers) => {
-      try {
+      try {        
+        const users = await axios.get("/api/user")
+        .then(res => res.data.data)
+        .catch(error => console.log(error));
+
+        var user_filter = users.filter( user => user.email === values.memberSearch);
+
+        let collaborators;
+        user_filter.length?  collaborators = user_filter[0].id : collaborators = null;
+
         axios.post("/api/projects", {
           owner: "3",
           title: values.name,
           description: values.description,
-          budget: values.newPrice
+          budget: values.newPrice,
+          collaborators
         })
         .catch(error => console.log(error));
 
