@@ -32,10 +32,10 @@ export default function ProjectGrid() {
           
         }}
       >
-      <Grid container 
-        spacing={3}>
-        {projectsData ?
-          projectsData.map((project, i) => {
+        {projectsData ? 
+            <Grid container 
+                spacing={3}>
+          {projectsData.map((project, i) => {
             return (
               <Grid key={i}
               item 
@@ -47,9 +47,9 @@ export default function ProjectGrid() {
                   image={images[i]}
                   link="/workspace"
                 />
-              </Grid>
-            )
-          }) : <Box sx={{ 
+              </Grid> )})}
+            </Grid>
+           : <Box sx={{ 
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -57,7 +57,6 @@ export default function ProjectGrid() {
                 <CircularProgress />
               </Box>
         }
-      </Grid>
     </Box>
   );
 }
