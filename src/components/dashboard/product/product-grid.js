@@ -4,7 +4,8 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import ProductCard from './project-card';
-import axios from 'axios'
+import axios from 'axios';
+import CircularProgress from '@mui/material/CircularProgress';
 
 export default function ProjectGrid() {
 
@@ -48,7 +49,13 @@ export default function ProjectGrid() {
                 />
               </Grid>
             )
-          }) : <h1> Loading </h1>
+          }) : <Box sx={{ 
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    minHeight: '70vh' }}>
+                <CircularProgress />
+              </Box>
         }
       </Grid>
     </Box>
