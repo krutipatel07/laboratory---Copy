@@ -27,11 +27,12 @@ export const FirebaseLogin = (props) => {
         .required('Password is required')
     }),
     onSubmit: async (values, helpers) => {
-      console.log("onSubmit called");
       try {
         await signInWithEmailAndPassword(values.email, values.password);
 
         if (isMounted()) {
+          localStorage.setItem("lab-email", values.email);
+          
           const returnUrl = router.query.returnUrl || '/dashboard/projects';
           router.push(returnUrl);
         }
@@ -48,7 +49,6 @@ export const FirebaseLogin = (props) => {
   });
 
   const handleGoogleClick = async () => {
-    console.log("handleGoogleClick called");
     try {
       await signInWithGoogle();
 

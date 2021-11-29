@@ -20,12 +20,18 @@ export const FirebaseRegister = (props) => {
   const { createUserWithEmailAndPassword, signInWithGoogle } = useAuth();
   const formik = useFormik({
     initialValues: {
+      username: '',
       email: '',
       password: '',
       policy: true,
       submit: null
     },
     validationSchema: Yup.object({
+      username: Yup
+        .string()
+        .email('Must be a valid email')
+        .max(255)
+        .required('Email is required'),
       email: Yup
         .string()
         .email('Must be a valid email')
@@ -41,11 +47,16 @@ export const FirebaseRegister = (props) => {
         .oneOf([true], 'This field must be checked')
     }),
     onSubmit: async (values, helpers) => {
-      console.log("createUserWithEmailAndPassword called");
       try {
         await createUserWithEmailAndPassword(values.email, values.password);
 
         if (isMounted()) {
+          axios.post("/api/user", {
+            name: values.email,
+            email: values.email
+          })
+          .catch(error => console.log(error));
+
           const returnUrl = router.query.returnUrl || '/dashboard/projects';
           router.push(returnUrl);
         }
@@ -62,7 +73,6 @@ export const FirebaseRegister = (props) => {
   });
 
   const handleGoogleClick = async () => {
-    console.log("handleGoogelClick called");
 
     try {
       await signInWithGoogle();
