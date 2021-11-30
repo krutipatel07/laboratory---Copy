@@ -11,7 +11,9 @@ export default async (req, res) => {
     switch (method) {
         case 'GET':
             try {
-                const project = await Project.findById(id);
+                const project = await Project.findById(id)
+                                .populate('owner')
+                                .populate('collaborators');
                 if (!project){
                     res.status(404).json({ success: false, message: error})
                 }

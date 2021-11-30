@@ -3,11 +3,12 @@ const dateFormat = require('../utils/dateFormat');
 
 const ProjectSchema = new mongoose.Schema(
     {
-        owner: {
-            type: Number,
-            required: true,
-            unique: true
-        },
+        owner: [
+          {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+          }
+        ],
         title: {
             type: String,
             required: 'You must enter project title!',

@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import { useAuth } from '../../hooks/use-auth';
 import { useMounted } from '../../hooks/use-mounted';
+import axios from 'axios'
 
 export const FirebaseRegister = (props) => {
   const isMounted = useMounted();
@@ -20,18 +21,12 @@ export const FirebaseRegister = (props) => {
   const { createUserWithEmailAndPassword, signInWithGoogle } = useAuth();
   const formik = useFormik({
     initialValues: {
-      username: '',
       email: '',
       password: '',
       policy: true,
       submit: null
     },
     validationSchema: Yup.object({
-      username: Yup
-        .string()
-        .email('Must be a valid email')
-        .max(255)
-        .required('Email is required'),
       email: Yup
         .string()
         .email('Must be a valid email')
@@ -50,12 +45,13 @@ export const FirebaseRegister = (props) => {
       try {
         await createUserWithEmailAndPassword(values.email, values.password);
 
-        if (isMounted()) {
-          axios.post("/api/user", {
+        if (isMounted()) {          
+          const {data} = await axios.post("/api/user", {
             name: values.email,
             email: values.email
           })
           .catch(error => console.log(error));
+          localStorage.setItem("lab-user", data.data.id);
 
           const returnUrl = router.query.returnUrl || '/dashboard/projects';
           router.push(returnUrl);

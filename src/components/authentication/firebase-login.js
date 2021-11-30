@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import { Alert, Box, Button, Divider, FormHelperText, TextField, Typography } from '@mui/material';
 import { useAuth } from '../../hooks/use-auth';
 import { useMounted } from '../../hooks/use-mounted';
+import axios from 'axios'
 
 export const FirebaseLogin = (props) => {
   const isMounted = useMounted();
@@ -30,8 +31,13 @@ export const FirebaseLogin = (props) => {
       try {
         await signInWithEmailAndPassword(values.email, values.password);
 
-        if (isMounted()) {
-          localStorage.setItem("lab-email", values.email);
+        if (isMounted()) {          
+          const {data} = await axios.post("/api/user", {
+            name: values.email,
+            email: values.email
+          })
+          .catch(error => console.log(error));
+          localStorage.setItem("lab-user", data.data.id);
           
           const returnUrl = router.query.returnUrl || '/dashboard/projects';
           router.push(returnUrl);

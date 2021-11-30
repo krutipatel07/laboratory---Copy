@@ -11,7 +11,8 @@ export default async (req, res) => {
     switch (method) {
         case 'GET':
             try {
-                const user = await User.findById(id);
+                const user = await User.findById(id)
+                            .populate('projects');  
                 if (!user){
                     res.status(404).json({ success: false, message: error})
                 }
@@ -26,7 +27,7 @@ export default async (req, res) => {
                 const user = await User.findByIdAndUpdate(id, req.body, {
                     new: true,
                     runValidators: true
-                });
+                }).populate('projects');
                 if (!user){
                     res.status(404).json({ success: false, message: error})
                 }
@@ -50,8 +51,6 @@ export default async (req, res) => {
                 res.status(404).json({ success: false, message: error})
             }
             break;
-    
-    
         default:
             res.status(404).json({ success: false })
             break;

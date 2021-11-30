@@ -56,9 +56,10 @@ export const ProductCreateForm = (props) => {
 
         let collaborators;
         user_filter.length?  collaborators = user_filter[0].id : collaborators = [];
+        const owner = localStorage.getItem("lab-user");
 
         axios.post("/api/projects", {
-          owner: "3",
+          owner,
           title: values.name,
           description: values.description,
           budget: values.newPrice,

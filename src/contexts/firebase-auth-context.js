@@ -77,7 +77,7 @@ export const AuthProvider = (props) => {
     password) => firebase.auth().createUserWithEmailAndPassword(email, password);
 
   const logout = async () => {
-    localStorage.removeItem("lab-email");
+    localStorage.removeItem("lab-user");
     await firebase.auth().signOut();
   };
 
