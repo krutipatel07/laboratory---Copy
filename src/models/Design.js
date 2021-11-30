@@ -26,4 +26,4 @@ const DesignSchema = new mongoose.Schema(
   }
 );
 
-module.exports = DesignSchema;
+module.exports = mongoose.models.Design || mongoose.model('Design', DesignSchema);
