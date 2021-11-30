@@ -43,7 +43,7 @@ export default function ProjectGrid() {
                 <ProductCard
                   title={project.title}
                   description={(project.description.replace("<p>", "").replace("</p>", ""))}
-                  members = {project.owner}
+                  members = {project.collaborators.length}
                   image={images[i]}
                   link="/workspace"
                 />
