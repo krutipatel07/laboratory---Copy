@@ -17,12 +17,6 @@ const DesignSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Version'
         }
-    ],
-    comments: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Comment'
-        }
     ]
   },
   {

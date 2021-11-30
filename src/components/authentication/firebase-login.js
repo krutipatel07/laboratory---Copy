@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import { Alert, Box, Button, Divider, FormHelperText, TextField, Typography } from '@mui/material';
 import { useAuth } from '../../hooks/use-auth';
 import { useMounted } from '../../hooks/use-mounted';
+import axios from 'axios'
 
 export const FirebaseLogin = (props) => {
   const isMounted = useMounted();
@@ -27,11 +28,17 @@ export const FirebaseLogin = (props) => {
         .required('Password is required')
     }),
     onSubmit: async (values, helpers) => {
-      console.log("onSubmit called");
       try {
         await signInWithEmailAndPassword(values.email, values.password);
 
-        if (isMounted()) {
+        if (isMounted()) {          
+          const {data} = await axios.post("/api/user", {
+            name: values.email,
+            email: values.email
+          })
+          .catch(error => console.log(error));
+          localStorage.setItem("lab-user", data.data.id);
+          
           const returnUrl = router.query.returnUrl || '/dashboard/projects';
           router.push(returnUrl);
         }
@@ -48,7 +55,6 @@ export const FirebaseLogin = (props) => {
   });
 
   const handleGoogleClick = async () => {
-    console.log("handleGoogleClick called");
     try {
       await signInWithGoogle();
 
