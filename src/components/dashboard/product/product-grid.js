@@ -20,7 +20,7 @@ export default function ProjectGrid() {
                 ]
 
   useEffect(() => {
-    const owner = "";
+    const owner = localStorage.getItem("lab-user");
     axios.get(`/api/${owner}/projects`)
     .then(res => setProjectsData(res.data.data))
     .catch(error => console.log(error));
