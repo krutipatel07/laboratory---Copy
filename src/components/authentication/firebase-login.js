@@ -32,13 +32,6 @@ export const FirebaseLogin = (props) => {
         await signInWithEmailAndPassword(values.email, values.password);
 
         if (isMounted()) {          
-          const {data} = await axios.post("/api/user", {
-            name: values.email,
-            email: values.email
-          })
-          .catch(error => console.log(error));
-          localStorage.setItem("lab-user", data.data.id);
-          
           const returnUrl = router.query.returnUrl || '/dashboard/projects';
           router.push(returnUrl);
         }
