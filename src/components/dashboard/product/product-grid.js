@@ -20,7 +20,8 @@ export default function ProjectGrid() {
                 ]
 
   useEffect(() => {
-    axios.get("/api/projects")
+    const owner = "";
+    axios.get(`/api/${owner}/projects`)
     .then(res => setProjectsData(res.data.data))
     .catch(error => console.log(error));
   })
@@ -35,19 +36,21 @@ export default function ProjectGrid() {
         {projectsData ? 
             <Grid container 
                 spacing={3}>
-          {projectsData.map((project, i) => {
-            return (
-              <Grid key={i}
-              item 
-              xs>
-                <ProductCard
-                  title={project.title}
-                  description={(project.description.replace("<p>", "").replace("</p>", ""))}
-                  members = {project.collaborators.length}
-                  image={images[i]}
-                  link="/workspace"
-                />
-              </Grid> )})}
+          {projectsData.length? 
+            projectsData.map((project, i) => {
+              return (
+                <Grid key={i}
+                item 
+                xs>
+                  <ProductCard
+                    title={project.title}
+                    description={(project.description.replace("<p>", "").replace("</p>", ""))}
+                    members = {project.collaborators.length}
+                    image={images[i]}
+                    link="/workspace"
+                  />
+                </Grid> )})
+                : <h1> Create your first project.</h1>}
             </Grid>
            : <Box sx={{ 
                     display: 'flex',
