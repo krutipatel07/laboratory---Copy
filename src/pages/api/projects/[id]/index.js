@@ -13,7 +13,8 @@ export default async (req, res) => {
             try {
                 const project = await Project.findById(id)
                                 .populate('owner')
-                                .populate('collaborators');
+                                .populate('collaborators')
+                                .populate('designs');
                 if (!project){
                     res.status(404).json({ success: false, message: error})
                 }

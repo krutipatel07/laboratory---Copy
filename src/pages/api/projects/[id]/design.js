@@ -1,5 +1,5 @@
 import dbConnect from "../../../../utils/dbConnect";
-import {Design} from "../../../../models";
+import {Design, Project} from "../../../../models";
 
 dbConnect();
 
@@ -22,6 +22,12 @@ export default async (req, res) => {
             try {
                 const design = await Design.create({...req.body, project : id});
                 res.status(201).json({ success: true, data: design})
+                
+                await Project.findByIdAndUpdate(
+                    { _id: design.project },
+                    { $push: { designs: design._id } },
+                    { new: true }
+                );
                 
             } catch (error) {
                 res.status(404).json({ success: false, message: error})
