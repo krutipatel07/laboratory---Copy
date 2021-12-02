@@ -12,7 +12,7 @@ export default async (req, res) => {
                         .populate('collaborators')
                         .populate('designs');
         if (!project){
-            res.status(404).json({ success: false, message: error})
+            res.status(404).json({ success: false })
         }
         res.status(200).json({ success: true, data: project});
 }
