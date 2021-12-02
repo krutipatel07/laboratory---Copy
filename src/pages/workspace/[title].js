@@ -26,6 +26,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { SettingsSystemDaydreamRounded } from '@mui/icons-material';
+import { useRouter } from 'next/router'
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -89,6 +90,9 @@ const ProductList = () => {
   });
 
   const [displayBanner, setDisplayBanner] = useState(true);
+
+  const router = useRouter()
+  console.log(router.query.title);
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });

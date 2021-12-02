@@ -47,7 +47,7 @@ export default function ProjectGrid() {
                     description={(project.description.replace("<p>", "").replace("</p>", ""))}
                     members = {project.collaborators.length}
                     image={images[i]}
-                    link="/workspace"
+                    link= {`/workspace/title?${project.title}`}
                   />
                 </Grid> )})
                 : <h1> Create your first project.</h1>}
