@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
-import { Box, Card, Container, Divider, Link, Typography } from '@mui/material';
+import { Button, Box, Card, Container, Divider, Link, Typography } from '@mui/material';
 import { AmplifyLogin } from '../../components/authentication/amplify-login';
 import { Auth0Login } from '../../components/authentication/auth0-login';
 import { FirebaseLogin } from '../../components/authentication/firebase-login';
@@ -36,6 +36,21 @@ const Login = () => {
         </title>
       </Head>
       <Box
+        >
+        <NextLink
+        href="/"
+        passHref
+      >
+          <Button
+            sx={{ m: 1.5 }}
+            component="a"
+            variant="text"
+          >
+            back
+          </Button>
+        </NextLink>
+        </Box>
+      <Box
         component="main"
         sx={{
           backgroundColor: 'background.default',
@@ -48,45 +63,10 @@ const Login = () => {
           maxWidth="sm"
           sx={{
             py: {
-              xs: '60px',
-              md: '120px'
+              xs: '60px'
             }
           }}
         >
-          <Box
-            sx={{
-              alignItems: 'center',
-              backgroundColor: (theme) => theme.palette.mode === 'dark'
-                ? 'neutral.900'
-                : 'neutral.100',
-              borderColor: 'divider',
-              borderRadius: 1,
-              borderStyle: 'solid',
-              borderWidth: 1,
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'space-between',
-              mb: 4,
-              p: 2,
-              '& > img': {
-                height: 32,
-                width: 'auto',
-                flexGrow: 0,
-                flexShrink: 0
-              }
-            }}
-          >
-            <Typography
-              color="textSecondary"
-              variant="caption"
-            >
-              The app authenticates via Firebase
-            </Typography>
-            <img
-              alt="Auth platform"
-              src={platformIcons[platform]}
-            />
-          </Box>
           <Card
             elevation={16}
             sx={{ p: 4 }}

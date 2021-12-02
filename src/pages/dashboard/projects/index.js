@@ -9,6 +9,8 @@ import { useMounted } from '../../../hooks/use-mounted';
 import { Plus as PlusIcon } from '../../../icons/plus';
 import { gtm } from '../../../lib/gtm';
 import ProjectGrid from '../../../components/dashboard/product/product-grid.js';
+import DashboardModal from '../../../components/modal/dashboard-modal';
+
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -149,6 +151,7 @@ const ProductList = () => {
           </Card>
         </Container>
       </Box>
+      <DashboardModal/>
     </>
   );
 };
