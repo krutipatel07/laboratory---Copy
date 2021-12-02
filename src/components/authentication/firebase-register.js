@@ -21,12 +21,17 @@ export const FirebaseRegister = (props) => {
   const { createUserWithEmailAndPassword, signInWithGoogle } = useAuth();
   const formik = useFormik({
     initialValues: {
+      name: '',
       email: '',
       password: '',
       policy: true,
       submit: null
     },
     validationSchema: Yup.object({
+      name: Yup
+        .string()
+        .max(255)
+        .required('name is required'),
       email: Yup
         .string()
         .email('Must be a valid email')
@@ -127,7 +132,19 @@ export const FirebaseRegister = (props) => {
         onSubmit={formik.handleSubmit}
       >
         <TextField
-          error={Boolean(formik.touched.email && formik.errors.email)}
+          error={Boolean(formik.touched.name && formik.touched.email && formik.errors.email)}
+          fullWidth
+          helperText={formik.touched.name}
+          label="Full Name"
+          margin="normal"
+          name="name"
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+          type="text"
+          value={formik.values.name}
+        />
+        <TextField
+          error={Boolean(formik.touched.name && formik.touched.email && formik.errors.email)}
           fullWidth
           helperText={formik.touched.email && formik.errors.email}
           label="Email Address"
@@ -139,7 +156,7 @@ export const FirebaseRegister = (props) => {
           value={formik.values.email}
         />
         <TextField
-          error={Boolean(formik.touched.password && formik.errors.password)}
+          error={Boolean(formik.touched.name && formik.touched.password && formik.errors.password)}
           fullWidth
           helperText={formik.touched.password && formik.errors.password}
           label="Password"

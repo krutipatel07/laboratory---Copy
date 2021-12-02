@@ -160,8 +160,9 @@ const ProductList = () => {
         passHref
       >
           <Button
+            sx={{ m: 1.5 }}
             component="a"
-            variant="contained"
+            variant="text"
           >
             back
           </Button>
