@@ -10,7 +10,7 @@ export default async (req, res) => {
         const user = await User.findOne({ email })
                     .populate('projects');
         if (!user){
-            res.status(404).json({ success: false, message: error})
+            res.status(404).json({ success: false })
         }
         res.status(200).json({ success: true, data: user});
 }

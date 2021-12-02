@@ -52,7 +52,7 @@ export const FirebaseRegister = (props) => {
 
         if (isMounted()) {          
           const {data} = await axios.post("/api/user", {
-            name: values.email,
+            name: values.name,
             email: values.email
           })
           .catch(error => console.log(error));
