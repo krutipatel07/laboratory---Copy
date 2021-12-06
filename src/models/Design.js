@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const CommentSchema = require('./Comment');
 
 const DesignSchema = new mongoose.Schema(
   {
@@ -12,12 +13,17 @@ const DesignSchema = new mongoose.Schema(
       required: true,
       maxlength: 280 
     },
+    versionOf: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Design'
+  },
     versions: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Version'
-        }
-    ]
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Design'
+      }
+    ],
+    comments: [CommentSchema]
   },
   {
     toJSON: {
