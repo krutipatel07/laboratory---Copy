@@ -1,18 +1,19 @@
-import dbConnect from "../../../../utils/dbConnect";
-import {Design, Project} from "../../../../models";
+import dbConnect from "../../../../../utils/dbConnect";
+import {Design, Project} from "../../../../../models";
 
 dbConnect();
 
 export default async (req, res) => {
     const { 
-        query: {id},
+        query: {projectId},
         method } = req;
 
     switch (method) {
         case 'GET':
             try {
-                const design = await Design.find({ project: id })
-                .populate('project');
+                const design = await Design.find({ project: projectId })
+                                .populate('versionOf')
+                                .populate('versions');
                 res.status(200).json({ success: true, data: design})                
             } catch (error) {
                 res.status(404).json({ success: false, message: error})
@@ -20,7 +21,7 @@ export default async (req, res) => {
             break;
         case 'POST':
             try {
-                const design = await Design.create({...req.body, project : id});
+                const design = await Design.create({...req.body, project : projectId});
                 res.status(201).json({ success: true, data: design})
                 
                 await Project.findByIdAndUpdate(
@@ -29,11 +30,17 @@ export default async (req, res) => {
                     { new: true }
                 );
                 
+                if(req.body.versionOf){                    
+                    await Design.findByIdAndUpdate(
+                    { _id: req.body.versionOf },
+                    { $push: { versions: design._id } },
+                    { new: true }
+                    );
+                }
             } catch (error) {
                 res.status(404).json({ success: false, message: error})
             }
-            break;
-    
+            break;    
         default:
             res.status(404).json({ success: false })
             break;

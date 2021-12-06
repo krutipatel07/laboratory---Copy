@@ -18,6 +18,14 @@ const CommentSchema = new mongoose.Schema(
       required: true,
       maxlength: 280
     },
+    x_location: {
+        type: Number,
+        required: true
+    },
+    y_location: {
+        type: Number,
+        required: true
+    },
     dateCreated: {
       type: Date,
       default: Date.now,

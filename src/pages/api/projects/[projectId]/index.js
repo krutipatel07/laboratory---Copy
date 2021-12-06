@@ -5,13 +5,13 @@ dbConnect();
 
 export default async (req, res) => {
     const { 
-        query: {id},
+        query: {projectId},
         method } = req;
 
     switch (method) {
         case 'GET':
             try {
-                const project = await Project.findById(id)
+                const project = await Project.findById(projectId)
                                 .populate('owner')
                                 .populate('collaborators')
                                 .populate('designs');
@@ -26,7 +26,7 @@ export default async (req, res) => {
             break;
         case 'PUT':
             try {
-                const project = await Project.findByIdAndUpdate(id, req.body, {
+                const project = await Project.findByIdAndUpdate(projectId, req.body, {
                     new: true,
                     runValidators: true
                 });
@@ -42,7 +42,7 @@ export default async (req, res) => {
             break;
         case 'DELETE':
             try {
-                const deletedProject = await Project.deleteOne({ _id: id });
+                const deletedProject = await Project.deleteOne({ _id: projectId });
                 if (!deletedProject){
                     res.status(404).json({ success: false, message: error})
                 }
