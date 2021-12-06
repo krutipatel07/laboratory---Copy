@@ -13,7 +13,8 @@ export default async (req, res) => {
             try {
                 const design = await Design.findById(designId)
                                 .populate('versionOf')
-                                .populate('versions');
+                                .populate('versions')
+                                .populate('comments');
                 if (!design){
                     res.status(404).json({ success: false, message: error})
                 }

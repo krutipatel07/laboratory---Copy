@@ -13,7 +13,8 @@ export default async (req, res) => {
             try {
                 const design = await Design.find({ project: projectId })
                                 .populate('versionOf')
-                                .populate('versions');
+                                .populate('versions')
+                                .populate('comments');
                 res.status(200).json({ success: true, data: design})                
             } catch (error) {
                 res.status(404).json({ success: false, message: error})
