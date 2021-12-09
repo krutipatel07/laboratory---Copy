@@ -2,8 +2,9 @@ const mongoose = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
 const Role = {
-  ARCHITECTURE : 'ARCHITECTURE',
-  CLIENT : 'CLIENT'
+  Student : 'Student',
+  Architect : 'Architect',
+  Enterprise : 'Enterprise'
 }
 const Tier = {
   PROFESSIONAL : 'PROFESSIONAL',
@@ -32,7 +33,7 @@ const UserSchema = new mongoose.Schema(
     role: {
       type: String,
       enum : Role,
-      default: Role.ARCHITECTURE
+      default: Role.Architect
     },
     tier: {
       type: String,

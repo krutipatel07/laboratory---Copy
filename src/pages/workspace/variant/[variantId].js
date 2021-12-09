@@ -78,7 +78,7 @@ const ProductList = () => {
     status: [],
     inStock: undefined
   });
-  const [comments, setComments] = useState([]);  
+  const [variantData, setVariantData] = useState([]);  
 
   const [displayBanner, setDisplayBanner] = useState(true);
 
@@ -88,7 +88,7 @@ const ProductList = () => {
 
   useEffect(() => {
     axios.get(`/api/projects/61a6f14226e3a5ddb58625bf/design/61ada44148fa8d33f1f01c53`)
-    .then(res => setComments(res.data.data.comments))
+    .then(res => setVariantData(res.data.data))
     .catch(error => console.log(error));
   }, []);
 
