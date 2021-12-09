@@ -42,7 +42,7 @@ export default function DesignGrid() {
                       members = {1}
                       comments = {design.comments.length}
                       image={"https://static.turbosquid.com/Preview/001201/665/78/floor-plan-3D_DHQ.jpg"}
-                      link={`/workspace/variant/${design.id}`}
+                      link={`/workspace/${projectData.title}/variant/${design.id}`}
                       />
                   </Grid> )})
                 :

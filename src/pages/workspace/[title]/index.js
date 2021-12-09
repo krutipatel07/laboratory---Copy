@@ -12,15 +12,15 @@ import { Box,
   Tabs,
   TextField,
   Typography } from '@mui/material';
-import { productApi } from '../../__fake-api__/product-api';
-import { withAuthGuard } from '../../hocs/with-auth-guard';
-import { withWorkspaceLayout } from '../../hocs/with-workspace-layout';
-import { useMounted } from '../../hooks/use-mounted';
-import { Plus as PlusIcon } from '../../icons/plus';
-import { gtm } from '../../lib/gtm';
-import DesignGrid from '../../components/workspace/design-grid.js';
-import { OverviewBanner } from '../../components/dashboard/overview/overview-banner';
-import { Search as SearchIcon } from '../../icons/search';
+import { productApi } from '../../../__fake-api__/product-api';
+import { withAuthGuard } from '../../../hocs/with-auth-guard';
+import { withWorkspaceLayout } from '../../../hocs/with-workspace-layout';
+import { useMounted } from '../../../hooks/use-mounted';
+import { Plus as PlusIcon } from '../../../icons/plus';
+import { gtm } from '../../../lib/gtm';
+import DesignGrid from '../../../components/workspace/design-grid.js';
+import { OverviewBanner } from '../../../components/dashboard/overview/overview-banner';
+import { Search as SearchIcon } from '../../../icons/search';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
