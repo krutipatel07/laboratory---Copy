@@ -12,17 +12,18 @@ import { Box,
   Tabs,
   TextField,
   Typography } from '@mui/material';
-import { productApi } from '../../__fake-api__/product-api';
-import { withAuthGuard } from '../../hocs/with-auth-guard';
-import { withWorkspaceLayout } from '../../hocs/with-workspace-layout';
-import { useMounted } from '../../hooks/use-mounted';
-import { Plus as PlusIcon } from '../../icons/plus';
-import { gtm } from '../../lib/gtm';
-import DesignGrid from '../../components/workspace/design-grid.js';
-import { OverviewBanner } from '../../components/dashboard/overview/overview-banner';
-import { Search as SearchIcon } from '../../icons/search';
+import { productApi } from '../../../__fake-api__/product-api';
+import { withAuthGuard } from '../../../hocs/with-auth-guard';
+import { withWorkspaceLayout } from '../../../hocs/with-workspace-layout';
+import { useMounted } from '../../../hooks/use-mounted';
+import { Plus as PlusIcon } from '../../../icons/plus';
+import { gtm } from '../../../lib/gtm';
+import DesignGrid from '../../../components/workspace/design-grid.js';
+import { OverviewBanner } from '../../../components/dashboard/overview/overview-banner';
+import { Search as SearchIcon } from '../../../icons/search';
 import Paper from '@mui/material/Paper';
-import BottomNav from "../../components/workspace/variant/variant-bottomNav";
+import BottomNav from "../../../components/workspace/variant/variant-bottomNav";
+import axios from 'axios';
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -77,11 +78,18 @@ const ProductList = () => {
     status: [],
     inStock: undefined
   });
+  const [comments, setComments] = useState([]);  
 
   const [displayBanner, setDisplayBanner] = useState(true);
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
+  }, []);
+
+  useEffect(() => {
+    axios.get(`/api/projects/61a6f14226e3a5ddb58625bf/design/61ada44148fa8d33f1f01c53`)
+    .then(res => setComments(res.data.data.comments))
+    .catch(error => console.log(error));
   }, []);
 
   useEffect(() => {
