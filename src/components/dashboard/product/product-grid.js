@@ -68,12 +68,15 @@ export default function ProjectGrid() {
                       <NextLink
                                 href="/dashboard/products/new"
                                 passHref
-                                ><PlusIcon fontSize="large" cursor = "pointer"/>
+                                ><PlusIcon 
+                                fontSize="large" 
+                                cursor = "pointer"/>
                               </NextLink>
                     </Typography>
                     <Typography 
                     variant="body2" 
-                    color="text.secondary" fontSize="small"                   
+                    color="text.secondary" 
+                    fontSize="small"                   
                     textAlign = "center">
                         create new project
                     </Typography>

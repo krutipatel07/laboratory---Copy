@@ -30,11 +30,13 @@ export default function DesignGrid({projectId}) {
       <Grid container 
       spacing={3}>        
         {projectData.designs ? 
-          <Grid container spacing={3}>
+          <Grid container 
+          spacing={3}>
           {projectData.designs.length? 
               projectData.designs.map((design, i) => {
                 return (                
-                  <Grid item key = {design.id}
+                  <Grid item 
+                  key = {design.id}
                   xs>
                       <VariantCard                     
                       title={`Design_${i+1}`}
@@ -64,12 +66,15 @@ export default function DesignGrid({projectId}) {
                       <NextLink
                                 href="#"
                                 passHref
-                                ><PlusIcon fontSize="large" cursor = "pointer"/>
+                                ><PlusIcon 
+                                fontSize="large" 
+                                cursor = "pointer"/>
                               </NextLink>
                     </Typography>
                     <Typography 
                     variant="body2" 
-                    color="text.secondary" fontSize="small"                   
+                    color="text.secondary" 
+                    fontSize="small"                   
                     textAlign = "center">
                         create new design
                     </Typography>

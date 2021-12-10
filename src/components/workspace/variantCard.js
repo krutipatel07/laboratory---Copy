@@ -74,7 +74,8 @@ const VariantCard = (props) => {
         href={link}
         passHref
       >
-      <Card sx={{
+      <Card 
+      sx={{
             maxWidth: 300, 
             minWidth: 400,
             backgroundColor: 'background.paper',
@@ -103,7 +104,8 @@ const VariantCard = (props) => {
               <Typography>
               {members}
               </Typography>
-              <IconButton aria-label="share" sx={{marginLeft: 50}}>
+              <IconButton aria-label="share" 
+              sx={{marginLeft: 50}}>
               <CommentIcon/>
               </IconButton>
               <Typography>
@@ -125,9 +127,11 @@ const VariantCard = (props) => {
       />
 
         <CardActions>
-          <Stack direction="row" spacing={2}>
+          <Stack direction="row" 
+          spacing={2}>
             <ColorButton variant="contained" >New Comments</ColorButton>
-            <Button variant="contained" className={classes.Button}>New Version</Button>
+            <Button variant="contained" 
+            className={classes.Button}>New Version</Button>
           </Stack>
         </CardActions>
       </Card>
