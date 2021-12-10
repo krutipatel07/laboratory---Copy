@@ -33,13 +33,3 @@ const DesignSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.models.Design || mongoose.model('Design', DesignSchema);
-
-
-// 	
-	// "comments":  {
-	// 	"creator" : "61a8dcaf1ea0179c909f5b1c",
-	// 	"version" : "61ada44148fa8d33f1f01c53",
-	// 	"text" : "first comment for design 1",
-	// 	"x_location" : "2",
-	// 	"y_location" : "2"
-	// }
