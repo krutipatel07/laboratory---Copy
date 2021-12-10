@@ -23,6 +23,8 @@ import { OverviewBanner } from '../../components/dashboard/overview/overview-ban
 import { Search as SearchIcon } from '../../icons/search';
 import Paper from '@mui/material/Paper';
 import BottomNav from "../../components/workspace/variant/variant-bottomNav";
+import axios from 'axios';
+import { withRouter } from 'next/router'
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -66,7 +68,8 @@ const applyFilters = (products, filters) => products.filter((product) => {
 const applyPagination = (products, page, rowsPerPage) => products.slice(page * rowsPerPage,
   page * rowsPerPage + rowsPerPage);
 
-const ProductList = () => {
+const ProductList = withRouter((props) => {
+  
   const isMounted = useMounted();
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(0);
@@ -77,12 +80,22 @@ const ProductList = () => {
     status: [],
     inStock: undefined
   });
+  const [variantData, setVariantData] = useState([]);  
 
   const [displayBanner, setDisplayBanner] = useState(true);
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
   }, []);
+
+  useEffect(() => {
+    const designId = props.router.query.designId;
+    axios.get(`/api/projects/_/design/${designId}`)
+    .then(res => setVariantData(res.data.data))
+    .catch(error => console.log(error));
+  }, []);
+
+  variantData && console.log(variantData);
 
   useEffect(() => {
     // Restore the persistent state from local/session storage
@@ -237,6 +250,6 @@ const ProductList = () => {
       </Box>
     </>
   );
-};
+})
 
 export default withAuthGuard(withWorkspaceLayout(ProductList));

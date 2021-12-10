@@ -9,7 +9,10 @@ import {
   FormHelperText,
   Link,
   TextField,
-  Typography
+  Typography,
+  InputLabel,
+  Select,
+  MenuItem
 } from '@mui/material';
 import { useAuth } from '../../hooks/use-auth';
 import { useMounted } from '../../hooks/use-mounted';
@@ -53,7 +56,8 @@ export const FirebaseRegister = (props) => {
         if (isMounted()) {          
           const {data} = await axios.post("/api/user", {
             name: values.name,
-            email: values.email
+            email: values.email,
+            role: values.role
           })
           .catch(error => console.log(error));
           localStorage.setItem("lab-user", data.data.id);
@@ -167,6 +171,22 @@ export const FirebaseRegister = (props) => {
           type="password"
           value={formik.values.password}
         />
+        
+            <Select
+              fullWidth
+              label="Role"
+              margin="normal"
+              name='role'
+              value={formik.values.role}
+              label="Role"              
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+            >
+              <MenuItem value="Student">Student</MenuItem>
+              <MenuItem value="Architect">Architect</MenuItem>
+              <MenuItem value="Enterprise">Enterprise</MenuItem>
+            </Select>
+
         <Box
           sx={{
             alignItems: 'center',

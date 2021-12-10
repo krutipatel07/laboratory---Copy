@@ -15,14 +15,7 @@ import Typography from '@mui/material/Typography';
 export default function ProjectGrid() {
 
   const [projectsData, setProjectsData] = useState();
-  const images = ["https://mattamy.secure.footprint.net/-/media/images/mattamywebsite/canada/calgary/carrington/plans/annex/elevations---will-need-to-be-expanded/elevationcraftsman_carrington_annex_main.jpg?sc_lang=en-ca",
-                  "https://mattamy.secure.footprint.net/-/media/images/mattamywebsite/canada/calgary/cityscape/plans/caspian/exterior-styles-images/elevationprairie_cityscape_caspian_main.jpg?sc_lang=en-ca",
-                  "https://mattamy.secure.footprint.net/-/media/images/mattamywebsite/canada/calgary/cityscape/plans/thames/exterior-styles-images/elevationprairie_cityscape_thames_main.jpg?sc_lang=en-ca",
-                  "https://mattamy.secure.footprint.net/-/media/images/mattamywebsite/canada/calgary/cityscape/plans/hurley/exterior-styles-images/elevationcraftsman_cityscape_hurley_main.jpg?sc_lang=en-ca",
-                  "https://mattamy.secure.footprint.net/-/media/images/mattamywebsite/canada/calgary/cityscape/plans/whistler/elevations/prairie_cityscape_whistler_main.jpg",
-                  "https://mattamy.secure.footprint.net/-/media/images/mattamywebsite/canada/calgary/carrington/plans/vanier-end/exterior-styles-images/elevationprairie_carrington_vanierend_main.jpg?sc_lang=en-ca",
-                  "https://mattamy.secure.footprint.net/-/media/images/mattamywebsite/canada/calgary/carrington/plans/graydon-corner/exterior-styles-images/elevationcraftsman_carrington_graydoncorner_main.jpg?sc_lang=en-ca"
-                ]
+  const images = "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2352&q=80"
 
   useEffect(() => {
     const owner = localStorage.getItem("lab-user");
@@ -42,17 +35,17 @@ export default function ProjectGrid() {
             <Grid container 
                 spacing={3}>
           {projectsData.length? 
-            projectsData.map((project, i) => {
+            projectsData.map(project => {
               return (
-                <Grid key={i}
+                <Grid key={project.id}
                 item 
                 xs>
                   <ProductCard
                     title={project.title}
                     description={(project.description.replace("<p>", "").replace("</p>", ""))}
                     members = {project.collaborators.length}
-                    image={images[i]}
-                    link= {`/workspace/title?${project.title}`}
+                    image={images}
+                    link= {`/workspace?id=${project.id}`}
                   />
                 </Grid> )})
                 :
