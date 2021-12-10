@@ -12,12 +12,11 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
-export default function DesignGrid() {
-  const [projectData, setDesigns] = useState([]);
-  
+export default function DesignGrid({projectId}) {
+  const [projectData, setProjectData] = useState([]);
   useEffect(() => {
-    axios.get(`/api/projects/61a6f14226e3a5ddb58625bf`)
-    .then(res => setDesigns(res.data.data))
+    axios.get(`/api/projects/${projectId}`)
+    .then(res => setProjectData(res.data.data))
     .catch(error => console.log(error));
   }, [])
 
@@ -35,14 +34,14 @@ export default function DesignGrid() {
           {projectData.designs.length? 
               projectData.designs.map((design, i) => {
                 return (                
-                  <Grid item 
+                  <Grid item key = {design.id}
                   xs>
                       <VariantCard                     
-                      title={`Design - ${i+1} - ${design.title}`}
+                      title={`Design_${i+1}`}
                       members = {1}
                       comments = {design.comments.length}
                       image={"https://static.turbosquid.com/Preview/001201/665/78/floor-plan-3D_DHQ.jpg"}
-                      link={`/workspace/${projectData.title}/variant/${design.id}`}
+                      link={`/workspace/${projectData.title.replaceAll(" ", "_")}?designId=${design.id}`}
                       />
                   </Grid> )})
                 :

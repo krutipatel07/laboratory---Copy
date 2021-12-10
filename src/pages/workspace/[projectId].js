@@ -12,18 +12,19 @@ import { Box,
   Tabs,
   TextField,
   Typography } from '@mui/material';
-import { productApi } from '../../../../__fake-api__/product-api';
-import { withAuthGuard } from '../../../../hocs/with-auth-guard';
-import { withWorkspaceLayout } from '../../../../hocs/with-workspace-layout';
-import { useMounted } from '../../../../hooks/use-mounted';
-import { Plus as PlusIcon } from '../../../../icons/plus';
-import { gtm } from '../../../../lib/gtm';
-import DesignGrid from '../../../../components/workspace/design-grid.js';
-import { OverviewBanner } from '../../../../components/dashboard/overview/overview-banner';
-import { Search as SearchIcon } from '../../../../icons/search';
+import { productApi } from '../../__fake-api__/product-api';
+import { withAuthGuard } from '../../hocs/with-auth-guard';
+import { withWorkspaceLayout } from '../../hocs/with-workspace-layout';
+import { useMounted } from '../../hooks/use-mounted';
+import { Plus as PlusIcon } from '../../icons/plus';
+import { gtm } from '../../lib/gtm';
+import DesignGrid from '../../components/workspace/design-grid.js';
+import { OverviewBanner } from '../../components/dashboard/overview/overview-banner';
+import { Search as SearchIcon } from '../../icons/search';
 import Paper from '@mui/material/Paper';
-import BottomNav from "../../../../components/workspace/variant/variant-bottomNav";
+import BottomNav from "../../components/workspace/variant/variant-bottomNav";
 import axios from 'axios';
+import { withRouter } from 'next/router'
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -67,7 +68,8 @@ const applyFilters = (products, filters) => products.filter((product) => {
 const applyPagination = (products, page, rowsPerPage) => products.slice(page * rowsPerPage,
   page * rowsPerPage + rowsPerPage);
 
-const ProductList = () => {
+const ProductList = withRouter((props) => {
+  
   const isMounted = useMounted();
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(0);
@@ -87,10 +89,13 @@ const ProductList = () => {
   }, []);
 
   useEffect(() => {
-    axios.get(`/api/projects/61a6f14226e3a5ddb58625bf/design/61ada44148fa8d33f1f01c53`)
+    const designId = props.router.query.designId;
+    axios.get(`/api/projects/_/design/${designId}`)
     .then(res => setVariantData(res.data.data))
     .catch(error => console.log(error));
   }, []);
+
+  variantData && console.log(variantData);
 
   useEffect(() => {
     // Restore the persistent state from local/session storage
@@ -245,6 +250,6 @@ const ProductList = () => {
       </Box>
     </>
   );
-};
+})
 
 export default withAuthGuard(withWorkspaceLayout(ProductList));

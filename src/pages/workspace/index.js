@@ -12,21 +12,21 @@ import { Box,
   Tabs,
   TextField,
   Typography } from '@mui/material';
-import { productApi } from '../../../__fake-api__/product-api';
-import { withAuthGuard } from '../../../hocs/with-auth-guard';
-import { withWorkspaceLayout } from '../../../hocs/with-workspace-layout';
-import { useMounted } from '../../../hooks/use-mounted';
-import { Plus as PlusIcon } from '../../../icons/plus';
-import { gtm } from '../../../lib/gtm';
-import DesignGrid from '../../../components/workspace/design-grid.js';
-import { OverviewBanner } from '../../../components/dashboard/overview/overview-banner';
-import { Search as SearchIcon } from '../../../icons/search';
+import { productApi } from '../../__fake-api__/product-api';
+import { withAuthGuard } from '../../hocs/with-auth-guard';
+import { withWorkspaceLayout } from '../../hocs/with-workspace-layout';
+import { useMounted } from '../../hooks/use-mounted';
+import { Plus as PlusIcon } from '../../icons/plus';
+import { gtm } from '../../lib/gtm';
+import DesignGrid from '../../components/workspace/design-grid.js';
+import { OverviewBanner } from '../../components/dashboard/overview/overview-banner';
+import { Search as SearchIcon } from '../../icons/search';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { SettingsSystemDaydreamRounded } from '@mui/icons-material';
-import { useRouter } from 'next/router'
+import { withRouter, useRouter } from 'next/router'
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -70,7 +70,7 @@ const applyFilters = (products, filters) => products.filter((product) => {
 const applyPagination = (products, page, rowsPerPage) => products.slice(page * rowsPerPage,
   page * rowsPerPage + rowsPerPage);
 
-const ProductList = () => {
+const ProductList = withRouter((props) => {
   const [state, setState] = React.useState({
     floor: " ",
     budget: " ",
@@ -90,9 +90,6 @@ const ProductList = () => {
   });
 
   const [displayBanner, setDisplayBanner] = useState(true);
-
-  const router = useRouter()
-  console.log(router.query.title);
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
@@ -357,11 +354,11 @@ const ProductList = () => {
               </Grid>
             </Grid>
           </Box>
-          <DesignGrid/>
+          <DesignGrid projectId= {props.router.query.id} />
         </Container>
       </Box>
     </>
   );
-};
+})
 
 export default withAuthGuard(withWorkspaceLayout(ProductList));
