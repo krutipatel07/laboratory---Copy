@@ -18,7 +18,7 @@ export default function DesignGrid({projectId}) {
     axios.get(`/api/projects/${projectId}`)
     .then(res => setProjectData(res.data.data))
     .catch(error => console.log(error));
-  }, [])
+  }, [projectId])
 
   return (
     <Box

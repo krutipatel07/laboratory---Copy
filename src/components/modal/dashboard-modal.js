@@ -31,7 +31,8 @@ export default function DashboardModal() {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" 
-          variant="h6" component="h2">
+          variant="h6" 
+          component="h2">
             Text in a modal
           </Typography>
           <Typography id="modal-modal-description" 
