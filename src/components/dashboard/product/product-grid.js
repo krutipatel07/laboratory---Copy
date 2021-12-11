@@ -37,7 +37,8 @@ export default function ProjectGrid() {
           {projectsData.length? 
             projectsData.map(project => {
               return (
-                <Grid key={project.id}
+                <Grid 
+                key={project.id}
                 item 
                 xs>
                   <ProductCard
