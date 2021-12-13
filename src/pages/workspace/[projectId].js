@@ -90,7 +90,7 @@ const ProductList = withRouter((props) => {
 
   useEffect(() => {
     const designId = props.router.query.designId;
-    axios.get(`/api/projects/61aa918c1ea0179c90a72964/design/${designId}`)
+    axios.get(`/api/projects/_/design/${designId}`)
     .then(res => setVariantData(res.data.data))
     .catch(error => console.log(error));
   }, []);
