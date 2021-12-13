@@ -52,45 +52,7 @@ export default function DesignGrid({projectId}) {
                       image={"https://static.turbosquid.com/Preview/001201/665/78/floor-plan-3D_DHQ.jpg"}
                       link={`/workspace/${projectData.id}?designId=${design.id}`}
                       />
-<<<<<<< HEAD
-                  </Grid> )})
-                :
-                <Card sx={{
-                  maxWidth: 300, 
-                  minWidth: 400,
-                  margin: "auto",
-                  alignItems: "center",
-                  backgroundColor: 'background.paper',
-                  '&:hover': {
-                    backgroundColor: 'background.hover',
-                    } }}
-                  variant="elevation">  
-                  <CardContent>
-                    <Typography gutterBottom 
-                    variant="subtitle1" 
-                    component="div" 
-                    textAlign = "center"
-                    color="text.secondary">
-                      <NextLink
-                                href="#"
-                                passHref
-                                ><PlusIcon 
-                                fontSize="large" 
-                                cursor = "pointer"/>
-                              </NextLink>
-                    </Typography>
-                    <Typography 
-                    variant="body2" 
-                    color="text.secondary" 
-                    fontSize="small"                   
-                    textAlign = "center">
-                        create new design
-                    </Typography>
-                  </CardContent>
-                </Card>}
-=======
                   </Grid> )})}
->>>>>>> backend
             </Grid>
            : <Box sx={{ 
                 width: "100%",
