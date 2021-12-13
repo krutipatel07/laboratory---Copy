@@ -175,17 +175,17 @@ export const FirebaseRegister = (props) => {
           type="password"
           value={formik.values.password}
         />
-        <InputLabel id="user-role">Role</InputLabel>
+        
         <Select
           fullWidth
-          labelId= "user-role"
+          label="Role" 
           margin="normal"
-          name='role'
-          value={formik.values.role}
-          label="Role"              
+          name="role"
+          type="text"
+          value={formik.values.role}             
           onBlur={formik.handleBlur}
           onChange={formik.handleChange}
-        >
+          >
           <MenuItem value="Student">Student</MenuItem>
           <MenuItem value="Architect">Architect</MenuItem>
           <MenuItem value="Enterprise">Enterprise</MenuItem>
