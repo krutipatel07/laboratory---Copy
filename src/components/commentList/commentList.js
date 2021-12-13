@@ -141,7 +141,7 @@ const classes = useStyles();
                     <div className={classes.userAvatar}>
                         <img alt="user icon" className={classes.img}
                         src="/static/mock-images/avatars/avatar-anika_visser.png" 
-                        class="MuiAvatar-img css-1pqm26d-MuiAvatar-img">
+                        className="MuiAvatar-img css-1pqm26d-MuiAvatar-img">
                         </img>
                     </div>
                     <div className={classes.userName}>
