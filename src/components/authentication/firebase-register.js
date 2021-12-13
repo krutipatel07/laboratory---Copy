@@ -28,6 +28,7 @@ export const FirebaseRegister = (props) => {
       email: '',
       password: '',
       policy: true,
+      role: '',
       submit: null
     },
     validationSchema: Yup.object({
@@ -47,7 +48,10 @@ export const FirebaseRegister = (props) => {
         .required('Password is required'),
       policy: Yup
         .boolean()
-        .oneOf([true], 'This field must be checked')
+        .oneOf([true], 'This field must be checked'),
+      role: Yup
+        .string()
+        .required('Role is required')
     }),
     onSubmit: async (values, helpers) => {
       try {
@@ -172,20 +176,19 @@ export const FirebaseRegister = (props) => {
           value={formik.values.password}
         />
         
-            <Select
-              fullWidth
-              label="Role"
-              margin="normal"
-              name='role'
-              value={formik.values.role}
-              label="Role"              
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-            >
-              <MenuItem value="Student">Student</MenuItem>
-              <MenuItem value="Architect">Architect</MenuItem>
-              <MenuItem value="Enterprise">Enterprise</MenuItem>
-            </Select>
+        <Select
+          fullWidth
+          margin="normal"
+          name='role'
+          value={formik.values.role}
+          label="Role"              
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+        >
+          <MenuItem value="Student">Student</MenuItem>
+          <MenuItem value="Architect">Architect</MenuItem>
+          <MenuItem value="Enterprise">Enterprise</MenuItem>
+        </Select>
 
         <Box
           sx={{
