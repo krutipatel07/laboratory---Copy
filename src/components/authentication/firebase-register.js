@@ -175,9 +175,10 @@ export const FirebaseRegister = (props) => {
           type="password"
           value={formik.values.password}
         />
-        
+        <InputLabel id="user-role">Role</InputLabel>
         <Select
           fullWidth
+          labelId= "user-role"
           margin="normal"
           name='role'
           value={formik.values.role}
