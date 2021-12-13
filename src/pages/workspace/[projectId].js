@@ -24,7 +24,9 @@ import { Search as SearchIcon } from '../../icons/search';
 import Paper from '@mui/material/Paper';
 import BottomNav from "../../components/workspace/variant/variant-bottomNav";
 import axios from 'axios';
-import { withRouter } from 'next/router'
+import { withRouter } from 'next/router';
+import CommentBox from '../../components/commentbox/commentbox';
+import CommentList from '../../components/commentList/commentList';
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -161,25 +163,28 @@ const ProductList = withRouter((props) => {
         sx={{
           alignItems: 'center',
           display: 'flex',
+          justifyContent: 'space-between',
           flexWrap: 'wrap',
           m: -1.5,
           p: 3
         }}
       >
-      <Box
+        <Box>         
+          <NextLink
+          href="/workspace"
+          passHref
         >
-        <NextLink
-        href="/workspace"
-        passHref
-      >
-          <Button
-            sx={{ m: 1.5 }}
-            component="a"
-            variant="text"
-          >
-            back
-          </Button>
-        </NextLink>
+            <Button
+              sx={{ m: 1.5 }}
+              component="a"
+              variant="text"
+            >
+              back
+            </Button>
+          </NextLink>
+        </Box>
+        <Box>
+          <CommentList/>
         </Box>
       </Box>
       <Box
@@ -244,8 +249,10 @@ const ProductList = withRouter((props) => {
       >
       </Box>
         </Container>
-        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} 
-        elevation={3}>
+        <Box>
+          <CommentBox/>
+        </Box>
+        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
         <BottomNav/>
       </Paper>
       </Box>
