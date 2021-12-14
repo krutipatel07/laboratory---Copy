@@ -32,9 +32,9 @@ export const FirebaseLogin = (props) => {
         await signInWithEmailAndPassword(values.email, values.password);
 
         if (isMounted()) {    
-          const data = await axios.get(`/api/owner/${values.email}`)
+          const {data} = await axios.get(`/api/owner/${values.email}`)
           .catch(error => console.log(error));
-          localStorage.setItem("lab-user", data.data.data._id);
+          localStorage.setItem("lab-user", data.data._id);
 
           const returnUrl = router.query.returnUrl || '/dashboard/projects';
           router.push(returnUrl);
@@ -53,9 +53,13 @@ export const FirebaseLogin = (props) => {
 
   const handleGoogleClick = async () => {
     try {
-      await signInWithGoogle();
+      const googleLogin = await signInWithGoogle();
 
       if (isMounted()) {
+        const {data} = await axios.get(`/api/owner/${googleLogin.user.email}`)
+        .catch(error => console.log(error));
+        localStorage.setItem("lab-user", data.data._id);
+
         const returnUrl = router.query.returnUrl || '/dashboard/projects';
         router.push(returnUrl);
       }
