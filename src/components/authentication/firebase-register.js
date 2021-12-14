@@ -159,7 +159,7 @@ export const FirebaseRegister = (props) => {
           fullWidth
           helperText={formik.touched.name}
           label="Full Name"
-          margin="normal"
+          margin="dense"
           name="name"
           onBlur={formik.handleBlur}
           onChange={formik.handleChange}
@@ -171,7 +171,7 @@ export const FirebaseRegister = (props) => {
           fullWidth
           helperText={formik.touched.email && formik.errors.email}
           label="Email Address"
-          margin="normal"
+          margin="dense"
           name="email"
           onBlur={formik.handleBlur}
           onChange={formik.handleChange}
@@ -183,7 +183,7 @@ export const FirebaseRegister = (props) => {
           fullWidth
           helperText={formik.touched.password && formik.errors.password}
           label="Password"
-          margin="normal"
+          margin="dense"
           name="password"
           onBlur={formik.handleBlur}
           onChange={formik.handleChange}
@@ -194,7 +194,7 @@ export const FirebaseRegister = (props) => {
         <Select
           fullWidth
           label="Role" 
-          margin="normal"
+          margin="dense"
           name="role"
           type="text"
           value={formik.values.role}             
