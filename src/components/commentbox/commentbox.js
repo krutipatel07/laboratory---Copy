@@ -1,5 +1,5 @@
 
-import { useForm } from 'react-hook-form';
+
 import React, { useState, useRef } from "react";
 import { makeStyles } from '@material-ui/styles';
 import { Divider, Avatar, Grid, Paper } from "@material-ui/core";
@@ -69,8 +69,7 @@ const [state, setState] = React.useState({
     id: null
 });
 
-const { register, handleSubmit } = useForm();
-const onSubmit = (data) => alert(JSON.stringify(data, null, 4));
+// const onSubmit = (data) => alert(JSON.stringify(data, null, 4));
 const textRef = useRef(null);
 const classes = useStyles();
 
@@ -82,7 +81,7 @@ const classes = useStyles();
     <div style={{ padding: 14, borderRadius: 8, minWidth: 282, width: "calc(100% - 50px)", maxWidth: "calc(40ch + 14px)" }}>
         <form 
         className={classes.form}
-        onSubmit={handleSubmit(onSubmit)}
+        // onSubmit={handleSubmit(onSubmit)}
         >
             <div className={classes.writeComment}>
                 <textarea

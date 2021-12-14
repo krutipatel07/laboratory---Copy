@@ -27,6 +27,8 @@ import axios from 'axios';
 import { withRouter } from 'next/router';
 import CommentBox from '../../components/commentbox/commentbox';
 import CommentList from '../../components/commentList/commentList';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import AddCommentIcon from '@mui/icons-material/AddComment';
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -71,6 +73,12 @@ const applyPagination = (products, page, rowsPerPage) => products.slice(page * r
   page * rowsPerPage + rowsPerPage);
 
 const ProductList = withRouter((props) => {
+
+  const [state, setState] = useState( "start"
+  //   {
+  //   openBox: 'false'
+  // }
+  );
   
   const isMounted = useMounted();
   const [products, setProducts] = useState([]);
@@ -151,6 +159,11 @@ const ProductList = withRouter((props) => {
   // Usually query is done on backend with indexing solutions
   const filteredProducts = applyFilters(products, filters);
   const paginatedProducts = applyPagination(filteredProducts, page, rowsPerPage);
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    setState("add-box");
+  };
 
   return (
     <>
@@ -250,10 +263,28 @@ const ProductList = withRouter((props) => {
       </Box>
         </Container>
         <Box>
-          <CommentBox/>
+          {/* <CommentBox/> */}
         </Box>
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-        <BottomNav/>
+        <BottomNavigationAction label="Comment" icon={<AddCommentIcon />}  onClick={handleClick}/>
+        {
+          state ==="add-box" && <CommentBox/>
+        }
+        
+        {/* {
+          (state === 'start')
+          ?
+          <CommentBox/>
+          :
+          ''
+        } */}
+
+        {/* <BottomNav addTrip={this.triggerAddTripState}/>
+        {state === 'start' && (
+        <BottomNav addTrip={() => setState('add-trip') } />
+      )}
+
+      {state === 'add-trip' && <CommentBox />} */}
       </Paper>
       </Box>
     </>

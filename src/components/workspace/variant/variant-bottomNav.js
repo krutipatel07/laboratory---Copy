@@ -28,7 +28,7 @@ export default function BottomNav() {
             setValue(newValue);
           }}
         >
-          <BottomNavigationAction label="Comment" icon={<AddCommentIcon />} />
+          <BottomNavigationAction label="Comment" icon={<AddCommentIcon/>}/>
           <BottomNavigationAction label="Note" icon={<NoteIcon />} />
           <BottomNavigationAction label="Version" icon={<FormatListBulletedIcon />} />
         </BottomNavigation>
