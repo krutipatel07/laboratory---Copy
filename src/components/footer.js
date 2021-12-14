@@ -54,7 +54,7 @@ const sections = [
       },
       {
         title: 'LinkedIn',
-        href: '#'
+        href: 'https://www.linkedin.com/company/maket-ai/'
       }
     ]
   }

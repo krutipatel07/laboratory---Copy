@@ -193,7 +193,6 @@ export const FirebaseRegister = (props) => {
         
         <Select
           fullWidth
-          label="Role" 
           margin="dense"
           name="role"
           type="text"

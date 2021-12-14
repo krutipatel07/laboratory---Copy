@@ -171,7 +171,7 @@ const ProductList = withRouter((props) => {
       >
         <Box>         
           <NextLink
-          href="/workspace"
+          href={`/workspace?id=${props.router.query.projectId}`}
           passHref
         >
             <Button
