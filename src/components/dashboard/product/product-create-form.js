@@ -322,15 +322,9 @@ export const ProductCreateForm = (props) => {
         }}
       >
         <Button
-          color="error"
-          sx={{
-            m: 1,
-            mr: 'auto'
-          }}
-        >
-          Delete
-        </Button>
-        <Button
+        onClick={() => {
+          router.push('/dashboard/projects');
+        }}
           sx={{ m: 1 }}
           variant="outlined"
         >

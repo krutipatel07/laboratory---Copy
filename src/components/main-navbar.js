@@ -62,7 +62,7 @@ export const MainNavbar = (props) => {
             }}
           >
             <NextLink
-              href="/dashboard"
+              href="https://www.maket.ca/"
               passHref
             >
               <Link
