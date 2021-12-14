@@ -17,6 +17,7 @@ import {
 import { useAuth } from '../../hooks/use-auth';
 import { useMounted } from '../../hooks/use-mounted';
 import axios from 'axios'
+import toast from 'react-hot-toast';
 
 export const FirebaseRegister = (props) => {
   const isMounted = useMounted();
@@ -82,12 +83,26 @@ export const FirebaseRegister = (props) => {
   });
 
   const handleGoogleClick = async () => {
-
     try {
-      await signInWithGoogle();
+      const googleSignup = await signInWithGoogle();
+
+      if (googleSignup.additionalUserInfo.isNewUser) {          
+        const {data} = await axios.post("/api/user", {
+          name: googleSignup.user.displayName,
+          email: googleSignup.user.email
+        })
+        .catch(error => console.log(error));
+        localStorage.setItem("lab-user", data.data.id);
+
+        const returnUrl = router.query.returnUrl || '/dashboard/projects';
+        router.push(returnUrl);
+      }
+      else {
+        toast.error('User already have an account!');
+      }
     } catch (err) {
       console.error(err);
-    }
+    }  
   };
 
   return (
