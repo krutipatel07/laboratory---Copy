@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { Box,
@@ -74,11 +74,7 @@ const applyPagination = (products, page, rowsPerPage) => products.slice(page * r
 
 const ProductList = withRouter((props) => {
 
-  const [state, setState] = useState( "start"
-  //   {
-  //   openBox: 'false'
-  // }
-  );
+  const [state, setState] = useState( "start");
   
   const isMounted = useMounted();
   const [products, setProducts] = useState([]);
@@ -160,9 +156,14 @@ const ProductList = withRouter((props) => {
   const filteredProducts = applyFilters(products, filters);
   const paginatedProducts = applyPagination(filteredProducts, page, rowsPerPage);
 
+
+  // const [showResults, setShowResults] = React.useState(false)
+
   const handleClick = (e) => {
     e.preventDefault();
     setState("add-box");
+    setOpen(true);
+    // setShowResults(true)
   };
 
   return (
@@ -267,24 +268,10 @@ const ProductList = withRouter((props) => {
         </Box>
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
         <BottomNavigationAction label="Comment" icon={<AddCommentIcon />}  onClick={handleClick}/>
+        {/* { showResults ? <CommentBox /> : null } */}
         {
-          state ==="add-box" && <CommentBox/>
+          state ==="add-box" && <CommentBox open={open} onClose={handleClose}/>
         }
-        
-        {/* {
-          (state === 'start')
-          ?
-          <CommentBox/>
-          :
-          ''
-        } */}
-
-        {/* <BottomNav addTrip={this.triggerAddTripState}/>
-        {state === 'start' && (
-        <BottomNav addTrip={() => setState('add-trip') } />
-      )}
-
-      {state === 'add-trip' && <CommentBox />} */}
       </Paper>
       </Box>
     </>
