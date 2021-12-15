@@ -159,6 +159,7 @@ export const ContactForm = () => {
         }}
       >
         <Button
+          onClick={handleSubmit}
           fullWidth
           size="large"
           variant="contained"

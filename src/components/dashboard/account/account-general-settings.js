@@ -11,14 +11,11 @@ import {
   Typography
 } from '@mui/material';
 import { UserCircle as UserCircleIcon } from '../../../icons/user-circle';
+import { useAuth } from '../../../hooks/use-auth';
 
 export const AccountGeneralSettings = (props) => {
   // To get the user from the authContext, you can use
-  // `const { user } = useAuth();`
-  const user = {
-    avatar: '/static/mock-images/avatars/avatar-anika_visser.png',
-    name: 'Anika Visser'
-  };
+  const { user } = useAuth();
 
   return (
     <Box
@@ -51,7 +48,7 @@ export const AccountGeneralSettings = (props) => {
                 }}
               >
                 <Avatar
-                  src={user.avatar}
+                  src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${user.email}`}
                   sx={{
                     height: 64,
                     mr: 2,
@@ -72,7 +69,7 @@ export const AccountGeneralSettings = (props) => {
                 }}
               >
                 <TextField
-                  defaultValue={user.name}
+                  defaultValue={user.email}
                   label="Full Name"
                   size="small"
                   sx={{
@@ -92,7 +89,7 @@ export const AccountGeneralSettings = (props) => {
                 }}
               >
                 <TextField
-                  defaultValue="dummy.account@gmail.com"
+                  defaultValue={user.email}
                   disabled
                   label="Email Address"
                   required

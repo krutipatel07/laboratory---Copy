@@ -15,6 +15,7 @@ import { Logo } from '../logo';
 import { Scrollbar } from '../scrollbar';
 import { DashboardSidebarSection } from './dashboard-sidebar-section';
 import DesignServicesIcon from '@mui/icons-material/DesignServices';
+import { useAuth } from '../../hooks/use-auth';
 
 const getSections = (t) => [
   {
@@ -167,6 +168,7 @@ export const DashboardSidebar = (props) => {
     noSsr: true
   });
   const sections = useMemo(() => getSections(t), [t]);
+  const { user } = useAuth();
 
   const handlePathChange = () => {
     if (!router.isReady) {
@@ -234,7 +236,7 @@ export const DashboardSidebar = (props) => {
                     color="inherit"
                     variant="subtitle1"
                   >
-                    Anika Visser
+                    {user.email}
                   </Typography>
                   <Typography
                     color="neutral.400"

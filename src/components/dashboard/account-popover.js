@@ -23,11 +23,7 @@ export const AccountPopover = (props) => {
   const router = useRouter();
   const { logout } = useAuth();
   // To get the user from the authContext, you can use
-  // `const { user } = useAuth();`
-  const user = {
-    avatar: '/static/mock-images/avatars/avatar-anika_visser.png',
-    name: 'Anika Visser'
-  };
+  const { user } = useAuth();
 
   const handleLogout = async () => {
     try {
@@ -61,7 +57,7 @@ export const AccountPopover = (props) => {
         }}
       >
         <Avatar
-          src={user.avatar}
+          src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${user.email}`}
           sx={{
             height: 40,
             width: 40
@@ -75,7 +71,7 @@ export const AccountPopover = (props) => {
           }}
         >
           <Typography variant="body1">
-            {user.name}
+            {user.email}
           </Typography>
           <Typography
             color="textSecondary"

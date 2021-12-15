@@ -10,6 +10,7 @@ import { Plus as PlusIcon } from '../../../icons/plus';
 import { gtm } from '../../../lib/gtm';
 import ProjectGrid from '../../../components/dashboard/product/product-grid.js';
 import DashboardModal from '../../../components/modal/dashboard-modal';
+import { useAuth } from '../../../hooks/use-auth';
 
 
 const applyFilters = (products, filters) => products.filter((product) => {
@@ -65,6 +66,7 @@ const ProductList = () => {
     status: [],
     inStock: undefined
   });
+  const { user} = useAuth();
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
