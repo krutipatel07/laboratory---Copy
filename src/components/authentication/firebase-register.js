@@ -47,12 +47,12 @@ export const FirebaseRegister = (props) => {
         .min(7)
         .max(255)
         .required('Password is required'),
+      role: Yup
+        .string()
+        .required('Role is required'),
       policy: Yup
         .boolean()
         .oneOf([true], 'This field must be checked'),
-      role: Yup
-        .string()
-        .required('Role is required')
     }),
     onSubmit: async (values, helpers) => {
       try {
@@ -192,14 +192,19 @@ export const FirebaseRegister = (props) => {
         />
         
         <Select
+          error={Boolean( formik.touched.name && formik.touched.role)}
           fullWidth
           margin="dense"
           name="role"
           type="text"
+          helperText={formik.touched.role && formik.errors.role}
           value={formik.values.role}             
           onBlur={formik.handleBlur}
           onChange={formik.handleChange}
           >
+          <MenuItem value="" disabled>
+            <em>select your role</em>
+          </MenuItem>
           <MenuItem value="Student">Student</MenuItem>
           <MenuItem value="Architect">Architect</MenuItem>
           <MenuItem value="Enterprise">Enterprise</MenuItem>
