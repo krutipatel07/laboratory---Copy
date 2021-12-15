@@ -28,7 +28,7 @@ export const AccountPopover = (props) => {
   const handleLogout = async () => {
     try {
       onClose?.();
-      await logout();
+      // await logout();
       router.push('/');
     } catch (err) {
       console.error(err);
