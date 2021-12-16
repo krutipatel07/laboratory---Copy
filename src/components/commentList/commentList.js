@@ -131,7 +131,8 @@ const classes = useStyles();
 
 
   return (
-    <div style={{ padding: 14, borderRadius: 8, minWidth: 282, width: "calc(100% - 50px)", maxWidth: "calc(40ch + 14px)", marginLeft: "auto" }}>
+    <div style={{ padding: 14, borderRadius: 8, minWidth: 282, width: "calc(100% - 50px)", maxWidth: "calc(40ch + 14px)", 
+    marginLeft: "auto", backgroundColor: "white", marginTop: 10  }}>
             <div className={classes.header}>
                 <div className={classes.userContent}>
                     <div className={classes.userAvatar}>

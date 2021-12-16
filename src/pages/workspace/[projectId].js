@@ -263,21 +263,15 @@ const ProductList = withRouter((props) => {
       >
       </Box>
         </Container>
-        <Box>
+        <Box 
+        // sx={{position: 'relative', zIndex: 10}}
+        >
           {
             variantData.comments && variantData.comments.map((comment, i) => <CommentList key={i} comment={comment}/> )
           }
         </Box>
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-
-        <BottomNav/>
-        {/* <BottomNavigationAction label="Comment" icon={<AddCommentIcon />}  onClick={handleClick}/> */}
-       
-        {/* {
-          state ==="add-box" && <CommentBox open={open} onClose={handleClose}/>
-        } */}
-
-        {/* { showResults ? <CommentBox /> : null } */}
+          <BottomNav/>
       </Paper>
       </Box>
     </>
