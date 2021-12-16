@@ -188,6 +188,18 @@ const ProductList = withRouter((props) => {
             m: 1.5
           }}
         >
+          <NextLink
+            href="/dashboard/projects"
+            passHref
+          >
+            <Button
+              sx={{ m: 1.5 }}
+              component="a"
+              variant="text"
+            >
+              back
+            </Button>
+          </NextLink>
           <TextField
             defaultValue=""
             width="50%"
