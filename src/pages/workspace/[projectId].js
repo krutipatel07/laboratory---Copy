@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { Box,
@@ -27,6 +27,8 @@ import axios from 'axios';
 import { withRouter } from 'next/router';
 import CommentBox from '../../components/commentbox/commentbox';
 import CommentList from '../../components/commentList/commentList';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import AddCommentIcon from '@mui/icons-material/AddComment';
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -71,6 +73,8 @@ const applyPagination = (products, page, rowsPerPage) => products.slice(page * r
   page * rowsPerPage + rowsPerPage);
 
 const ProductList = withRouter((props) => {
+
+  const [state, setState] = useState( "start");
   
   const isMounted = useMounted();
   const [products, setProducts] = useState([]);
@@ -152,6 +156,16 @@ const ProductList = withRouter((props) => {
   const filteredProducts = applyFilters(products, filters);
   const paginatedProducts = applyPagination(filteredProducts, page, rowsPerPage);
 
+
+  // const [showResults, setShowResults] = React.useState(false)
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    setState("add-box");
+    setOpen(true);
+    // setShowResults(true)
+  };
+
   return (
     <>
       <Head>
@@ -184,7 +198,7 @@ const ProductList = withRouter((props) => {
           </NextLink>
         </Box>
         <Box>
-          <CommentList/>
+          {/* <CommentList/> */}
         </Box>
       </Box>
       <Box
@@ -250,10 +264,18 @@ const ProductList = withRouter((props) => {
       </Box>
         </Container>
         <Box>
-          <CommentBox/>
+          {/* <CommentBox/> */}
         </Box>
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+
         <BottomNav/>
+        {/* <BottomNavigationAction label="Comment" icon={<AddCommentIcon />}  onClick={handleClick}/> */}
+       
+        {/* {
+          state ==="add-box" && <CommentBox open={open} onClose={handleClose}/>
+        } */}
+
+        {/* { showResults ? <CommentBox /> : null } */}
       </Paper>
       </Box>
     </>

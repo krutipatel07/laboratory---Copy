@@ -1,9 +1,10 @@
 
-import { useForm } from 'react-hook-form';
+
 import React, { useState, useRef } from "react";
 import { makeStyles } from '@material-ui/styles';
 import { Divider, Avatar, Grid, Paper } from "@material-ui/core";
 import { styled } from '@mui/material/styles';
+import CommentList from '../commentList/commentList';
 
 export default function CommentBox() {
 
@@ -69,8 +70,12 @@ const [state, setState] = React.useState({
     id: null
 });
 
-const { register, handleSubmit } = useForm();
-const onSubmit = (data) => alert(JSON.stringify(data, null, 4));
+const [showList, setShowList] = React.useState(false);
+
+const handleSubmit = (data) => {
+    // console.log(JSON.stringify(data, null, 4) ,
+    setShowList(true);
+};
 const textRef = useRef(null);
 const classes = useStyles();
 
@@ -82,7 +87,7 @@ const classes = useStyles();
     <div style={{ padding: 14, borderRadius: 8, minWidth: 282, width: "calc(100% - 50px)", maxWidth: "calc(40ch + 14px)" }}>
         <form 
         className={classes.form}
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit}
         >
             <div className={classes.writeComment}>
                 <textarea
@@ -103,6 +108,7 @@ const classes = useStyles();
                     Post 
                 </button>
             </div>
+            {showList ?  <CommentList /> : ''}
 
         </form>
     </div>
