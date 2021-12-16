@@ -198,7 +198,7 @@ const ProductList = withRouter((props) => {
           </NextLink>
         </Box>
         <Box>
-          <CommentList/>
+          {/* <CommentList/> */}
         </Box>
       </Box>
       <Box
@@ -267,11 +267,15 @@ const ProductList = withRouter((props) => {
           {/* <CommentBox/> */}
         </Box>
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-        <BottomNavigationAction label="Comment" icon={<AddCommentIcon />}  onClick={handleClick}/>
-        {/* { showResults ? <CommentBox /> : null } */}
-        {
+
+        <BottomNav/>
+        {/* <BottomNavigationAction label="Comment" icon={<AddCommentIcon />}  onClick={handleClick}/> */}
+       
+        {/* {
           state ==="add-box" && <CommentBox open={open} onClose={handleClose}/>
-        }
+        } */}
+
+        {/* { showResults ? <CommentBox /> : null } */}
       </Paper>
       </Box>
     </>

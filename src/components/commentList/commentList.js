@@ -161,6 +161,7 @@ const classes = useStyles();
                     Did you get the chance to look over the new project brief?
                 </Typography>
             </div>
+
             <div className={classes.footer}>
                 <div className={classes.timeStamp}>
                     <span>1 day ago</span>
