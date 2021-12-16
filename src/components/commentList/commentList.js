@@ -4,8 +4,11 @@ import { makeStyles } from '@material-ui/styles';
 import { Divider, Avatar, Grid, Paper } from "@material-ui/core";
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import { useAuth } from '../../hooks/use-auth';
 
-export default function CommentList() {
+export default function CommentList({comment}) {
+    
+  const { user } = useAuth();
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -123,27 +126,27 @@ export default function CommentList() {
       
       }));
 
-// const onSubmit = (data) => alert(JSON.stringify(data, null, 4));
 const textRef = useRef(null);
 const classes = useStyles();
 
 
   return (
     <div style={{ padding: 14, borderRadius: 8, minWidth: 282, width: "calc(100% - 50px)", maxWidth: "calc(40ch + 14px)", marginLeft: "auto" }}>
-        <form 
-        className={classes.form}
-        // onSubmit={handleSubmit(onSubmit)}
-        >
             <div className={classes.header}>
                 <div className={classes.userContent}>
                     <div className={classes.userAvatar}>
-                        <img alt="user icon"
-                        src="/static/mock-images/avatars/avatar-anika_visser.png" 
-                        className={`MuiAvatar-img css-1pqm26d-MuiAvatar-img ${classes.img}`}>
-                        </img>
+                        <Avatar
+                        alt="user icon"
+                        src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${user.email}`}
+                        sx={{
+                            height: 40,
+                            width: 40
+                        }}
+                        >
+                        </Avatar>
                     </div>
                     <div className={classes.userName}>
-                        Fran Perez
+                        {user.email}
                     </div>
                 </div>
                 <div className={classes.userAction}>
@@ -157,8 +160,7 @@ const classes = useStyles();
             </div>
             <div className={classes.userComment}>
                 <Typography className={classes.comment}>
-                    Done some wireframing this weekend. How was yours? 
-                    Did you get the chance to look over the new project brief?
+                {comment.text}
                 </Typography>
             </div>
 
@@ -175,7 +177,6 @@ const classes = useStyles();
                     </button>
                 </div>
             </div>
-        </form>
     </div>
   );
 }

@@ -264,7 +264,9 @@ const ProductList = withRouter((props) => {
       </Box>
         </Container>
         <Box>
-          {/* <CommentBox/> */}
+          {
+            variantData.comments && variantData.comments.map((comment, i) => <CommentList key={i} comment={comment}/> )
+          }
         </Box>
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
 

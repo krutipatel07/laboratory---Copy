@@ -2,7 +2,6 @@ import React, { useState, useRef } from "react";
 import { makeStyles } from '@material-ui/styles';
 import { Divider, Avatar, Grid, Paper } from "@material-ui/core";
 import { styled } from '@mui/material/styles';
-import CommentList from '../commentList/commentList';
 import { withRouter } from 'next/router';
 import axios from 'axios'
 import toast from 'react-hot-toast';
@@ -69,8 +68,6 @@ const CommentBox = withRouter((props) => {
 
 const [commentValue, setCommentValue] = React.useState();
 
-const [showList, setShowList] = React.useState(false);
-
 const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -85,16 +82,13 @@ const handleSubmit = async (event) => {
         })
         .catch(error => console.log(error));
 
-        console.log(data);
-
-        toast.success('Comment added!');
         setCommentValue("");
-        // router.push('/dashboard/projects');
+        location.reload();
+        toast.success('Comment added!');
       } catch (err) {
         console.error(err);
         toast.error('Something went wrong!');
       }
-    // setShowList(true);
 };
 const textRef = useRef(null);
 const classes = useStyles();
@@ -128,8 +122,6 @@ const handleChange = (event) => {
                     Post 
                 </button>
             </div>
-            {showList ?  <CommentList /> : ''}
-
         </form>
     </div>
   );
