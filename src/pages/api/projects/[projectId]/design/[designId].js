@@ -26,7 +26,9 @@ export default async (req, res) => {
             break;
         case 'PUT':
             try {
-                const design = await Design.findByIdAndUpdate(designId, req.body, {
+                const design = await Design.findByIdAndUpdate(designId, 
+                    { $push : { comments : req.body.comments}}, 
+                    {
                     new: true,
                     runValidators: true
                 });

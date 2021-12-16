@@ -10,21 +10,23 @@ import {
 } from '@mui/material';
 import { useSettings } from '../hooks/use-settings';
 import { X as XIcon } from '../icons/x';
-import LightThemeIcon from '../components/light-theme.svg';
-import DarkThemeIcon from '../components/dark-theme.svg';
+// removing themes temporarily
+// import LightThemeIcon from '../components/light-theme.svg';
+// import DarkThemeIcon from '../components/dark-theme.svg';
 import PropTypes from 'prop-types';
 
+// removing themes temporarily
 const themes = [
-  {
-    label: 'Light',
-    value: 'light',
-    icon: LightThemeIcon
-  },
-  {
-    label: 'Dark',
-    value: 'dark',
-    icon: DarkThemeIcon
-  }
+  // {
+  //   label: 'Light',
+  //   value: 'light',
+  //   icon: LightThemeIcon
+  // },
+  // {
+  //   label: 'Dark',
+  //   value: 'dark',
+  //   icon: DarkThemeIcon
+  // }
 ];
 
 const getValues = (settings) => ({

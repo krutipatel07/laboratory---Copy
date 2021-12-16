@@ -1,13 +1,14 @@
-
-
 import React, { useState, useRef } from "react";
 import { makeStyles } from '@material-ui/styles';
 import { Divider, Avatar, Grid, Paper } from "@material-ui/core";
 import { styled } from '@mui/material/styles';
 import CommentList from '../commentList/commentList';
+import { withRouter } from 'next/router';
+import axios from 'axios'
+import toast from 'react-hot-toast';
 
-export default function CommentBox() {
-
+const CommentBox = withRouter((props) => {
+    const {designId, projectId} = props.router.query;
     const useStyles = makeStyles((theme) => ({
         root: {
           flexGrow: 1,
@@ -66,22 +67,41 @@ export default function CommentBox() {
       
       }));
 
-const [state, setState] = React.useState({
-    id: null
-});
+const [commentValue, setCommentValue] = React.useState();
 
 const [showList, setShowList] = React.useState(false);
 
-const handleSubmit = (data) => {
-    // console.log(JSON.stringify(data, null, 4) ,
-    setShowList(true);
+const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+        const data = await axios.put(`/api/projects/${projectId}/design/${designId}`, {
+          comments : {
+              creator: localStorage.getItem("lab-user"),
+              version: designId,
+              text: commentValue,
+              x_location: "2",
+              y_location: "2"
+          }
+        })
+        .catch(error => console.log(error));
+
+        console.log(data);
+
+        toast.success('Comment added!');
+        setCommentValue("");
+        // router.push('/dashboard/projects');
+      } catch (err) {
+        console.error(err);
+        toast.error('Something went wrong!');
+      }
+    // setShowList(true);
 };
 const textRef = useRef(null);
 const classes = useStyles();
 
-// const handleChange = (event) => {
-//     this.setState({id: event.target.value});
-//  }
+const handleChange = (event) => {
+    setCommentValue(event.target.value)
+ }
 
   return (
     <div style={{ padding: 14, borderRadius: 8, minWidth: 282, width: "calc(100% - 50px)", maxWidth: "calc(40ch + 14px)" }}>
@@ -92,10 +112,10 @@ const classes = useStyles();
             <div className={classes.writeComment}>
                 <textarea
                 ref={textRef}
-                // onChange={this.handleChange}
+                onChange={handleChange}
                 className={classes.commentField}
                 placeholder="Add a comment"
-                // value={commentValue}
+                value={commentValue}
                 name="comment"
                 id="comment"
                 />
@@ -113,4 +133,6 @@ const classes = useStyles();
         </form>
     </div>
   );
-}
+})
+
+export default CommentBox;
