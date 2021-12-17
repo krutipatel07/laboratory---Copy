@@ -40,6 +40,7 @@
     "@fullcalendar/timeline": "^5.9.0",
     "@material-ui/core": "^4.12.3",
     "@material-ui/icons": "^4.11.2",
+    "@mongoosejs/double": "^0.2.0",
     "@mui/icons-material": "^5.0.0-rc.1",
     "@mui/lab": "^5.0.0-alpha.53",
     "@mui/material": "^5.0.4",
