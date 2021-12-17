@@ -17,17 +17,13 @@ import { withAuthGuard } from '../../hocs/with-auth-guard';
 import { withWorkspaceLayout } from '../../hocs/with-workspace-layout';
 import { useMounted } from '../../hooks/use-mounted';
 import { gtm } from '../../lib/gtm';
-import DesignGrid from '../../components/workspace/design-grid.js';
 import { OverviewBanner } from '../../components/dashboard/overview/overview-banner';
 import { Search as SearchIcon } from '../../icons/search';
 import Paper from '@mui/material/Paper';
 import BottomNav from "../../components/workspace/variant/variant-bottomNav";
 import axios from 'axios';
 import { withRouter } from 'next/router';
-import CommentBox from '../../components/commentbox/commentbox';
 import CommentList from '../../components/commentList/commentList';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import AddCommentIcon from '@mui/icons-material/AddComment';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 
 const applyFilters = (products, filters) => products.filter((product) => {
@@ -73,8 +69,6 @@ const applyPagination = (products, page, rowsPerPage) => products.slice(page * r
   page * rowsPerPage + rowsPerPage);
 
 const ProductList = withRouter((props) => {
-
-  const [state, setState] = useState( "start");
   
   const isMounted = useMounted();
   const [products, setProducts] = useState([]);
@@ -154,16 +148,6 @@ const ProductList = withRouter((props) => {
   const filteredProducts = applyFilters(products, filters);
   const paginatedProducts = applyPagination(filteredProducts, page, rowsPerPage);
 
-
-  // const [showResults, setShowResults] = React.useState(false)
-
-  const handleClick = (e) => {
-    e.preventDefault();
-    setState("add-box");
-    setOpen(true);
-    // setShowResults(true)
-  };
-
   return (
     <>
       <Head>
@@ -194,9 +178,6 @@ const ProductList = withRouter((props) => {
               <ArrowBackOutlinedIcon/>
             </Button>
           </NextLink>
-        </Box>
-        <Box>
-          {/* <CommentList/> */}
         </Box>
       </Box>
 
@@ -271,8 +252,7 @@ const ProductList = withRouter((props) => {
           <Grid item xs={4}
           style={{maxHeight: '600px', overflow: 'auto'}}
           >
-            <Box 
-            // sx={{position: 'relative', zIndex: 10}}
+            <Box            
             >
               {
                 variantData.comments && variantData.comments.map((comment, i) => <CommentList key={i} comment={comment}/> )

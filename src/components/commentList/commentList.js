@@ -167,7 +167,7 @@ const classes = useStyles();
 
             <div className={classes.footer}>
                 <div className={classes.timeStamp}>
-                    <span>1 day ago</span>
+                    <span>{comment.dateCreated}</span>
                 </div>
                 <div className={classes.btnGroup}>
                     <button type="button" className={classes.close}>

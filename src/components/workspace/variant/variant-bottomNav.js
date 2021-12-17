@@ -11,7 +11,6 @@ import AddCommentIcon from '@mui/icons-material/AddComment';
 import NoteIcon from '@mui/icons-material/Note';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import CommentBox from '../../../components/commentbox/commentbox';
-import CommentList from '../../../components/commentList/commentList';
 import Popper from '@mui/material/Popper';
 
 
@@ -28,10 +27,6 @@ export default function BottomNav() {
 
   return (
     <Box>
-      <Box>
-      {/* <CommentBox/> */}
-      </Box>
-
       <Box sx={{ width: 500 }}>
 
         <BottomNavigation
@@ -44,19 +39,9 @@ export default function BottomNav() {
           <BottomNavigationAction label="Comment" icon={<AddCommentIcon/>} aria-describedby={id} type="button" onClick={handleClick}/>
           <Popper id={id} open={open} anchorEl={anchorEl}>
           <Grid container justify="flex-end">
-
-            <Box >
+            <Box >              
               <Box >
-              {/* <CommentList/> */}
-              
-
-              </Box>
-              
-              <Box >
-            <CommentBox/>
-
-           
-
+                <CommentBox/>
               </Box>
             </Box>
             </Grid>

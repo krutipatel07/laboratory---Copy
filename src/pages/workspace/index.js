@@ -25,7 +25,6 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { SettingsSystemDaydreamRounded } from '@mui/icons-material';
 import { withRouter, useRouter } from 'next/router'
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 
@@ -326,7 +325,6 @@ const ProductList = withRouter((props) => {
             variant="contained"
             onClick={handleSubmit}
             type="submit"
-            // value={state}
           >
             Generate
           </Button>
