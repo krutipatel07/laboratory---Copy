@@ -201,6 +201,7 @@ const ProductList = withRouter((props) => {
           {/* <CommentList/> */}
         </Box>
       </Box>
+
       <Box
         component="main"
         sx={{
@@ -208,7 +209,10 @@ const ProductList = withRouter((props) => {
           py: 8
         }}
       >
-        <Container maxWidth="xl">
+        <Grid container spacing={2}>
+          <Grid item xs={8}>
+
+            <Container maxWidth="xl">
           <Box sx={{ mb: 4 }}>
             <Grid
               container
@@ -244,7 +248,8 @@ const ProductList = withRouter((props) => {
               height: 'auto',
               position: 'absolute',
               top: 0,
-              width: '100%'
+              width: '100%',
+              height: '100%'
             }
           }}
         >
@@ -262,14 +267,22 @@ const ProductList = withRouter((props) => {
         }}
       >
       </Box>
-        </Container>
-        <Box 
-        // sx={{position: 'relative', zIndex: 10}}
-        >
-          {
-            variantData.comments && variantData.comments.map((comment, i) => <CommentList key={i} comment={comment}/> )
-          }
-        </Box>
+            </Container>
+          </Grid>
+
+          <Grid item xs={4}
+          style={{maxHeight: '600px', overflow: 'auto'}}
+          >
+            <Box 
+            // sx={{position: 'relative', zIndex: 10}}
+            >
+              {
+                variantData.comments && variantData.comments.map((comment, i) => <CommentList key={i} comment={comment}/> )
+              }
+            </Box>
+          </Grid>
+        </Grid>
+
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
           <BottomNav/>
       </Paper>
