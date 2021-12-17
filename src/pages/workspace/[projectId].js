@@ -101,8 +101,6 @@ const ProductList = withRouter((props) => {
     .catch(error => console.log(error));
   }, []);
 
-  variantData && console.log(variantData);
-
   useEffect(() => {
     // Restore the persistent state from local/session storage
     const value = globalThis.sessionStorage.getItem('dismiss-banner');
