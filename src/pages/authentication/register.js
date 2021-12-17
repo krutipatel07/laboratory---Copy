@@ -12,6 +12,7 @@ import { Logo } from '../../components/logo';
 import { withGuestGuard } from '../../hocs/with-guest-guard';
 import { useAuth } from '../../hooks/use-auth';
 import { gtm } from '../../lib/gtm';
+import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 
 const platformIcons = {
   Amplify: '/static/icons/amplify.svg',
@@ -47,7 +48,7 @@ const Register = () => {
             component="a"
             variant="text"
           >
-            back
+          <ArrowBackOutlinedIcon/>
           </Button>
         </NextLink>
         </Box>

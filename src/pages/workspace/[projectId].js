@@ -16,7 +16,6 @@ import { productApi } from '../../__fake-api__/product-api';
 import { withAuthGuard } from '../../hocs/with-auth-guard';
 import { withWorkspaceLayout } from '../../hocs/with-workspace-layout';
 import { useMounted } from '../../hooks/use-mounted';
-import { Plus as PlusIcon } from '../../icons/plus';
 import { gtm } from '../../lib/gtm';
 import DesignGrid from '../../components/workspace/design-grid.js';
 import { OverviewBanner } from '../../components/dashboard/overview/overview-banner';
@@ -29,6 +28,7 @@ import CommentBox from '../../components/commentbox/commentbox';
 import CommentList from '../../components/commentList/commentList';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import AddCommentIcon from '@mui/icons-material/AddComment';
+import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -193,7 +193,7 @@ const ProductList = withRouter((props) => {
               component="a"
               variant="text"
             >
-              back
+              <ArrowBackOutlinedIcon/>
             </Button>
           </NextLink>
         </Box>

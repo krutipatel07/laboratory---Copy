@@ -27,6 +27,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { SettingsSystemDaydreamRounded } from '@mui/icons-material';
 import { withRouter, useRouter } from 'next/router'
+import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -197,7 +198,7 @@ const ProductList = withRouter((props) => {
               component="a"
               variant="text"
             >
-              back
+              <ArrowBackOutlinedIcon/>
             </Button>
           </NextLink>
           <TextField
