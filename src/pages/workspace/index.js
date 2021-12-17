@@ -73,9 +73,10 @@ const applyPagination = (products, page, rowsPerPage) => products.slice(page * r
 const ProductList = withRouter((props) => {
   const [state, setState] = React.useState({
     floor: " ",
-    budget: " ",
+    squarefeet: " ",
     bed: " ",
-    bath: " "
+    bath: " ",
+    garages: " "
   });
 
   const isMounted = useMounted();
@@ -156,7 +157,7 @@ const ProductList = withRouter((props) => {
     event.preventDefault()
     window.localStorage.setItem("saved_data", JSON.stringify(state))
     let  savedItem = JSON.parse(localStorage.getItem("saved_data"));
-    const { floor, budget, bed, bath } = state
+    // const { floor, squarefeet, bed, bath, garages } = state
   };
 
   // Usually query is done on backend with indexing solutions
@@ -196,6 +197,7 @@ const ProductList = withRouter((props) => {
               sx={{ m: 1.5 }}
               component="a"
               variant="text"
+              style={{margin:7}}
             >
               <ArrowBackOutlinedIcon/>
             </Button>
@@ -224,10 +226,10 @@ const ProductList = withRouter((props) => {
           <TextField
             defaultValue="$500,000"
             width="50%"
-            placeholder="Budget"
+            placeholder="Square feet"
             type="number"
-            name="budget"
-            value={state.budget}
+            name="squarefeet"
+            value={state.squarefeet}
             onChange={handleChange}
           />
         </Box>
@@ -306,7 +308,32 @@ const ProductList = withRouter((props) => {
             </Select>
           </FormControl>
         </Box>
+
         <Box
+          component="form"
+          sx={{
+            flexGrow: 1,
+            m: 1.5
+          }}
+        >
+          <FormControl fullWidth>
+            <InputLabel id="garages_select_label">Garages</InputLabel>
+            <Select
+              labelId="garages_select_label"
+              id="garages_select"
+              name='garages'
+              value={state.bath}
+              label="Garages"
+              onChange={handleChange}
+            >
+              <MenuItem value={1}>1</MenuItem>
+              <MenuItem value={2}>2</MenuItem>
+              <MenuItem value={3}>3</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
+
+        {/* <Box
           component="form"
           sx={{
             flexGrow: 1,
@@ -317,7 +344,7 @@ const ProductList = withRouter((props) => {
             width="50%"
             placeholder="Adjacencies"
           />
-        </Box>
+        </Box> */}
         <Box
         >
           <Button

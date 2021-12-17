@@ -12,7 +12,8 @@ import {
   Typography,
   InputLabel,
   Select,
-  MenuItem
+  MenuItem,
+  FormControl
 } from '@mui/material';
 import { useAuth } from '../../hooks/use-auth';
 import { useMounted } from '../../hooks/use-mounted';
@@ -190,10 +191,12 @@ export const FirebaseRegister = (props) => {
           type="password"
           value={formik.values.password}
         />
-        
+         <FormControl fullWidth style={{marginTop:8, marginBottom: 4}}>
+        <InputLabel id="demo-multiple-name-label">Role</InputLabel>
         <Select
           error={Boolean( formik.touched.name && formik.touched.role)}
           fullWidth
+          label="Role"
           margin="dense"
           name="role"
           type="text"
@@ -209,7 +212,7 @@ export const FirebaseRegister = (props) => {
           <MenuItem value="Architect">Architect</MenuItem>
           <MenuItem value="Enterprise">Enterprise</MenuItem>
         </Select>
-
+        </FormControl>
         <Box
           sx={{
             alignItems: 'center',
