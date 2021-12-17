@@ -1,8 +1,5 @@
-// const { Double } = require('mongodb');
 const mongoose = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
-
-
 import Double from '@mongoosejs/double';
 
 const ParameterSchema = new mongoose.Schema(
