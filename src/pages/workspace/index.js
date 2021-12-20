@@ -114,6 +114,10 @@ const ProductList = withRouter((props) => {
   };
 
   const addDesign = async (generatedData) => {
+    if (!generatedData.length) {
+      toast.error('No data found')
+      return
+    }
     generatedData.forEach( async (element) => {      
       await axios.post(`/api/projects/${props.router.query.id}/design`, {
         title: `Design_G`,
@@ -121,6 +125,9 @@ const ProductList = withRouter((props) => {
       })
       .catch(error => console.log(error));
     });
+    
+    toast.success('Design added')
+    location.reload();
   }
 
   useEffect(() => {
@@ -170,10 +177,6 @@ const ProductList = withRouter((props) => {
     const { floor, squarefeet, bed, bath, garages } = state
     const {data} = await axios.get(`/api/parameters?baths=${bath}&beds=${bed}&floor=${floor}&garages=${garages}&sqft=${squarefeet}`)
     .catch(error => console.log(error));
-    if (!data.length) {
-      toast.error('No data found')
-      return
-    }
     addDesign(data.data);
   };
 
