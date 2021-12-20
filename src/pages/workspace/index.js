@@ -197,7 +197,7 @@ const ProductList = withRouter((props) => {
           alignItems: 'center',
           display: 'flex',
           flexWrap: 'wrap',
-          m: -1.5,
+          // m: -1.5,
           p: 3
         }}
       >

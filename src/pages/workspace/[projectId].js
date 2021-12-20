@@ -250,7 +250,7 @@ const ProductList = withRouter((props) => {
           </Grid>
 
           <Grid item xs={4}
-          style={{maxHeight: '600px', overflow: 'auto'}}
+          style={{maxHeight: '600px', overflow: 'auto', display:'inline-flex', flexFlow:'column-reverse'}}
           >
             <Box            
             >
