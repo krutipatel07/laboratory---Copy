@@ -27,6 +27,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { withRouter, useRouter } from 'next/router'
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
+import axios from 'axios'
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -74,7 +75,10 @@ const ProductList = withRouter((props) => {
   const [state, setState] = React.useState({
     floor: " ",
     squarefeet: " ",
+<<<<<<< HEAD
     bed: " ",
+=======
+>>>>>>> 27ee2f72458e8bac68dd2d2eeeede8c36efb9d11
     bath: " ",
     garages: " "
   });
@@ -153,11 +157,21 @@ const ProductList = withRouter((props) => {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
+<<<<<<< HEAD
     window.localStorage.setItem("saved_data", JSON.stringify(state))
     let  savedItem = JSON.parse(localStorage.getItem("saved_data"));
     // const { floor, squarefeet, bed, bath, garages } = state
+=======
+    console.log(state);
+
+    const { floor, squarefeet, bed, bath, garages } = state
+
+    // window.localStorage.setItem("saved_data", JSON.stringify(state))
+    // let  savedItem = JSON.parse(localStorage.getItem("saved_data"));
+    // const { floor, budget, bed, bath } = state
+>>>>>>> 27ee2f72458e8bac68dd2d2eeeede8c36efb9d11
   };
 
   // Usually query is done on backend with indexing solutions
@@ -316,6 +330,10 @@ const ProductList = withRouter((props) => {
             m: 1.5
           }}
         >
+<<<<<<< HEAD
+=======
+
+>>>>>>> 27ee2f72458e8bac68dd2d2eeeede8c36efb9d11
           <FormControl fullWidth>
             <InputLabel id="garages_select_label">Garages</InputLabel>
             <Select
@@ -332,6 +350,7 @@ const ProductList = withRouter((props) => {
             </Select>
           </FormControl>
         </Box>
+<<<<<<< HEAD
 
         {/* <Box
           component="form"
@@ -345,6 +364,8 @@ const ProductList = withRouter((props) => {
             placeholder="Adjacencies"
           />
         </Box> */}
+=======
+>>>>>>> 27ee2f72458e8bac68dd2d2eeeede8c36efb9d11
         <Box
         >
           <Button
