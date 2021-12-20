@@ -76,6 +76,7 @@ const ProductList = withRouter((props) => {
   const [state, setState] = React.useState({
     floor: "",
     squarefeet: "",
+    bed: "",
     bath: "",
     garages: ""
   });
