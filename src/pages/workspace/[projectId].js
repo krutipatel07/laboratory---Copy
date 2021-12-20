@@ -234,7 +234,7 @@ const ProductList = withRouter((props) => {
         >
           <img
             alt=""
-            src={"https://drummondhouseplans.com/assets/_entemp_/plan-house-3290-1st-level-500px-71387195.jpg"}
+            src={variantData.url}
           />
         </Box>
       </Box>

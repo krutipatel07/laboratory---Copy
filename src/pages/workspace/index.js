@@ -28,6 +28,7 @@ import Select from '@mui/material/Select';
 import { withRouter, useRouter } from 'next/router'
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import axios from 'axios'
+import toast from 'react-hot-toast';
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -169,6 +170,10 @@ const ProductList = withRouter((props) => {
     const { floor, squarefeet, bed, bath, garages } = state
     const {data} = await axios.get(`/api/parameters?baths=${bath}&beds=${bed}&floor=${floor}&garages=${garages}&sqft=${squarefeet}`)
     .catch(error => console.log(error));
+    if (!data.length) {
+      toast.error('No data found')
+      return
+    }
     addDesign(data.data);
   };
 
