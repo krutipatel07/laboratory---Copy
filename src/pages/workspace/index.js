@@ -393,7 +393,7 @@ const ProductList = withRouter((props) => {
               </Grid>
             </Grid>
           </Box>
-          {/* <DesignGrid projectId= {props.router.query.id} /> */}
+          <DesignGrid projectId= {props.router.query.id} />
         </Container>
       </Box>
     </>
