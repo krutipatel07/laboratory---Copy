@@ -19,6 +19,7 @@ import { useMounted } from '../../hooks/use-mounted';
 import { Plus as PlusIcon } from '../../icons/plus';
 import { gtm } from '../../lib/gtm';
 import DesignGrid from '../../components/workspace/design-grid.js';
+import GenerateGrid from '../../components/workspace/generate-grid.js';
 import { OverviewBanner } from '../../components/dashboard/overview/overview-banner';
 import { Search as SearchIcon } from '../../icons/search';
 import InputLabel from '@mui/material/InputLabel';
@@ -92,6 +93,7 @@ const ProductList = withRouter((props) => {
   });
 
   const [displayBanner, setDisplayBanner] = useState(true);
+  const [displayGenerate, setDisplayGenerate] = useState(false);
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
@@ -157,12 +159,9 @@ const ProductList = withRouter((props) => {
   const handleSubmit = async (event) => {
     event.preventDefault()
     console.log(state);
+    setDisplayGenerate(true);
 
     const { floor, squarefeet, bed, bath, garages } = state
-
-    // window.localStorage.setItem("saved_data", JSON.stringify(state))
-    // let  savedItem = JSON.parse(localStorage.getItem("saved_data"));
-    // const { floor, budget, bed, bath } = state
   };
 
   // Usually query is done on backend with indexing solutions
@@ -375,6 +374,16 @@ const ProductList = withRouter((props) => {
                 />
               </Grid>
               )}
+
+              {displayGenerate  && <><Grid item>
+                <Typography variant="h4">
+                  Generate
+                </Typography>
+              </Grid>
+              
+              <GenerateGrid projectId= {props.router.query.id} /></>
+              }
+
               <Grid item>
                 <Typography variant="h4">
                   Designs
@@ -384,7 +393,7 @@ const ProductList = withRouter((props) => {
               </Grid>
             </Grid>
           </Box>
-          <DesignGrid projectId= {props.router.query.id} />
+          {/* <DesignGrid projectId= {props.router.query.id} /> */}
         </Container>
       </Box>
     </>
