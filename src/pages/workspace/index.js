@@ -75,10 +75,7 @@ const ProductList = withRouter((props) => {
   const [state, setState] = React.useState({
     floor: " ",
     squarefeet: " ",
-<<<<<<< HEAD
     bed: " ",
-=======
->>>>>>> 27ee2f72458e8bac68dd2d2eeeede8c36efb9d11
     bath: " ",
     garages: " "
   });
@@ -159,11 +156,6 @@ const ProductList = withRouter((props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-<<<<<<< HEAD
-    window.localStorage.setItem("saved_data", JSON.stringify(state))
-    let  savedItem = JSON.parse(localStorage.getItem("saved_data"));
-    // const { floor, squarefeet, bed, bath, garages } = state
-=======
     console.log(state);
 
     const { floor, squarefeet, bed, bath, garages } = state
@@ -171,7 +163,6 @@ const ProductList = withRouter((props) => {
     // window.localStorage.setItem("saved_data", JSON.stringify(state))
     // let  savedItem = JSON.parse(localStorage.getItem("saved_data"));
     // const { floor, budget, bed, bath } = state
->>>>>>> 27ee2f72458e8bac68dd2d2eeeede8c36efb9d11
   };
 
   // Usually query is done on backend with indexing solutions
@@ -330,10 +321,6 @@ const ProductList = withRouter((props) => {
             m: 1.5
           }}
         >
-<<<<<<< HEAD
-=======
-
->>>>>>> 27ee2f72458e8bac68dd2d2eeeede8c36efb9d11
           <FormControl fullWidth>
             <InputLabel id="garages_select_label">Garages</InputLabel>
             <Select
@@ -350,22 +337,6 @@ const ProductList = withRouter((props) => {
             </Select>
           </FormControl>
         </Box>
-<<<<<<< HEAD
-
-        {/* <Box
-          component="form"
-          sx={{
-            flexGrow: 1,
-            m: 1.5
-          }}
-        >
-          <TextField
-            width="50%"
-            placeholder="Adjacencies"
-          />
-        </Box> */}
-=======
->>>>>>> 27ee2f72458e8bac68dd2d2eeeede8c36efb9d11
         <Box
         >
           <Button

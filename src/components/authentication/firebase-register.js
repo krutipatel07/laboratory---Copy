@@ -191,11 +191,7 @@ export const FirebaseRegister = (props) => {
           type="password"
           value={formik.values.password}
         />
-<<<<<<< HEAD
-         <FormControl fullWidth style={{marginTop:8, marginBottom: 4}}>
-=======
         <FormControl fullWidth style={{marginTop:8, marginBottom: 4}}>
->>>>>>> 27ee2f72458e8bac68dd2d2eeeede8c36efb9d11
         <InputLabel id="demo-multiple-name-label">Role</InputLabel>
         <Select
           error={Boolean( formik.touched.name && formik.touched.role)}
@@ -216,14 +212,8 @@ export const FirebaseRegister = (props) => {
           <MenuItem value="Student">Student</MenuItem>
           <MenuItem value="Architect">Architect</MenuItem>
           <MenuItem value="Enterprise">Enterprise</MenuItem>
-<<<<<<< HEAD
         </Select>
         </FormControl>
-=======
-        </Select> 
-        </FormControl>
-
->>>>>>> 27ee2f72458e8bac68dd2d2eeeede8c36efb9d11
         <Box
           sx={{
             alignItems: 'center',
