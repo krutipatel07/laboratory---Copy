@@ -23,6 +23,10 @@ const DesignSchema = new mongoose.Schema(
         ref: 'Design'
       }
     ],
+    url: {
+      type: String,
+      required: true
+    },
     comments: [CommentSchema]
   },
   {
