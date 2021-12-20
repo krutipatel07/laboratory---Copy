@@ -74,10 +74,10 @@ const applyPagination = (products, page, rowsPerPage) => products.slice(page * r
 
 const ProductList = withRouter((props) => {
   const [state, setState] = React.useState({
-    floor: " ",
-    squarefeet: " ",
-    bath: " ",
-    garages: " "
+    floor: "",
+    squarefeet: "",
+    bath: "",
+    garages: ""
   });
 
   const isMounted = useMounted();
@@ -93,6 +93,7 @@ const ProductList = withRouter((props) => {
 
   const [displayBanner, setDisplayBanner] = useState(true);
   const [displayGenerate, setDisplayGenerate] = useState(false);
+  const [generatedData, setGeneratedData] = useState([]);
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
@@ -158,15 +159,20 @@ const ProductList = withRouter((props) => {
   const handleSubmit = async (event) => {
     event.preventDefault()
     console.log(state);
-    setDisplayGenerate(true);
-
+    
     const { floor, squarefeet, bed, bath, garages } = state
+    axios.get(`/api/parameters?baths=${bath}&beds=${bed}&floor=${floor}&garages=${garages}`)
+    .then(res => setGeneratedData(res.data.data))
+    .catch(error => console.log(error));  
+
+    setDisplayGenerate(true);
   };
 
   // Usually query is done on backend with indexing solutions
   const filteredProducts = applyFilters(products, filters);
   const paginatedProducts = applyPagination(filteredProducts, page, rowsPerPage);
 
+  generatedData && console.log(generatedData);
   return (
     <>
       <Head>
@@ -380,7 +386,7 @@ const ProductList = withRouter((props) => {
                 </Typography>
               </Grid>
               
-              <GenerateGrid projectId= {props.router.query.id} /></>
+              <GenerateGrid generatedData= {generatedData} /></>
               }
 
               <Grid item>
