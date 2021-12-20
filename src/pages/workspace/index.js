@@ -27,6 +27,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { withRouter, useRouter } from 'next/router'
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
+import axios from 'axios'
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -73,9 +74,9 @@ const applyPagination = (products, page, rowsPerPage) => products.slice(page * r
 const ProductList = withRouter((props) => {
   const [state, setState] = React.useState({
     floor: " ",
-    budget: " ",
-    bed: " ",
-    bath: " "
+    squarefeet: " ",
+    bath: " ",
+    garages: " "
   });
 
   const isMounted = useMounted();
@@ -152,11 +153,15 @@ const ProductList = withRouter((props) => {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    window.localStorage.setItem("saved_data", JSON.stringify(state))
-    let  savedItem = JSON.parse(localStorage.getItem("saved_data"));
-    const { floor, budget, bed, bath } = state
+    console.log(state);
+
+    const { floor, squarefeet, bed, bath, garages } = state
+
+    // window.localStorage.setItem("saved_data", JSON.stringify(state))
+    // let  savedItem = JSON.parse(localStorage.getItem("saved_data"));
+    // const { floor, budget, bed, bath } = state
   };
 
   // Usually query is done on backend with indexing solutions
@@ -196,6 +201,7 @@ const ProductList = withRouter((props) => {
               sx={{ m: 1.5 }}
               component="a"
               variant="text"
+              style={{margin:7}}
             >
               <ArrowBackOutlinedIcon/>
             </Button>
@@ -224,10 +230,10 @@ const ProductList = withRouter((props) => {
           <TextField
             defaultValue="$500,000"
             width="50%"
-            placeholder="Budget"
+            placeholder="Square feet"
             type="number"
-            name="budget"
-            value={state.budget}
+            name="squarefeet"
+            value={state.squarefeet}
             onChange={handleChange}
           />
         </Box>
@@ -313,10 +319,22 @@ const ProductList = withRouter((props) => {
             m: 1.5
           }}
         >
-          <TextField
-            width="50%"
-            placeholder="Adjacencies"
-          />
+
+          <FormControl fullWidth>
+            <InputLabel id="garages_select_label">Garages</InputLabel>
+            <Select
+              labelId="garages_select_label"
+              id="garages_select"
+              name='garages'
+              value={state.bath}
+              label="Garages"
+              onChange={handleChange}
+            >
+              <MenuItem value={1}>1</MenuItem>
+              <MenuItem value={2}>2</MenuItem>
+              <MenuItem value={3}>3</MenuItem>
+            </Select>
+          </FormControl>
         </Box>
         <Box
         >
