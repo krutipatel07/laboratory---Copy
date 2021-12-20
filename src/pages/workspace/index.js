@@ -19,7 +19,6 @@ import { useMounted } from '../../hooks/use-mounted';
 import { Plus as PlusIcon } from '../../icons/plus';
 import { gtm } from '../../lib/gtm';
 import DesignGrid from '../../components/workspace/design-grid.js';
-import GenerateGrid from '../../components/workspace/generate-grid.js';
 import { OverviewBanner } from '../../components/dashboard/overview/overview-banner';
 import { Search as SearchIcon } from '../../icons/search';
 import InputLabel from '@mui/material/InputLabel';
@@ -29,6 +28,7 @@ import Select from '@mui/material/Select';
 import { withRouter, useRouter } from 'next/router'
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import axios from 'axios'
+import toast from 'react-hot-toast';
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -93,8 +93,6 @@ const ProductList = withRouter((props) => {
   });
 
   const [displayBanner, setDisplayBanner] = useState(true);
-  const [displayGenerate, setDisplayGenerate] = useState(false);
-  const [generatedData, setGeneratedData] = useState([]);
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
@@ -114,6 +112,23 @@ const ProductList = withRouter((props) => {
     // globalThis.sessionStorage.setItem('dismiss-banner', 'true');
     setDisplayBanner(false);
   };
+
+  const addDesign = async (generatedData) => {
+    if (!generatedData.length) {
+      toast.error('No data found')
+      return
+    }
+    generatedData.forEach( async (element) => {      
+      await axios.post(`/api/projects/${props.router.query.id}/design`, {
+        title: `Design_G`,
+        url: element.url
+      })
+      .catch(error => console.log(error));
+    });
+    
+    toast.success(`${generatedData.length} Design added`)
+    location.reload();
+  }
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
@@ -159,21 +174,16 @@ const ProductList = withRouter((props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    console.log(state);
-    
     const { floor, squarefeet, bed, bath, garages } = state
-    axios.get(`/api/parameters?baths=${bath}&beds=${bed}&floor=${floor}&garages=${garages}`)
-    .then(res => setGeneratedData(res.data.data))
-    .catch(error => console.log(error));  
-
-    setDisplayGenerate(true);
+    const {data} = await axios.get(`/api/parameters?baths=${bath}&beds=${bed}&floor=${floor}&garages=${garages}&sqft=${squarefeet}`)
+    .catch(error => console.log(error));
+    addDesign(data.data);
   };
 
   // Usually query is done on backend with indexing solutions
   const filteredProducts = applyFilters(products, filters);
   const paginatedProducts = applyPagination(filteredProducts, page, rowsPerPage);
 
-  generatedData && console.log(generatedData);
   return (
     <>
       <Head>
@@ -332,7 +342,7 @@ const ProductList = withRouter((props) => {
               labelId="garages_select_label"
               id="garages_select"
               name='garages'
-              value={state.bath}
+              value={state.garages}
               label="Garages"
               onChange={handleChange}
             >
@@ -381,15 +391,6 @@ const ProductList = withRouter((props) => {
               </Grid>
               )}
 
-              {displayGenerate  && <><Grid item>
-                <Typography variant="h4">
-                  Generate
-                </Typography>
-              </Grid>
-              
-              <GenerateGrid generatedData= {generatedData} /></>
-              }
-
               <Grid item>
                 <Typography variant="h4">
                   Designs
@@ -399,7 +400,7 @@ const ProductList = withRouter((props) => {
               </Grid>
             </Grid>
           </Box>
-          <DesignGrid projectId= {props.router.query.id} />
+            <DesignGrid projectId= {props.router.query.id} />
         </Container>
       </Box>
     </>
