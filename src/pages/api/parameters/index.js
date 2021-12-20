@@ -12,7 +12,7 @@ export default async (req, res) => {
             try {
                 const parameters = await Parameter
                 .find({baths, beds, floor, garages})
-                .limit(20);
+                .limit(9);
                 res.status(200).json({ success: true, data: parameters})              
             } catch (error) {
                 res.status(404).json({ success: false, message: error})
