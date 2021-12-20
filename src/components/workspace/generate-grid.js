@@ -5,7 +5,7 @@ import VariantCard from './variantCard';
 import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
 
-export default function DesignGrid({projectId}) {
+export default function GenerateGrid({projectId}) {
   const [projectData, setProjectData] = useState([]);
   useEffect(() => {
     axios.get(`/api/projects/${projectId}`)
