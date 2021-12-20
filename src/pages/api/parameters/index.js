@@ -4,13 +4,16 @@ import {Parameter} from "../../../models";
 dbConnect();
 
 export default async (req, res) => {
-    const { method } = req;
-
+    const { 
+        query: {baths, beds, floor, garages}
+        , method } = req;
     switch (method) { 
         case 'GET':
             try {
-                const parameters = await Parameter.find({});
-                res.status(200).json({ success: true, data: parameters})                
+                const parameters = await Parameter
+                .find({baths, beds, floor, garages})
+                .limit(9);
+                res.status(200).json({ success: true, data: parameters})              
             } catch (error) {
                 res.status(404).json({ success: false, message: error})
             }
