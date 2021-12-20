@@ -196,7 +196,6 @@ export const FirebaseRegister = (props) => {
         <Select
           error={Boolean( formik.touched.name && formik.touched.role)}
           fullWidth
-          label="Role"
           margin="dense"
           name="role"
           type="text"
