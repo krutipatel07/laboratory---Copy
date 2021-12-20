@@ -126,7 +126,7 @@ const ProductList = withRouter((props) => {
       .catch(error => console.log(error));
     });
     
-    toast.success('Design added')
+    toast.success(`${generatedData.length} Design added`)
     location.reload();
   }
 
