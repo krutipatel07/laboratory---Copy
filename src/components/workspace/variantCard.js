@@ -81,13 +81,6 @@ const VariantCard = (props) => {
 
     const classes = useStyles();
 
-<<<<<<< HEAD
-    const deleteDesign = async () => {
-      const deleted = await axios.delete(`/api/projects/_/design/${designId}`);
-      deleted && toast.success("Design deleted");
-      location.reload();
-    }
-=======
     const deleteDesign = (event) => {
       const value = event.target.value;
       setState({
@@ -95,7 +88,6 @@ const VariantCard = (props) => {
         [event.target.name]: value
       });
     };
->>>>>>> c97a19def0c4633ba0566f3ff316c461857a3b06
     
   return (
     <NextLink
