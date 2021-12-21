@@ -30,7 +30,7 @@ export default function DesignGrid({projectId}) {
       <Grid container style={{marginLeft:0, width: "100%"}}
       spacing={3}>        
         {projectData.designs ? 
-          <Grid container spacing={3} style={{marginLeft:0, width: "100%"}}>
+          <Grid container spacing={3} style={{marginLeft:0, width: "100%", justifyContent:'center'}}>
           {projectData.designs.length ?
               projectData.designs.map((design, i) => {
                 return (                
@@ -44,7 +44,7 @@ export default function DesignGrid({projectId}) {
                       image={design.url}
                       link={`/workspace/${projectData.id}?designId=${design.id}`}
                       />
-                  </Grid> )}) : <h4>no designs</h4> }
+                  </Grid> )}) : <h3 style={{marginTop:50, fontSize:24, color:"#F0C88E"}}>No designs</h3> }
             </Grid>
            : <Box sx={{ 
                 width: "100%",
