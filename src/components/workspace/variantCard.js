@@ -18,6 +18,7 @@ import { purple } from '@mui/material/colors';
 import { styled } from '@mui/material/styles';
 import axios from 'axios'
 import toast from 'react-hot-toast';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -34,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '12px 5px 12px 24px'
   },
   Button: {
+    // padding: '8px 10px',
     "&.MuiButton-contained": {
       color: "#64B6F7",
       backgroundColor: 'rgba(0, 255, 255, 0.08)',
@@ -45,6 +47,13 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     paddingTop: '15px'
+  },
+  deletebtn: {
+    marginLeft: 'auto',
+    padding: '8px 10px'
+  },
+  btnStyle: {
+    padding: '8px 10px',
   }
 
 }));
@@ -72,11 +81,21 @@ const VariantCard = (props) => {
 
     const classes = useStyles();
 
+<<<<<<< HEAD
     const deleteDesign = async () => {
       const deleted = await axios.delete(`/api/projects/_/design/${designId}`);
       deleted && toast.success("Design deleted");
       location.reload();
     }
+=======
+    const deleteDesign = (event) => {
+      const value = event.target.value;
+      setState({
+        ...state,
+        [event.target.name]: value
+      });
+    };
+>>>>>>> c97a19def0c4633ba0566f3ff316c461857a3b06
     
   return (
     <NextLink
@@ -136,11 +155,14 @@ const VariantCard = (props) => {
       />
 
         <CardActions>
-          <Stack direction="row" 
+          <Stack direction="row" width='100%'
           spacing={2}>
-            <ColorButton variant="contained" >New Comments</ColorButton>
-            <Button variant="contained" 
-            className={classes.Button}>New Version</Button>
+            <ColorButton variant="contained" className={classes.btnStyle}>New Comments</ColorButton>
+            <Button variant="contained" className={[classes.Button, classes.btnStyle]}>New Version</Button>
+            <IconButton aria-label="delete" onClick={deleteDesign}  className={classes.deletebtn} style={{marginLeft: 'auto'}}>
+              <DeleteIcon style={{color:'#D14343'}} />
+            </IconButton>
+            
           </Stack>
         </CardActions>
       </Card>
