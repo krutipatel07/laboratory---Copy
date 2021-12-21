@@ -397,8 +397,6 @@ const ProductList = withRouter((props) => {
                   Designs
                 </Typography>
               </Grid>
-              <Grid item>
-              </Grid>
             </Grid>
           </Box>
             <DesignGrid projectId= {props.router.query.id} />
