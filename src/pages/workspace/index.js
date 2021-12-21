@@ -391,13 +391,10 @@ const ProductList = withRouter((props) => {
                 />
               </Grid>
               )}
-
               <Grid item>
                 <Typography variant="h4">
                   Designs
                 </Typography>
-              </Grid>
-              <Grid item>
               </Grid>
             </Grid>
           </Box>
