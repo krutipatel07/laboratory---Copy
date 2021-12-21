@@ -57,97 +57,97 @@ const getSections = (t) => [
       },
     ]
   },
-  {
-    title: t('Communicate'),
-    items: [
+  // {
+  //   title: t('Communicate'),
+  //   items: [
       
-      {
-        title: t('Mail'),
-        path: '/dashboard/mail',
-        icon: <MailIcon fontSize="small" />,
-        chip: <Chip
-          color="secondary"
-          label={(
-            <Typography
-              sx={{
-                fontSize: '10px',
-                fontWeight: '600',
-                color: '#000000'
-              }}
-            >
-              COMING SOON!
-            </Typography>
-          )}
-          size="small"
-        />
-      },
-      {
-        title: t('Chat'),
-        path: '/dashboard/chat',
-        icon: <ChatAlt2Icon fontSize="small" />,
-        chip: <Chip
-          color="secondary"
-          label={(
-            <Typography
-              sx={{
-                fontSize: '10px',
-                fontWeight: '600',
-                color: '#000000'
-              }}
-            >
-              COMING SOON!
-            </Typography>
-          )}
-          size="small"
-        />
-      }
-    ]
-  },
-  {
-    title: t('Organize'),
-    items: [
-      {
-        title: t('Kanban'),
-        path: '/dashboard/kanban',
-        icon: <ClipboardListIcon fontSize="small" />,
-        chip: <Chip
-          color="secondary"
-          label={(
-            <Typography
-              sx={{
-                fontSize: '10px',
-                fontWeight: '600',
-                color: '#000000'
-              }}
-            >
-              COMING SOON!
-            </Typography>
-          )}
-          size="small"
-        />
-      },
-      {
-        title: t('Calendar'),
-        path: '/dashboard/calendar',
-        icon: <CalendarIcon fontSize="small" />,
-        chip: <Chip
-          color="secondary"
-          label={(
-            <Typography
-              sx={{
-                fontSize: '10px',
-                fontWeight: '600',
-                color: '#000000'
-              }}
-            >
-              COMING SOON!
-            </Typography>
-          )}
-          size="small"
-        />
-      }
-    ]
-  },
+  //     {
+  //       title: t('Mail'),
+  //       path: '/dashboard/mail',
+  //       icon: <MailIcon fontSize="small" />,
+  //       chip: <Chip
+  //         color="secondary"
+  //         label={(
+  //           <Typography
+  //             sx={{
+  //               fontSize: '10px',
+  //               fontWeight: '600',
+  //               color: '#000000'
+  //             }}
+  //           >
+  //             COMING SOON!
+  //           </Typography>
+  //         )}
+  //         size="small"
+  //       />
+  //     },
+  //     {
+  //       title: t('Chat'),
+  //       path: '/dashboard/chat',
+  //       icon: <ChatAlt2Icon fontSize="small" />,
+  //       chip: <Chip
+  //         color="secondary"
+  //         label={(
+  //           <Typography
+  //             sx={{
+  //               fontSize: '10px',
+  //               fontWeight: '600',
+  //               color: '#000000'
+  //             }}
+  //           >
+  //             COMING SOON!
+  //           </Typography>
+  //         )}
+  //         size="small"
+  //       />
+  //     }
+  //   ]
+  // },
+  // {
+  //   title: t('Organize'),
+  //   items: [
+  //     {
+  //       title: t('Kanban'),
+  //       path: '/dashboard/kanban',
+  //       icon: <ClipboardListIcon fontSize="small" />,
+  //       chip: <Chip
+  //         color="secondary"
+  //         label={(
+  //           <Typography
+  //             sx={{
+  //               fontSize: '10px',
+  //               fontWeight: '600',
+  //               color: '#000000'
+  //             }}
+  //           >
+  //             COMING SOON!
+  //           </Typography>
+  //         )}
+  //         size="small"
+  //       />
+  //     },
+  //     {
+  //       title: t('Calendar'),
+  //       path: '/dashboard/calendar',
+  //       icon: <CalendarIcon fontSize="small" />,
+  //       chip: <Chip
+  //         color="secondary"
+  //         label={(
+  //           <Typography
+  //             sx={{
+  //               fontSize: '10px',
+  //               fontWeight: '600',
+  //               color: '#000000'
+  //             }}
+  //           >
+  //             COMING SOON!
+  //           </Typography>
+  //         )}
+  //         size="small"
+  //       />
+  //     }
+  //   ]
+  // },
   {
     title: t('General'),
     items: [

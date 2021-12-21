@@ -28,40 +28,31 @@ const data = [
     author: 'Jie Yang Song',
     avatar: '/static/mock-images/avatars/avatar-jie_yan_song.png',
     createdAt: subHours(now, 2).getTime(),
-    job: 'Remote React / React Native Developer',
+    job: 'Project Ignite / Design_3',
     read: true,
-    type: 'job_add'
+    type: 'new_comment'
   },
   {
     id: 'bfb21a370c017acc416757c7',
     author: 'Jie Yang Song',
     avatar: '/static/mock-images/avatars/avatar-jie_yan_song.png',
     createdAt: subHours(now, 2).getTime(),
-    job: 'Senior Golang Backend Engineer',
+    job: 'Project Inspire / Design 8',
     read: false,
-    type: 'job_add'
+    type: 'new_comment'
   },
   {
     id: '20d9df4f23fff19668d7031c',
     createdAt: subDays(now, 1).getTime(),
-    description: 'Logistics management is now available',
+    description: 'Commenting on designs is now available!',
     read: true,
     type: 'new_feature'
-  },
-  {
-    id: '5e8883fca0e8612044248ecf',
-    author: 'Jie Yang Song',
-    avatar: '/static/mock-images/avatars/avatar-jie_yan_song.png',
-    company: 'Augmastic Inc',
-    createdAt: subHours(now, 2).getTime(),
-    read: false,
-    type: 'company_created'
   }
 ];
 
 const getNotificationContent = (notification) => {
   switch (notification.type) {
-    case 'job_add':
+    case 'new_comment':
       return (
         <>
           <ListItemAvatar sx={{ mt: 0.5 }}>
@@ -88,7 +79,7 @@ const getNotificationContent = (notification) => {
                   sx={{ mr: 0.5 }}
                   variant="body2"
                 >
-                  added a new job
+                  added a new comment
                 </Typography>
                 <Link
                   href="/dashboard/jobs"

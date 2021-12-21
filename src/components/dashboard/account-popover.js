@@ -73,33 +73,10 @@ export const AccountPopover = (props) => {
           <Typography variant="body1">
             {user.email}
           </Typography>
-          <Typography
-            color="textSecondary"
-            variant="body2"
-          >
-            Acme Inc
-          </Typography>
         </Box>
       </Box>
       <Divider />
       <Box sx={{ my: 1 }}>
-        <NextLink
-          href="/dashboard/social/profile"
-          passHref
-        >
-          <MenuItem component="a">
-            <ListItemIcon>
-              <UserCircleIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText
-              primary={(
-                <Typography variant="body1">
-                  Profile
-                </Typography>
-              )}
-            />
-          </MenuItem>
-        </NextLink>
         <NextLink
           href="/dashboard/account"
           passHref
@@ -112,23 +89,6 @@ export const AccountPopover = (props) => {
               primary={(
                 <Typography variant="body1">
                   Settings
-                </Typography>
-              )}
-            />
-          </MenuItem>
-        </NextLink>
-        <NextLink
-          href="/dashboard"
-          passHref
-        >
-          <MenuItem component="a">
-            <ListItemIcon>
-              <SwitchHorizontalOutlinedIcon fontSize="small" />
-            </ListItemIcon>
-            <ListItemText
-              primary={(
-                <Typography variant="body1">
-                  Change organization
                 </Typography>
               )}
             />

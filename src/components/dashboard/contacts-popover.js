@@ -45,7 +45,7 @@ export const ContactsPopover = (props) => {
       transitionDuration={0}
       {...other}>
       <Typography variant="h6">
-        Contacts
+        Collaborators
       </Typography>
       <Box sx={{ mt: 2 }}>
         <List disablePadding>
