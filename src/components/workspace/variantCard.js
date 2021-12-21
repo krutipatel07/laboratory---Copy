@@ -80,7 +80,6 @@ const VariantCard = (props) => {
     } = props;
 
     const classes = useStyles();
-
     const deleteDesign = async () => {
       const deleted = await axios.delete(`/api/projects/_/design/${designId}`);
       deleted && toast.success("Design deleted");
