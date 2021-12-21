@@ -68,7 +68,7 @@ const Contact = () => {
               sx={{ py: 3 }}
               variant="body1"
             >
-              Have questions or suggestions about our the product? Let us know how we can best serve your needs.
+              Have questions or suggestions about our product? Let us know how we can best serve your needs.
             </Typography>
           </Container>
         </Box>
