@@ -31,7 +31,7 @@ export default function DesignGrid({projectId}) {
       spacing={3}>        
         {projectData.designs ? 
           <Grid container spacing={3}>
-          {projectData.designs.length &&
+          {projectData.designs.length ?
               projectData.designs.map((design, i) => {
                 return (                
                   <Grid item 
@@ -44,7 +44,7 @@ export default function DesignGrid({projectId}) {
                       image={design.url}
                       link={`/workspace/${projectData.id}?designId=${design.id}`}
                       />
-                  </Grid> )})}
+                  </Grid> )}) : <h4>no designs</h4> }
             </Grid>
            : <Box sx={{ 
                 width: "100%",
