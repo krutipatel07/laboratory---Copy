@@ -122,24 +122,6 @@ export const ContactForm = () => {
             sx={{ mb: 1 }}
             variant="subtitle2"
           >
-            Project Budget *
-          </Typography>
-          <Select
-            fullWidth
-            required
-          >
-            <MenuItem value={20000}>$20,000+</MenuItem>
-            <MenuItem value={50000}>$50,000+</MenuItem>
-          </Select>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-        >
-          <Typography
-            sx={{ mb: 1 }}
-            variant="subtitle2"
-          >
             Message
           </Typography>
           <TextField

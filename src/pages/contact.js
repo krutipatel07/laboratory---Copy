@@ -45,7 +45,7 @@ const Contact = () => {
             }}
           >
             <NextLink
-              href="/dashboard"
+              href="/dashboard/projects"
               passHref
             >
               <Button
@@ -61,28 +61,6 @@ const Contact = () => {
             >
               Contact
             </Typography>
-            <Box
-              sx={{
-                alignItems: 'center',
-                display: 'flex',
-                mb: 6,
-                mt: 8
-              }}
-            >
-              <Avatar
-                sx={{
-                  backgroundColor: 'primary.main',
-                  color: 'primary.contrastText',
-                  mr: 2
-                }}
-                variant="rounded"
-              >
-                <MailIcon fontSize="small" />
-              </Avatar>
-              <Typography variant="overline">
-                Contact sales
-              </Typography>
-            </Box>
             <Typography variant="h1">
               Talk to our account expert
             </Typography>
@@ -90,22 +68,8 @@ const Contact = () => {
               sx={{ py: 3 }}
               variant="body1"
             >
-              Have questions about integrating our APIs? Fill out the form
-              and a senior web expert will be in touch shortly.
+              Have questions or suggestions about our the product? Let us know how we can best serve your needs.
             </Typography>
-            <Typography
-              sx={{ color: 'primary.main' }}
-              variant="h6"
-            >
-              Join 3,000+ forward-thinking companies:
-            </Typography>
-            <Box sx={{ pt: 2 }}>
-              <img
-                alt="logoipsum1"
-                src="/static/contact/contact_logos.svg"
-                style={{ maxWidth: '100%' }}
-              />
-            </Box>
           </Container>
         </Box>
         <Box
