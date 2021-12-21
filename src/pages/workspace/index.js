@@ -391,7 +391,6 @@ const ProductList = withRouter((props) => {
                 />
               </Grid>
               )}
-
               <Grid item>
                 <Typography variant="h4">
                   Designs
