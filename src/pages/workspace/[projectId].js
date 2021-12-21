@@ -192,7 +192,7 @@ const ProductList = withRouter((props) => {
           <Grid item xs={8}>
 
             <Container maxWidth="xl">
-          <Box sx={{ mb: 4 }}>
+          {/* <Box sx={{ mb: 4 }}>
             <Grid
               container
               justifyContent="space-between"
@@ -211,7 +211,7 @@ const ProductList = withRouter((props) => {
               </Grid>
               )}
             </Grid>
-          </Box>
+          </Box> */}
           <Box
         sx={{
           maxWidth: 980,
@@ -250,7 +250,7 @@ const ProductList = withRouter((props) => {
           </Grid>
 
           <Grid item xs={4}
-          style={{maxHeight: '600px', overflow: 'auto'}}
+          style={{maxHeight: '600px', overflow: 'auto', display:'inline-flex', flexFlow:'column-reverse'}}
           >
             <Box            
             >

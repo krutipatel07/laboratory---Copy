@@ -211,9 +211,8 @@ export const FirebaseRegister = (props) => {
           <MenuItem value="Student">Student</MenuItem>
           <MenuItem value="Architect">Architect</MenuItem>
           <MenuItem value="Enterprise">Enterprise</MenuItem>
-        </Select> 
+        </Select>
         </FormControl>
-
         <Box
           sx={{
             alignItems: 'center',

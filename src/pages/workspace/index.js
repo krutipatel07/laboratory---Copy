@@ -197,7 +197,7 @@ const ProductList = withRouter((props) => {
           alignItems: 'center',
           display: 'flex',
           flexWrap: 'wrap',
-          m: -1.5,
+          // m: -1.5,
           p: 3
         }}
       >
@@ -328,6 +328,7 @@ const ProductList = withRouter((props) => {
             </Select>
           </FormControl>
         </Box>
+
         <Box
           component="form"
           sx={{
@@ -335,7 +336,6 @@ const ProductList = withRouter((props) => {
             m: 1.5
           }}
         >
-
           <FormControl fullWidth>
             <InputLabel id="garages_select_label">Garages</InputLabel>
             <Select
@@ -346,6 +346,7 @@ const ProductList = withRouter((props) => {
               label="Garages"
               onChange={handleChange}
             >
+              <MenuItem value={0}>0</MenuItem>
               <MenuItem value={1}>1</MenuItem>
               <MenuItem value={2}>2</MenuItem>
               <MenuItem value={3}>3</MenuItem>
@@ -390,13 +391,10 @@ const ProductList = withRouter((props) => {
                 />
               </Grid>
               )}
-
               <Grid item>
                 <Typography variant="h4">
                   Designs
                 </Typography>
-              </Grid>
-              <Grid item>
               </Grid>
             </Grid>
           </Box>
