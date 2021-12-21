@@ -16,6 +16,8 @@ import { makeStyles } from '@material-ui/styles';
 import Stack from '@mui/material/Stack';
 import { purple } from '@mui/material/colors';
 import { styled } from '@mui/material/styles';
+import axios from 'axios'
+import toast from 'react-hot-toast';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -60,6 +62,7 @@ const ColorButton = styled(Button)(({ theme }) => ({
 
 const VariantCard = (props) => {
     const {
+        designId,
         title,
         members,
         comments,
@@ -68,6 +71,12 @@ const VariantCard = (props) => {
     } = props;
 
     const classes = useStyles();
+
+    const deleteDesign = async () => {
+      const deleted = await axios.delete(`/api/projects/_/design/${designId}`);
+      deleted && toast.success("Design deleted");
+      location.reload();
+    }
     
   return (
     <NextLink

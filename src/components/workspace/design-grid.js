@@ -37,7 +37,8 @@ export default function DesignGrid({projectId}) {
                   <Grid item 
                   key = {design.id}
                   xs>
-                      <VariantCard                     
+                      <VariantCard
+                      designId = {design.id}                     
                       title={design.title}
                       members = {1}
                       comments = {design.comments.length}
