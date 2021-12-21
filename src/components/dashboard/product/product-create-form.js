@@ -306,7 +306,7 @@ export const ProductCreateForm = (props) => {
                   }}
                   placeholder="enter name or email"
               />
-              <MemberList/>
+              {/* <MemberList/> */}
             </Grid>
           </Grid>
         </CardContent>
