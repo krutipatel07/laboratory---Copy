@@ -27,7 +27,13 @@ const DesignSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    comments: [CommentSchema]
+    comments: [CommentSchema],
+    collaborators: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+      }
+    ]
   },
   {
     toJSON: {
