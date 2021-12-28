@@ -14,6 +14,7 @@ import {
 import { styled } from '@mui/material/styles';
 import { Menu as MenuIcon } from '../../icons/menu';
 import { AccountPopover } from '../dashboard/account-popover';
+import { SharePopover } from '../dashboard/share-popover';
 import { ContactsPopover } from '../dashboard/contacts-popover';
 import { ContentSearchDialog } from '../dashboard/content-search-dialog';
 import { NotificationsPopover } from '../dashboard/notifications-popover';
@@ -25,6 +26,9 @@ import { Users as UsersIcon } from '../../icons/users';
 import NextLink from 'next/link';
 import { Logo } from '../logo';
 import { useAuth } from '../../hooks/use-auth';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import { makeStyles } from '@material-ui/styles';
 
 
 
@@ -119,6 +123,53 @@ const ContentSearchButton = () => {
         onClose={handleCloseSearchDialog}
         open={openDialog}
       />
+    </>
+  );
+};
+
+const ShareButton = () => {
+  const anchorRef = useRef(null);
+  const [openPopover, setOpenPopover] = useState(false);
+  // To get the user from the authContext, you can use
+  const { user } = useAuth();
+
+  const handleOpenPopover = () => {
+    setOpenPopover(true);
+  };
+
+  const handleClosePopover = () => {
+    setOpenPopover(false);
+  };
+
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+    },
+    sharebtn: {
+      fontWeight: 'bold',
+      fontSize: '0.875rem',
+      padding: '7px 11px',
+      borderRadius: '8px',
+      color: 'white',
+      transition: 'all 150ms ease',
+      cursor: 'pointer',
+      border: 'none',
+      backgroundColor: '#007FFF',
+    },
+  }));
+  const classes = useStyles();
+
+  return (
+    <>
+      <Stack spacing={2} direction="row" onClick={handleOpenPopover}
+        ref={anchorRef}>
+        <Button variant="contained" className={classes.sharebtn}>Share</Button>
+      </Stack>
+      <SharePopover
+        anchorEl={anchorRef.current}
+        onClose={handleClosePopover}
+        open={openPopover}
+      /> 
     </>
   );
 };
@@ -288,6 +339,7 @@ export const WorkspaceNavbar = (props) => {
           <Box sx={{ flexGrow: 1 }} />
           {/*<LanguageButton />*/}
           {/*<ContentSearchButton />*/}
+          <ShareButton/>
           <ContactsButton />
           <NotificationsButton />
           <AccountButton />
