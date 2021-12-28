@@ -16,6 +16,6 @@ export default async (req, res) => {
         subject: "Join collaborative workspace",
         text: message,
         html: message.replace(/\r\n/g, '<br>')
-    }
+        }
     mail.send(data);
 }
