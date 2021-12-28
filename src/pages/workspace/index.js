@@ -180,14 +180,6 @@ const ProductList = withRouter((props) => {
     addDesign(data.data);
   };
 
-  const handleClick = async (event) => {
-    event.preventDefault();
-    const isEmailSent = await axios.post("/api/invite", {
-      email: "kirti@maket.ca"
-    })
-    .catch(error => console.log(error));
-  }
-
   // Usually query is done on backend with indexing solutions
   const filteredProducts = applyFilters(products, filters);
   const paginatedProducts = applyPagination(filteredProducts, page, rowsPerPage);
@@ -405,7 +397,6 @@ const ProductList = withRouter((props) => {
                 </Typography>
               </Grid>
             </Grid>
-            <h1 onClick={handleClick}>hihi</h1>
           </Box>
             <DesignGrid projectId= {props.router.query.id} />
         </Container>

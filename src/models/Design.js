@@ -30,8 +30,7 @@ const DesignSchema = new mongoose.Schema(
     comments: [CommentSchema],
     collaborators: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        type: String
       }
     ]
   },

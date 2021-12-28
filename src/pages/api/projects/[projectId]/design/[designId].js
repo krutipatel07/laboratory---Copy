@@ -42,6 +42,14 @@ export default async (req, res) => {
                     { new: true }
                     );
                 }
+                if(req.body.collaborators){                    
+                    await Design.findByIdAndUpdate(designId, 
+                        { $push : { collaborators : req.body.collaborators}}, 
+                        {
+                        new: true,
+                        runValidators: true
+                    });
+                }
                 res.status(200).json({ success: true, data: design})
                 
             } catch (error) {

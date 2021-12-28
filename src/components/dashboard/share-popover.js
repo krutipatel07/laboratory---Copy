@@ -24,6 +24,7 @@ import { UserCircle as UserCircleIcon } from '../../icons/user-circle';
 import { SwitchHorizontalOutlined as SwitchHorizontalOutlinedIcon } from '../../icons/switch-horizontal-outlined';
 import { makeStyles } from '@material-ui/styles';
 import Stack from '@mui/material/Stack';
+import axios from 'axios';
 
 
 export const SharePopover = (props) => {
@@ -36,12 +37,21 @@ export const SharePopover = (props) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    function handleSubmit(event) {
-        event.preventDefault();
-        console.log( 'Email:', email); 
-       // You should see email and password in console.
-       // ..code to submit form to backend here...
+    const [designData, setDesignData] = useState();
+   
+    useEffect(() => {
+      const designId = router.query.designId;
+      axios.get(`/api/projects/_/design/${designId}`)
+      .then(res => setDesignData(res.data.data))
+      .catch(error => console.log(error));
+    }, []);
 
+    const handleSubmit = async event => {
+      event.preventDefault();
+      await axios.post("/api/invite", {
+       email,
+     })
+     .catch(error => console.log(error));
     }
 
     const useStyles = makeStyles((theme) => ({
@@ -105,27 +115,18 @@ export const SharePopover = (props) => {
         </Typography>
       </Box>
       <Box sx={{ my: 1 }}>
-
+      {designData? designData.collaborators.length? designData.collaborators.map((collaborator) => 
+          <>
           <MenuItem component="a">
             <ListItemText
               primary={(
                 <Typography variant="body1">
-                  sammy@gmail.com
+                  {collaborator}
                 </Typography>
               )}
             />
-          </MenuItem>
-
-        <Divider />
-        <MenuItem>
-          <ListItemText
-            primary={(
-              <Typography variant="body1">
-                lucia@hotmail.com
-              </Typography>
-            )}
-          />
-        </MenuItem>
+          </MenuItem> 
+          <Divider /></>): <h5>add collaborator</h5>  : <h5>loading...</h5>}
       </Box>
     </Popover>
   );
