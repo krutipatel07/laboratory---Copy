@@ -57,7 +57,7 @@ export const AccountPopover = (props) => {
         }}
       >
         <Avatar
-          src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${user.email}`}
+          src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${user.email? user.email : "Anonymous" }`}
           sx={{
             height: 40,
             width: 40
@@ -71,7 +71,7 @@ export const AccountPopover = (props) => {
           }}
         >
           <Typography variant="body1">
-            {user.email}
+          {user.email? user.email : "Anonymous" }
           </Typography>
         </Box>
       </Box>
