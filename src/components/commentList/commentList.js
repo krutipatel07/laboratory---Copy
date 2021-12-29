@@ -1,14 +1,20 @@
 
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { makeStyles } from '@material-ui/styles';
 import { Divider, Avatar, Grid, Paper } from "@material-ui/core";
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 import { useAuth } from '../../hooks/use-auth';
+import axios from 'axios'
 
 export default function CommentList({comment}) {
-    
-  const { user } = useAuth();
+  const [userName, setUserName] = useState();
+  
+  useEffect(() => {
+    axios.get(`/api/user/${comment.creator}`)
+    .then(res => setUserName(res.data.data.name))
+    .catch(error => console.log(error));
+  })
 
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -136,18 +142,18 @@ const classes = useStyles();
             <div className={classes.header}>
                 <div className={classes.userContent}>
                     <div className={classes.userAvatar}>
-                        <Avatar
+                        {userName && <Avatar
                         alt="user icon"
-                        src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${user.email}`}
+                        src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${userName}`}
                         sx={{
                             height: 40,
                             width: 40
                         }}
                         >
-                        </Avatar>
+                        </Avatar>}
                     </div>
                     <div className={classes.userName}>
-                        {user.email}
+                        {userName}
                     </div>
                 </div>
                 <div className={classes.userAction}>

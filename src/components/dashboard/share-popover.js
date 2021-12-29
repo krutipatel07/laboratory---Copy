@@ -129,9 +129,8 @@ export const SharePopover = (props) => {
         </Typography>
       </Box>
       <Box sx={{ my: 1 }}>
-      {designData? designData.collaborators.length? designData.collaborators.map((collaborator) => 
-          <>
-          <MenuItem component="a">
+      {designData? designData.collaborators.length? designData.collaborators.map((collaborator, i) => 
+          <MenuItem key={i} component="a">
             <ListItemText
               primary={(
                 <Typography variant="body1">
@@ -140,7 +139,8 @@ export const SharePopover = (props) => {
               )}
             />
           </MenuItem> 
-          <Divider /></>): <h5>add collaborator</h5>  : <h5>loading...</h5>}
+          // <Divider />
+          ): <h5>add collaborator</h5>  : <h5>loading...</h5>}
       </Box>
     </Popover>
   );
