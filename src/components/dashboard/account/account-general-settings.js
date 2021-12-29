@@ -48,7 +48,7 @@ export const AccountGeneralSettings = (props) => {
                 }}
               >
                 <Avatar
-                  src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${user.email == null ? "Anonymous" : user.email }`}
+                  src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${user.email}`}
                   sx={{
                     height: 64,
                     mr: 2,
@@ -69,7 +69,7 @@ export const AccountGeneralSettings = (props) => {
                 }}
               >
                 <TextField
-                  defaultValue={user.email == null ? "Anonymous" : user.email }
+                  defaultValue={user.email}
                   label="Full Name"
                   size="small"
                   sx={{
@@ -89,7 +89,7 @@ export const AccountGeneralSettings = (props) => {
                 }}
               >
                 <TextField
-                  defaultValue={user.email == null ? "Anonymous" : user.email }
+                  defaultValue={user.email}
                   disabled
                   label="Email Address"
                   required
