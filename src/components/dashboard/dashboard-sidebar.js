@@ -237,7 +237,7 @@ export const DashboardSidebar = (props) => {
                     color="inherit"
                     variant="subtitle1"
                   >
-                    {user.email? user.email : "Anonymous" }
+                    {user.email == null ? "Anonymous" : user.email }
                   </Typography>
                   <Typography
                     color="neutral.400"

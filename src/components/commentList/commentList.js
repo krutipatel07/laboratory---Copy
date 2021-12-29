@@ -138,7 +138,7 @@ const classes = useStyles();
                     <div className={classes.userAvatar}>
                         <Avatar
                         alt="user icon"
-                        src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${user.email? user.email : "Anonymous" }`}
+                        src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${user.email == null ? "Anonymous" : user.email }`}
                         sx={{
                             height: 40,
                             width: 40
@@ -147,7 +147,7 @@ const classes = useStyles();
                         </Avatar>
                     </div>
                     <div className={classes.userName}>
-                    ${user.email? user.email : "Anonymous" }
+                    {user.email == null ? "Anonymous" : user.email }
                     </div>
                 </div>
                 <div className={classes.userAction}>
