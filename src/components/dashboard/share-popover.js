@@ -125,7 +125,7 @@ export const SharePopover = (props) => {
       </Box>
       <Box sx={{ my: 1 }} className={classes.text}>
         <Typography className={classes.p}>
-            COLLABORATERS
+            COLLABORATORS
         </Typography>
       </Box>
       <Box sx={{ my: 1 }}>
