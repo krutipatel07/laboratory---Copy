@@ -35,7 +35,6 @@ export const SharePopover = (props) => {
   const { user } = useAuth();
 
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
 
     const [designData, setDesignData] = useState();
    
@@ -52,29 +51,48 @@ export const SharePopover = (props) => {
        email,
      })
      .catch(error => console.log(error));
+     setEmail('');
     }
 
+    
     const useStyles = makeStyles((theme) => ({
         root: {
           flexGrow: 1,
+          '& .MuiOutlinedInput-root':{
+          input: {
+            "&:-webkit-autofill": {
+              WebkitBoxShadow: "0 0 0 1000px black inset"
+            },}
+        //   '& .MuiOutlinedInput-root':{
+        //     "&:-webkit-autofill": {
+        //         WebkitBoxShadow: "0 0 0 1000px #111827 inset",
+        //       } ,
+        //   },
+        //   'input:-webkit-autofill': {backgroundColor:"#111827"},
+          }
         },
+        
         invitebtn: {
           fontWeight: 'bold',
           fontSize: '0.885rem',
           padding: '7px 27px',
           borderRadius: '8px',
           color: 'white',
-          transition: 'all 150ms ease',
+          transition: 'all 150ms ease', 
           cursor: 'pointer',
           border: 'none',
           backgroundColor: '#007FFF',
         },
         text: {
             padding: '6px 19px',
-            backgroundColor: '#212735'
+        }, 
+        p: {
+            fontWeight: 600,
+            fontSize: '1.1rem'
         }
       }));
-      const classes = useStyles();
+    const classes = useStyles();
+      
 
   return (
     <Popover
@@ -97,20 +115,16 @@ export const SharePopover = (props) => {
           fontSize: '14px'
         }}
       >
-        <form onSubmit={handleSubmit} style={{display:"inline-flex", justifyContent:'space-between', width:'100%'}}>
-            {/* <TextField             
-                value={email}
-                onInput={ e=>setEmail(e.target.value)}
-            /> */}
-            {/* <Input placeholder="Collaborater email" inputProps={ariaLabel} /> */}
+        <form onSubmit={handleSubmit} method={'post'} style={{display:"inline-flex", justifyContent:'space-between', width:'100%'}}>
             <TextField label="Collaborater email" value={email} onInput={ e=>setEmail(e.target.value)}/>
             <Stack spacing={2} direction="row">
                 <Button type="submit" variant="contained" className={classes.invitebtn}>Invite</Button>
             </Stack>
+
         </form>
       </Box>
       <Box sx={{ my: 1 }} className={classes.text}>
-        <Typography>
+        <Typography className={classes.p}>
             COLLABORATERS
         </Typography>
       </Box>

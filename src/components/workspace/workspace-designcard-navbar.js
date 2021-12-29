@@ -296,7 +296,7 @@ const AccountButton = () => {
   );
 };
 
-export const WorkspaceNavbar = (props) => {
+export const WorkspaceDesignNavbar = (props) => {
   const { onOpenSidebar, ...other } = props;
 
   return (
@@ -339,7 +339,7 @@ export const WorkspaceNavbar = (props) => {
           <Box sx={{ flexGrow: 1 }} />
           {/*<LanguageButton />*/}
           {/*<ContentSearchButton />*/}
-          {/* <ShareButton/> */}
+          <ShareButton/>
           <ContactsButton />
           <NotificationsButton />
           <AccountButton />
@@ -349,6 +349,6 @@ export const WorkspaceNavbar = (props) => {
   );
 };
 
-WorkspaceNavbar.propTypes = {
+WorkspaceDesignNavbar.propTypes = {
   onOpenSidebar: PropTypes.func
 };
