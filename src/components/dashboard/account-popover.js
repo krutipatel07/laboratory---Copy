@@ -19,7 +19,7 @@ import { UserCircle as UserCircleIcon } from '../../icons/user-circle';
 import { SwitchHorizontalOutlined as SwitchHorizontalOutlinedIcon } from '../../icons/switch-horizontal-outlined';
 
 export const AccountPopover = (props) => {
-  const { anchorEl, onClose, open, ...other } = props;
+  const { anchorEl, onClose, open, userName, ...other } = props;
   const router = useRouter();
   const { logout } = useAuth();
   // To get the user from the authContext, you can use
@@ -57,7 +57,7 @@ export const AccountPopover = (props) => {
         }}
       >
         <Avatar
-          src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${user.email}`}
+          src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${userName}`}
           sx={{
             height: 40,
             width: 40
@@ -71,7 +71,7 @@ export const AccountPopover = (props) => {
           }}
         >
           <Typography variant="body1">
-            {user.email}
+            {userName}
           </Typography>
         </Box>
       </Box>

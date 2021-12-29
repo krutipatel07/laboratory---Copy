@@ -1,3 +1,5 @@
+import { useState, useEffect} from 'react';
+import axios from 'axios';
 import {
   Avatar,
   Box,
@@ -15,7 +17,16 @@ import { useAuth } from '../../../hooks/use-auth';
 
 export const AccountGeneralSettings = (props) => {
   // To get the user from the authContext, you can use
-  const { user } = useAuth();
+  // const { user } = useAuth();
+  
+  const [user, setUser] = useState();
+  
+  useEffect(() => {
+    const user = localStorage.getItem("lab-user");
+    axios.get(`/api/user/${user}`)
+    .then(res => setUser(res.data.data))
+    .catch(error => console.log(error));
+  })
 
   return (
     <Box
@@ -47,8 +58,8 @@ export const AccountGeneralSettings = (props) => {
                   display: 'flex'
                 }}
               >
-                <Avatar
-                  src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${user.email}`}
+                {user && <Avatar
+                  src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${user.name}`}
                   sx={{
                     height: 64,
                     mr: 2,
@@ -56,7 +67,7 @@ export const AccountGeneralSettings = (props) => {
                   }}
                 >
                   <UserCircleIcon fontSize="small" />
-                </Avatar>
+                </Avatar> }
                 <Button>
                   Change
                 </Button>
@@ -68,15 +79,15 @@ export const AccountGeneralSettings = (props) => {
                   alignItems: 'center'
                 }}
               >
-                <TextField
-                  defaultValue={user.email}
+                {user && <TextField
+                  defaultValue={user.name}
                   label="Full Name"
                   size="small"
                   sx={{
                     flexGrow: 1,
                     mr: 3
                   }}
-                />
+                />}
                 <Button>
                   Save
                 </Button>
@@ -88,7 +99,7 @@ export const AccountGeneralSettings = (props) => {
                   alignItems: 'center'
                 }}
               >
-                <TextField
+                { user && <TextField
                   defaultValue={user.email}
                   disabled
                   label="Email Address"
@@ -101,7 +112,7 @@ export const AccountGeneralSettings = (props) => {
                       borderStyle: 'dashed'
                     }
                   }}
-                />
+                />}
                 <Button>
                   Edit
                 </Button>

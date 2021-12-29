@@ -16,6 +16,7 @@ import { Scrollbar } from '../scrollbar';
 import { DashboardSidebarSection } from './dashboard-sidebar-section';
 import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import { useAuth } from '../../hooks/use-auth';
+import axios from 'axios'
 
 const getSections = (t) => [
   {
@@ -169,7 +170,7 @@ export const DashboardSidebar = (props) => {
     noSsr: true
   });
   const sections = useMemo(() => getSections(t), [t]);
-  const { user } = useAuth();
+  // const { user } = useAuth();
 
   const handlePathChange = () => {
     if (!router.isReady) {
@@ -180,6 +181,15 @@ export const DashboardSidebar = (props) => {
       onClose?.();
     }
   };
+  
+  const [user, setUser] = useState();
+  
+  useEffect(() => {
+    const user = localStorage.getItem("lab-user");
+    axios.get(`/api/user/${user}`)
+    .then(res => setUser(res.data.data))
+    .catch(error => console.log(error));
+  },[])
 
   useEffect(handlePathChange,
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -233,11 +243,11 @@ export const DashboardSidebar = (props) => {
                 }}
               >
                 <div>
-                  <Typography
+                  {user ? <><Typography
                     color="inherit"
                     variant="subtitle1"
                   >
-                    {user.email}
+                    {user.name}
                   </Typography>
                   <Typography
                     color="neutral.400"
@@ -245,8 +255,8 @@ export const DashboardSidebar = (props) => {
                   >
                     {t('Your tier')}
                     {' '}
-                    : Student
-                  </Typography>
+                    : {user.tier}
+                  </Typography></> : <h3>loading...</h3>}
                 </div>
               </Box>
             </Box>

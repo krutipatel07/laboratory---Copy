@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import {
@@ -23,6 +23,7 @@ import { UserCircle as UserCircleIcon } from '../../icons/user-circle';
 import { Search as SearchIcon } from '../../icons/search';
 import { Users as UsersIcon } from '../../icons/users';
 import { useAuth } from '../../hooks/use-auth';
+import axios from 'axios';
 
 const languages = {
   en: '/static/icons/uk_flag.svg',
@@ -197,10 +198,19 @@ const NotificationsButton = () => {
 };
 
 const AccountButton = () => {
+  const [userName, setUserName] = useState();
+  
+  useEffect(() => {
+    const user = localStorage.getItem("lab-user");
+    axios.get(`/api/user/${user}`)
+    .then(res => setUserName(res.data.data.name))
+    .catch(error => console.log(error));
+  })
+
   const anchorRef = useRef(null);
   const [openPopover, setOpenPopover] = useState(false);
   // To get the user from the authContext, you can use
-  const { user } = useAuth();
+  // const { user } = useAuth();
 
   const handleOpenPopover = () => {
     setOpenPopover(true);
@@ -222,20 +232,21 @@ const AccountButton = () => {
           ml: 2
         }}
       >
-        <Avatar
+        {userName && <Avatar
           sx={{
             height: 40,
             width: 40
           }}
-          src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${user.email}`}
+          src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${userName}`}
         >
           <UserCircleIcon fontSize="small" />
-        </Avatar>
+        </Avatar> }
       </Box>
       <AccountPopover
         anchorEl={anchorRef.current}
         onClose={handleClosePopover}
         open={openPopover}
+        userName={userName}
       />
     </>
   );
