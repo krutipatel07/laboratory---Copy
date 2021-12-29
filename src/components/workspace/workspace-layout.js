@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import { WorkspaceNavbar } from './workspace-navbar';
 import { Box } from '@mui/material';
+import { WorkspaceDesignNavbar } from './workspace-designcard-navbar'
+import { useRouter } from 'next/router';
 
 const WorkspaceLayoutRoot = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -14,6 +16,7 @@ const WorkspaceLayoutRoot = styled('div')(({ theme }) => ({
 export const WorkspaceLayout = (props) => {
   const { children } = props;
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const router = useRouter();
 
   return (
     <>
@@ -29,7 +32,13 @@ export const WorkspaceLayout = (props) => {
           {children}
         </Box>
       </WorkspaceLayoutRoot>
+      {
+      router.query.designId ? 
+      <WorkspaceDesignNavbar onOpenSidebar={() => setIsSidebarOpen(true)} /> :
       <WorkspaceNavbar onOpenSidebar={() => setIsSidebarOpen(true)} />
+      }
+      
+      
     </>
   );
 };

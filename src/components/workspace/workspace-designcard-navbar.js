@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import {
@@ -29,7 +29,7 @@ import { useAuth } from '../../hooks/use-auth';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
-import axios from 'axios'
+
 
 
 const languages = {
@@ -255,16 +255,7 @@ const AccountButton = () => {
   const anchorRef = useRef(null);
   const [openPopover, setOpenPopover] = useState(false);
   // To get the user from the authContext, you can use
-  // const { user } = useAuth();
-  
-  const [userName, setUserName] = useState();
-  
-  useEffect(() => {
-    const user = localStorage.getItem("lab-user");
-    axios.get(`/api/user/${user}`)
-    .then(res => setUserName(res.data.data.name))
-    .catch(error => console.log(error));
-  })
+  const { user } = useAuth();
 
   const handleOpenPopover = () => {
     setOpenPopover(true);
@@ -286,27 +277,26 @@ const AccountButton = () => {
           ml: 2
         }}
       >
-        {userName && <Avatar
+        <Avatar
           sx={{
             height: 40,
             width: 40
           }}
-          src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${userName}`}
+          src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${user.email}`}
         >
           <UserCircleIcon fontSize="small" />
-        </Avatar>}
+        </Avatar>
       </Box>
       <AccountPopover
         anchorEl={anchorRef.current}
         onClose={handleClosePopover}
         open={openPopover}
-        userName={userName}
       />
     </>
   );
 };
 
-export const WorkspaceNavbar = (props) => {
+export const WorkspaceDesignNavbar = (props) => {
   const { onOpenSidebar, ...other } = props;
 
   return (
@@ -349,7 +339,7 @@ export const WorkspaceNavbar = (props) => {
           <Box sx={{ flexGrow: 1 }} />
           {/*<LanguageButton />*/}
           {/*<ContentSearchButton />*/}
-          {/* <ShareButton/> */}
+          <ShareButton/>
           <ContactsButton />
           <NotificationsButton />
           <AccountButton />
@@ -359,6 +349,6 @@ export const WorkspaceNavbar = (props) => {
   );
 };
 
-WorkspaceNavbar.propTypes = {
+WorkspaceDesignNavbar.propTypes = {
   onOpenSidebar: PropTypes.func
 };

@@ -25,6 +25,7 @@ import axios from 'axios';
 import { withRouter } from 'next/router';
 import CommentList from '../../components/commentList/commentList';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
+import {WorkspaceDesignNavbar} from '../../components/workspace/workspace-designcard-navbar'
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -155,6 +156,7 @@ const ProductList = withRouter((props) => {
           Variant | Maket Colaboratory
         </title>
       </Head>
+      
       <Box
         sx={{
           alignItems: 'center',
@@ -165,6 +167,7 @@ const ProductList = withRouter((props) => {
           p: 3
         }}
       >
+        <WorkspaceDesignNavbar/>
         <Box>         
           <NextLink
           href={`/workspace?id=${props.router.query.projectId}`}
@@ -191,7 +194,7 @@ const ProductList = withRouter((props) => {
         <Grid container spacing={2}>
           <Grid item xs={8}>
 
-            <Container maxWidth="xl">
+            <Container maxWidth="xl"> 
           {/* <Box sx={{ mb: 4 }}>
             <Grid
               container
