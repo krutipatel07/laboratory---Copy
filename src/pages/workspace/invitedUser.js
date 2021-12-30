@@ -13,19 +13,15 @@ import { Box,
   TextField,
   Typography } from '@mui/material';
 import { productApi } from '../../__fake-api__/product-api';
-import { withAuthGuard } from '../../hocs/with-auth-guard';
 import { withWorkspaceLayout } from '../../hocs/with-workspace-layout';
 import { useMounted } from '../../hooks/use-mounted';
 import { gtm } from '../../lib/gtm';
-import { OverviewBanner } from '../../components/dashboard/overview/overview-banner';
-import { Search as SearchIcon } from '../../icons/search';
 import Paper from '@mui/material/Paper';
 import BottomNav from "../../components/workspace/variant/variant-bottomNav";
 import axios from 'axios';
 import { withRouter } from 'next/router';
 import CommentList from '../../components/commentList/commentList';
-import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
-import {WorkspaceDesignNavbar} from '../../components/workspace/workspace-designcard-navbar'
+import {InvitedUserNavbar} from '../../components/workspace/workspace-inviteduser-navbar'
 import {InvitedUserModal} from "../../components/workspace/invitedUserModal/invitedUserModal"
 
 const applyFilters = (products, filters) => products.filter((product) => {
@@ -70,7 +66,7 @@ const applyFilters = (products, filters) => products.filter((product) => {
 const applyPagination = (products, page, rowsPerPage) => products.slice(page * rowsPerPage,
   page * rowsPerPage + rowsPerPage);
 
-const ProductList = withRouter((props) => {
+const InvitedUSerPage = withRouter((props) => {
   
   const isMounted = useMounted();
   const [products, setProducts] = useState([]);
@@ -158,7 +154,7 @@ const ProductList = withRouter((props) => {
         </title>
       </Head>
       
-      <Box
+       <Box
         sx={{
           alignItems: 'center',
           display: 'flex',
@@ -168,21 +164,7 @@ const ProductList = withRouter((props) => {
           p: 3
         }}
       >
-        <WorkspaceDesignNavbar/>
-        <Box>         
-          <NextLink
-          href={`/workspace?id=${props.router.query.projectId}`}
-          passHref
-        >
-            <Button
-              sx={{ m: 1.5 }}
-              component="a"
-              variant="text"
-            >
-              <ArrowBackOutlinedIcon/>
-            </Button>
-          </NextLink>
-        </Box>
+        {/* <InvitedUserNavbar/> */}
       </Box>
 
       <Box
@@ -196,26 +178,7 @@ const ProductList = withRouter((props) => {
           <Grid item xs={8}>
 
             <Container maxWidth="xl"> 
-          {/* <Box sx={{ mb: 4 }}>
-            <Grid
-              container
-              justifyContent="space-between"
-              spacing={3}
-            >
-              {displayBanner && (
-              <Grid
-                item
-                xs={12}
-              >
-                <OverviewBanner
-                onDismiss={handleDismissBanner}
-                title="Welcome to your design variant!"
-                blurb="This is where you and your collaborators can comment on and discuss the specifics of each design option you create."
-                />
-              </Grid>
-              )}
-            </Grid>
-          </Box> */}
+          
           <Box
         sx={{
           maxWidth: 980,
@@ -268,9 +231,10 @@ const ProductList = withRouter((props) => {
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
           <BottomNav/>
         </Paper>
+        <InvitedUserModal/>
       </Box>
     </>
   );
 })
 
-export default withAuthGuard(withWorkspaceLayout(ProductList));
+export default withWorkspaceLayout(InvitedUSerPage);

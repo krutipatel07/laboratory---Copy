@@ -14,6 +14,7 @@ import {
 import { styled } from '@mui/material/styles';
 import { Menu as MenuIcon } from '../../icons/menu';
 import { AccountPopover } from '../dashboard/account-popover';
+import { SharePopover } from '../dashboard/share-popover';
 import { ContactsPopover } from '../dashboard/contacts-popover';
 import { ContentSearchDialog } from '../dashboard/content-search-dialog';
 import { NotificationsPopover } from '../dashboard/notifications-popover';
@@ -24,7 +25,6 @@ import { Search as SearchIcon } from '../../icons/search';
 import { Users as UsersIcon } from '../../icons/users';
 import NextLink from 'next/link';
 import { Logo } from '../logo';
-import { useAuth } from '../../hooks/use-auth';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
@@ -37,7 +37,7 @@ const languages = {
   es: '/static/icons/es_flag.svg'
 };
 
-const WorkspaceNavbarRoot = styled(AppBar)(({ theme }) => ({
+const InvitedUserNavbar = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   ...(theme.palette.mode === 'light'
     ? {
@@ -97,117 +97,12 @@ const LanguageButton = () => {
   );
 };
 
-const ContentSearchButton = () => {
-  const [openDialog, setOpenDialog] = useState(false);
-
-  const handleOpenSearchDialog = () => {
-    setOpenDialog(true);
-  };
-
-  const handleCloseSearchDialog = () => {
-    setOpenDialog(false);
-  };
-
-  return (
-    <>
-      <Tooltip title="Search">
-        <IconButton
-          onClick={handleOpenSearchDialog}
-          sx={{ ml: 1 }}
-        >
-          <SearchIcon fontSize="small" />
-        </IconButton>
-      </Tooltip>
-      <ContentSearchDialog
-        onClose={handleCloseSearchDialog}
-        open={openDialog}
-      />
-    </>
-  );
-};
-
-const ContactsButton = () => {
-  const anchorRef = useRef(null);
-  const [openPopover, setOpenPopover] = useState(false);
-
-  const handleOpenPopover = () => {
-    setOpenPopover(true);
-  };
-
-  const handleClosePopover = () => {
-    setOpenPopover(false);
-  };
-
-  return (
-    <>
-      <Tooltip title="Contacts">
-        <IconButton
-          onClick={handleOpenPopover}
-          sx={{ ml: 1 }}
-          ref={anchorRef}
-        >
-          <UsersIcon fontSize="small" />
-        </IconButton>
-      </Tooltip>
-      <ContactsPopover
-        anchorEl={anchorRef.current}
-        onClose={handleClosePopover}
-        open={openPopover}
-      />
-    </>
-  );
-};
-
-const NotificationsButton = () => {
-  const anchorRef = useRef(null);
-  const [unread, setUnread] = useState(0);
-  const [openPopover, setOpenPopover] = useState(false);
-  // Unread notifications should come from a context and be shared with both this component and
-  // notifications popover. To simplify the demo, we get it from the popover
-
-  const handleOpenPopover = () => {
-    setOpenPopover(true);
-  };
-
-  const handleClosePopover = () => {
-    setOpenPopover(false);
-  };
-
-  const handleUpdateUnread = (value) => {
-    setUnread(value);
-  };
-
-  return (
-    <>
-      <Tooltip title="Notifications">
-        <IconButton
-          ref={anchorRef}
-          sx={{ ml: 1 }}
-          onClick={handleOpenPopover}
-        >
-          <Badge
-            color="error"
-            badgeContent={unread}
-          >
-            <BellIcon fontSize="small" />
-          </Badge>
-        </IconButton>
-      </Tooltip>
-      <NotificationsPopover
-        anchorEl={anchorRef.current}
-        onClose={handleClosePopover}
-        onUpdateUnread={handleUpdateUnread}
-        open={openPopover}
-      />
-    </>
-  );
-};
 
 const AccountButton = () => {
   const anchorRef = useRef(null);
   const [openPopover, setOpenPopover] = useState(false);
   // To get the user from the authContext, you can use
-  const { user } = useAuth();
+  
 
   const handleOpenPopover = () => {
     setOpenPopover(true);
@@ -248,7 +143,7 @@ const AccountButton = () => {
   );
 };
 
-export const WorkspaceNavbar = (props) => {
+export const WorkspaceDesignNavbar = (props) => {
   const { onOpenSidebar, ...other } = props;
 
   return (
@@ -263,36 +158,10 @@ export const WorkspaceNavbar = (props) => {
             px: 2
           }}
         >
-        <NextLink
-                href="/"
-                passHref
-              >
-                <a>
-                  <Logo
-                    sx={{
-                      height: 42,
-                      width: 42,
-                    }}
-                    variant="primary"
-                  />
-                </a>
-              </NextLink>
-          <IconButton
-            onClick={onOpenSidebar}
-            sx={{
-              display: {
-                xs: 'inline-flex',
-                lg: 'none'
-              }
-            }}
-          >
-            <MenuIcon fontSize="small" />
-          </IconButton>
+
           <Box sx={{ flexGrow: 1 }} />
           {/*<LanguageButton />*/}
           {/*<ContentSearchButton />*/}
-          <ContactsButton />
-          <NotificationsButton />
           <AccountButton />
         </Toolbar>
       </WorkspaceNavbarRoot>
@@ -300,6 +169,6 @@ export const WorkspaceNavbar = (props) => {
   );
 };
 
-WorkspaceNavbar.propTypes = {
+InvitedUserNavbar.propTypes = {
   onOpenSidebar: PropTypes.func
 };
