@@ -65,11 +65,13 @@ export const InvitedUserModal = (props) => {
     }
   });
 
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
     const owner = localStorage.getItem("lab-user");
-    owner && setOpen(true)
+    if (!owner) {
+      setOpen(true);
+    }
   },[])
 
    return (
