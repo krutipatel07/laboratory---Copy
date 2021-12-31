@@ -164,7 +164,7 @@ const InvitedUSerPage = withRouter((props) => {
           p: 3
         }}
       >
-        <InvitedUserNavbar/>
+        {/* <InvitedUserNavbar/> */}
       </Box>
 
       <Box

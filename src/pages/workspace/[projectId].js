@@ -25,7 +25,6 @@ import axios from 'axios';
 import { withRouter } from 'next/router';
 import CommentList from '../../components/commentList/commentList';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
-import {WorkspaceDesignNavbar} from '../../components/workspace/workspace-designcard-navbar'
 import {InvitedUserModal} from "../../components/workspace/invitedUserModal/invitedUserModal"
 
 const applyFilters = (products, filters) => products.filter((product) => {
@@ -168,7 +167,6 @@ const ProductList = withRouter((props) => {
           p: 3
         }}
       >
-        <WorkspaceDesignNavbar/>
         <Box>         
           <NextLink
           href={`/workspace?id=${props.router.query.projectId}`}

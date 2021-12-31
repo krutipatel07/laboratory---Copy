@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import { WorkspaceNavbar } from './workspace-navbar';
 import { Box } from '@mui/material';
-import { WorkspaceDesignNavbar } from './workspace-designcard-navbar'
 import { useRouter } from 'next/router';
 import { InvitedUserModal } from './invitedUserModal/invitedUserModal';
 import {InvitedUserNavbar} from '../../components/workspace/workspace-inviteduser-navbar'
@@ -34,11 +33,8 @@ export const WorkspaceLayout = (props) => {
           {children}
         </Box>
       </WorkspaceLayoutRoot>
-      {
-      router.query.designId ? 
-      <WorkspaceDesignNavbar onOpenSidebar={() => setIsSidebarOpen(true)} /> :
+
       <WorkspaceNavbar onOpenSidebar={() => setIsSidebarOpen(true)} />
-      }
       
       {/* <InvitedUserNavbar/> */}
       
