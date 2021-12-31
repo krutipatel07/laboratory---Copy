@@ -22,6 +22,7 @@ import * as React from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 
 export const InvitedUserModal = (props) => {
   const isMounted = useMounted();
@@ -82,6 +83,7 @@ export const InvitedUserModal = (props) => {
    return (
     <div {...props}>
       <Dialog open={open}>
+        <DialogTitle>Please confirm your identity</DialogTitle>
         <DialogContent>
             <form
             noValidate
@@ -110,18 +112,6 @@ export const InvitedUserModal = (props) => {
                 onChange={formik.handleChange}
                 type="email"
                 value={formik.values.email}
-                />
-                <TextField
-                error={Boolean(formik.touched.name && formik.touched.password && formik.errors.password)}
-                fullWidth
-                helperText={formik.touched.password && formik.errors.password}
-                label="Password"
-                margin="dense"
-                name="password"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                type="password"
-                value={formik.values.password}
                 />
                 <DialogActions>
                     <Box sx={{ mt: 2 }}>
