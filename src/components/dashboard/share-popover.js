@@ -118,7 +118,7 @@ export const SharePopover = (props) => {
         }}
       >
         <form onSubmit={handleSubmit} method={'post'} style={{display:"inline-flex", justifyContent:'space-between', width:'100%'}}>
-            <TextField label="Collaborater email" value={email} onInput={ e=>setEmail(e.target.value)}/>
+            <TextField label="Collaborator email" value={email} onInput={ e=>setEmail(e.target.value)}/>
             <Stack spacing={2} direction="row">
                 <Button type="submit" variant="contained" className={classes.invitebtn}>Invite</Button>
             </Stack>

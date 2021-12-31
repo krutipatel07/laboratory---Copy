@@ -37,7 +37,7 @@ const languages = {
   es: '/static/icons/es_flag.svg'
 };
 
-const InvitedUserNavbar = styled(AppBar)(({ theme }) => ({
+const WorkspaceNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   ...(theme.palette.mode === 'light'
     ? {
@@ -143,7 +143,7 @@ const AccountButton = () => {
   );
 };
 
-export const WorkspaceDesignNavbar = (props) => {
+export const InvitedUserNavbar = (props) => {
   const { onOpenSidebar, ...other } = props;
 
   return (
