@@ -196,26 +196,26 @@ const ProductList = withRouter((props) => {
           <Grid item xs={8}>
 
             <Container maxWidth="xl"> 
-          {/* <Box sx={{ mb: 4 }}>
-            <Grid
-              container
-              justifyContent="space-between"
-              spacing={3}
-            >
-              {displayBanner && (
-              <Grid
-                item
-                xs={12}
-              >
-                <OverviewBanner
-                onDismiss={handleDismissBanner}
-                title="Welcome to your design variant!"
-                blurb="This is where you and your collaborators can comment on and discuss the specifics of each design option you create."
-                />
-              </Grid>
-              )}
-            </Grid>
-          </Box> */}
+              <Box sx={{ mb: 4 }}>
+                <Grid
+                  container
+                  justifyContent="space-between"
+                  spacing={3}
+                >
+                  {displayBanner && (
+                  <Grid
+                    item
+                    xs={12}
+                  >
+                    <OverviewBanner
+                    onDismiss={handleDismissBanner}
+                    title="Welcome to your design variant!"
+                    blurb="This is where you and your collaborators can comment on and discuss the specifics of each design option you create."
+                    />
+                  </Grid>
+                  )}
+                </Grid>
+              </Box>
           <Box
         sx={{
           maxWidth: 980,

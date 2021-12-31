@@ -6,6 +6,7 @@ import { Box } from '@mui/material';
 import { WorkspaceDesignNavbar } from './workspace-designcard-navbar'
 import { useRouter } from 'next/router';
 import { InvitedUserModal } from './invitedUserModal/invitedUserModal';
+import {InvitedUserNavbar} from '../../components/workspace/workspace-inviteduser-navbar'
 
 const WorkspaceLayoutRoot = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -38,7 +39,7 @@ export const WorkspaceLayout = (props) => {
       <WorkspaceDesignNavbar onOpenSidebar={() => setIsSidebarOpen(true)} /> :
       <WorkspaceNavbar onOpenSidebar={() => setIsSidebarOpen(true)} />
       }
-      
+      <InvitedUserNavbar/>
     </>
   );
 };

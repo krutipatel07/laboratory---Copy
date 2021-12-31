@@ -102,7 +102,7 @@ const AccountButton = () => {
   const anchorRef = useRef(null);
   const [openPopover, setOpenPopover] = useState(false);
   // To get the user from the authContext, you can use
-  
+  const [userName, setUserName] = useState();
 
   const handleOpenPopover = () => {
     setOpenPopover(true);
@@ -129,7 +129,7 @@ const AccountButton = () => {
             height: 40,
             width: 40
           }}
-          src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${user.email}`}
+          src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${userName}`}
         >
           <UserCircleIcon fontSize="small" />
         </Avatar>
