@@ -28,6 +28,7 @@ import { Logo } from '../logo';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
+import DownloadIcon from '@mui/icons-material/Download';
 
 
 
@@ -97,6 +98,47 @@ const LanguageButton = () => {
   );
 };
 
+const ExportButton = () => {
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+    },
+    sharebtn: {
+      fontWeight: 'bold',
+      fontSize: '0.875rem',
+      padding: '7px 11px',
+      borderRadius: '8px',
+      color: 'white',
+      transition: 'all 150ms ease',
+      cursor: 'pointer',
+      border: 'none',
+      backgroundColor: '#007FFF',
+    },
+  }));
+  const classes = useStyles();
+
+  return (
+    <>
+      <Box
+        component={ButtonBase}
+        sx={{
+          alignItems: 'center',
+          display: 'flex',
+          ml: 2
+        }}
+      >
+        <Stack spacing={2} direction="row">
+          <Button variant="contained" className={classes.sharebtn}>
+            Export Design
+            <DownloadIcon style={{marginLeft:"10px"}}/>
+          </Button>
+          
+        </Stack>
+      </Box>
+    </>
+  );
+};
+
 
 const AccountButton = () => {
   const anchorRef = useRef(null);
@@ -162,6 +204,7 @@ export const InvitedUserNavbar = (props) => {
           <Box sx={{ flexGrow: 1 }} />
           {/*<LanguageButton />*/}
           {/*<ContentSearchButton />*/}
+          <ExportButton/>
           <AccountButton />
         </Toolbar>
       </WorkspaceNavbarRoot>

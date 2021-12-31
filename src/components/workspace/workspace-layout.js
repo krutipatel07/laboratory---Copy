@@ -39,7 +39,10 @@ export const WorkspaceLayout = (props) => {
       <WorkspaceDesignNavbar onOpenSidebar={() => setIsSidebarOpen(true)} /> :
       <WorkspaceNavbar onOpenSidebar={() => setIsSidebarOpen(true)} />
       }
-      <InvitedUserNavbar/>
+      
+      {/* <InvitedUserNavbar/> */}
+      
+      
     </>
   );
 };
