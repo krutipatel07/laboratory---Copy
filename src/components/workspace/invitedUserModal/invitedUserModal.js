@@ -19,6 +19,7 @@ import { useMounted } from '../../../hooks/use-mounted';
 import axios from 'axios'
 import toast from 'react-hot-toast';
 import * as React from 'react';
+import {useEffect} from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -60,16 +61,16 @@ export const InvitedUserModal = (props) => {
             .catch(error => console.log(error));
             localStorage.setItem("lab-user", data.data.id);
       }
-      handleClose();
+      setOpen(false);
     }
   });
 
-
   const [open, setOpen] = React.useState(true);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  useEffect(() => {
+    const owner = localStorage.getItem("lab-user");
+    owner && setOpen(true)
+  },[])
 
    return (
     <div {...props}>
