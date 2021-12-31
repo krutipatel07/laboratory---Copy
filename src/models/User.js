@@ -4,7 +4,8 @@ const dateFormat = require('../utils/dateFormat');
 const Role = {
   Student : 'Student',
   Architect : 'Architect',
-  Enterprise : 'Enterprise'
+  Enterprise : 'Enterprise',
+  Collaborator : 'Collaborator'
 }
 const Tier = {
   PROFESSIONAL : 'PROFESSIONAL',

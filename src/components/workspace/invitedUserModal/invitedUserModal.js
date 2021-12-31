@@ -43,32 +43,23 @@ export const InvitedUserModal = (props) => {
         .max(255)
         .required('Email is required'),
     }),
-    onSubmit: async (values, helpers) => {
-        console.log(values)
-        handleClose();
-    //   try {
-
-    //     if (isMounted()) {          
-    //       const {data} = await axios.post("/api/user", {
-    //         name: values.name,
-    //         email: values.email,
-    //         role: "[Collaborator]"
-    //       })
-    //       .catch(error => console.log(error));
-    //       localStorage.setItem("lab-user", data.data.id);
-
-    //       const returnUrl = router.query.returnUrl || '/dashboard/projects';
-    //       router.push(returnUrl);
-    //     }
-    //   } catch (err) {
-    //     console.error(err);
-
-    //     if (isMounted()) {
-    //       helpers.setStatus({ success: false });
-    //       helpers.setErrors({ submit: err.message });
-    //       helpers.setSubmitting(false);
-    //     }
-    //   }
+    onSubmit: async (values) => {
+      try {
+        if (isMounted()) {          
+          const {data} = await axios.get(`/api/owner/${values.email}`)
+          .catch(error => console.log(error));
+          localStorage.setItem("lab-user", data.data.id);
+        }
+      } catch (err) {
+        const {data} = await axios.post("/api/user", {
+              name: values.name,
+              email: values.email,
+              role: "Collaborator"
+            })
+            .catch(error => console.log(error));
+            localStorage.setItem("lab-user", data.data.id);
+      }
+      handleClose();
     }
   });
 
