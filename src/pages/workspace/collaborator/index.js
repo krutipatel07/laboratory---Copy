@@ -22,7 +22,6 @@ import BottomNav from "../../../components/workspace/variant/variant-bottomNav";
 import axios from 'axios';
 import { withRouter } from 'next/router';
 import CommentList from '../../../components/commentList/commentList';
-import {InvitedUserNavbar} from '../../../components/workspace/workspace-inviteduser-navbar'
 import {InvitedUserModal} from "../../../components/workspace/invitedUserModal/invitedUserModal"
 
 const applyFilters = (products, filters) => products.filter((product) => {
@@ -164,7 +163,6 @@ const InvitedUSerPage = withRouter((props) => {
           p: 3
         }}
       >
-        {/* <InvitedUserNavbar/> */}
       </Box>
 
       <Box

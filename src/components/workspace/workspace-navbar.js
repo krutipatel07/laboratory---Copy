@@ -31,8 +31,7 @@ import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/styles';
 import axios from 'axios'
 import { useRouter } from 'next/router';
-
-
+import DownloadIcon from '@mui/icons-material/Download';
 
 const languages = {
   en: '/static/icons/uk_flag.svg',
@@ -411,10 +410,9 @@ export const WorkspaceNavbar = (props) => {
             <NotificationsButton />
             </>
           }
-          <ContactsButton />
-          <NotificationsButton />
           {
-            router.query.invited && <ExportButton/>
+            // router.query.invited && <ExportButton/>
+            router.query.invite && <ExportButton/>
           }
           <AccountButton />
         </Toolbar>
