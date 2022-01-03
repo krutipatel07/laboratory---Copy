@@ -288,15 +288,26 @@ const AccountButton = () => {
           ml: 2
         }}
       >
-        {userName && <Avatar
+        {userName ? 
+          <Avatar
+            sx={{
+              height: 40,
+              width: 40
+            }}
+            src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${userName}`}
+          >
+            <UserCircleIcon fontSize="small" />
+          </Avatar> : 
+          <Avatar
           sx={{
             height: 40,
             width: 40
           }}
-          src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${userName}`}
-        >
-          <UserCircleIcon fontSize="small" />
-        </Avatar>}
+            src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=anonymous`}
+          >
+            <UserCircleIcon fontSize="small" />
+          </Avatar>
+        }
       </Box>
       <AccountPopover
         anchorEl={anchorRef.current}
