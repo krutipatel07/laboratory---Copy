@@ -411,14 +411,11 @@ export const WorkspaceNavbar = (props) => {
             <NotificationsButton />
             </>
           }
-<<<<<<< HEAD
           <ContactsButton />
           <NotificationsButton />
           {
             router.query.invited && <ExportButton/>
           }
-=======
->>>>>>> 703a577d242229483ab73a3543cfa76be8c15d16
           <AccountButton />
         </Toolbar>
       </WorkspaceNavbarRoot>
