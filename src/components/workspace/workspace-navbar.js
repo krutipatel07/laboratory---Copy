@@ -308,6 +308,47 @@ const AccountButton = () => {
   );
 };
 
+const ExportButton = () => {
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+    },
+    sharebtn: {
+      fontWeight: 'bold',
+      fontSize: '0.875rem',
+      padding: '7px 11px',
+      borderRadius: '8px',
+      color: 'white',
+      transition: 'all 150ms ease',
+      cursor: 'pointer',
+      border: 'none',
+      backgroundColor: '#007FFF',
+    },
+  }));
+  const classes = useStyles();
+
+  return (
+    <>
+      <Box
+        component={ButtonBase}
+        sx={{
+          alignItems: 'center',
+          display: 'flex',
+          ml: 2
+        }}
+      >
+        <Stack spacing={2} direction="row">
+          <Button variant="contained" className={classes.sharebtn}>
+            Export Design
+            <DownloadIcon style={{marginLeft:"10px"}}/>
+          </Button>
+          
+        </Stack>
+      </Box>
+    </>
+  );
+};
+
 export const WorkspaceNavbar = (props) => {
   const { onOpenSidebar, ...other } = props;
   const router = useRouter();
@@ -357,6 +398,9 @@ export const WorkspaceNavbar = (props) => {
           }
           <ContactsButton />
           <NotificationsButton />
+          {
+            router.query.invited && <ExportButton/>
+          }
           <AccountButton />
         </Toolbar>
       </WorkspaceNavbarRoot>

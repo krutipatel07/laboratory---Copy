@@ -34,9 +34,11 @@ export const WorkspaceLayout = (props) => {
         </Box>
       </WorkspaceLayoutRoot>
 
-      <WorkspaceNavbar onOpenSidebar={() => setIsSidebarOpen(true)} />
+      {/* <WorkspaceNavbar onOpenSidebar={() => setIsSidebarOpen(true)} /> */}
       {
-        router.query.invited && <InvitedUserNavbar/>
+        router.query.invited ?
+         <InvitedUserNavbar/> :
+         <WorkspaceNavbar onOpenSidebar={() => setIsSidebarOpen(true)} />
       }
       
       {/* <InvitedUserNavbar/> */}
