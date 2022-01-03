@@ -288,15 +288,26 @@ const AccountButton = () => {
           ml: 2
         }}
       >
-        {userName && <Avatar
+        {userName ? 
+          <Avatar
+            sx={{
+              height: 40,
+              width: 40
+            }}
+            src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${userName}`}
+          >
+            <UserCircleIcon fontSize="small" />
+          </Avatar> : 
+          <Avatar
           sx={{
             height: 40,
             width: 40
           }}
-          src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${userName}`}
-        >
-          <UserCircleIcon fontSize="small" />
-        </Avatar>}
+            src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=anonymous`}
+          >
+            <UserCircleIcon fontSize="small" />
+          </Avatar>
+        }
       </Box>
       <AccountPopover
         anchorEl={anchorRef.current}
@@ -393,14 +404,21 @@ export const WorkspaceNavbar = (props) => {
           <Box sx={{ flexGrow: 1 }} />
           {/*<LanguageButton />*/}
           {/*<ContentSearchButton />*/}
+          {router.query.projectId && <ShareButton/>}
           {
-            router.query.designId && <ShareButton/>
+            !(router.query.invite) && <>
+            <ContactsButton />
+            <NotificationsButton />
+            </>
           }
+<<<<<<< HEAD
           <ContactsButton />
           <NotificationsButton />
           {
             router.query.invited && <ExportButton/>
           }
+=======
+>>>>>>> 703a577d242229483ab73a3543cfa76be8c15d16
           <AccountButton />
         </Toolbar>
       </WorkspaceNavbarRoot>

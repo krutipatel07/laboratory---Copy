@@ -28,7 +28,7 @@ export const AccountPopover = (props) => {
   const handleLogout = async () => {
     try {
       onClose?.();
-      // await logout();
+      await logout();
       router.push('/');
     } catch (err) {
       console.error(err);
@@ -56,27 +56,40 @@ export const AccountPopover = (props) => {
           display: 'flex'
         }}
       >
-        <Avatar
-          src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${userName}`}
+        {userName ? 
+          <Avatar
+            sx={{
+              height: 40,
+              width: 40
+            }}
+            src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${userName}`}
+          >
+            <UserCircleIcon fontSize="small" />
+          </Avatar> : 
+          <Avatar
           sx={{
             height: 40,
             width: 40
           }}
-        >
-          <UserCircleIcon fontSize="small" />
-        </Avatar>
+            src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=anonymous`}
+          >
+            <UserCircleIcon fontSize="small" />
+          </Avatar>
+        }
         <Box
           sx={{
             ml: 1
           }}
         >
           <Typography variant="body1">
-            {userName}
+            {userName ? userName : "Anonymous"}
           </Typography>
         </Box>
       </Box>
       <Divider />
       <Box sx={{ my: 1 }}>
+        { !(router.query.invite) &&
+        <>
         <NextLink
           href="/dashboard/account"
           passHref
@@ -94,7 +107,8 @@ export const AccountPopover = (props) => {
             />
           </MenuItem>
         </NextLink>
-        <Divider />
+        <Divider /></>}
+
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <LogoutIcon fontSize="small" />
