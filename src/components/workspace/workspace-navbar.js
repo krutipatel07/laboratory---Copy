@@ -363,11 +363,13 @@ export const WorkspaceNavbar = (props) => {
           <Box sx={{ flexGrow: 1 }} />
           {/*<LanguageButton />*/}
           {/*<ContentSearchButton />*/}
+          {router.query.projectId && <ShareButton/>}
           {
-            router.query.designId && <ShareButton/>
+            !(router.query.invite) && <>
+            <ContactsButton />
+            <NotificationsButton />
+            </>
           }
-          <ContactsButton />
-          <NotificationsButton />
           <AccountButton />
         </Toolbar>
       </WorkspaceNavbarRoot>

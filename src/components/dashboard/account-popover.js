@@ -88,6 +88,8 @@ export const AccountPopover = (props) => {
       </Box>
       <Divider />
       <Box sx={{ my: 1 }}>
+        { !(router.query.invite) &&
+        <>
         <NextLink
           href="/dashboard/account"
           passHref
@@ -105,7 +107,8 @@ export const AccountPopover = (props) => {
             />
           </MenuItem>
         </NextLink>
-        <Divider />
+        <Divider /></>}
+
         <MenuItem onClick={handleLogout}>
           <ListItemIcon>
             <LogoutIcon fontSize="small" />
