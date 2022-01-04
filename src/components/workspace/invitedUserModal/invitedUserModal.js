@@ -46,22 +46,30 @@ export const InvitedUserModal = (props) => {
         .required('Email is required'),
     }),
     onSubmit: async (values) => {
-      try {
-        if (isMounted()) {          
-          const {data} = await axios.get(`/api/owner/${values.email}`)
-          .catch(error => console.log(error));
-          localStorage.setItem("lab-user", data.data.id);
-        }
-      } catch (err) {
-        const {data} = await axios.post("/api/user", {
-              name: values.name,
-              email: values.email,
-              role: "Collaborator"
-            })
+      const existingCollaboratorList = props.variantData.collaborators;
+      const isExisting = existingCollaboratorList.filter(collaborator => collaborator===values.email);
+      if(isExisting.length){
+        try {
+          if (isMounted()) {     
+            const {data} = await axios.get(`/api/owner/${values.email}`)
             .catch(error => console.log(error));
             localStorage.setItem("lab-user", data.data.id);
+          }
+        } catch (err) {
+          const {data} = await axios.post("/api/user", {
+                name: values.name,
+                email: values.email,
+                role: "Collaborator"
+              })
+              .catch(error => console.log(error));
+              localStorage.setItem("lab-user", data.data.id);
+        }
+        setOpen(false);
+        toast.success("Collaborator verified")
       }
-      setOpen(false);
+      else{
+        toast.error("Please enter correct email address")
+      }
     }
   });
 
