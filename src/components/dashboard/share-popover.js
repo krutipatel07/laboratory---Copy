@@ -26,13 +26,10 @@ import { makeStyles } from '@material-ui/styles';
 import Stack from '@mui/material/Stack';
 import axios from 'axios';
 
-
 export const SharePopover = (props) => {
   const { anchorEl, onClose, open, ...other } = props;
   const router = useRouter();
   const { logout } = useAuth();
-  // To get the user from the authContext, you can use
-  const { user } = useAuth();
 
     const [email, setEmail] = useState('');
 
@@ -43,16 +40,23 @@ export const SharePopover = (props) => {
       axios.get(`/api/projects/_/design/${designId}`)
       .then(res => setDesignData(res.data.data))
       .catch(error => console.log(error));
-    }, []);
+    }, [email]);
 
     const handleSubmit = async event => {
       event.preventDefault();
       const designId = router.query.designId;
-      await axios.post("/api/invite", {
+      axios.post("/api/invite", {
        email,
        designId
      })
      .catch(error => console.log(error));
+
+     await axios.put(`/api/projects/_/design/${designId}`, {
+      collaborators : email,
+    })
+    .catch(error => console.log(error));
+
+     toast.success('Collaborator invited!');
      setEmail('');
     }
 
@@ -118,7 +122,7 @@ export const SharePopover = (props) => {
         }}
       >
         <form onSubmit={handleSubmit} method={'post'} style={{display:"inline-flex", justifyContent:'space-between', width:'100%'}}>
-            <TextField label="Collaborator email" value={email} onInput={ e=>setEmail(e.target.value)}/>
+            <TextField label="Collaborator email" type="email" required value={email} onInput={ e=>setEmail(e.target.value)}/>
             <Stack spacing={2} direction="row">
                 <Button type="submit" variant="contained" className={classes.invitebtn}>Invite</Button>
             </Stack>
