@@ -319,6 +319,29 @@ const AccountButton = () => {
 };
 
 const ExportButton = () => {
+  const router = useRouter();
+  const downloadDesign = async () => {
+    // const data = await axios.get(`/api/projects/_/design/${router.query.designId}`);
+    const data = await axios.get(`/api/projects/_/design/61c117a67ce63dc2be7e1870`);
+    const file = await data.data.data.url;
+
+    axios.get(file, {
+      responseType: "blob",
+    }).then(function (response) {
+      const url = window.URL.createObjectURL(
+        new Blob([response.data], {
+          type: response.headers["content-type"],
+        })
+      );
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "maket-design.jpg");
+      document.body.appendChild(link);
+      link.click();
+    });
+  }
+
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -348,7 +371,7 @@ const ExportButton = () => {
         }}
       >
         <Stack spacing={2} direction="row">
-          <Button variant="contained" className={classes.sharebtn}>
+          <Button variant="contained" className={classes.sharebtn} onClick={() => downloadDesign()}>
             Export Design
             <DownloadIcon style={{marginLeft:"10px"}}/>
           </Button>
