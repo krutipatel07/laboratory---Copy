@@ -321,8 +321,8 @@ const AccountButton = () => {
 const ExportButton = () => {
   const router = useRouter();
   const downloadDesign = async () => {
-    // const data = await axios.get(`/api/projects/_/design/${router.query.designId}`);
-    const data = await axios.get(`/api/projects/_/design/61c117a67ce63dc2be7e1870`);
+    const data = await axios.get(`/api/projects/_/design/${router.query.designId}`);
+    // const data = await axios.get(`/api/projects/_/design/61c117a67ce63dc2be7e1870`);
     const file = await data.data.data.url;
 
     axios.get(file, {

@@ -14,7 +14,7 @@ import CommentBox from '../../../components/commentbox/commentbox';
 import Popper from '@mui/material/Popper';
 
 
-export default function BottomNav() {
+export default function BottomNav({versions}) {
   const [value, setValue] = React.useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
