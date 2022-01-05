@@ -8,7 +8,7 @@ export default async (req, res) => {
 
     Join our collaborative workspace using the link below.\r\n\r\n
 
-    https://laboratory-qrkly6btd-maket-development.vercel.app/workspace/collaborator?invite=true&designId=${body.designId}
+    https://laboratory-3zyylxeh8-maket-development.vercel.app/workspace/collaborator?invite=true&designId=${body.designId}
     `;
     const data = { 
         to: body.email,
