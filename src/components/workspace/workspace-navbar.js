@@ -162,10 +162,19 @@ const ShareButton = () => {
 
   return (
     <>
-      <Stack spacing={2} direction="row" onClick={handleOpenPopover}
-        ref={anchorRef}>
-        <Button variant="contained" className={classes.sharebtn}>Share</Button>
-      </Stack>
+      <Box
+        component={ButtonBase}
+        sx={{
+          alignItems: 'center',
+          display: 'flex',
+          ml: 2
+        }}
+      >
+        <Stack spacing={2} direction="row" onClick={handleOpenPopover}
+          ref={anchorRef}>
+          <Button variant="contained" className={classes.sharebtn}>Share</Button>
+        </Stack>
+      </Box>
       <SharePopover
         anchorEl={anchorRef.current}
         onClose={handleClosePopover}
@@ -356,6 +365,7 @@ const ExportButton = () => {
       cursor: 'pointer',
       border: 'none',
       backgroundColor: '#007FFF',
+      marginRight: '8px'
     },
   }));
   const classes = useStyles();
@@ -376,6 +386,60 @@ const ExportButton = () => {
             <DownloadIcon style={{marginLeft:"10px"}}/>
           </Button>
           
+        </Stack>
+      </Box>
+    </>
+  );
+};
+const ImportButton = () => {
+  const router = useRouter();
+
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+    },
+    importbtn: {
+      fontWeight: 'bold',
+      fontSize: '0.875rem',
+      padding: '7px 11px',
+      borderRadius: '8px',
+      color: 'white',
+      transition: 'all 150ms ease',
+      cursor: 'pointer',
+      border: 'none',
+      backgroundColor: '#007FFF',
+      marginRight: '8px'
+    },
+  }));
+  const classes = useStyles();
+
+  const importDesign = async (formData) => {
+    const config = {
+      headers: { 'content-type': 'multipart/form-data' },
+      onUploadProgress: (event) => {
+        console.log(`Current progress:`, Math.round((event.loaded * 100) / event.total));
+      },
+    };
+
+    const response = await axios.post('/api/uploads', formData, config);
+
+    console.log('response', response.data);
+  };
+
+  return (
+    <>
+      <Box
+        component={ButtonBase}
+        sx={{
+          alignItems: 'center',
+          display: 'flex',
+          ml: 2
+        }}
+      >
+        <Stack spacing={2} direction="row">
+          <Button variant="contained" className={classes.importbtn} onClick={importDesign} uploadFileName="theFiles">
+            Import
+          </Button>
         </Stack>
       </Box>
     </>
@@ -426,7 +490,8 @@ export const WorkspaceNavbar = (props) => {
           <Box sx={{ flexGrow: 1 }} />
           {/*<LanguageButton />*/}
           {/*<ContentSearchButton />*/}
-          {router.query.projectId && <ShareButton/>}
+          
+          {router.query.projectId && <><ExportButton/><ImportButton/><ShareButton/></>}
           {
             !(router.query.invite) && <>
             <ContactsButton />
@@ -434,8 +499,7 @@ export const WorkspaceNavbar = (props) => {
             </>
           }
           {
-            // router.query.invited && <ExportButton/>
-            router.query.invite && <ExportButton/>
+            router.query.invite && <><ExportButton/><ImportButton/></> 
           }
           <AccountButton />
         </Toolbar>
