@@ -12,11 +12,13 @@ import NoteIcon from '@mui/icons-material/Note';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import CommentBox from '../../../components/commentbox/commentbox';
 import Popper from '@mui/material/Popper';
+import { Button } from '@mui/material';
 
 
 export default function BottomNav() {
   const [value, setValue] = React.useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  // const [anchorE2, setAnchorE2] = React.useState(null);
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popper' : undefined;
@@ -24,6 +26,7 @@ export default function BottomNav() {
   const handleClick = (event) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
   };
+
 
   return (
     <Box>
@@ -35,19 +38,69 @@ export default function BottomNav() {
           onChange={(event, newValue) => {
             setValue(newValue);
           }}
+          style={{justifyContent:"space-around"}}
         >
-          <BottomNavigationAction label="Comment" icon={<AddCommentIcon/>} aria-describedby={id} type="button" onClick={handleClick}/>
-          <Popper id={id} open={open} anchorEl={anchorEl}>
-          <Grid container justify="flex-end">
-            <Box >              
-              <Box >
-                <CommentBox/>
+          <div>
+            <Button 
+            aria-describedby={id} 
+            type="button" 
+            onClick={handleClick}
+            style={{display:"block"}}
+            >
+              <span style={{display: "block", height:"23px"}}><AddCommentIcon/></span>  
+              Comments
+            </Button>
+
+            <Popper id={id} open={open} anchorEl={anchorEl}>
+            <Grid container justify="flex-end">
+              <Box >              
+                <Box >
+                  <CommentBox/>
+                </Box>
               </Box>
-            </Box>
-            </Grid>
-          </Popper>
-          <BottomNavigationAction label="Note" icon={<NoteIcon />} />
-          <BottomNavigationAction label="Version" icon={<FormatListBulletedIcon />} />
+              </Grid>
+            </Popper>
+          </div>
+
+          <div>
+            <Button label="Note" aria-describedby={id} type="button" style={{display:"block"}}>
+              <span style={{display: "block", height:"23px"}}><NoteIcon /></span>
+              Note
+            </Button>
+            <Popper id={id} open={open} anchorEl={anchorEl}>
+            <Grid container justify="flex-end">
+              <Box >              
+                <Box >
+                  <CommentBox/>
+                </Box>
+              </Box>
+              </Grid>
+            </Popper>
+          </div>
+          
+          <div>
+            <Button 
+            label="Note" 
+            aria-describedby={id} 
+            type="button" 
+            style={{display:"block"}} 
+            onClick={handleClick}
+            >
+              <span style={{display: "block", height:"23px"}}><NoteIcon /></span>
+              Version
+            </Button>
+            <Popper id={id} open={open} anchorEl={anchorEl}>
+            <Grid container justify="flex-end">
+              <Box >              
+                <Box >
+                  <CommentBox/>
+                </Box>
+              </Box>
+              </Grid>
+            </Popper>
+          </div>
+   
+          {/* <BottomNavigationAction label="Version" icon={<FormatListBulletedIcon />} /> */}
         </BottomNavigation>
       </Box>
     </Box>
