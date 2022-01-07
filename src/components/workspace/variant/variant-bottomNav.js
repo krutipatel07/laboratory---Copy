@@ -11,6 +11,7 @@ import AddCommentIcon from '@mui/icons-material/AddComment';
 import NoteIcon from '@mui/icons-material/Note';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import CommentBox from '../../../components/commentbox/commentbox';
+import VersionList from '../../../components/versionList/versionList';
 import Popper from '@mui/material/Popper';
 import { Button } from '@mui/material';
 
@@ -18,13 +19,18 @@ import { Button } from '@mui/material';
 export default function BottomNav({versions}) {
   const [value, setValue] = React.useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  // const [anchorE2, setAnchorE2] = React.useState(null);
+  const [anchorE2, setAnchorE2] = React.useState(null);
 
   const open = Boolean(anchorEl);
+  const open1 = Boolean(anchorE2);
   const id = open ? 'simple-popper' : undefined;
+  const id1 = open1 ? 'simple-popper' : undefined;
 
   const handleClick = (event) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+  const handleClick1 = (event) => {
+    setAnchorE2(anchorE2 ? null : event.currentTarget);
   };
 
 
@@ -81,19 +87,19 @@ export default function BottomNav({versions}) {
           <div>
             <Button 
             label="Note" 
-            aria-describedby={id} 
+            aria-describedby={id1} 
             type="button" 
             style={{display:"block"}} 
-            onClick={handleClick}
+            onClick={handleClick1}
             >
               <span style={{display: "block", height:"23px"}}><NoteIcon /></span>
               Version
             </Button>
-            <Popper id={id} open={open} anchorEl={anchorEl}>
+            <Popper id={id1} open={open1} anchorE2={anchorE2}>
             <Grid container justify="flex-end">
               <Box >              
                 <Box >
-                  <CommentBox/>
+                  <VersionList/>
                 </Box>
               </Box>
               </Grid>
