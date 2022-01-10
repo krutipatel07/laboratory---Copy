@@ -14,7 +14,7 @@ export default function CommentList({comment}) {
     axios.get(`/api/user/${comment.creator}`)
     .then(res => setUserName(res.data.data.name))
     .catch(error => console.log(error));
-  })
+  }, [comment])
 
     const useStyles = makeStyles((theme) => ({
         root: {

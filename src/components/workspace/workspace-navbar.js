@@ -393,6 +393,7 @@ const ExportButton = () => {
 };
 const ImportButton = () => {
   const router = useRouter();
+  const isVersion = router.query.isVersion;
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -436,11 +437,11 @@ const ImportButton = () => {
           ml: 2
         }}
       >
-        <Stack spacing={2} direction="row">
+        { !isVersion && <Stack spacing={2} direction="row">
           <Button variant="contained" className={classes.importbtn} onClick={importDesign} uploadFileName="theFiles">
             Import
           </Button>
-        </Stack>
+        </Stack>}
       </Box>
     </>
   );

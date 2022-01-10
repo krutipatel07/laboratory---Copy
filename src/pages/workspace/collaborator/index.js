@@ -246,7 +246,7 @@ const InvitedUSerPage = withRouter((props) => {
         </Grid>
 
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-          <BottomNav versions={variantData.versions}/>
+          <BottomNav/>
         </Paper>
         <InvitedUserModal variantData={variantData}/>
       </Box>

@@ -14,12 +14,15 @@ import CommentBox from '../../../components/commentbox/commentbox';
 import VersionList from '../../../components/versionList/versionList';
 import Popper from '@mui/material/Popper';
 import { Button } from '@mui/material';
+import { useRouter } from 'next/router';
 
 
-export default function BottomNav({versions}) {
+export default function BottomNav() {
   const [value, setValue] = React.useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [anchorE2, setAnchorE2] = React.useState(null);
+  const router = useRouter();
+  const isVersion = router.query.isVersion;
 
   const open = Boolean(anchorEl);
   const open1 = Boolean(anchorE2);
@@ -84,7 +87,7 @@ export default function BottomNav({versions}) {
             </Popper>
           </div>
           
-          <div>
+          { !isVersion && <div>
             <Button 
             label="Note" 
             aria-describedby={id1} 
@@ -104,7 +107,7 @@ export default function BottomNav({versions}) {
               </Box>
               </Grid>
             </Popper>
-          </div>
+          </div> }
    
           {/* <BottomNavigationAction label="Version" icon={<FormatListBulletedIcon />} /> */}
         </BottomNavigation>
