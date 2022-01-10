@@ -7,7 +7,7 @@ import axios from 'axios'
 import NextLink from 'next/link';
 
 const VersionList = withRouter((props) => {
-    const {projectId, designId} = props.router.query;
+    const {projectId, designId, invite} = props.router.query;
     const [versions, setVersions] = useState();
   
     useEffect(() => {
@@ -21,7 +21,7 @@ const VersionList = withRouter((props) => {
         <form>
             {versions? versions.length ? versions.map((version, i) => 
             <><NextLink
-                  href={`/workspace/${projectId}?designId=${version._id}&isVersion=true`}
+                  href={ invite ? `/workspace/collaborator?invite=true&designId=${version._id}&isVersion=true` :`/workspace/${projectId}?designId=${version._id}&isVersion=true`}
                   passHref
                 >
                 <MenuItem component="a">
