@@ -34,7 +34,7 @@ export default function DesignGrid({projectId}) {
           {projectData.designs.length ?
               projectData.designs.map((design, i) => {
                 return (                
-                  <Grid item 
+                  !design.versionOf && <Grid item 
                   key = {design.id}
                   xs>
                       <VariantCard

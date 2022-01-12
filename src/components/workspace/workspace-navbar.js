@@ -32,6 +32,7 @@ import { makeStyles } from '@material-ui/styles';
 import axios from 'axios'
 import { useRouter } from 'next/router';
 import DownloadIcon from '@mui/icons-material/Download';
+import toast from 'react-hot-toast';
 
 const languages = {
   en: '/static/icons/uk_flag.svg',
@@ -393,7 +394,9 @@ const ExportButton = () => {
 };
 const ImportButton = () => {
   const router = useRouter();
-  const isVersion = router.query.isVersion;
+  const {projectId, designId, isVersion} = router.query;
+  console.log("projectId", projectId, "designId",  designId, "isVersion", isVersion);
+  // const isVersion = router.query.isVersion;
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -422,9 +425,14 @@ const ImportButton = () => {
       },
     };
 
-    const response = await axios.post('/api/uploads', formData, config);
+    const addVariant = await axios.post(`/api/projects/${projectId}/design`, {
+      title : "Variant Title",
+      versionOf : designId,
+      url: "https://maket-generatedcontent.s3.ca-central-1.amazonaws.com/output/pred5141MM.png"
+    });
 
-    console.log('response', response.data);
+    addVariant ? toast.success('Variant design added!') : toast.error('Something went wrong!');
+    // location.reload();
   };
 
   return (

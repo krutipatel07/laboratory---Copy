@@ -87,7 +87,7 @@ export default function BottomNav() {
             </Popper>
           </div>
           
-          { !isVersion && <div>
+          <div>
             <Button 
             label="Note" 
             aria-describedby={id1} 
@@ -107,7 +107,7 @@ export default function BottomNav() {
               </Box>
               </Grid>
             </Popper>
-          </div> }
+          </div>
    
           {/* <BottomNavigationAction label="Version" icon={<FormatListBulletedIcon />} /> */}
         </BottomNavigation>
