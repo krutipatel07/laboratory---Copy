@@ -382,7 +382,7 @@ const ExportButton = () => {
         }}
       >
         <Stack spacing={2} direction="row">
-          <Button variant="contained" className={classes.sharebtn} onClick={() => downloadDesign()}>
+          <Button variant="contained" className={classes.sharebtn} onClick={downloadDesign}>
             Export Design
             <DownloadIcon style={{marginLeft:"10px"}}/>
           </Button>

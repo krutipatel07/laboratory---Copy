@@ -87,10 +87,6 @@ const VariantCard = (props) => {
     }
     
   return (
-    <NextLink
-        href={link}
-        passHref
-      >
       <Card 
       sx={{
             maxWidth: 300, 
@@ -101,61 +97,79 @@ const VariantCard = (props) => {
             } }}
             variant="elevation">
 
-      <CardContent 
-        className={classes.CardContent}
+      <NextLink
+        href={link}
+        passHref
       >
-        <Typography gutterBottom 
-        variant="subtitle1" 
-        component="div" 
-        color="text.primary"
-        className={classes.title}
+        <CardContent 
+          className={classes.CardContent}
         >
-          {title}
-        </Typography>
-        <CardActions 
-          className={classes.cardActions}
+          <Typography gutterBottom 
+          variant="subtitle1" 
+          component="div" 
+          color="text.primary"
+          className={classes.title}
           >
-              <IconButton aria-label="share">
-              <DesignServicesIcon />
-              </IconButton>
-              <Typography>
-              {members}
-              </Typography>
-              <IconButton aria-label="share" 
-              sx={{marginLeft: 50}}>
-              <CommentIcon/>
-              </IconButton>
-              <Typography>
-              {comments}
-              </Typography>
-        </CardActions>
-      </CardContent>
+            {title}
+          </Typography>
+          <CardActions 
+            className={classes.cardActions}
+            >
+                <IconButton aria-label="share">
+                <DesignServicesIcon />
+                </IconButton>
+                <Typography>
+                {members}
+                </Typography>
+                <IconButton aria-label="share" 
+                sx={{marginLeft: 50}}>
+                <CommentIcon/>
+                </IconButton>
+                <Typography>
+                {comments}
+                </Typography>
+          </CardActions>
+        </CardContent>
+      </NextLink>
 
-      <CardMedia
-        className={classes.image}
-        sx={{
-            objectFit:"fill",
-            }}
-        component="img"
-        alt="green iguana"
-        height="200"
-        padding="0 24px"
-        src={image}
-      />
-
+      <NextLink
+        href={link}
+        passHref
+      >
+        <CardMedia
+          className={classes.image}
+          sx={{
+              objectFit:"fill",
+              }}
+          component="img"
+          alt="green iguana"
+          height="200"
+          padding="0 24px"
+          src={image}
+        />
+      </NextLink>
         <CardActions>
           <Stack direction="row" width='100%'
           spacing={2}>
-            <ColorButton variant="contained" className={classes.btnStyle}>New Comments</ColorButton>
-            <Button variant="contained" className={[classes.Button, classes.btnStyle]}>New Version</Button>
+            
+            <NextLink
+              href={link}
+              passHref
+            >
+              <ColorButton variant="contained" className={classes.btnStyle}>New Comments</ColorButton>
+            </NextLink>             
+            <NextLink
+              href={link}
+              passHref
+            >
+              <Button variant="contained" className={[classes.Button, classes.btnStyle]}>New Version</Button>
+            </NextLink>
             <IconButton aria-label="delete" onClick={deleteDesign}  className={classes.deletebtn} style={{marginLeft: 'auto'}}>
               <DeleteIcon style={{color:'#D14343'}} />
             </IconButton>
-            
           </Stack>
         </CardActions>
       </Card>
-      </NextLink>
   );
 };
 
