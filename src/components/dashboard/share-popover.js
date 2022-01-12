@@ -33,10 +33,10 @@ export const SharePopover = (props) => {
 
     const [email, setEmail] = useState('');
 
-    const [designData, setDesignData] = useState();
-   
+    const [designData, setDesignData] = useState();   
+    const {projectId, designId} = router.query;
+
     useEffect(() => {
-      const designId = router.query.designId;
       axios.get(`/api/projects/_/design/${designId}`)
       .then(res => setDesignData(res.data.data))
       .catch(error => console.log(error));
@@ -47,6 +47,7 @@ export const SharePopover = (props) => {
       const designId = router.query.designId;
       axios.post("/api/invite", {
        email,
+       projectId,
        designId
      })
      .catch(error => console.log(error));

@@ -395,8 +395,6 @@ const ExportButton = () => {
 const ImportButton = () => {
   const router = useRouter();
   const {projectId, designId, isVersion} = router.query;
-  console.log("projectId", projectId, "designId",  designId, "isVersion", isVersion);
-  // const isVersion = router.query.isVersion;
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -500,7 +498,8 @@ export const WorkspaceNavbar = (props) => {
           {/*<LanguageButton />*/}
           {/*<ContentSearchButton />*/}
           
-          {router.query.projectId && <><ExportButton/><ImportButton/><ShareButton/></>}
+          {router.query.projectId && !router.query.invite && <><ExportButton/><ImportButton/></>}
+          {!router.query.isVersion && router.query.projectId && !router.query.invite && <ShareButton/> }
           {
             !(router.query.invite) && <>
             <ContactsButton />
