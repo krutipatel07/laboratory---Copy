@@ -7,13 +7,25 @@ import axios from 'axios'
 import NextLink from 'next/link';
 
 const VersionList = withRouter((props) => {
-    const {projectId, designId, invite} = props.router.query;
+    const {projectId, designId, invite, isVersion} = props.router.query;
     const [versions, setVersions] = useState();
   
+    const getParentDesignVersions = () =>{
+      axios.get(`/api/projects/${projectId}/design/${designId}`)
+      .then(res => {
+        const designId = res.data.data.versionOf._id;
+        axios.get(`/api/projects/${projectId}/design/${designId}`)
+        .then(res => setVersions(res.data.data.versions))
+        .catch(error => console.log(error))
+      })
+      .catch(error => console.log(error))
+    }
+
     useEffect(() => {
+      isVersion ? getParentDesignVersions() :
       axios.get(`/api/projects/${projectId}/design/${designId}`)
       .then(res => setVersions(res.data.data.versions))
-      .catch(error => console.log(error));
+      .catch(error => console.log(error))
     }, [designId])
 
   return (

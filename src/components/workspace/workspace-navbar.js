@@ -337,7 +337,7 @@ const ExportButton = () => {
 
     axios.get(file, {
       responseType: "blob",
-    }).then(function (response) {
+    }).then(response => {
       const url = window.URL.createObjectURL(
         new Blob([response.data], {
           type: response.headers["content-type"],
@@ -430,7 +430,7 @@ const ImportButton = () => {
     });
 
     addVariant ? toast.success('Variant design added!') : toast.error('Something went wrong!');
-    // location.reload();
+    location.reload();
   };
 
   return (
@@ -498,8 +498,7 @@ export const WorkspaceNavbar = (props) => {
           {/*<LanguageButton />*/}
           {/*<ContentSearchButton />*/}
           
-          {router.query.projectId && !router.query.invite && <><ExportButton/><ImportButton/></>}
-          {!router.query.isVersion && router.query.projectId && !router.query.invite && <ShareButton/> }
+          {router.query.projectId && !router.query.invite && <><ExportButton/><ImportButton/><ShareButton/></>}
           {
             !(router.query.invite) && <>
             <ContactsButton />
@@ -507,7 +506,7 @@ export const WorkspaceNavbar = (props) => {
             </>
           }
           {
-            router.query.invite && <><ExportButton/><ImportButton/></> 
+            router.query.invite && <ExportButton/> 
           }
           <AccountButton />
         </Toolbar>
