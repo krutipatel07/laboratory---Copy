@@ -212,7 +212,8 @@ export const FirebaseRegister = (props) => {
           type="password"
           value={formik.values.password}
         />
-        <FormControl fullWidth style={{marginTop:8, marginBottom: 4}}>
+        <FormControl fullWidth 
+        style={{marginTop:8, marginBottom: 4}}>
         <InputLabel id="demo-multiple-name-label">Role</InputLabel>
         <Select
           error={Boolean( formik.touched.name && formik.touched.role)}
@@ -226,7 +227,8 @@ export const FirebaseRegister = (props) => {
           onBlur={formik.handleBlur}
           onChange={formik.handleChange}
           >
-          <MenuItem value="" disabled>
+          <MenuItem value="" 
+          disabled>
             <em>select your role</em>
           </MenuItem>
           <MenuItem value="Student">Student</MenuItem>

@@ -172,9 +172,11 @@ const ShareButton = () => {
           ml: 2
         }}
       >
-        <Stack spacing={2} direction="row" onClick={handleOpenPopover}
+        <Stack spacing={2} 
+        direction="row" onClick={handleOpenPopover}
           ref={anchorRef}>
-          <Button variant="contained" className={classes.sharebtn}>Share</Button>
+          <Button variant="contained" 
+          className={classes.sharebtn}>Share</Button>
         </Stack>
       </Box>
       <SharePopover
@@ -276,7 +278,7 @@ const AccountButton = () => {
     axios.get(`/api/user/${user}`)
     .then(res => setUserName(res.data.data.name))
     .catch(error => console.log(error));
-  })
+  },[])
 
   const handleOpenPopover = () => {
     setOpenPopover(true);
@@ -382,8 +384,10 @@ const ExportButton = () => {
           ml: 2
         }}
       >
-        <Stack spacing={2} direction="row">
-          <Button variant="contained" className={classes.sharebtn} onClick={downloadDesign}>
+        <Stack spacing={2} 
+        direction="row">
+          <Button variant="contained" 
+          className={classes.sharebtn} onClick={downloadDesign}>
             Export Design
             <DownloadIcon style={{marginLeft:"10px"}}/>
           </Button>
@@ -458,10 +462,12 @@ const ImportButton = () => {
         }}
       >
         { !isVersion && 
-        <Stack spacing={2} direction="row">
+        <Stack spacing={2} 
+        direction="row">
           <div {...getRootProps()}>
             <input {...getInputProps()} />
-            <Button variant="contained" className={classes.importbtn}>
+            <Button variant="contained" 
+            className={classes.importbtn}>
               Import
             </Button>
           </div>
@@ -520,7 +526,7 @@ export const WorkspaceNavbar = (props) => {
           {
             !(router.query.invite) && <>
             <ContactsButton />
-            <NotificationsButton />
+            {/* <NotificationsButton /> */}
             </>
           }
           {

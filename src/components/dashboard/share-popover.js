@@ -122,25 +122,36 @@ export const SharePopover = (props) => {
           fontSize: '14px'
         }}
       >
-        <form onSubmit={handleSubmit} method={'post'} style={{display:"inline-flex", justifyContent:'space-between', width:'100%'}}>
-            <TextField label="Collaborator email" type="email" required value={email} onInput={ e=>setEmail(e.target.value)}/>
-            <Stack spacing={2} direction="row">
-                <Button type="submit" variant="contained" className={classes.invitebtn}>Invite</Button>
+        <form onSubmit={handleSubmit} 
+        method={'post'} 
+        style={{display:"inline-flex", justifyContent:'space-between', width:'100%'}}>
+            <TextField label="Collaborator email" 
+            type="email" required value={email} onInput={ e=>setEmail(e.target.value)}/>
+            <Stack spacing={2} 
+            direction="row">
+                <Button 
+                type="submit" 
+                variant="contained" 
+                className={classes.invitebtn}>Invite</Button>
             </Stack>
 
         </form>
       </Box>
-      <Box sx={{ my: 1 }} className={classes.text}>
-        <Typography className={classes.p}>
+      <Box sx={{ my: 1 }} 
+      className={classes.text}>
+        <Typography 
+        className={classes.p}>
             COLLABORATORS
         </Typography>
       </Box>
       <Box sx={{ my: 1 }}>
       {designData? designData.collaborators.length? designData.collaborators.map((collaborator, i) => 
-          <MenuItem key={i} component="a">
+          <MenuItem key={i} 
+          component="a">
             <ListItemText
               primary={(
-                <Typography variant="body1">
+                <Typography 
+                variant="body1">
                   {collaborator}
                 </Typography>
               )}

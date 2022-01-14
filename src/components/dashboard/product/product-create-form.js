@@ -264,7 +264,7 @@ export const ProductCreateForm = (props) => {
           </Grid>
         </CardContent>
       </Card>
-      <Card sx={{ mt: 3 }}>
+      {/* <Card sx={{ mt: 3 }}>
         <CardContent>
           <Grid
             container
@@ -306,11 +306,10 @@ export const ProductCreateForm = (props) => {
                   }}
                   placeholder="enter name or email"
               />
-              {/* <MemberList/> */}
             </Grid>
           </Grid>
         </CardContent>
-      </Card>
+      </Card> */}
       <Box
         sx={{
           display: 'flex',

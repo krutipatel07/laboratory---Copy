@@ -190,8 +190,10 @@ const ProductList = withRouter((props) => {
           py: 8
         }}
       >
-        <Grid container spacing={2}>
-          <Grid item xs={8}>
+        <Grid container 
+        spacing={2}>
+          <Grid item 
+          xs={8}>
 
             <Container maxWidth="xl"> 
               <Box sx={{ mb: 4 }}>
@@ -251,7 +253,8 @@ const ProductList = withRouter((props) => {
             </Container>
           </Grid>
 
-          <Grid item xs={4}
+          <Grid item 
+          xs={4}
           style={{maxHeight: '600px', overflow: 'auto', display:'inline-flex', flexFlow:'column-reverse'}}
           >
             <Box            
@@ -263,7 +266,8 @@ const ProductList = withRouter((props) => {
           </Grid>
         </Grid>
 
-        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
+        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} 
+        elevation={3}>
           <BottomNav/>
         </Paper>
       </Box>
