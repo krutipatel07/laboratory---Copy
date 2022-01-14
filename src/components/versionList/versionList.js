@@ -33,6 +33,7 @@ const VersionList = withRouter((props) => {
         <form>
             {versions? versions.length ? versions.map((version, i) => 
             <><NextLink
+                  key={version._id}
                   href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${version._id}&isVersion=true` :`/workspace/${projectId}?designId=${version._id}&isVersion=true`}
                   passHref
                 >

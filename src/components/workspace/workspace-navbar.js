@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect , useCallback} from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import {
@@ -33,6 +33,7 @@ import axios from 'axios'
 import { useRouter } from 'next/router';
 import DownloadIcon from '@mui/icons-material/Download';
 import toast from 'react-hot-toast';
+import {useDropzone} from 'react-dropzone'
 
 const languages = {
   en: '/static/icons/uk_flag.svg',
@@ -392,6 +393,7 @@ const ExportButton = () => {
     </>
   );
 };
+
 const ImportButton = () => {
   const router = useRouter();
   const {projectId, designId, isVersion} = router.query;
@@ -414,19 +416,28 @@ const ImportButton = () => {
     },
   }));
   const classes = useStyles();
+  
+  const onDrop = useCallback(acceptedFiles => {
+      const formData = new FormData();
+      formData.append('file', acceptedFiles[0])
+      formData.append('upload_preset', 'maket_design');
 
-  const importDesign = async (formData) => {
-    const config = {
-      headers: { 'content-type': 'multipart/form-data' },
-      onUploadProgress: (event) => {
-        console.log(`Current progress:`, Math.round((event.loaded * 100) / event.total));
-      },
-    };
+      const url = "https://api.cloudinary.com/v1_1/maket/image/upload";
+      fetch(url, {
+        method: "POST",
+        body: formData
+      }).then(res => res.json())
+      .then(res =>{
+        importDesign(res.secure_url);
+      }).catch(err => console.log(err))
+  }, [])
+  const {getRootProps, getInputProps} = useDropzone({onDrop})
 
-    const addVariant = await axios.post(`/api/projects/${projectId}/design`, {
-      title : "Variant Title",
+  const importDesign = async (secure_url) => {
+    const addVariant = axios.post(`/api/projects/${projectId}/design`, {
+      title : "Variant Title with image upload",
       versionOf : designId,
-      url: "https://maket-generatedcontent.s3.ca-central-1.amazonaws.com/output/pred5141MM.png"
+      url: secure_url
     });
 
     addVariant ? toast.success('Variant design added!') : toast.error('Something went wrong!');
@@ -443,10 +454,14 @@ const ImportButton = () => {
           ml: 2
         }}
       >
-        { !isVersion && <Stack spacing={2} direction="row">
-          <Button variant="contained" className={classes.importbtn} onClick={importDesign} uploadFileName="theFiles">
-            Import
-          </Button>
+        { !isVersion && 
+        <Stack spacing={2} direction="row">
+          <div {...getRootProps()}>
+            <input {...getInputProps()} />
+            <Button variant="contained" className={classes.importbtn}>
+              Imports
+            </Button>
+          </div>
         </Stack>}
       </Box>
     </>
