@@ -124,7 +124,7 @@ export const InvitedUserModal = (props) => {
                             type="submit"
                             variant="contained"
                         >
-                            Register
+                            Verify
                         </Button>
                     </Box>
                 </DialogActions>

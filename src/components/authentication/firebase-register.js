@@ -59,17 +59,38 @@ export const FirebaseRegister = (props) => {
       try {
         await createUserWithEmailAndPassword(values.email, values.password);
 
-        if (isMounted()) {          
-          const {data} = await axios.post("/api/user", {
-            name: values.name,
-            email: values.email,
-            role: values.role
-          })
-          .catch(error => console.log(error));
-          localStorage.setItem("lab-user", data.data.id);
+        try {
+          if (isMounted()) {     
+            const {data} = await axios.get(`/api/owner/${values.email}`)
+            .catch(error => console.log(error));
+            console.log(data.data._id);
+            await axios.put(`/api/user/${data.data._id}`, {
+              name: values.name,
+              role: values.role
+            })
+            .catch(error => console.log(error));
 
-          const returnUrl = router.query.returnUrl || '/dashboard/projects';
-          router.push(returnUrl);
+            localStorage.setItem("lab-user", data.data.id);
+            const returnUrl = router.query.returnUrl || '/dashboard/projects';
+            router.push(returnUrl);
+          }
+        } catch (err) {
+          const {data} = await axios.post("/api/user", {
+                name: values.name,
+                email: values.email,
+                role: values.role
+              })
+              .catch(error => console.log(error));
+
+              localStorage.setItem("lab-user", data.data.id);
+              const returnUrl = router.query.returnUrl || '/dashboard/projects';
+              router.push(returnUrl);
+        } finally {          
+            await axios.post("/api/welcome_email", {
+              name: values.name,
+              email: values.email
+            })
+            .catch(error => console.log(error));
         }
       } catch (err) {
         console.error(err);
