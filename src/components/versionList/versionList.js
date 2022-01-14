@@ -22,7 +22,7 @@ const VersionList = withRouter((props) => {
     }
 
     useEffect(() => {
-      isVersion ? getParentDesignVersions() :
+      (isVersion || invite) ? getParentDesignVersions() :
       axios.get(`/api/projects/${projectId}/design/${designId}`)
       .then(res => setVersions(res.data.data.versions))
       .catch(error => console.log(error))
