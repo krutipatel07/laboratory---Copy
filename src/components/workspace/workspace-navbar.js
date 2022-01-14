@@ -434,8 +434,11 @@ const ImportButton = () => {
   const {getRootProps, getInputProps} = useDropzone({onDrop})
 
   const importDesign = async (secure_url) => {
-    const addVariant = axios.post(`/api/projects/${projectId}/design`, {
-      title : "Variant Title with image upload",
+    const version = await axios.get(`/api/projects/${projectId}/design/${designId}`);
+    const versionLength = version.data.data.versions.length;
+
+    const addVariant = await axios.post(`/api/projects/${projectId}/design`, {
+      title : `Variant ${versionLength+1}`,
       versionOf : designId,
       url: secure_url
     });
@@ -459,7 +462,7 @@ const ImportButton = () => {
           <div {...getRootProps()}>
             <input {...getInputProps()} />
             <Button variant="contained" className={classes.importbtn}>
-              Imports
+              Import
             </Button>
           </div>
         </Stack>}
