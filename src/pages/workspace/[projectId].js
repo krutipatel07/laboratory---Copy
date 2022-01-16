@@ -21,6 +21,7 @@ import { OverviewBanner } from '../../components/dashboard/overview/overview-ban
 import { Search as SearchIcon } from '../../icons/search';
 import Paper from '@mui/material/Paper';
 import BottomNav from "../../components/workspace/variant/variant-bottomNav";
+import BottomNavCopy from "../../components/workspace/variant/variant-bottomNavCopy";
 import axios from 'axios';
 import { withRouter } from 'next/router';
 import CommentList from '../../components/commentList/commentList';
@@ -163,7 +164,7 @@ const ProductList = withRouter((props) => {
           display: 'flex',
           justifyContent: 'space-between',
           flexWrap: 'wrap',
-          m: -1.5,
+          // m: -1.5,
           p: 3
         }}
       >
@@ -190,7 +191,7 @@ const ProductList = withRouter((props) => {
           py: 8
         }}
       >
-        <Grid container spacing={2}>
+        <Grid container spacing={2} style={{width: "100%"}}>
           <Grid item xs={8}>
 
             <Container maxWidth="xl"> 
@@ -264,7 +265,8 @@ const ProductList = withRouter((props) => {
         </Grid>
 
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-          <BottomNav/>
+          {/* <BottomNav/> */}
+          <BottomNavCopy/>
         </Paper>
       </Box>
     </>

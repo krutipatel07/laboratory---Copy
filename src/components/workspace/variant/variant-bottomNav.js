@@ -15,25 +15,29 @@ import VersionList from '../../../components/versionList/versionList';
 import Popper from '@mui/material/Popper';
 import { Button } from '@mui/material';
 import { useRouter } from 'next/router';
+import Fade from '@mui/material/Fade';
+import Paper from '@mui/material/Paper';
 
 
 export default function BottomNav() {
   const [value, setValue] = React.useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [anchorE2, setAnchorE2] = React.useState(null);
-  const router = useRouter();
-  const isVersion = router.query.isVersion;
+  const [open, setOpen] = React.useState(false);
+  const [open1, setOpen1] = React.useState(false);
+  const [placement, setPlacement] = React.useState();
+  const [placement1, setPlacement1] = React.useState();
 
-  const open = Boolean(anchorEl);
-  const open1 = Boolean(anchorE2);
-  const id = open ? 'simple-popper' : undefined;
-  const id1 = open1 ? 'simple-popper' : undefined;
-
-  const handleClick = (event) => {
-    setAnchorEl(anchorEl ? null : event.currentTarget);
+  const handleClick = (newPlacement) => (event) => {
+    setAnchorEl(event.currentTarget);
+    setOpen((prev) => placement !== newPlacement || !prev);
+    setPlacement(newPlacement);
   };
-  const handleClick1 = (event) => {
-    setAnchorE2(anchorE2 ? null : event.currentTarget);
+
+  const handleClick1 = (newPlacement) => (event) => {
+    setAnchorE2(event.currentTarget);
+    setOpen1((prev) => placement1 !== newPlacement || !prev);
+    setPlacement1(newPlacement);
   };
 
 
@@ -49,8 +53,28 @@ export default function BottomNav() {
           }}
           style={{justifyContent:"space-around"}}
         >
+
           <div>
-            <Button 
+
+          <Popper open={open} anchorEl={anchorEl} placement={placement} transition>
+            {({ TransitionProps }) => (
+              <Fade {...TransitionProps} timeout={350}>
+                <Paper>
+                <CommentBox/>
+                </Paper>
+              </Fade>
+            )}
+          </Popper>
+          <Grid container justifyContent="center">
+            <Grid item>
+              <Button onClick={handleClick('top-start')} style={{display:"block"}}>
+              <span style={{display: "block", height:"23px"}}><AddCommentIcon/></span>  
+              Comments
+              </Button>
+            </Grid>
+          </Grid>
+
+            {/* <Button 
             aria-describedby={id} 
             type="button" 
             onClick={handleClick}
@@ -58,9 +82,9 @@ export default function BottomNav() {
             >
               <span style={{display: "block", height:"23px"}}><AddCommentIcon/></span>  
               Comments
-            </Button>
+            </Button> */}
 
-            <Popper id={id} open={open} anchorEl={anchorEl}>
+            {/* <Popper id={id} open={open} anchorEl={anchorEl}>
             <Grid container justify="flex-end">
               <Box >              
                 <Box >
@@ -68,10 +92,10 @@ export default function BottomNav() {
                 </Box>
               </Box>
               </Grid>
-            </Popper>
+            </Popper> */}
           </div>
 
-          <div>
+          {/* <div>
             <Button label="Note" aria-describedby={id} type="button" style={{display:"block"}}>
               <span style={{display: "block", height:"23px"}}><NoteIcon /></span>
               Note
@@ -85,10 +109,30 @@ export default function BottomNav() {
               </Box>
               </Grid>
             </Popper>
-          </div>
+          </div> */}
           
           <div>
-            <Button 
+
+          <Popper  open={open1} anchorE2={anchorE2} placement={placement1} transition>
+            {({ TransitionProps }) => (
+              <Fade {...TransitionProps} timeout={350}>
+                <Paper>
+                <VersionList/>
+                </Paper>
+              </Fade>
+            )}
+          </Popper>
+          <Grid container justifyContent="center">
+            <Grid item>
+              <Button onClick={handleClick1('top')} style={{display:"block"}}>
+              <span style={{display: "block", height:"23px"}}><FormatListBulletedIcon/></span>  
+              Version
+              </Button>
+            </Grid>
+          </Grid>
+
+
+            {/* <Button 
             label="Note" 
             aria-describedby={id1} 
             type="button" 
@@ -106,7 +150,7 @@ export default function BottomNav() {
                 </Box>
               </Box>
               </Grid>
-            </Popper>
+            </Popper> */}
           </div>
    
           {/* <BottomNavigationAction label="Version" icon={<FormatListBulletedIcon />} /> */}
