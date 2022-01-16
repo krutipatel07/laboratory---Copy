@@ -84,7 +84,7 @@ export default function BottomNav() {
               Comments
             </Button> */}
 
-            <Popper id={id} 
+            {/* <Popper id={id} 
             open={open} anchorEl={anchorEl}>
             <Grid container 
             justify="flex-end">
@@ -94,7 +94,7 @@ export default function BottomNav() {
                 </Box>
               </Box>
               </Grid>
-            </Popper> */}
+            </Popper>  */}
           </div>
 
           {/* <div>

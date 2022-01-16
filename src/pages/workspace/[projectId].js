@@ -265,15 +265,9 @@ const ProductList = withRouter((props) => {
           </Grid>
         </Grid>
 
-<<<<<<< HEAD
         <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
           {/* <BottomNav/> */}
           <BottomNavCopy/>
-=======
-        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} 
-        elevation={3}>
-          <BottomNav/>
->>>>>>> c91ca1adf2ade6db34a4edd5f7d1d3c48186ad5f
         </Paper>
       </Box>
     </>
