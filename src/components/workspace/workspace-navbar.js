@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect , useCallback} from 'react';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import {
@@ -33,6 +33,7 @@ import axios from 'axios'
 import { useRouter } from 'next/router';
 import DownloadIcon from '@mui/icons-material/Download';
 import toast from 'react-hot-toast';
+import {useDropzone} from 'react-dropzone'
 
 const languages = {
   en: '/static/icons/uk_flag.svg',
@@ -171,9 +172,11 @@ const ShareButton = () => {
           ml: 2
         }}
       >
-        <Stack spacing={2} direction="row" onClick={handleOpenPopover}
+        <Stack spacing={2} 
+        direction="row" onClick={handleOpenPopover}
           ref={anchorRef}>
-          <Button variant="contained" className={classes.sharebtn}>Share</Button>
+          <Button variant="contained" 
+          className={classes.sharebtn}>Share</Button>
         </Stack>
       </Box>
       <SharePopover
@@ -275,7 +278,7 @@ const AccountButton = () => {
     axios.get(`/api/user/${user}`)
     .then(res => setUserName(res.data.data.name))
     .catch(error => console.log(error));
-  })
+  },[])
 
   const handleOpenPopover = () => {
     setOpenPopover(true);
@@ -337,7 +340,7 @@ const ExportButton = () => {
 
     axios.get(file, {
       responseType: "blob",
-    }).then(function (response) {
+    }).then(response => {
       const url = window.URL.createObjectURL(
         new Blob([response.data], {
           type: response.headers["content-type"],
@@ -381,8 +384,10 @@ const ExportButton = () => {
           ml: 2
         }}
       >
-        <Stack spacing={2} direction="row">
-          <Button variant="contained" className={classes.sharebtn} onClick={downloadDesign}>
+        <Stack spacing={2} 
+        direction="row">
+          <Button variant="contained" 
+          className={classes.sharebtn} onClick={downloadDesign}>
             Export Design
             <DownloadIcon style={{marginLeft:"10px"}}/>
           </Button>
@@ -392,6 +397,7 @@ const ExportButton = () => {
     </>
   );
 };
+
 const ImportButton = () => {
   const router = useRouter();
   const {projectId, designId, isVersion} = router.query;
@@ -414,23 +420,35 @@ const ImportButton = () => {
     },
   }));
   const classes = useStyles();
+  
+  const onDrop = useCallback(acceptedFiles => {
+      const formData = new FormData();
+      formData.append('file', acceptedFiles[0])
+      formData.append('upload_preset', 'maket_design');
 
-  const importDesign = async (formData) => {
-    const config = {
-      headers: { 'content-type': 'multipart/form-data' },
-      onUploadProgress: (event) => {
-        console.log(`Current progress:`, Math.round((event.loaded * 100) / event.total));
-      },
-    };
+      const url = "https://api.cloudinary.com/v1_1/maket/image/upload";
+      fetch(url, {
+        method: "POST",
+        body: formData
+      }).then(res => res.json())
+      .then(res =>{
+        importDesign(res.secure_url);
+      }).catch(err => console.log(err))
+  }, [])
+  const {getRootProps, getInputProps} = useDropzone({onDrop})
+
+  const importDesign = async (secure_url) => {
+    const version = await axios.get(`/api/projects/${projectId}/design/${designId}`);
+    const versionLength = version.data.data.versions.length;
 
     const addVariant = await axios.post(`/api/projects/${projectId}/design`, {
-      title : "Variant Title",
+      title : `Variant ${versionLength+1}`,
       versionOf : designId,
-      url: "https://maket-generatedcontent.s3.ca-central-1.amazonaws.com/output/pred5141MM.png"
+      url: secure_url
     });
 
     addVariant ? toast.success('Variant design added!') : toast.error('Something went wrong!');
-    // location.reload();
+    location.reload();
   };
 
   return (
@@ -443,10 +461,16 @@ const ImportButton = () => {
           ml: 2
         }}
       >
-        { !isVersion && <Stack spacing={2} direction="row">
-          <Button variant="contained" className={classes.importbtn} onClick={importDesign} uploadFileName="theFiles">
-            Import
-          </Button>
+        { !isVersion && 
+        <Stack spacing={2} 
+        direction="row">
+          <div {...getRootProps()}>
+            <input {...getInputProps()} />
+            <Button variant="contained" 
+            className={classes.importbtn}>
+              Import
+            </Button>
+          </div>
         </Stack>}
       </Box>
     </>
@@ -498,16 +522,15 @@ export const WorkspaceNavbar = (props) => {
           {/*<LanguageButton />*/}
           {/*<ContentSearchButton />*/}
           
-          {router.query.projectId && !router.query.invite && <><ExportButton/><ImportButton/></>}
-          {!router.query.isVersion && router.query.projectId && !router.query.invite && <ShareButton/> }
+          {router.query.projectId && !router.query.invite && <><ExportButton/><ImportButton/><ShareButton/></>}
           {
             !(router.query.invite) && <>
             <ContactsButton />
-            <NotificationsButton />
+            {/* <NotificationsButton /> */}
             </>
           }
           {
-            router.query.invite && <><ExportButton/><ImportButton/></> 
+            router.query.invite && <ExportButton/> 
           }
           <AccountButton />
         </Toolbar>

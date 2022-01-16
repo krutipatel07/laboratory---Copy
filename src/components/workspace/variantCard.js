@@ -149,22 +149,27 @@ const VariantCard = (props) => {
         />
       </NextLink>
         <CardActions>
-          <Stack direction="row" width='100%'
+          <Stack direction="row" 
+          width='100%'
           spacing={2}>
             
             <NextLink
               href={link}
               passHref
             >
-              <ColorButton variant="contained" className={classes.btnStyle}>New Comments</ColorButton>
+              <ColorButton variant="contained" 
+              className={classes.btnStyle}>New Comments</ColorButton>
             </NextLink>             
             <NextLink
               href={link}
               passHref
             >
-              <Button variant="contained" className={[classes.Button, classes.btnStyle]}>New Version</Button>
+              <Button variant="contained" 
+              className={[classes.Button, classes.btnStyle]}>New Version</Button>
             </NextLink>
-            <IconButton aria-label="delete" onClick={deleteDesign}  className={classes.deletebtn} style={{marginLeft: 'auto'}}>
+            <IconButton aria-label="delete" 
+            onClick={deleteDesign}  
+            className={classes.deletebtn} style={{marginLeft: 'auto'}}>
               <DeleteIcon style={{color:'#D14343'}} />
             </IconButton>
           </Stack>

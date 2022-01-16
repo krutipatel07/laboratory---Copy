@@ -32,7 +32,7 @@ export const ProductCreateForm = (props) => {
       images: [],
       name: '',
       newPrice: 0,
-      oldPrice: 0,
+      // oldPrice: 0,
       sku: 'IYV-8745',
       submit: null
     },
@@ -43,7 +43,7 @@ export const ProductCreateForm = (props) => {
       images: Yup.array(),
       name: Yup.string().max(255).required(),
       newPrice: Yup.number().min(0).required(),
-      oldPrice: Yup.number().min(0),
+      // oldPrice: Yup.number().min(0),
       sku: Yup.string().max(255)
     }),
     onSubmit: async (values, helpers) => {
@@ -239,7 +239,7 @@ export const ProductCreateForm = (props) => {
               md={8}
               xs={12}
             >
-              <TextField
+              {/* <TextField
                 error={Boolean(formik.touched.oldPrice && formik.errors.oldPrice)}
                 fullWidth
                 label="Min"
@@ -248,11 +248,11 @@ export const ProductCreateForm = (props) => {
                 onChange={formik.handleChange}
                 type="number"
                 value={formik.values.oldPrice}
-              />
+              /> */}
               <TextField
                 error={Boolean(formik.touched.newPrice && formik.errors.newPrice)}
                 fullWidth
-                label="Max"
+                label="Price"
                 name="newPrice"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
@@ -264,7 +264,7 @@ export const ProductCreateForm = (props) => {
           </Grid>
         </CardContent>
       </Card>
-      <Card sx={{ mt: 3 }}>
+      {/* <Card sx={{ mt: 3 }}>
         <CardContent>
           <Grid
             container
@@ -306,11 +306,10 @@ export const ProductCreateForm = (props) => {
                   }}
                   placeholder="enter name or email"
               />
-              {/* <MemberList/> */}
             </Grid>
           </Grid>
         </CardContent>
-      </Card>
+      </Card> */}
       <Box
         sx={{
           display: 'flex',

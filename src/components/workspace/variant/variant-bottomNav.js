@@ -84,8 +84,10 @@ export default function BottomNav() {
               Comments
             </Button> */}
 
-            {/* <Popper id={id} open={open} anchorEl={anchorEl}>
-            <Grid container justify="flex-end">
+            <Popper id={id} 
+            open={open} anchorEl={anchorEl}>
+            <Grid container 
+            justify="flex-end">
               <Box >              
                 <Box >
                   <CommentBox/>
@@ -142,8 +144,10 @@ export default function BottomNav() {
               <span style={{display: "block", height:"23px"}}><NoteIcon /></span>
               Version
             </Button>
-            <Popper id={id1} open={open1} anchorE2={anchorE2}>
-            <Grid container justify="flex-end">
+            <Popper id={id1} 
+            open={open1} anchorE2={anchorE2}>
+            <Grid container 
+            justify="flex-end">
               <Box >              
                 <Box >
                   <VersionList/>

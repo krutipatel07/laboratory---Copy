@@ -139,9 +139,12 @@ const classes = useStyles();
   return (
     <div style={{ padding: 14, borderRadius: 8, minWidth: 282, width: "calc(100% - 50px)", maxWidth: "calc(40ch + 14px)", 
     marginLeft: "auto", backgroundColor: "white", marginTop: 10  }}>
-            <div className={classes.header}>
-                <div className={classes.userContent}>
-                    <div className={classes.userAvatar}>
+            <div 
+            className={classes.header}>
+                <div 
+                className={classes.userContent}>
+                    <div 
+                    className={classes.userAvatar}>
                         {userName && <Avatar
                         alt="user icon"
                         src={`https://ui-avatars.com/api/?background=0D8ABC&color=fff&name=${userName}`}
@@ -152,34 +155,45 @@ const classes = useStyles();
                         >
                         </Avatar>}
                     </div>
-                    <div className={classes.userName}>
+                    <div 
+                    className={classes.userName}>
                         {userName}
                     </div>
                 </div>
-                <div className={classes.userAction}>
-                    <Typography className={classes.edit}>
+                <div 
+                className={classes.userAction}>
+                    <Typography 
+                    className={classes.edit}>
                         Edit
                     </Typography>
-                    <Typography className={classes.delete}>
+                    <Typography 
+                    className={classes.delete}>
                         Delete
                     </Typography>
                 </div>
             </div>
-            <div className={classes.userComment}>
-                <Typography className={classes.comment}>
+            <div 
+            className={classes.userComment}>
+                <Typography 
+                className={classes.comment}>
                 {comment.text}
                 </Typography>
             </div>
 
-            <div className={classes.footer}>
-                <div className={classes.timeStamp}>
+            <div 
+            className={classes.footer}>
+                <div 
+                className={classes.timeStamp}>
                     <span>{comment.dateCreated}</span>
                 </div>
-                <div className={classes.btnGroup}>
-                    <button type="button" className={classes.close}>
+                <div 
+                className={classes.btnGroup}>
+                    <button type="button" 
+                    className={classes.close}>
                         Close
                     </button>
-                    <button type="submit" className={classes.reply}>
+                    <button type="submit" 
+                    className={classes.reply}>
                         Reply 
                     </button>
                 </div>
