@@ -290,7 +290,7 @@ export const DashboardNavbar = (props) => {
           {/*<LanguageButton />*/}
           {/*<ContentSearchButton />*/}
           <ContactsButton />
-          <NotificationsButton />
+          {/* <NotificationsButton /> */}
           <AccountButton />
         </Toolbar>
       </DashboardNavbarRoot>

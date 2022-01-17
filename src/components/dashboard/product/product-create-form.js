@@ -154,7 +154,7 @@ export const ProductCreateForm = (props) => {
           </Grid>
         </CardContent>
       </Card>
-      <Card sx={{ mt: 3 }}>
+      {/* <Card sx={{ mt: 3 }}>
         <CardContent>
           <Grid
             container
@@ -218,7 +218,7 @@ export const ProductCreateForm = (props) => {
             </Grid>
           </Grid>
         </CardContent>
-      </Card>
+      </Card> */}
       <Card sx={{ mt: 3 }}>
         <CardContent>
           <Grid
