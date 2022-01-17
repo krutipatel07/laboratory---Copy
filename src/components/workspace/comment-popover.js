@@ -126,6 +126,9 @@ const handleChange = (event) => {
       PaperProps={{ sx: { width: 300 } }}
       transitionDuration={0}
       {...other}
+      getContentAnchorEl={null}
+      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      transformOrigin={{ vertical: "bottom", horizontal: "center" }}
       >
       <Box
         sx={{
