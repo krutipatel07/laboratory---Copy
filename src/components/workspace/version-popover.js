@@ -56,7 +56,12 @@ export const VersionPopover = withRouter((props) => {
       open={open}
       PaperProps={{ sx: { width: 300 } }}
       transitionDuration={0}
-      {...other}>
+      {...other}
+      getContentAnchorEl={null}
+      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      transformOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        
       <Box
         sx={{
           alignItems: 'center',
