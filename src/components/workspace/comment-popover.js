@@ -118,7 +118,7 @@ const handleChange = (event) => {
 
 
   return (
-    <Popper
+    <Popover
       anchorEl={anchorEl}
       keepMounted
       onClose={onClose}
@@ -160,7 +160,7 @@ const handleChange = (event) => {
 
       </Box>
 
-    </Popper>
+    </Popover>
   );
 });
 

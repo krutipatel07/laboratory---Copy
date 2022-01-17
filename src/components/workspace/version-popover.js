@@ -25,13 +25,25 @@ export const VersionPopover = withRouter((props) => {
   // To get the user from the authContext, you can use
   const { user } = useAuth();
 
-  const {projectId, designId, invite} = props.router.query;
+  const {projectId, designId, invite, isVersion} = props.router.query;
   const [versions, setVersions] = useState();
 
+  const getParentDesignVersions = () =>{
+    axios.get(`/api/projects/${projectId}/design/${designId}`)
+    .then(res => {
+      const designId = res.data.data.versionOf._id;
+      axios.get(`/api/projects/${projectId}/design/${designId}`)
+      .then(res => setVersions(res.data.data.versions))
+      .catch(error => console.log(error))
+    })
+    .catch(error => console.log(error))
+  }
+
   useEffect(() => {
+    (isVersion || invite) ? getParentDesignVersions() :
     axios.get(`/api/projects/${projectId}/design/${designId}`)
     .then(res => setVersions(res.data.data.versions))
-    .catch(error => console.log(error));
+    .catch(error => console.log(error))
   }, [designId])
 
 
@@ -53,7 +65,7 @@ export const VersionPopover = withRouter((props) => {
         }}
       >
         <form>
-            {versions? versions.length ? versions.map((version, i) => 
+        {versions? versions.length ? versions.map((version, i) =>
             <><NextLink
                   href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${version._id}&isVersion=true` :`/workspace/${projectId}?designId=${version._id}&isVersion=true`}
                   passHref
