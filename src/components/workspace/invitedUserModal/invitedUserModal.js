@@ -32,7 +32,6 @@ export const InvitedUserModal = (props) => {
     initialValues: {
       name: '',
       email: '',
-      role: '',
       submit: null
     },
     validationSchema: Yup.object({
@@ -45,9 +44,6 @@ export const InvitedUserModal = (props) => {
         .email('Must be a valid email')
         .max(255)
         .required('Email is required'),
-      role: Yup
-        .string()
-        .required('Role is required'),
     }),
     onSubmit: async (values) => {
       const existingCollaboratorList = props.variantData.collaborators;
@@ -63,7 +59,7 @@ export const InvitedUserModal = (props) => {
           const {data} = await axios.post("/api/user", {
                 name: values.name,
                 email: values.email,
-                role: values.role
+                role: "Collaborator"
               })
               .catch(error => console.log(error));
               localStorage.setItem("lab-user", data.data.id);
@@ -119,30 +115,6 @@ export const InvitedUserModal = (props) => {
                 type="email"
                 value={formik.values.email}
                 />
-                <FormControl fullWidth 
-                style={{marginTop:8, marginBottom: 4}}>
-                <InputLabel id="demo-multiple-name-label">Role</InputLabel>
-                <Select
-                  error={Boolean( formik.touched.name && formik.touched.role)}
-                  fullWidth
-                  margin="dense"
-                  name="role"
-                  type="text"
-                  label="Role"
-                  helperText={formik.touched.role && formik.errors.role}
-                  value={formik.values.role}             
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  >
-                  <MenuItem value="" 
-                  disabled>
-                    <em>select your role</em>
-                  </MenuItem>
-                  <MenuItem value="Student">Student</MenuItem>
-                  <MenuItem value="Architect">Architect</MenuItem>
-                  <MenuItem value="Enterprise">Enterprise</MenuItem>
-                </Select>
-                </FormControl>
                 <DialogActions>
                     <Box sx={{ mt: 2 }}>
                         <Button
