@@ -142,7 +142,7 @@ const Version = () => {
 };
 
 
-export default function BottomNavCopy() {
+export default function BottomNav() {
   const [value, setValue] = React.useState(0);
   const router = useRouter();
   const isVersion = router.query.isVersion;

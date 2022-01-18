@@ -87,7 +87,7 @@ export const VersionPopover = withRouter((props) => {
                 </MenuItem>
             </NextLink>
             <Divider /></>)
-            : <h1>No versions available</h1> : <h1>loading</h1>}
+            : <h3>No versions available</h3> : <h3>loading</h3>}
         </form>
 
       </Box>
