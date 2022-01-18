@@ -524,12 +524,6 @@ export const WorkspaceNavbar = (props) => {
           
           {router.query.projectId && !router.query.invite && <><ExportButton/><ImportButton/><ShareButton/></>}
           {
-            !(router.query.invite) && <>
-            <ContactsButton />
-            {/* <NotificationsButton /> */}
-            </>
-          }
-          {
             router.query.invite && <ExportButton/> 
           }
           <AccountButton />

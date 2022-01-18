@@ -188,10 +188,10 @@ const classes = useStyles();
                 </div>
                 <div 
                 className={classes.btnGroup}>
-                    <button type="button" 
+                    {/* <button type="button" 
                     className={classes.close}>
                         Close
-                    </button>
+                    </button> */}
                     <button type="submit" 
                     className={classes.reply}>
                         Reply 

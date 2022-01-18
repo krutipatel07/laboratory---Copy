@@ -12,10 +12,10 @@ import { gtm } from '../../lib/gtm';
 
 const tabs = [
   { label: 'General', value: 'general' },
-  { label: 'Billing', value: 'billing' },
-  { label: 'Team', value: 'team' },
-  { label: 'Notifications', value: 'notifications' },
-  { label: 'Security', value: 'security' }
+  // { label: 'Billing', value: 'billing' },
+  // { label: 'Team', value: 'team' },
+  // { label: 'Notifications', value: 'notifications' },
+  // { label: 'Security', value: 'security' }
 ];
 
 const Account = () => {
@@ -66,10 +66,10 @@ const Account = () => {
           </Tabs>
           <Divider sx={{ mb: 3 }} />
           {currentTab === 'general' && <AccountGeneralSettings />}
-          {currentTab === 'billing' && <AccountBillingSettings />}
+          {/* {currentTab === 'billing' && <AccountBillingSettings />}
           {currentTab === 'team' && <AccountTeamSettings />}
           {currentTab === 'notifications' && <AccountNotificationsSettings />}
-          {currentTab === 'security' && <AccountSecuritySettings />}
+          {currentTab === 'security' && <AccountSecuritySettings />} */}
         </Container>
       </Box>
     </>

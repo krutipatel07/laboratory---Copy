@@ -68,9 +68,9 @@ export const AccountGeneralSettings = (props) => {
                 >
                   <UserCircleIcon fontSize="small" />
                 </Avatar> }
-                <Button>
+                {/* <Button>
                   Change
-                </Button>
+                </Button> */}
               </Box>
               <Box
                 sx={{
@@ -88,9 +88,9 @@ export const AccountGeneralSettings = (props) => {
                     mr: 3
                   }}
                 />}
-                <Button>
+                {/* <Button>
                   Save
-                </Button>
+                </Button> */}
               </Box>
               <Box
                 sx={{
@@ -113,9 +113,9 @@ export const AccountGeneralSettings = (props) => {
                     }
                   }}
                 />}
-                <Button>
+                {/* <Button>
                   Edit
-                </Button>
+                </Button> */}
               </Box>
             </Grid>
           </Grid>
