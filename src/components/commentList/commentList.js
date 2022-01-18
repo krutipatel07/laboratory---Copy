@@ -160,7 +160,7 @@ const classes = useStyles();
                         {userName}
                     </div>
                 </div>
-                <div 
+                {/* <div 
                 className={classes.userAction}>
                     <Typography 
                     className={classes.edit}>
@@ -170,7 +170,7 @@ const classes = useStyles();
                     className={classes.delete}>
                         Delete
                     </Typography>
-                </div>
+                </div> */}
             </div>
             <div 
             className={classes.userComment}>
@@ -186,17 +186,17 @@ const classes = useStyles();
                 className={classes.timeStamp}>
                     <span>{comment.dateCreated}</span>
                 </div>
-                <div 
+                {/* <div 
                 className={classes.btnGroup}>
-                    {/* <button type="button" 
+                    <button type="button" 
                     className={classes.close}>
                         Close
-                    </button> */}
+                    </button>
                     <button type="submit" 
                     className={classes.reply}>
                         Reply 
                     </button>
-                </div>
+                </div> */}
             </div>
     </div>
   );

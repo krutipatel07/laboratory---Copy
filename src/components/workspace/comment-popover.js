@@ -152,9 +152,9 @@ const handleChange = (event) => {
                 />
             </div>
             <div className={classes.btnGroup}>
-                <button type="button" className={classes.cancel}>
+                {/* <button type="button" className={classes.cancel}>
                     Cancel
-                </button>
+                </button> */}
                 <button type="submit" className={classes.post}>
                     Post 
                 </button>
