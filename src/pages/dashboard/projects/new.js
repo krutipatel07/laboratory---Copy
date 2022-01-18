@@ -31,7 +31,7 @@ const ProductCreate = () => {
             <Typography variant="h4">
               Create a new project
             </Typography>
-            <Breadcrumbs
+            {/* <Breadcrumbs
               separator="/"
               sx={{ mt: 1 }}
             >
@@ -60,7 +60,7 @@ const ProductCreate = () => {
               >
                 Products
               </Typography>
-            </Breadcrumbs>
+            </Breadcrumbs> */}
           </Box>
           <ProductCreateForm />
         </Container>

@@ -438,12 +438,14 @@ const ImportButton = () => {
   const {getRootProps, getInputProps} = useDropzone({onDrop})
 
   const importDesign = async (secure_url) => {
-    const version = await axios.get(`/api/projects/${projectId}/design/${designId}`);
-    const versionLength = version.data.data.versions.length;
+    const {data} = await axios.get(`/api/projects/${projectId}/design/${designId}`);
+    const versionLength = data.data.versions.length;
+    const versionLengthParentDesign = data.data.versionOf.versions.length;
+    const parentDesignId = data.data.versionOf.id;
 
     const addVariant = await axios.post(`/api/projects/${projectId}/design`, {
-      title : `Variant ${versionLength+1}`,
-      versionOf : designId,
+      title : `Variant ${isVersion ? versionLengthParentDesign+1 : versionLength+1}`,
+      versionOf : isVersion ? parentDesignId : designId,
       url: secure_url
     });
 
@@ -461,7 +463,6 @@ const ImportButton = () => {
           ml: 2
         }}
       >
-        { !isVersion && 
         <Stack spacing={2} 
         direction="row">
           <div {...getRootProps()}>
@@ -471,7 +472,7 @@ const ImportButton = () => {
               Import
             </Button>
           </div>
-        </Stack>}
+        </Stack>
       </Box>
     </>
   );
@@ -523,12 +524,6 @@ export const WorkspaceNavbar = (props) => {
           {/*<ContentSearchButton />*/}
           
           {router.query.projectId && !router.query.invite && <><ExportButton/><ImportButton/><ShareButton/></>}
-          {
-            !(router.query.invite) && <>
-            <ContactsButton />
-            {/* <NotificationsButton /> */}
-            </>
-          }
           {
             router.query.invite && <ExportButton/> 
           }

@@ -153,7 +153,7 @@ const VariantCard = (props) => {
           width='100%'
           spacing={2}>
             
-            <NextLink
+            {/* <NextLink
               href={link}
               passHref
             >
@@ -166,7 +166,7 @@ const VariantCard = (props) => {
             >
               <Button variant="contained" 
               className={[classes.Button, classes.btnStyle]}>New Version</Button>
-            </NextLink>
+            </NextLink> */}
             <IconButton aria-label="delete" 
             onClick={deleteDesign}  
             className={classes.deletebtn} style={{marginLeft: 'auto'}}>

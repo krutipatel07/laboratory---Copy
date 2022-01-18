@@ -222,7 +222,7 @@ const ProductList = withRouter((props) => {
               <ArrowBackOutlinedIcon/>
             </Button>
           </NextLink>
-          <TextField
+          {/* <TextField
             defaultValue=""
             width="50%"
             //inputProps={{ ref: queryRef }}
@@ -234,7 +234,7 @@ const ProductList = withRouter((props) => {
               )
             }}
             placeholder="Search designs by name"
-          />
+          /> */}
         </Box>
         <Box
           component="form"
