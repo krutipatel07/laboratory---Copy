@@ -57,12 +57,21 @@ export default async (req, res) => {
             }
             break;
         case 'DELETE':
-            try {
+            try {            
+                const design = await Design.findById(designId)
+                .populate('versionOf')
+                .populate('versions')
+                .populate('comments');
+
                 const deletedDesign = await Design.deleteOne({ _id: designId });
                 if (!deletedDesign){
                     res.status(404).json({ success: false, message: error})
                 }
                 
+                design.versions.forEach(async version => {
+                    await Design.deleteOne({ _id: version._id });
+                })
+
                 res.status(200).json({ success: true, data: deletedDesign})
                 
             } catch (error) {

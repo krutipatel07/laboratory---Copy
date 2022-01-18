@@ -22,8 +22,7 @@ export default function ProjectGrid() {
     axios.get(`/api/${owner}/projects`)
     .then(res => setProjectsData(res.data.data))
     .catch(error => console.log(error));
-  })
-
+  },[])
   return (
     <Box
         sx={{

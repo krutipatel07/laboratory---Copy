@@ -14,5 +14,5 @@ export default async (req, res) => {
         if (!project){
             res.status(404).json({ success: false })
         }
-        res.status(200).json({ success: true, data: project});
+        res.status(200).json({ success: true, data: project.reverse() });
 }
