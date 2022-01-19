@@ -6,21 +6,11 @@ import {
   ButtonBase,
   Toolbar,
 } from '@mui/material';
-import { CommentPopover } from '../comment-popover';
-import { VersionPopover } from '../version-popover';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import AddCommentIcon from '@mui/icons-material/AddComment';
-import NoteIcon from '@mui/icons-material/Note';
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import { Button } from '@mui/material';
-import { useRouter } from 'next/router';
 import CircleIcon from '@mui/icons-material/Circle';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import StarIcon from '@mui/icons-material/Star';
 import { blue, brown, green, orange, pink, purple, red } from '@mui/material/colors';
 import { makeStyles } from '@material-ui/styles';
 

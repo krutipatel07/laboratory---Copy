@@ -90,11 +90,6 @@ const Note = () => {
         </Button>
         
       </Box>
-      {/* <NotePopover
-        anchorEl={anchorRef.current}
-        onClose={handleClosePopover}
-        open={openPopover}
-      /> */}
     </>
   );
 

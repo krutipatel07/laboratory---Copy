@@ -7,7 +7,7 @@ import { Plus as PlusIcon } from '../../icons/plus';
 import { getInitials } from '../../utils/get-initials';
 
 export const BlogCommentAdd = (props) => {
-  // To get the user from the authContext, you can use
+  // To get the user from the authContext, use
   // `const { user } = useAuth();`
   const user = {
     avatar: '/static/mock-images/avatars/avatar-anika_visser.png',

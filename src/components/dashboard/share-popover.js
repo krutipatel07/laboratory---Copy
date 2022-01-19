@@ -70,12 +70,6 @@ export const SharePopover = (props) => {
             "&:-webkit-autofill": {
               WebkitBoxShadow: "0 0 0 1000px black inset"
             },}
-        //   '& .MuiOutlinedInput-root':{
-        //     "&:-webkit-autofill": {
-        //         WebkitBoxShadow: "0 0 0 1000px #111827 inset",
-        //       } ,
-        //   },
-        //   'input:-webkit-autofill': {backgroundColor:"#111827"},
           }
         },
         

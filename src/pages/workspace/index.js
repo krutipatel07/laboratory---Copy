@@ -197,13 +197,11 @@ const ProductList = withRouter((props) => {
           alignItems: 'center',
           display: 'flex',
           flexWrap: 'wrap',
-          // m: -1.5,
           p: 3
         }}
       >
         <Box
           component="form"
-          //onSubmit={handleQueryChange}
           sx={{
             flexGrow: 1,
             m: 1.5
