@@ -265,7 +265,10 @@ const ProductList = withRouter((props) => {
           </Grid>
         </Grid>
 
-        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} style={{display: 'flex'}} elevation={3}>
+        <Paper 
+        sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} 
+        style={{display: 'flex'}} 
+        elevation={3}>
           <BottomNav/>
           <Legends/>
         </Paper>

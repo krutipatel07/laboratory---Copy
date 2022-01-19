@@ -23,6 +23,7 @@ import axios from 'axios';
 import { withRouter } from 'next/router';
 import CommentList from '../../../components/commentList/commentList';
 import {InvitedUserModal} from "../../../components/workspace/invitedUserModal/invitedUserModal"
+import Legends from "../../../components/workspace/variant/variant-legends";
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -248,9 +249,12 @@ const InvitedUSerPage = withRouter((props) => {
           </Grid>
         </Grid>
 
-        <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} 
+        <Paper 
+        sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} 
+        style={{display: 'flex'}} 
         elevation={3}>
           <BottomNav/>
+          <Legends/>
         </Paper>
         <InvitedUserModal variantData={variantData}/>
       </Box>
