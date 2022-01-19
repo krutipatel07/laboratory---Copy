@@ -270,7 +270,7 @@ const ProductList = withRouter((props) => {
         style={{display: 'flex'}} 
         elevation={3}>
           <BottomNav/>
-          <Legends/>
+          {/* <Legends/> */}
         </Paper>
       </Box>
     </>
