@@ -439,13 +439,11 @@ const ImportButton = () => {
 
   const importDesign = async (secure_url) => {
     const {data} = await axios.get(`/api/projects/${projectId}/design/${designId}`);
-    const versionLength = data.data.versions.length;
-    const versionLengthParentDesign = data.data.versionOf.versions.length;
-    const parentDesignId = data.data.versionOf.id;
-
+    const versionLength = data.data.versionOf ? data.data.versionOf.versions.length : data.data.versions.length;
+    const versionOf = data.data.versionOf ? data.data.versionOf.id : designId;
     const addVariant = await axios.post(`/api/projects/${projectId}/design`, {
-      title : `Variant ${isVersion ? versionLengthParentDesign+1 : versionLength+1}`,
-      versionOf : isVersion ? parentDesignId : designId,
+      title : `Variant ${versionLength+1}`,
+      versionOf : versionOf,
       url: secure_url
     });
 
