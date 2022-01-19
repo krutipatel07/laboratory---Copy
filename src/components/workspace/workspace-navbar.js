@@ -432,6 +432,10 @@ const ImportButton = () => {
         body: formData
       }).then(res => res.json())
       .then(res =>{
+        if(res.error) {
+          toast.error(res.error.message)
+          return
+        }
         importDesign(res.secure_url);
       }).catch(err => console.log(err))
   }, [])
