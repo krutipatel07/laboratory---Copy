@@ -3,8 +3,6 @@ import Head from 'next/head';
 import NextLink from 'next/link';
 import { Box, Button, Card, Container, Divider, Typography } from '@mui/material';
 import { ArrowBack as ArrowBackIcon, ArrowForward as ArrowForwardIcon } from '@mui/icons-material';
-import { BlogNewsletter } from '../../components/blog/blog-newsletter';
-import { BlogPostCard } from '../../components/blog/blog-post-card';
 import { useMounted } from '../../hooks/use-mounted';
 import { ArrowLeft as ArrowLeftIcon } from '../../icons/arrow-left';
 import { gtm } from '../../lib/gtm';
