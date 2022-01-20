@@ -1,9 +1,7 @@
 import NextLink from 'next/link';
 import React, { useState, useRef,useEffect } from "react";
 import { useRouter } from 'next/router';
-import { makeStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
-import toast from 'react-hot-toast';
 import {
   Avatar,
   Box,
@@ -14,7 +12,6 @@ import {
   Popover,
   Typography
 } from '@mui/material';
-import { Logout as LogoutIcon } from '@mui/icons-material';
 import { useAuth } from '../../hooks/use-auth';
 import axios from 'axios'
 import { withRouter } from 'next/router';
@@ -72,12 +69,12 @@ export const VersionPopover = withRouter((props) => {
         <form>
         {versions? versions.length ? versions.map((version, i) =>
             <><NextLink
+                  key={version._id}
                   href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${version._id}&isVersion=true` :`/workspace/${projectId}?designId=${version._id}&isVersion=true`}
                   passHref
                 >
                 <MenuItem component="a">
                     <ListItemText
-                    key={version._id}
                     primary={(
                         <Typography variant="body1">
                             {version.title}
@@ -86,7 +83,8 @@ export const VersionPopover = withRouter((props) => {
                     />
                 </MenuItem>
             </NextLink>
-            <Divider /></>)
+            <Divider key={`DividerVersionList ${version._id}`}/>
+            </>)
             : <h3>No versions available</h3> : <h3>loading</h3>}
         </form>
 

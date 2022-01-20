@@ -72,6 +72,7 @@ const InvitedUSerPage = withRouter((props) => {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const designId = props.router.query.designId;
   const [filters, setFilters] = useState({
     name: undefined,
     category: [],
@@ -87,11 +88,10 @@ const InvitedUSerPage = withRouter((props) => {
   }, []);
 
   useEffect(() => {
-    const designId = props.router.query.designId;
     axios.get(`/api/projects/_/design/${designId}`)
     .then(res => setVariantData(res.data.data))
     .catch(error => console.log(error));
-  }, []);
+  }, [designId]);
 
   useEffect(() => {
     // Restore the persistent state from local/session storage
@@ -243,7 +243,7 @@ const InvitedUSerPage = withRouter((props) => {
             <Box            
             >
               {
-                variantData.comments && variantData.comments.map((comment, i) => <CommentList key={i} comment={comment}/> )
+                variantData.comments && variantData.comments.map(comment => <CommentList key={comment.id} comment={comment}/> )
               }
             </Box>
           </Grid>
