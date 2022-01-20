@@ -12,7 +12,6 @@ import { Box,
   Tabs,
   TextField,
   Typography } from '@mui/material';
-import { productApi } from '../../../__fake-api__/product-api';
 import { withWorkspaceLayout } from '../../../hocs/with-workspace-layout';
 import { useMounted } from '../../../hooks/use-mounted';
 import { gtm } from '../../../lib/gtm';

@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import Head from 'next/head';
 import { Box, Container, Typography } from '@mui/material';
-import { socialApi } from '../../../__fake-api__/social-api';
 import { SocialPostAdd } from '../../../components/dashboard/social/social-post-add';
 import { SocialPostCard } from '../../../components/dashboard/social/social-post-card';
 import { withAuthGuard } from '../../../hocs/with-auth-guard';
