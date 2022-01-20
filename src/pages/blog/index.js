@@ -3,7 +3,6 @@ import Head from 'next/head';
 import NextLink from 'next/link';
 import { Box, Button, Card, Container, Divider, Typography } from '@mui/material';
 import { ArrowBack as ArrowBackIcon, ArrowForward as ArrowForwardIcon } from '@mui/icons-material';
-import { blogApi } from '../../__fake-api__/blog-api';
 import { BlogNewsletter } from '../../components/blog/blog-newsletter';
 import { BlogPostCard } from '../../components/blog/blog-post-card';
 import { useMounted } from '../../hooks/use-mounted';

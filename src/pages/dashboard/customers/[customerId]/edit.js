@@ -3,7 +3,6 @@ import NextLink from 'next/link';
 import Head from 'next/head';
 import { Avatar, Box, Chip, Container, Link, Typography } from '@mui/material';
 import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
-import { customerApi } from '../../../../__fake-api__/customer-api';
 import { CustomerEditForm } from '../../../../components/dashboard/customer/customer-edit-form';
 import { withAuthGuard } from '../../../../hocs/with-auth-guard';
 import { withDashboardLayout } from '../../../../hocs/with-dashboard-layout';

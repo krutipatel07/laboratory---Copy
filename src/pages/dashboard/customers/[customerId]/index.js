@@ -15,7 +15,6 @@ import {
   Typography
 } from '@mui/material';
 import { ArrowBack as ArrowBackIcon } from '@mui/icons-material';
-import { customerApi } from '../../../../__fake-api__/customer-api';
 import { CustomerBasicDetails } from '../../../../components/dashboard/customer/customer-basic-details';
 import { CustomerDataManagement } from '../../../../components/dashboard/customer/customer-data-management';
 import { CustomerEmailsSummary } from '../../../../components/dashboard/customer/customer-emails-summary';
