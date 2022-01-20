@@ -2,7 +2,7 @@ import { readdirSync, readFileSync } from 'fs';
 import { join } from 'path';
 import matter from 'gray-matter';
 
-const articlesDirectory = join(process.cwd(), '_docs');
+// const articlesDirectory = join(process.cwd(), '_docs');
 
 export const getArticleSlugs = () => {
   return readdirSync(articlesDirectory);
@@ -10,7 +10,7 @@ export const getArticleSlugs = () => {
 
 export const getArticleBySlug = (slug, fields = []) => {
   const realSlug = slug.replace(/\.md$/, '');
-  const fullPath = join(articlesDirectory, `${realSlug}.md`);
+  // const fullPath = join(articlesDirectory, `${realSlug}.md`);
   const fileContents = readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
 
