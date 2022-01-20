@@ -71,24 +71,6 @@ const ProductList = () => {
     gtm.push({ event: 'page_view' });
   }, []);
 
-  const getProducts = useCallback(async () => {
-    try {
-      const data = await productApi.getProducts();
-
-      if (isMounted()) {
-        setProducts(data);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  }, [isMounted]);
-
-  useEffect(() => {
-      getProducts();
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []);
-
   const handleFiltersChange = (filters) => {
     setFilters(filters);
   };
