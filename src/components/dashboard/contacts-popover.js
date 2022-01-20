@@ -12,7 +12,6 @@ import {
   Popover,
   Typography
 } from '@mui/material';
-import { getContacts } from '../../slices/chat';
 import { useDispatch, useSelector } from '../../store';
 import { StatusIndicator } from '../status-indicator';
 

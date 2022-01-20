@@ -12,7 +12,6 @@ import { Box,
   Tabs,
   TextField,
   Typography } from '@mui/material';
-import { productApi } from '../../__fake-api__/product-api';
 import { withAuthGuard } from '../../hocs/with-auth-guard';
 import { withWorkspaceLayout } from '../../hocs/with-workspace-layout';
 import { useMounted } from '../../hooks/use-mounted';
@@ -220,19 +219,6 @@ const ProductList = withRouter((props) => {
               <ArrowBackOutlinedIcon/>
             </Button>
           </NextLink>
-          {/* <TextField
-            defaultValue=""
-            width="50%"
-            //inputProps={{ ref: queryRef }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon fontSize="small" />
-                </InputAdornment>
-              )
-            }}
-            placeholder="Search designs by name"
-          /> */}
         </Box>
         <Box
           component="form"

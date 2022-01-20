@@ -228,14 +228,6 @@ const CustomerList = () => {
                   Collaborators
                 </Typography>
               </Grid>
-              {/* <Grid item>
-                <Button
-                  startIcon={<PlusIcon fontSize="small" />}
-                  variant="contained"
-                >
-                  Add
-                </Button>
-              </Grid> */}
             </Grid>
           </Box>
           <Card>

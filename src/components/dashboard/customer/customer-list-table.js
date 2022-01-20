@@ -101,9 +101,6 @@ export const CustomerListTable = (props) => {
               <TableCell>
                 Name
               </TableCell>
-              {/* <TableCell>
-                Location
-              </TableCell> */}
               <TableCell align="right">
                 Role
               </TableCell>
@@ -163,9 +160,6 @@ export const CustomerListTable = (props) => {
                       </Box>
                     </Box>
                   </TableCell>
-                  {/* <TableCell>
-                    {`${customer.city}, ${customer.state}, ${customer.country}`}
-                  </TableCell> */}
                   <TableCell align="right">
                     <SeverityPill
                         color={customer.role == 'client' ? 'info' : 'primary'}
