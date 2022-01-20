@@ -46,11 +46,6 @@ const posts = [
   }
 ];
 
-const BlogPostCardMediaWrapper = styled('div')({
-  paddingTop: 'calc(100% * 4 / 4)',
-  position: 'relative'
-});
-
 export const GridList1 = () => (
   <Box
     sx={{
@@ -76,17 +71,6 @@ export const GridList1 = () => (
               p: 2
             }}
           >
-            <BlogPostCardMediaWrapper>
-              <CardMedia
-                image={post.cover}
-                sx={{
-                  height: '100%',
-                  position: 'absolute',
-                  top: 0,
-                  width: '100%'
-                }}
-              />
-            </BlogPostCardMediaWrapper>
             <Box sx={{ mt: 2 }}>
               <div>
                 <Chip
