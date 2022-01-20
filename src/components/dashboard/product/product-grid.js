@@ -66,7 +66,7 @@ export default function ProjectGrid() {
                     textAlign = "center"
                     color="text.secondary">
                       <NextLink
-                                href="/dashboard/products/new"
+                                href="/dashboard/projects/new"
                                 passHref
                                 ><PlusIcon 
                                 fontSize="large" 
