@@ -189,8 +189,11 @@ const ProductList = withRouter((props) => {
           py: 8
         }}
       >
-        <Grid container spacing={2} style={{width: "100%"}}>
-          <Grid item xs={8}>
+        <Grid container 
+        spacing={2} 
+        style={{width: "100%"}}>
+          <Grid item 
+          xs={8}>
 
             <Container maxWidth="xl"> 
               <Box sx={{ mb: 4 }}>

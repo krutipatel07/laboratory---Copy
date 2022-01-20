@@ -41,59 +41,77 @@ export default function Legends() {
       sx={{ width: '100%'}}
       aria-label="contacts"
     >
-      <ListItem disablePadding className={classes.listItem}>
+      <ListItem disablePadding 
+      className={classes.listItem}>
           <ListItemIcon>
             <CircleIcon sx={{ color: green[500] }}/>
           </ListItemIcon>
-          <ListItemText sx={{ color: green[500] }} primary="Bedroom" />
+          <ListItemText sx={{ color: green[500] }} 
+          primary="Bedroom" />
       </ListItem>      
-      <ListItem disablePadding className={classes.listItem}>
+      <ListItem disablePadding 
+      className={classes.listItem}>
           <ListItemIcon>
             <CircleIcon sx={{ color: blue[500] }}/>
           </ListItemIcon>
-          <ListItemText sx={{ color: blue[500] }} primary="Bathroom" />
+          <ListItemText sx={{ color: blue[500] }} 
+          primary="Bathroom" />
       </ListItem>     
-      <ListItem disablePadding className={classes.listItem}>
+      <ListItem disablePadding 
+      className={classes.listItem}>
           <ListItemIcon>
             <CircleIcon sx={{ color: purple[500] }}/>
           </ListItemIcon>
-          <ListItemText sx={{ color: purple[500] }} primary="Kitchen" />
+          <ListItemText sx={{ color: purple[500] }} 
+          primary="Kitchen" />
       </ListItem>
-      <ListItem disablePadding className={classes.listItem}>
+      <ListItem disablePadding 
+      className={classes.listItem}>
           <ListItemIcon>
             <CircleIcon sx={{ color: orange[500] }}/>
           </ListItemIcon>
-          <ListItemText sx={{ color: orange[500] }} primary="Living-room" />
+          <ListItemText sx={{ color: orange[500] }} 
+          primary="Living-room" />
       </ListItem>
-      <ListItem disablePadding className={classes.listItem}>
+      <ListItem disablePadding 
+      className={classes.listItem}>
           <ListItemIcon>
             <CircleIcon sx={{ color: red[500] }}/>
           </ListItemIcon>
-          <ListItemText sx={{ color: red[500] }} primary="Dining-room" />
+          <ListItemText sx={{ color: red[500] }} 
+          primary="Dining-room" />
       </ListItem>
-      <ListItem disablePadding className={classes.listItem}>
+      <ListItem disablePadding 
+      className={classes.listItem}>
           <ListItemIcon>
             <CircleIcon sx={{ color: pink[500] }}/>
           </ListItemIcon>
-          <ListItemText sx={{ color: pink[500] }} primary="Entrance" />
+          <ListItemText sx={{ color: pink[500] }} 
+          primary="Entrance" />
       </ListItem>
-      <ListItem disablePadding className={classes.listItem}>
+      <ListItem disablePadding 
+      className={classes.listItem}>
           <ListItemIcon>
             <CircleIcon sx={{ color: brown[500] }}/>
           </ListItemIcon>
-          <ListItemText sx={{ color: brown[500] }} primary="Garage" />
+          <ListItemText sx={{ color: brown[500] }} 
+          primary="Garage" />
       </ListItem>
-      <ListItem disablePadding className={classes.listItem}>
+      <ListItem disablePadding 
+      className={classes.listItem}>
           <ListItemIcon>
             <CircleIcon sx={{ color: blue[300] }}/>
           </ListItemIcon>
-          <ListItemText sx={{ color: blue[300] }} primary="Deck" />
+          <ListItemText sx={{ color: blue[300] }} 
+          primary="Deck" />
       </ListItem>
-      <ListItem disablePadding className={classes.listItem}>
+      <ListItem disablePadding 
+      className={classes.listItem}>
           <ListItemIcon>
             <CircleIcon sx={{ color: pink[400] }}/>
           </ListItemIcon>
-          <ListItemText sx={{ color: pink[400] }} primary="Other" />
+          <ListItemText sx={{ color: pink[400] }} 
+          primary="Other" />
       </ListItem>
     </List>
       </Box>

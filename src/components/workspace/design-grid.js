@@ -27,7 +27,8 @@ export default function DesignGrid({projectId}) {
           
         }}
       >
-      <Grid container style={{marginLeft:0, width: "100%"}}
+      <Grid container 
+      style={{marginLeft:0, width: "100%"}}
       spacing={3}>        
         {projectData.designs ? 
           <Grid container 

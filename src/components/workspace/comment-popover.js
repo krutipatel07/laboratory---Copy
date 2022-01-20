@@ -140,7 +140,8 @@ const handleChange = (event) => {
         className={classes.form}
         onSubmit={handleSubmit}
         >
-            <div className={classes.writeComment}>
+            <div 
+            className={classes.writeComment}>
                 <textarea
                 ref={textRef}
                 onChange={handleChange}
@@ -151,7 +152,8 @@ const handleChange = (event) => {
                 id="comment"
                 />
             </div>
-            <div className={classes.btnGroup}>
+            <div 
+            className={classes.btnGroup}>
                 {/* <button type="button" className={classes.cancel}>
                     Cancel
                 </button> */}
