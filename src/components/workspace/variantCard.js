@@ -169,8 +169,10 @@ const VariantCard = (props) => {
             </NextLink> */}
             <IconButton aria-label="delete" 
             onClick={deleteDesign}  
-            className={classes.deletebtn} style={{marginLeft: 'auto'}}>
-              <DeleteIcon style={{color:'#D14343'}} />
+            className={classes.deletebtn} 
+            style={{marginLeft: 'auto'}}>
+              <DeleteIcon 
+              style={{color:'#D14343'}} />
             </IconButton>
           </Stack>
         </CardActions>

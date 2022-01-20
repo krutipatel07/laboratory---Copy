@@ -173,7 +173,8 @@ const ShareButton = () => {
         }}
       >
         <Stack spacing={2} 
-        direction="row" onClick={handleOpenPopover}
+        direction="row" 
+        onClick={handleOpenPopover}
           ref={anchorRef}>
           <Button variant="contained" 
           className={classes.sharebtn}>Share</Button>
@@ -387,7 +388,8 @@ const ExportButton = () => {
         <Stack spacing={2} 
         direction="row">
           <Button variant="contained" 
-          className={classes.sharebtn} onClick={downloadDesign}>
+          className={classes.sharebtn} 
+          onClick={downloadDesign}>
             Export Design
             <DownloadIcon style={{marginLeft:"10px"}}/>
           </Button>
