@@ -10,9 +10,12 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import PeopleIcon from '@mui/icons-material/People';
 import Box from '@mui/material/Box';
 import NextLink from 'next/link';
+import axios from 'axios'
+import toast from 'react-hot-toast';
 
 const ProductCard = (props) => {
     const {
+        id,
         title,
         description,
         members,
@@ -20,11 +23,13 @@ const ProductCard = (props) => {
         image
     } = props;
     
+    const deleteProject = async () => {
+      const deleted = await axios.delete(`/api/projects/${id}`);
+      deleted && toast.success("Design deleted");
+      location.reload();
+    }
+
   return (
-    <NextLink
-        href={link}
-        passHref
-      >
       <Card sx={{
             maxWidth: 300, 
             minWidth: 400,
@@ -34,25 +39,33 @@ const ProductCard = (props) => {
               backgroundColor: 'background.hover',
             } }}
             variant="elevation">
-        <CardMedia
-        component="img"
-        alt="green iguana"
-        height="160"
-        src={image}
-      />
-        <CardContent>
-          <Typography gutterBottom 
-          variant="subtitle1" 
-          component="div" 
-          color="text.primary">
-            {title}
-          </Typography>
-          <Typography 
-          variant="body2" 
-          color="text.secondary">
-              {description}
-          </Typography>
-        </CardContent>
+        <NextLink
+          href={link}
+          passHref
+        ><CardMedia
+          component="img"
+          alt="green iguana"
+          height="160"
+          src={image}
+        />
+        </NextLink>
+        <NextLink
+          href={link}
+          passHref
+        ><CardContent>
+            <Typography gutterBottom 
+            variant="subtitle1" 
+            component="div" 
+            color="text.primary">
+              {title}
+            </Typography>
+            <Typography 
+            variant="body2" 
+            color="text.secondary">
+                {description}
+            </Typography>
+          </CardContent>
+        </NextLink>
         <CardActions disableSpacing>
               <IconButton aria-label="share">
               <PeopleIcon />
@@ -62,7 +75,6 @@ const ProductCard = (props) => {
               </Typography>
         </CardActions>
       </Card>
-      </NextLink>
   );
 };
 

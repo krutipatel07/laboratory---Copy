@@ -41,6 +41,7 @@ export default function ProjectGrid() {
                 item 
                 xs>
                   <ProductCard
+                    id={project.id}
                     title={project.title}
                     description={(project.description.replace("<p>", "").replace("</p>", ""))}
                     members = {project.collaborators.length}
