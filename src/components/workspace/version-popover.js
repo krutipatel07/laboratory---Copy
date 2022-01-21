@@ -67,24 +67,44 @@ export const VersionPopover = withRouter((props) => {
         }}
       >
         <form>
-        {versions? versions.length ? versions.map((version, i) =>
-            <><NextLink
-                  key={version._id}
-                  href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${version._id}&isVersion=true` :`/workspace/${projectId}?designId=${version._id}&isVersion=true`}
-                  passHref
-                >
-                <MenuItem component="a">
-                    <ListItemText
-                    primary={(
-                        <Typography variant="body1">
-                            {version.title}
-                        </Typography>
-                    )}
-                    />
-                </MenuItem>
-            </NextLink>
-            <Divider key={`DividerVersionList ${version._id}`}/>
-            </>)
+        {versions? versions.length ? 
+            <>
+              { isVersion && 
+                  <>
+                  <NextLink
+                      href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${versions[0].versionOf}` :`/workspace/${projectId}?designId=${versions[0].versionOf}`}
+                      passHref
+                    >
+                    <MenuItem component="a">
+                        <ListItemText
+                        primary={(
+                            <Typography variant="body1">
+                                Default
+                            </Typography>
+                        )}
+                        />
+                    </MenuItem>
+                  </NextLink>
+                  <Divider/></>}
+              {versions.map((version, i) =>
+                  <><NextLink
+                        key={version._id}
+                        href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${version._id}&isVersion=true` :`/workspace/${projectId}?designId=${version._id}&isVersion=true`}
+                        passHref
+                      >
+                      <MenuItem component="a">
+                          <ListItemText
+                          primary={(
+                              <Typography variant="body1">
+                                  {version.title}
+                              </Typography>
+                          )}
+                          />
+                      </MenuItem>
+                  </NextLink>
+                  <Divider key={`DividerVersionList ${version._id}`}/>
+                  </>)}
+            </>
             : <h3>No versions available</h3> : <h3>loading</h3>}
         </form>
 

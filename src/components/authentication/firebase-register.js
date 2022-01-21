@@ -129,7 +129,7 @@ export const FirebaseRegister = (props) => {
 
   return (
     <div {...props}>
-      <Button
+      {/* <Button
         fullWidth
         onClick={handleGoogleClick}
         size="large"
@@ -171,7 +171,7 @@ export const FirebaseRegister = (props) => {
         <Box sx={{ flexGrow: 1 }}>
           <Divider orientation="horizontal" />
         </Box>
-      </Box>
+      </Box> */}
       <form
         noValidate
         onSubmit={formik.handleSubmit}
