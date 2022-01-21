@@ -116,7 +116,7 @@ export const DashboardSidebar = (props) => {
           <div>
             <Box sx={{ p: 3 }}>
               <NextLink
-                href="/"
+                href="/dashboard/projects"
                 passHref
               >
                 <a>

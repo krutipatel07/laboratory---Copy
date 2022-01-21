@@ -499,7 +499,7 @@ export const WorkspaceNavbar = (props) => {
           }}
         >
         <NextLink
-                href="/"
+                href="/dashboard/projects"
                 passHref
               >
                 <a>
