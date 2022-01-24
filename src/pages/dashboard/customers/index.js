@@ -128,7 +128,6 @@ const CustomerList = () => {
   const isMounted = useMounted();
   const queryRef = useRef(null);
   const [customers, setCustomers] = useState([]);
-  const [customerss, setCustomerss] = useState([]);
   const [currentTab, setCurrentTab] = useState('all');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -147,19 +146,11 @@ const CustomerList = () => {
   const getCustomers = useCallback(async () => {
     try {
 
-      // const data = await customerApi.getCustomers();
+      const data = await customerApi.getCustomers();
 
-      // if (isMounted()) {
-      //   setCustomers(data);
-      // }
-
-      const user = localStorage.getItem("lab-user");
-      const datas = await axios.get(`/api/user/${user}`);
-      console.log(datas);
       if (isMounted()) {
-        setCustomerss(datas);
+        setCustomers(data);
       }
-      customerss && console.log(customerss);
     } catch (err) {
       console.error(err);
     }
