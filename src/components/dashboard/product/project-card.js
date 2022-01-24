@@ -12,6 +12,20 @@ import Box from '@mui/material/Box';
 import NextLink from 'next/link';
 import axios from 'axios'
 import toast from 'react-hot-toast';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { makeStyles } from '@material-ui/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  projectListContent: {
+    minHeight: '115px',
+    maxHeight: '115px',
+    overflow: 'auto',
+    padding: '13px 24px'
+  }
+}));
 
 const ProductCard = (props) => {
     const {
@@ -22,10 +36,12 @@ const ProductCard = (props) => {
         link,
         image
     } = props;
+
+    const classes = useStyles();
     
     const deleteProject = async () => {
       const deleted = await axios.delete(`/api/projects/${id}`);
-      deleted && toast.success("Design deleted");
+      deleted && toast.success("Project deleted");
       location.reload();
     }
 
@@ -52,7 +68,7 @@ const ProductCard = (props) => {
         <NextLink
           href={link}
           passHref
-        ><CardContent>
+        ><CardContent className={classes.projectListContent}>
             <Typography gutterBottom 
             variant="subtitle1" 
             component="div" 
@@ -73,6 +89,12 @@ const ProductCard = (props) => {
               <Typography>
               {members}
               </Typography>
+              <IconButton aria-label="delete" 
+                onClick={deleteProject}  
+                style={{marginLeft: 'auto'}}>
+                  <DeleteIcon 
+                    style={{color:'#D14343'}} />
+              </IconButton>
         </CardActions>
       </Card>
   );

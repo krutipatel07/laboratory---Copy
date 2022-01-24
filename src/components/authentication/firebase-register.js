@@ -19,6 +19,19 @@ import { useAuth } from '../../hooks/use-auth';
 import { useMounted } from '../../hooks/use-mounted';
 import axios from 'axios'
 import toast from 'react-hot-toast';
+import { createMuiTheme } from "@material-ui/core/styles";
+
+const theme = createMuiTheme({
+  overrides: {
+    MuiOutlinedInput: {
+      root: {
+        "& $notchedOutline": {
+          borderColor: "green"
+        }
+      }
+    }
+  }
+});
 
 export const FirebaseRegister = (props) => {
   const isMounted = useMounted();

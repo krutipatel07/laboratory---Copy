@@ -67,7 +67,7 @@ export const ProductCreateForm = (props) => {
         })
         .catch(error => console.log(error));
 
-        toast.success('Product created!');
+        toast.success('Project created!');
         router.push('/dashboard/projects');
       } catch (err) {
         console.error(err);
