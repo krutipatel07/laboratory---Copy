@@ -229,7 +229,7 @@ export const FirebaseRegister = (props) => {
         style={{marginTop:8, marginBottom: 4}}>
         <InputLabel id="demo-multiple-name-label">Role</InputLabel>
         <Select
-          error={Boolean( formik.touched.name && formik.touched.role)}
+          error={Boolean( formik.touched.name && formik.touched.role && formik.errors.role)}
           fullWidth
           margin="dense"
           name="role"
