@@ -30,6 +30,14 @@ export default async (req, res) => {
                     new: true,
                     runValidators: true
                 });
+                if(req.body.collaborators){                    
+                    await Project.findByIdAndUpdate(projectId, 
+                        { $push : { collaborators : req.body.collaborators}}, 
+                        {
+                        new: true,
+                        runValidators: true
+                    });
+                }
                 if (!project){
                     res.status(404).json({ success: false, message: error})
                 }

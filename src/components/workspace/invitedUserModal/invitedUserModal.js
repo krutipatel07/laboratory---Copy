@@ -28,6 +28,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 export const InvitedUserModal = (props) => {
   const isMounted = useMounted();
   const router = useRouter();
+  const projectId = router.query.projectId;
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -53,6 +54,10 @@ export const InvitedUserModal = (props) => {
           if (isMounted()) {     
             const {data} = await axios.get(`/api/owner/${values.email}`)
             .catch(error => console.log(error));
+            await axios.put(`/api/projects/${projectId}`, {
+             collaborators : data.data.id,
+           })
+           .catch(error => console.log(error));
             localStorage.setItem("lab-user", data.data.id);
           }
         } catch (err) {
@@ -62,6 +67,10 @@ export const InvitedUserModal = (props) => {
                 role: "Collaborator"
               })
               .catch(error => console.log(error));
+              await axios.put(`/api/projects/${projectId}`, {
+               collaborators : data.data.id,
+             })
+             .catch(error => console.log(error));
               localStorage.setItem("lab-user", data.data.id);
         }
         setOpen(false);
