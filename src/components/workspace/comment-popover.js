@@ -13,12 +13,15 @@ import {
   MenuItem,
   Popover,
   coordinates,
-  Typography
+  Typography,
+  ButtonBase
 } from '@mui/material';
 import { Logout as LogoutIcon } from '@mui/icons-material';
 import { useAuth } from '../../hooks/use-auth';
 import axios from 'axios'
 import Popper from '@mui/material/Popper';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 
 export const CommentPopover = withRouter((props) => {
   const { anchorEl, onClose, open, ...other } = props;
@@ -75,12 +78,17 @@ export const CommentPopover = withRouter((props) => {
           backgroundColor: '#BDBDBD',
           boxShadow: 'none',
           border: '1px solid #BDBDBD',
-          padding: '3px 12px 5px',
           margin: '0 0 0 8px',
           minWidth: 24,
           verticalAlign: 'middle',
           borderRadius: 8,
-          lineHeight:' 16px'
+          lineHeight:' 16px',
+          padding: '7px 11px',
+          fontWeight: 'bold',
+          fontSize: '0.875rem',
+          cursor: 'pointer',
+          border: 'none',
+          backgroundColor: '#007FFF',
       }
     
     }));
@@ -153,11 +161,14 @@ const handleChange = (event) => {
                 />
             </div>
             <div 
-            className={classes.btnGroup}>
+            className={classes.btnGroup}
+            component={ButtonBase}>
                 {/* <button type="button" className={classes.cancel}>
                     Cancel
                 </button> */}
-                <button type="submit" className={classes.post}>
+                <button type="submit" variant="contained" 
+                className={classes.post}
+                >
                     Post 
                 </button>
             </div>
