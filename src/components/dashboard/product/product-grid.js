@@ -43,7 +43,8 @@ export default function ProjectGrid() {
                   <ProductCard
                     id={project.id}
                     title={project.title}
-                    description={(project.description.replace(/(<([^>]+)>)/gi, ""))}
+                    description={(project.description.replace(/(<([^>\s]+)>)/gi, ""))}
+                    // description={(project.description.replace(/\s+/, " "))}
                     members = {project.collaborators.length}
                     image={images}
                     link= {`/workspace?id=${project.id}`}
