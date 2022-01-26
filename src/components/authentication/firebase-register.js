@@ -63,7 +63,6 @@ export const FirebaseRegister = (props) => {
           if (isMounted()) {     
             const {data} = await axios.get(`/api/owner/${values.email}`)
             .catch(error => console.log(error));
-            console.log(data.data._id);
             await axios.put(`/api/user/${data.data._id}`, {
               name: values.name,
               role: values.role

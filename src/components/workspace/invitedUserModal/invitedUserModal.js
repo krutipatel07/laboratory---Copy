@@ -51,30 +51,28 @@ export const InvitedUserModal = (props) => {
       const isExisting = existingCollaboratorList.filter(collaborator => collaborator===values.email);
       if(isExisting.length){
         try {
-          if (isMounted()) {     
+          if (isMounted()) {    
             const {data} = await axios.get(`/api/owner/${values.email}`)
             .catch(error => console.log(error));
+            const id = data.data.id;
+            const projects = await axios.get(`/api/projects/${projectId}`)
+            const projectsCollaborators = projects.data.data.collaborators
+            const filteredProjectsCollaborators = projectsCollaborators.filter(collaborator => collaborator._id === id)
+            
+            if(filteredProjectsCollaborators.length === 0) {
             await axios.put(`/api/projects/${projectId}`, {
-             collaborators : data.data.id,
-           })
-           .catch(error => console.log(error));
-            localStorage.setItem("lab-user", data.data.id);
+              collaborators : id,
+            })
+            .catch(error => console.log(error));
+          }
+          localStorage.setItem("lab-user", id);
           }
         } catch (err) {
-          const {data} = await axios.post("/api/user", {
-                name: values.name,
-                email: values.email,
-                role: "Collaborator"
-              })
-              .catch(error => console.log(error));
-              await axios.put(`/api/projects/${projectId}`, {
-               collaborators : data.data.id,
-             })
-             .catch(error => console.log(error));
-              localStorage.setItem("lab-user", data.data.id);
+          createCollaborator(values, projectId);
         }
         setOpen(false);
         toast.success("Collaborator verified")
+        location.reload();
       }
       else{
         toast.error("Please enter correct email address")
@@ -90,6 +88,21 @@ export const InvitedUserModal = (props) => {
       setOpen(true);
     }
   },[])
+
+  const createCollaborator = async (values, projectId) => {
+    const {data} = await axios.post("/api/user", {
+      name: values.name,
+      email: values.email,
+      role: "Collaborator"
+    })
+    .catch(error => console.log(error));
+    const id = data.data.id;
+    await axios.put(`/api/projects/${projectId}`, {
+     collaborators : id,
+   })
+   .catch(error => console.log(error));
+    localStorage.setItem("lab-user", id);
+  }
 
    return (
     <div {...props}>

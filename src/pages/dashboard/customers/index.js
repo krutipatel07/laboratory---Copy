@@ -143,18 +143,21 @@ const CustomerList = () => {
     gtm.push({ event: 'page_view' });
   }, []);
 
-  const getCustomers = useCallback(async () => {
+  const getCustomers = async () => {
     try {
-
-      const data = await customerApi.getCustomers();
-
-      if (isMounted()) {
-        setCustomers(data);
-      }
+      const user = localStorage.getItem("lab-user");
+      const {data} = await axios.get(`/api/user/${user}`);
+      const {projects} = data.data;
+      projects.forEach( project => {
+        project.collaborators && project.collaborators.forEach( async collaborator => {
+          const {data} = await axios.get(`/api/user/${collaborator}`);
+          setCustomers((prev) => [...prev, data.data])
+        })
+      })
     } catch (err) {
       console.error(err);
     }
-  }, [isMounted]);
+};
 
   useEffect(() => {
       getCustomers();
