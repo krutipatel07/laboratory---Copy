@@ -19,18 +19,7 @@ const ProjectSchema = new mongoose.Schema(
             type: String,
             maxlength: 300
         },
-        assets: {
-            images:
-            {
-                data: Buffer,
-                contentType: String
-            },
-            documents:
-            {
-                data: Buffer,
-                contentType: String
-            }
-        },
+        assets: [Object],
         budget: {
             type: Number,
             required: true

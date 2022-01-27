@@ -22,7 +22,6 @@ export default async (req, res) => {
             try {
                 const project = await Project.create(req.body);
                 res.status(201).json({ success: true, data: project})
-
                 await User.findByIdAndUpdate(
                     { _id: project.owner },
                     { $push: { projects: project._id } },

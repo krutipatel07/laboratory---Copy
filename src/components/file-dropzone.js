@@ -149,14 +149,14 @@ export const FileDropzone = (props) => {
               mt: 2
             }}
           >
-            <Button
+            {/* <Button
               onClick={onRemoveAll}
               size="small"
               type="button"
             >
               Remove All
-            </Button>
-            <Button
+            </Button> */}
+            {/* <Button
               onClick={onUpload}
               size="small"
               sx={{ ml: 2 }}
@@ -164,7 +164,7 @@ export const FileDropzone = (props) => {
               variant="contained"
             >
               Upload
-            </Button>
+            </Button> */}
           </Box>
         </Box>
       )}
