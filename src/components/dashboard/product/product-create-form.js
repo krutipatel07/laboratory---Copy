@@ -32,7 +32,6 @@ export const ProductCreateForm = (props) => {
       images: [],
       name: '',
       newPrice: 0,
-      // oldPrice: 0,
       sku: 'IYV-8745',
       submit: null
     },
@@ -43,41 +42,63 @@ export const ProductCreateForm = (props) => {
       images: Yup.array(),
       name: Yup.string().max(255).required(),
       newPrice: Yup.number().min(0).required(),
-      // oldPrice: Yup.number().min(0),
       sku: Yup.string().max(255)
     }),
     onSubmit: async (values, helpers) => {
-      try {        
-        const users = await axios.get("/api/user")
-        .then(res => res.data.data)
-        .catch(error => console.log(error));
+      let url ;
+      let url_list = [];
+      const formData = new FormData();
+      const uploaders = files.map( async file => {
+            url = await storeFiles(file, formData);
+            if(file.type.includes('image')) {
+              return url_list.push({images : url})
+            }
+            else{
+              return url_list.push({documents : url})
+            }
+      });
+      
+      axios.all(uploaders).then(async () => {
+        try {
+          const owner = localStorage.getItem("lab-user");
+            await axios.post("/api/projects", {
+              owner,
+              title: values.name,
+              description: values.description,
+              assets: url_list,
+              budget: values.newPrice,
+            })
+            .catch(error => console.log(error));
 
-        var user_filter = users.filter( user => user.email === values.memberSearch);
-
-        let collaborators;
-        user_filter.length?  collaborators = user_filter[0].id : collaborators = [];
-        const owner = localStorage.getItem("lab-user");
-
-        await axios.post("/api/projects", {
-          owner,
-          title: values.name,
-          description: values.description,
-          budget: values.newPrice,
-          collaborators
-        })
-        .catch(error => console.log(error));
-
-        toast.success('Project created!');
-        router.push('/dashboard/projects');
-      } catch (err) {
-        console.error(err);
-        toast.error('Something went wrong!');
-        helpers.setStatus({ success: false });
-        helpers.setErrors({ submit: err.message });
-        helpers.setSubmitting(false);
-      }
+            toast.success('Project created!');
+            router.push('/dashboard/projects');
+        } catch (err) {
+          console.error(err);
+          toast.error('Something went wrong!');
+          helpers.setStatus({ success: false });
+          helpers.setErrors({ submit: err.message });
+          helpers.setSubmitting(false);
+        }
+      });
     }
   });
+
+  const storeFiles = async (file, formData) => {
+      formData.append('file', file)
+      formData.append('upload_preset', 'maket_design');
+      const url = "https://api.cloudinary.com/v1_1/maket/image/upload";
+      const secure_file_url = await fetch(url, {
+        method: "POST",
+        body: formData
+      }).then(res => res.json())
+      .then(res =>{
+        if(res.error) {
+          return
+        }
+        return res.secure_url
+      }).catch(err => console.log(err))
+      return secure_file_url;
+  }
 
   const handleDrop = (newFiles) => {
     setFiles((prevFiles) => [...prevFiles, ...newFiles]);
@@ -154,7 +175,7 @@ export const ProductCreateForm = (props) => {
           </Grid>
         </CardContent>
       </Card>
-      {/* <Card sx={{ mt: 3 }}>
+      <Card sx={{ mt: 3 }}>
         <CardContent>
           <Grid
             container
@@ -189,27 +210,10 @@ export const ProductCreateForm = (props) => {
                 }}
                 variant="subtitle2"
               >
-                Images
+                Images, Notes and Documents
               </Typography>
               <FileDropzone
-                accept="image/*"
-                files={files}
-                onDrop={handleDrop}
-                onRemove={handleRemove}
-                onRemoveAll={handleRemoveAll}
-              />
-              <Typography
-                color="textSecondary"
-                sx={{
-                  mb: 2,
-                  mt: 3
-                }}
-                variant="subtitle2"
-              >
-                Notes and Documents
-              </Typography>
-              <FileDropzone
-                accept="image/*"
+                accept="image/*,.pdf"
                 files={files}
                 onDrop={handleDrop}
                 onRemove={handleRemove}
@@ -218,7 +222,7 @@ export const ProductCreateForm = (props) => {
             </Grid>
           </Grid>
         </CardContent>
-      </Card> */}
+      </Card>
       <Card sx={{ mt: 3 }}>
         <CardContent>
           <Grid
@@ -239,16 +243,6 @@ export const ProductCreateForm = (props) => {
               md={8}
               xs={12}
             >
-              {/* <TextField
-                error={Boolean(formik.touched.oldPrice && formik.errors.oldPrice)}
-                fullWidth
-                label="Min"
-                name="oldPrice"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                type="number"
-                value={formik.values.oldPrice}
-              /> */}
               <TextField
                 error={Boolean(formik.touched.newPrice && formik.errors.newPrice)}
                 fullWidth
@@ -264,52 +258,6 @@ export const ProductCreateForm = (props) => {
           </Grid>
         </CardContent>
       </Card>
-      {/* <Card sx={{ mt: 3 }}>
-        <CardContent>
-          <Grid
-            container
-            spacing={3}
-          >
-            <Grid
-              item
-              md={4}
-              xs={12}
-            >
-              <Typography variant="h6">
-                Collaborators
-              </Typography>
-              <Typography
-                color="textSecondary"
-                variant="body2"
-                sx={{ mt: 1 }}
-              >
-                These are the people you will work together with on this project.
-              </Typography>
-            </Grid>
-            <Grid
-              item
-              md={8}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Add collaborators"
-                name="memberSearch"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <SearchIcon fontSize="small" />
-                      </InputAdornment>
-                    )
-                  }}
-                  placeholder="enter name or email"
-              />
-            </Grid>
-          </Grid>
-        </CardContent>
-      </Card> */}
       <Box
         sx={{
           display: 'flex',
