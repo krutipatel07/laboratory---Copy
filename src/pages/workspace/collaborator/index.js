@@ -16,7 +16,6 @@ import { withWorkspaceLayout } from '../../../hocs/with-workspace-layout';
 import { useMounted } from '../../../hooks/use-mounted';
 import { gtm } from '../../../lib/gtm';
 import Paper from '@mui/material/Paper';
-import { OverviewBanner } from '../../../components/dashboard/overview/overview-banner';
 import BottomNav from "../../../components/workspace/variant/variant-bottomNav";
 import axios from 'axios';
 import { withRouter } from 'next/router';
@@ -80,8 +79,6 @@ const InvitedUSerPage = withRouter((props) => {
   });
   const [variantData, setVariantData] = useState([]);  
 
-  const [displayBanner, setDisplayBanner] = useState(true);
-
   useEffect(() => {
     gtm.push({ event: 'page_view' });
   }, []);
@@ -92,20 +89,6 @@ const InvitedUSerPage = withRouter((props) => {
     .catch(error => console.log(error));
   }, [designId]);
 
-  useEffect(() => {
-    // Restore the persistent state from local/session storage
-    const value = globalThis.sessionStorage.getItem('dismiss-banner');
-
-    if (value === 'true') {
-      // setDisplayBanner(false);
-    }
-  }, []);
-
-  const handleDismissBanner = () => {
-    // Update the persistent state
-    // globalThis.sessionStorage.setItem('dismiss-banner', 'true');
-    setDisplayBanner(false);
-  };
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
@@ -160,26 +143,6 @@ const InvitedUSerPage = withRouter((props) => {
           xs={8}>
 
             <Container maxWidth="xl"> 
-              <Box sx={{ mb: 4 }}>
-                <Grid
-                  container
-                  justifyContent="space-between"
-                  spacing={3}
-                >
-                  {displayBanner && (
-                  <Grid
-                    item
-                    xs={12}
-                  >
-                    <OverviewBanner
-                    onDismiss={handleDismissBanner}
-                    title="Welcome to your design variant!"
-                    blurb="This is where you and your collaborators can comment on and discuss the specifics of each design option you create."
-                    />
-                  </Grid>
-                  )}
-                </Grid>
-              </Box>
           <Box
         sx={{
           maxWidth: 980,

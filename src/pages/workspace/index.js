@@ -19,7 +19,6 @@ import { Plus as PlusIcon } from '../../icons/plus';
 import { gtm } from '../../lib/gtm';
 import DesignGrid from '../../components/workspace/design-grid.js';
 import AssetsGrid from '../../components/workspace/assets-grid';
-import { OverviewBanner } from '../../components/dashboard/overview/overview-banner';
 import { Search as SearchIcon } from '../../icons/search';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -92,26 +91,12 @@ const ProductList = withRouter((props) => {
     inStock: undefined
   });
 
-  const [displayBanner, setDisplayBanner] = useState(true);
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
   }, []);
 
-  useEffect(() => {
-    // Restore the persistent state from local/session storage
-    const value = globalThis.sessionStorage.getItem('dismiss-banner');
 
-    if (value === 'true') {
-      // setDisplayBanner(false);
-    }
-  }, []);
-
-  const handleDismissBanner = () => {
-    // Update the persistent state
-    // globalThis.sessionStorage.setItem('dismiss-banner', 'true');
-    setDisplayBanner(false);
-  };
 
   const addDesign = async (generatedData) => {
     if (!generatedData.length) {
@@ -346,18 +331,6 @@ const ProductList = withRouter((props) => {
               justifyContent="space-between"
               spacing={3}
             >
-              {displayBanner && (
-              <Grid
-                item
-                xs={12}
-              >
-                <OverviewBanner
-                onDismiss={handleDismissBanner}
-                title="Welcome to your Workspace!"
-                blurb="This is where you will work together with your collaborators to bring your designs to life."
-                />
-              </Grid>
-              )}
               <Grid item>
                 <Typography variant="h4">
                   Designs
