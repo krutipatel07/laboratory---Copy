@@ -482,6 +482,51 @@ const ImportButton = () => {
   );
 };
 
+const AssetButton = () => {
+  const router = useRouter();
+  const {projectId} = router.query;
+
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+    },
+    assetbtn: {
+      fontWeight: 'bold',
+      fontSize: '0.875rem',
+      padding: '7px 11px',
+      borderRadius: '8px',
+      color: 'white',
+      transition: 'all 150ms ease',
+      cursor: 'pointer',
+      border: 'none',
+      backgroundColor: '#007FFF',
+      marginRight: '8px'
+    },
+  }));
+  const classes = useStyles();
+
+  return (
+    <>
+      <Box
+        component={ButtonBase}
+        sx={{
+          alignItems: 'center',
+          display: 'flex',
+          ml: 2
+        }}
+      >
+        <Stack spacing={2} 
+        direction="row">
+            <Button variant="contained" 
+            className={classes.assetbtn}>
+              Assets
+            </Button>
+        </Stack>
+      </Box>
+    </>
+  );
+};
+
 export const WorkspaceNavbar = (props) => {
   const { onOpenSidebar, ...other } = props;
   const router = useRouter();
@@ -531,6 +576,7 @@ export const WorkspaceNavbar = (props) => {
           {
             router.query.invite && <ExportButton/> 
           }
+          <AssetButton/>
           <AccountButton />
         </Toolbar>
       </WorkspaceNavbarRoot>

@@ -18,6 +18,7 @@ import { useMounted } from '../../hooks/use-mounted';
 import { Plus as PlusIcon } from '../../icons/plus';
 import { gtm } from '../../lib/gtm';
 import DesignGrid from '../../components/workspace/design-grid.js';
+import AssetsGrid from '../../components/workspace/assets-grid';
 import { OverviewBanner } from '../../components/dashboard/overview/overview-banner';
 import { Search as SearchIcon } from '../../icons/search';
 import InputLabel from '@mui/material/InputLabel';
@@ -362,9 +363,15 @@ const ProductList = withRouter((props) => {
                   Designs
                 </Typography>
               </Grid>
+              <Grid item>
+                <Typography variant="h4">
+                  Assets
+                </Typography>
+              </Grid>
             </Grid>
           </Box>
             <DesignGrid projectId= {props.router.query.id} />
+            <AssetsGrid projectId= {props.router.query.id}/>
         </Container>
       </Box>
     </>
