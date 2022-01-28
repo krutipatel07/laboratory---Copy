@@ -19,6 +19,7 @@ import { Plus as PlusIcon } from '../../icons/plus';
 import { gtm } from '../../lib/gtm';
 import DesignGrid from '../../components/workspace/design-grid.js';
 import AssetsGrid from '../../components/workspace/assets-grid';
+import TabPanel from '../../components/workspace/tabpanel/tabpanel';
 import { Search as SearchIcon } from '../../icons/search';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -325,7 +326,10 @@ const ProductList = withRouter((props) => {
         }}
       >
         <Container maxWidth="xl">
-          <Box sx={{ mb: 4 }}>
+        <TabPanel projectId= {props.router.query.id}/>
+
+        <DesignGrid projectId= {props.router.query.id} />
+          {/* <Box sx={{ mb: 4 }}>
             <Grid
               container
               justifyContent="space-between"
@@ -336,15 +340,9 @@ const ProductList = withRouter((props) => {
                   Designs
                 </Typography>
               </Grid>
-              <Grid item>
-                <Typography variant="h4">
-                  Assets
-                </Typography>
-              </Grid>
             </Grid>
           </Box>
-            <DesignGrid projectId= {props.router.query.id} />
-            <AssetsGrid projectId= {props.router.query.id}/>
+          <DesignGrid projectId= {props.router.query.id} /> */}
         </Container>
       </Box>
     </>

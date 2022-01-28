@@ -576,7 +576,7 @@ export const WorkspaceNavbar = (props) => {
           {
             router.query.invite && <ExportButton/> 
           }
-          <AssetButton/>
+          {/* <AssetButton/> */}
           <AccountButton />
         </Toolbar>
       </WorkspaceNavbarRoot>
