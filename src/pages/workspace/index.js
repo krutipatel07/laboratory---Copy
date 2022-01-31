@@ -322,13 +322,13 @@ const ProductList = withRouter((props) => {
         component="main"
         sx={{
           flexGrow: 1,
-          py: 8
+          mb: 8
         }}
       >
         <Container maxWidth="xl">
-        <TabPanel projectId= {props.router.query.id}/>
+          <TabPanel projectId= {props.router.query.id}/>
 
-        <DesignGrid projectId= {props.router.query.id} />
+        {/* <DesignGrid projectId= {props.router.query.id} /> */}
           {/* <Box sx={{ mb: 4 }}>
             <Grid
               container

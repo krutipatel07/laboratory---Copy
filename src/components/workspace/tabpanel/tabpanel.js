@@ -53,19 +53,18 @@ const BasicTabs = withRouter((props) => {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Design" {...a11yProps(0)} />
-          <Tab label="Assets" {...a11yProps(1)} />
+      <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: '30px' }}>
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
+          <Tab label="Design" {...a11yProps(0)} style={{fontSize: '1.5rem'}} />
+          <Tab label="Assets" {...a11yProps(1)} style={{fontSize: '1.5rem'}} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
         <DesignGrid projectId= {props.router.query.id}/>
-        ABC
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <AssetsGrid/>
-        Assets
+        <AssetsGrid projectId= {props.router.query.id}/>
+        
       </TabPanel>
     </Box>
   );

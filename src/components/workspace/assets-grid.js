@@ -12,6 +12,14 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
+
+const Item = styled(Paper)(({ theme }) => ({
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
+
 export default function AssetsGrid({projectId}) {
   const [projectData, setProjectData] = useState([]);
   useEffect(() => {
@@ -20,25 +28,37 @@ export default function AssetsGrid({projectId}) {
     .catch(error => console.log(error));
   }, [projectId])
 
+  projectData && console.log(projectData.assets)
+
   return (
     <Box
         sx={{
           backgroundColor: 'background.default',
-          
+          flexGrow: 1
         }}
-      >
-      <Grid container 
-      style={{marginLeft:0, width: "100%"}}
-      spacing={3}>        
-        {projectData.designs ? 
+      >   
+        <Grid container 
+          spacing={3} 
+        >
+          <Grid item xs="auto">
+            <Item>variable width content</Item>
+          </Grid>
+          <Grid item xs="auto">
+            <Item>variable</Item>
+          </Grid>
+          <Grid item xs="auto">
+            <Item>variable width content</Item>
+          </Grid>
+
+        {/* {projectData.assets ? 
           <Grid container 
           spacing={3} 
           style={{marginLeft:0, width: "100%", justifyContent:'center'}}>
-          {projectData.designs.length ?
-              projectData.designs.map((design, i) => {
+          {projectData.assets.length ?
+              projectData.assets.map((assets, i) => {
                 return (                
-                  !design.versionOf && <Grid item 
-                  key = {design.id}
+                  !assets.versionOf && <Grid item 
+                  key = {assets.id}
                   xs>
                         <Box
                         sx={{
@@ -47,10 +67,10 @@ export default function AssetsGrid({projectId}) {
                             <img 
                                 style={{maxWidth: '100%', maxHeight: '100%'}}
                                 alt=""
-                                src={design.url}
+                                src={assets.url}
                             />
                         </Box>
-                  </Grid> )}) : <h3 style={{marginTop:50, fontSize:24, color:"#F0C88E"}}>No designs</h3> }
+                  </Grid> )}) : <h3 style={{marginTop:50, fontSize:24, color:"#F0C88E"}}>No Assets</h3> }
             </Grid>
            : <Box sx={{ 
                 width: "100%",
@@ -60,7 +80,7 @@ export default function AssetsGrid({projectId}) {
                 minHeight: '70vh' }}>
               <CircularProgress />
             </Box>
-        }
+        } */}
       </Grid>
     </Box>
   );
