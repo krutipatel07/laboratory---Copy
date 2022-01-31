@@ -327,22 +327,6 @@ const ProductList = withRouter((props) => {
       >
         <Container maxWidth="xl">
           <TabPanel projectId= {props.router.query.id}/>
-
-        {/* <DesignGrid projectId= {props.router.query.id} /> */}
-          {/* <Box sx={{ mb: 4 }}>
-            <Grid
-              container
-              justifyContent="space-between"
-              spacing={3}
-            >
-              <Grid item>
-                <Typography variant="h4">
-                  Designs
-                </Typography>
-              </Grid>
-            </Grid>
-          </Box>
-          <DesignGrid projectId= {props.router.query.id} /> */}
         </Container>
       </Box>
     </>
