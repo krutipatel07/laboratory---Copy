@@ -21,14 +21,12 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function AssetsGrid({projectId}) {
-  const [projectData, setProjectData] = useState([]);
+  const [assetData, setAssetData] = useState();
   useEffect(() => {
     axios.get(`/api/projects/${projectId}`)
-    .then(res => setProjectData(res.data.data))
+    .then(res => setAssetData(res.data.data.assets))
     .catch(error => console.log(error));
   }, [projectId])
-
-  projectData && console.log(projectData.assets)
 
   return (
     <Box
@@ -36,51 +34,41 @@ export default function AssetsGrid({projectId}) {
           backgroundColor: 'background.default',
           flexGrow: 1
         }}
-      >   
-        <Grid container 
-          spacing={3} 
-        >
-          <Grid item xs="auto">
-            <Item>variable width content</Item>
-          </Grid>
-          <Grid item xs="auto">
-            <Item>variable</Item>
-          </Grid>
-          <Grid item xs="auto">
-            <Item>variable width content</Item>
-          </Grid>
-
-        {/* {projectData.assets ? 
-          <Grid container 
-          spacing={3} 
-          style={{marginLeft:0, width: "100%", justifyContent:'center'}}>
-          {projectData.assets.length ?
-              projectData.assets.map((assets, i) => {
-                return (                
-                  !assets.versionOf && <Grid item 
-                  key = {assets.id}
-                  xs>
-                        <Box
-                        sx={{
-                        maxWidth: 300, 
-                        minWidth: 400, }}>
-                            <img 
-                                style={{maxWidth: '100%', maxHeight: '100%'}}
-                                alt=""
-                                src={assets.url}
-                            />
-                        </Box>
-                  </Grid> )}) : <h3 style={{marginTop:50, fontSize:24, color:"#F0C88E"}}>No Assets</h3> }
-            </Grid>
-           : <Box sx={{ 
-                width: "100%",
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                minHeight: '70vh' }}>
-              <CircularProgress />
-            </Box>
-        } */}
+      > 
+      <Grid container 
+      spacing={3} 
+      style={{marginLeft:0, width: "100%", justifyContent:'center'}}>
+        {assetData ? assetData.length ?   
+          assetData.map((asset, i) => {
+            return (                
+              <Grid item 
+              key = {`Asset ${i}`}
+              xs>
+                <Box
+                sx={{
+                maxWidth: 300, 
+                minWidth: 400, }}>
+                  {asset.images && <img 
+                        style={{maxWidth: '100%', maxHeight: '100%'}}
+                        alt=""
+                        src={asset.images}
+                    />}
+                  {asset.documents && <img 
+                      style={{maxWidth: '100%', maxHeight: '100%'}}
+                      alt=""
+                      src={asset.documents}
+                  />}
+                </Box>
+              </Grid> )}) 
+            : <h3 style={{marginTop:50, fontSize:24, color:"#F0C88E"}}>No Assets</h3> 
+        : <Box sx={{ 
+              width: "100%",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              minHeight: '70vh' }}>
+            <CircularProgress />
+          </Box>}
       </Grid>
     </Box>
   );

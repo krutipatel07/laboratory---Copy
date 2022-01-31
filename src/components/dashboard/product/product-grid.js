@@ -23,7 +23,6 @@ export default function ProjectGrid() {
     .then(res => setProjectsData(res.data.data))
     .catch(error => console.log(error));
   },[])
-  projectsData && console.log(projectsData)
   return (
     <Box
         sx={{
