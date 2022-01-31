@@ -210,10 +210,10 @@ export const ProductCreateForm = (props) => {
                 }}
                 variant="subtitle2"
               >
-                Images, Notes and Documents
+                Images
               </Typography>
               <FileDropzone
-                accept="image/*,.pdf"
+                accept="image/*"
                 files={files}
                 onDrop={handleDrop}
                 onRemove={handleRemove}
