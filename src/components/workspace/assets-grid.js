@@ -35,6 +35,16 @@ export default function AssetsGrid({projectId}) {
           flexGrow: 1
         }}
       > 
+        <Box>
+          <Button
+            component="a"
+            variant="contained"
+            // onClick={handleSubmit}
+            type="submit"
+          >
+            UPLOAD
+          </Button>
+          </Box>
       <Grid container 
       spacing={3} 
       style={{marginLeft:0, width: "100%", justifyContent:'center'}}>

@@ -135,7 +135,7 @@ const ProductList = () => {
           </Card>
         </Container>
       </Box>
-      {/* <DashboardModal/> */}
+      <DashboardModal/>
     </>
   );
 };
