@@ -46,6 +46,10 @@ const UserSchema = new mongoose.Schema(
         ref: 'Project'
       }
     ],
+    isFirstTime: {
+      type: Boolean,
+      default:true
+    },
     dateCreated: {
       type: Date,
       default: Date.now,

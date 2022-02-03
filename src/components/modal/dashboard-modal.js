@@ -23,7 +23,6 @@ DashboardModal.propTypes = {
 
 export default function DashboardModal(props) {
   const [open, setOpen] = React.useState(true);
-  const { onClose, selectedValue } = props;
   const images = "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2352&q=80"
   const [index, setIndex] = useState(0);
   

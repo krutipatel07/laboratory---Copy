@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { Box, Button, Card, Container, Grid, Typography } from '@mui/material';
@@ -10,7 +11,6 @@ import { gtm } from '../../../lib/gtm';
 import ProjectGrid from '../../../components/dashboard/product/product-grid.js';
 import DashboardModal from '../../../components/modal/dashboard-modal';
 import { useAuth } from '../../../hooks/use-auth';
-
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -66,10 +66,41 @@ const ProductList = () => {
     inStock: undefined
   });
   const { user} = useAuth();
+  const [projectsData, setProjectsData] = useState();
+  const [userData, setUserData] = useState();
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
   }, []);
+
+  // useEffect(() => {
+  //   const owner = localStorage.getItem("lab-user");
+  //   axios.get(`/api/${owner}/projects`)
+  //   .then(res => setProjectsData(res.data.data))
+  //   .catch(error => console.log(error));
+  // },[]);
+
+  // Added a new column in the User Model 
+  // Called the User Model 
+  // useEffect should update when true to be false only once > PUT 
+  useEffect(() => {
+    const owner = localStorage.getItem("lab-user");
+    axios.get(`/api/user/${owner}`)
+    .then(res => setUserData(res.data.data))
+    .catch(error => console.log(error));
+  },[]);
+
+  useEffect(() => {
+    const owner = localStorage.getItem("lab-user");
+    if (owner && userData && userData.isFirstTime === true) {
+
+      axios.put(`/api/user/${owner}`, {
+        isFirstTime:false
+      })
+      .catch(error => console.log(error));
+    } 
+  }, [userData]);
+
 
   const handleFiltersChange = (filters) => {
     setFilters(filters);
@@ -135,7 +166,10 @@ const ProductList = () => {
           </Card>
         </Container>
       </Box>
-      <DashboardModal/>
+      {
+        userData && userData.isFirstTime ? 
+        <DashboardModal/> : ''
+        }
     </>
   );
 };
