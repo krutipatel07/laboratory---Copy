@@ -50,6 +50,7 @@ const ProductCard = (props) => {
             maxWidth: 300, 
             minWidth: 400,
             margin: "auto",
+            cursor :"pointer",
             backgroundColor: 'background.paper',
             '&:hover': {
               backgroundColor: 'background.hover',

@@ -61,28 +61,28 @@ export default function ProjectGrid() {
                     backgroundColor: 'background.hover',
                     } }}
                   variant="elevation">  
-                  <CardContent>
-                    <Typography gutterBottom 
-                    variant="subtitle1" 
-                    component="div" 
-                    textAlign = "center"
-                    color="text.secondary">
-                      <NextLink
-                                href="/dashboard/projects/new"
-                                passHref
-                                ><PlusIcon 
-                                fontSize="large" 
-                                cursor = "pointer"/>
-                              </NextLink>
-                    </Typography>
-                    <Typography 
-                    variant="body2" 
-                    color="text.secondary" 
-                    fontSize="small"                   
-                    textAlign = "center">
-                        create new project
-                    </Typography>
-                  </CardContent>
+                  <NextLink
+                    href="/dashboard/projects/new"
+                    passHref
+                    >
+                    <CardContent>
+                      <Typography gutterBottom 
+                      variant="subtitle1" 
+                      component="div" 
+                      textAlign = "center"
+                      color="text.secondary"><PlusIcon 
+                                  fontSize="large" 
+                                  cursor = "pointer"/>
+                      </Typography>
+                      <Typography 
+                      variant="body2" 
+                      color="text.secondary" 
+                      fontSize="small"                   
+                      textAlign = "center">
+                          create new project
+                      </Typography>
+                    </CardContent>
+                  </NextLink>
                 </Card>}
             </Grid>
            : <Box sx={{ 

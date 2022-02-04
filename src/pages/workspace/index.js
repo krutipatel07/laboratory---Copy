@@ -30,6 +30,8 @@ import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import axios from 'axios'
 import toast from 'react-hot-toast';
 
+const dateFormat = require('../../utils/dateFormat');
+
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
     const nameMatched = product.name.toLowerCase().includes(filters.name.toLowerCase());
@@ -92,21 +94,21 @@ const ProductList = withRouter((props) => {
     inStock: undefined
   });
 
+  const time = dateFormat(new Date());
+  const title = time.replaceAll(" ", "").replaceAll(",", "").replaceAll("pm", "").replaceAll("at", "").replaceAll("th", "");
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
   }, []);
-
-
 
   const addDesign = async (generatedData) => {
     if (!generatedData.length) {
       toast.error('No data found')
       return
     }
-    generatedData.forEach( async (element) => {      
+    generatedData.forEach( async (element,i) => {      
       await axios.post(`/api/projects/${props.router.query.id}/design`, {
-        title: `Design_G`,
+        title: `Design-${i+1}-${title}`,
         url: element.url
       })
       .catch(error => console.log(error));
