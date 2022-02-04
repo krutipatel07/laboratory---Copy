@@ -30,7 +30,7 @@ export default function DesignGrid({projectId}) {
       <Grid container style={{width:'100%', marginLeft:0}}
       spacing={3}>        
         {projectData.designs ? 
-          <Grid container 
+          <Grid container
           spacing={3}
           >
           {projectData.designs.length ?

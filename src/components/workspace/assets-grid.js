@@ -1,22 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import VariantCard from './variantCard';
 import axios from 'axios';
-import { Plus as PlusIcon } from '../../icons/plus';
 import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 import toast from 'react-hot-toast';
 import { useDropzone } from 'react-dropzone';
-import { useRouter } from 'next/router';
-
-
-
 
 export default function AssetsGrid({projectId, props}) {
   const [assetData, setAssetData] = useState();
@@ -99,19 +89,20 @@ const storeFiles = async (file, formData) => {
             </div>
         </section>
 
-        <Grid container spacing={3} style={{marginLeft:0, width: "100%", justifyContent:'center'}}>
+        <Grid container spacing={3} style={{marginLeft:0, width: "100%", justifyContent:'center', marginTop: "10px"}}>
           {assetData ? assetData.length ?   
             assetData.map((asset, i) => {
               return (                
                 <Grid item 
                 key = {`Asset ${i}`}
+                style={{paddingLeft: 0}}
                 xs>
                   <Box
                   sx={{
                   maxWidth: 300, 
                   minWidth: 400, }}>
                     {asset.images && <img 
-                          style={{maxWidth: '100%', maxHeight: '100%'}}
+                          style={{maxWidth: '100%', minWidth: '100%', height:200}}
                           alt=""
                           src={asset.images}
                       />}
