@@ -31,7 +31,7 @@ export const ProductCreateForm = (props) => {
       description: '',
       images: [],
       name: '',
-      newPrice: 0,
+      newPrice: 1,
       sku: 'IYV-8745',
       submit: null
     },
@@ -61,7 +61,7 @@ export const ProductCreateForm = (props) => {
       axios.all(uploaders).then(async () => {
         try {
           const owner = localStorage.getItem("lab-user");
-            await axios.post("/api/projects", {
+            const {data} = await axios.post("/api/projects", {
               owner,
               title: values.name,
               description: values.description,
@@ -71,7 +71,7 @@ export const ProductCreateForm = (props) => {
             .catch(error => console.log(error));
 
             toast.success('Project created!');
-            router.push('/dashboard/projects');
+            router.push(`/workspace?id=${data.data._id}`);
         } catch (err) {
           console.error(err);
           toast.error('Something went wrong!');
@@ -252,6 +252,7 @@ export const ProductCreateForm = (props) => {
                 onChange={formik.handleChange}
                 sx={{ mt: 2 }}
                 type="number"
+                inputProps={{ min: "1", step: "10000" }}
                 value={formik.values.newPrice}
               />
             </Grid>

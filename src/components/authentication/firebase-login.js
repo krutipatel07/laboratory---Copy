@@ -159,7 +159,7 @@ export const FirebaseLogin = (props) => {
             Log In
           </Button>
         </Box>
-        <Box sx={{ mt: 2 }}>
+        {/* <Box sx={{ mt: 2 }}>
           <Alert severity="info">
             <div>
               You can use
@@ -171,7 +171,7 @@ export const FirebaseLogin = (props) => {
               <b>maket123</b>
             </div>
           </Alert>
-        </Box>
+        </Box> */}
       </form>
     </div>
   );
