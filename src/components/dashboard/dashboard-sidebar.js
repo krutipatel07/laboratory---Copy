@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import * as React from 'react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
@@ -15,6 +16,7 @@ import { Logo } from '../logo';
 import { Scrollbar } from '../scrollbar';
 import { DashboardSidebarSection } from './dashboard-sidebar-section';
 import DesignServicesIcon from '@mui/icons-material/DesignServices';
+import DashboardModal from '../../components/modal/dashboard-modal';
 import { useAuth } from '../../hooks/use-auth';
 import axios from 'axios'
 
@@ -65,6 +67,8 @@ const getSections = (t) => [
 
 export const DashboardSidebar = (props) => {
   const { onClose, open } = props;
+  const [isModalShown, setModalShown] = useState(false)
+  const [isOpen, setOpen] = React.useState(false);
   const router = useRouter();
   const { t } = useTranslation();
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'), {
@@ -91,6 +95,12 @@ export const DashboardSidebar = (props) => {
     .then(res => setUser(res.data.data))
     .catch(error => console.log(error));
   },[])
+
+  const handleClick = (e) =>{
+    e.preventDefault();
+    setModalShown(true);
+    setOpen(true);
+  };
 
   useEffect(handlePathChange,
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -182,6 +192,21 @@ export const DashboardSidebar = (props) => {
                 {...section} />
             ))}
           </Box>
+
+          <Box sx={{p:2}}>
+            <Button
+                color="primary"
+                component="a"
+                variant="contained"
+                type="submit"
+                fullWidth
+                onClick={handleClick}
+              >
+                REVISIT GUIDE
+            </Button>
+            {isModalShown && <DashboardModal open={isOpen}/>}
+          </Box>
+
           <Divider
             sx={{
               borderColor: '#2D3748'  // dark divider
