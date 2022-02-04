@@ -32,6 +32,15 @@ export default async (req, res) => {
                     new: true,
                     runValidators: true
                 });
+            
+                if(req.body.assets){                    
+                    await Project.findByIdAndUpdate(projectId, 
+                        { $push : { assets : req.body.assets}}, 
+                        {
+                        new: true,
+                        runValidators: true
+                    });
+                }
                 
                 if (!project){
                     res.status(404).json({ success: false, message: error})

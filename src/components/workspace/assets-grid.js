@@ -21,61 +21,57 @@ import { useRouter } from 'next/router';
 export default function AssetsGrid({projectId, props}) {
   const [assetData, setAssetData] = useState();
 
-  // const {projectId} = router.query;
-  const [files, setFiles] = useState([]);
-
   const onDrop = useCallback(acceptedFiles => {
     let url ;
     let url_list = [];
     const formData = new FormData();
-    const uploaders = files.map( async file => {
-      if(file.type.includes('image')) {
-        return url_list.push({images : url})
-      }
+    const uploaders = acceptedFiles.map( async file => {
+          url = await storeFiles(file, formData);
+          if(file.type.includes('image')) {
+            return url_list.push({images : url})
+          }
+          else{
+            return url_list.push({documents : url})
+          }
     });
+    
     axios.all(uploaders).then(async () => {
       try {
-        console.log(url_list)
+          await axios.put(`/api/projects/${projectId}`, {
+            assets: url_list
+          })
+          .catch(error => console.log(error));
+          toast.success('Assets updated successfully!');
+          location.reload();
       } catch (err) {
         console.error(err);
         toast.error('Something went wrong!');
+        location.reload();
       }
-    });
-    formData.append('file', acceptedFiles[0])
-    formData.append('upload_preset', 'maket_design');
-    url = "https://api.cloudinary.com/v1_1/maket/image/upload";
-    fetch(url, {
-      method: "POST",
-      body: formData
-    }).then(res => res.json())
-    .then(res =>{
-      if(res.error) {
-        toast.error(res.error.message)
-        return
-      }
-      // importDesign(res.secure_url);
     }).catch(err => console.log(err))
 }, [])
 
+const storeFiles = async (file, formData) => {
+  formData.append('file', file)
+  formData.append('upload_preset', 'maket_design');
+  const url = "https://api.cloudinary.com/v1_1/maket/image/upload";
+  const secure_file_url = await fetch(url, {
+    method: "POST",
+    body: formData 
+  }).then(res => res.json())
+  .then(res =>{
+    if(res.error) {
+      return
+    }
+    return res.secure_url
+  }).catch(err => console.log(err))
+  return secure_file_url;
+}
 
   const {getRootProps,getInputProps} = useDropzone({
     onDrop,
     accept: 'image/jpeg, image/png'
   });
-
-  // const importDesign = async (secure_url) => {
-  //   const {data} = await axios.get(`/api/projects/${projectId}`);
-  //   const addImage = await axios.post(`/api/projects/${projectId}`, {
-  //     url: secure_url
-  //   });
-
-  //   addImage ? toast.success('Asset added!') : toast.error('Something went wrong!');
-  //   location.reload();
-  // };
-
-  // useEffect(() => () => {
-  //   files.forEach(file => URL.revokeObjectURL(file.preview));
-  // }, [files]);
 
   useEffect(() => {
     axios.get(`/api/projects/${projectId}`)
