@@ -46,7 +46,7 @@ export default function ProjectGrid() {
                     description={(project.description.replace(/(<([^>\s]+)>)/gi, ""))}
                     // description={(project.description.replace(/\s+/, " "))}
                     members = {project.collaborators.length}
-                    image={images}
+                    image={project.cover_image || images}
                     link= {`/workspace?id=${project.id}`}
                   />
                 </Grid> )})

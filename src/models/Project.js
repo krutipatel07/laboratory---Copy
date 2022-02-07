@@ -19,6 +19,10 @@ const ProjectSchema = new mongoose.Schema(
             type: String,
             maxlength: 300
         },
+        cover_image: {
+          type: String,
+          required: true
+        },
         assets: [Object],
         budget: {
             type: Number,
