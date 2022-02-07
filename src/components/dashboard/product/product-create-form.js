@@ -24,11 +24,13 @@ import axios from 'axios'
 export const ProductCreateForm = (props) => {
   const router = useRouter();
   const [files, setFiles] = useState([]);
+  const [coverImage, setCoverImage] = useState([]);
   const formik = useFormik({
     initialValues: {
       barcode: '925487986526',
       category: '',
       description: '',
+      cover_image: [],
       images: [],
       name: '',
       newPrice: 1,
@@ -39,6 +41,7 @@ export const ProductCreateForm = (props) => {
       barcode: Yup.string().max(255),
       category: Yup.string().max(255),
       description: Yup.string().max(5000),
+      cover_image: Yup.array(),
       images: Yup.array(),
       name: Yup.string().max(255).required(),
       newPrice: Yup.number().min(0).required(),
@@ -48,6 +51,8 @@ export const ProductCreateForm = (props) => {
       let url ;
       let url_list = [];
       const formData = new FormData();
+      const cover_image_url = await storeFiles(coverImage[0], formData);
+
       const uploaders = files.map( async file => {
             url = await storeFiles(file, formData);
             if(file.type.includes('image')) {
@@ -65,6 +70,7 @@ export const ProductCreateForm = (props) => {
               owner,
               title: values.name,
               description: values.description,
+              cover_image: cover_image_url,
               assets: url_list,
               budget: values.newPrice,
             })
@@ -110,6 +116,17 @@ export const ProductCreateForm = (props) => {
 
   const handleRemoveAll = () => {
     setFiles([]);
+  };
+  const handleDropCoverImage = (newFiles) => {
+    setCoverImage((prevFiles) => [...prevFiles, ...newFiles]);
+  };
+
+  const handleRemoveCoverImage = (file) => {
+    setCoverImage((prevFiles) => prevFiles.filter((_file) => _file.path !== file.path));
+  };
+
+  const handleRemoveAllCoverImage = () => {
+    setCoverImage([]);
   };
 
   return (
@@ -171,6 +188,47 @@ export const ProductCreateForm = (props) => {
                   </FormHelperText>
                 </Box>
               )}
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+      <Card sx={{ mt: 3 }}>
+        <CardContent>
+          <Grid
+            container
+            spacing={3}
+          >
+            <Grid
+              item
+              md={4}
+              xs={12}
+            >
+              <Typography variant="h6">
+                Project Cover Image
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              md={8}
+              xs={12}
+            >
+              <Typography
+                color="textSecondary"
+                sx={{
+                  mb: 2,
+                  mt: 3
+                }}
+                variant="subtitle2"
+              >
+                Image
+              </Typography>
+              <FileDropzone
+                accept="image/*"
+                files={coverImage}
+                onDrop={handleDropCoverImage}
+                onRemove={handleRemoveCoverImage}
+                onRemoveAll={handleRemoveAllCoverImage}
+              />
             </Grid>
           </Grid>
         </CardContent>

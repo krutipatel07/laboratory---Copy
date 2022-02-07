@@ -14,19 +14,37 @@ import {
 } from '@mui/material';
 import { UserCircle as UserCircleIcon } from '../../../icons/user-circle';
 import { useAuth } from '../../../hooks/use-auth';
+import toast from 'react-hot-toast';
 
 export const AccountGeneralSettings = (props) => {
   // To get the user from the authContext, you can use
   // const { user } = useAuth();
   
   const [user, setUser] = useState();
+  const [name, setName] = useState();
+  const [reload, setReload] = useState(false);
   
   useEffect(() => {
     const user = localStorage.getItem("lab-user");
     axios.get(`/api/user/${user}`)
     .then(res => setUser(res.data.data))
     .catch(error => console.log(error));
-  })
+  },[reload])
+
+  const handleChange = (e) => {
+    setName(e.target.value);
+  }
+  const updateName = async () => {
+    const user = localStorage.getItem("lab-user");
+    await axios.put(`/api/user/${user}`, {
+      name
+    })
+    .catch(error => console.log(error));
+
+    toast.success('Name updated successfully!');
+    setReload(true);
+    setName();
+  }
 
   return (
     <Box
@@ -81,6 +99,7 @@ export const AccountGeneralSettings = (props) => {
               >
                 {user && <TextField
                   defaultValue={user.name}
+                  onChange={handleChange}
                   label="Full Name"
                   size="small"
                   sx={{
@@ -88,9 +107,9 @@ export const AccountGeneralSettings = (props) => {
                     mr: 3
                   }}
                 />}
-                {/* <Button>
+                <Button disabled={!name} onClick={updateName}>
                   Save
-                </Button> */}
+                </Button>
               </Box>
               <Box
                 sx={{
