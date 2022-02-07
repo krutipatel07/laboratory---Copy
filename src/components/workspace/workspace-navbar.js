@@ -521,7 +521,7 @@ export const WorkspaceNavbar = (props) => {
               }
             }}
           >
-            <MenuIcon fontSize="small" />
+            {/* <MenuIcon fontSize="small" /> */}
           </IconButton>
           <Box sx={{ flexGrow: 1 }} />
           {/*<LanguageButton />*/}
