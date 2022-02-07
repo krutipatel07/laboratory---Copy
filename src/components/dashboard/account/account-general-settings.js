@@ -22,7 +22,7 @@ export const AccountGeneralSettings = (props) => {
   
   const [user, setUser] = useState();
   const [name, setName] = useState();
-  const [reload, setReload] = useState();
+  const [reload, setReload] = useState(false);
   
   useEffect(() => {
     const user = localStorage.getItem("lab-user");
