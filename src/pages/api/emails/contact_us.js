@@ -14,7 +14,7 @@ export default async (req, res) => {
     Message: ${message}\r\n
     `;
     const data = { 
-        to: "kirti@maket.ca",
+        to: "info@maket.ca",
         from: "info@maket.ca",
         subject: `${full_name.toUpperCase()} sent you a message`,
         text: final_message,
