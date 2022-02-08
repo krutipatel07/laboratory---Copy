@@ -48,10 +48,12 @@ export const ProductCreateForm = (props) => {
       sku: Yup.string().max(255)
     }),
     onSubmit: async (values, helpers) => {
-      let url ;
+      let url, cover_image_url="";
       let url_list = [];
       const formData = new FormData();
-      const cover_image_url = await storeFiles(coverImage[0], formData);
+      if(coverImage.length){
+        cover_image_url = await storeFiles(coverImage[0], formData);
+      }
 
       const uploaders = files.map( async file => {
             url = await storeFiles(file, formData);
@@ -70,7 +72,7 @@ export const ProductCreateForm = (props) => {
               owner,
               title: values.name,
               description: values.description,
-              cover_image: cover_image_url,
+              cover_image: cover_image_url || "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2352&q=80",
               assets: url_list,
               budget: values.newPrice,
             })
