@@ -48,7 +48,7 @@ export const SharePopover = (props) => {
     const handleSubmit = async event => {
       event.preventDefault();
       const designId = router.query.designId;
-      axios.post("/api/invite", {
+      axios.post("/api/emails/invite", {
        email,
        projectId,
        designId
