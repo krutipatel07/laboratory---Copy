@@ -33,7 +33,7 @@ export const ProductCreateForm = (props) => {
       cover_image: [],
       images: [],
       name: '',
-      newPrice: 1,
+      newPrice: 10000,
       sku: 'IYV-8745',
       submit: null
     },
@@ -297,6 +297,13 @@ export const ProductCreateForm = (props) => {
               <Typography variant="h6">
                 Budget
               </Typography>
+              <Typography
+                color="textSecondary"
+                variant="body2"
+                sx={{ mt: 1 }}
+              >
+                Budget must be greater than or equal to $10000 and multiple of 10000.
+              </Typography>
             </Grid>
             <Grid
               item
@@ -312,7 +319,7 @@ export const ProductCreateForm = (props) => {
                 onChange={formik.handleChange}
                 sx={{ mt: 2 }}
                 type="number"
-                inputProps={{ min: "1", step: "10000" }}
+                inputProps={{ min: "10000", step: "10000" }}
                 value={formik.values.newPrice}
               />
             </Grid>
