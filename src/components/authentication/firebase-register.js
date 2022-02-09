@@ -85,7 +85,7 @@ export const FirebaseRegister = (props) => {
               const returnUrl = router.query.returnUrl || '/dashboard/projects';
               router.push(returnUrl);
         } finally {          
-            await axios.post("/api/welcome_email", {
+            await axios.post("/api/emails/welcome_email", {
               name: values.name,
               email: values.email
             })

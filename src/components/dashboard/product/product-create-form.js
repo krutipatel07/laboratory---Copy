@@ -33,7 +33,7 @@ export const ProductCreateForm = (props) => {
       cover_image: [],
       images: [],
       name: '',
-      newPrice: 1,
+      newPrice: 10000,
       sku: 'IYV-8745',
       submit: null
     },
@@ -48,10 +48,12 @@ export const ProductCreateForm = (props) => {
       sku: Yup.string().max(255)
     }),
     onSubmit: async (values, helpers) => {
-      let url ;
+      let url, cover_image_url="";
       let url_list = [];
       const formData = new FormData();
-      const cover_image_url = await storeFiles(coverImage[0], formData);
+      if(coverImage.length){
+        cover_image_url = await storeFiles(coverImage[0], formData);
+      }
 
       const uploaders = files.map( async file => {
             url = await storeFiles(file, formData);
@@ -70,7 +72,7 @@ export const ProductCreateForm = (props) => {
               owner,
               title: values.name,
               description: values.description,
-              cover_image: cover_image_url,
+              cover_image: cover_image_url || "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2352&q=80",
               assets: url_list,
               budget: values.newPrice,
             })
@@ -295,6 +297,13 @@ export const ProductCreateForm = (props) => {
               <Typography variant="h6">
                 Budget
               </Typography>
+              <Typography
+                color="textSecondary"
+                variant="body2"
+                sx={{ mt: 1 }}
+              >
+                Budget must be greater than or equal to $10000 and multiple of 10000.
+              </Typography>
             </Grid>
             <Grid
               item
@@ -310,7 +319,7 @@ export const ProductCreateForm = (props) => {
                 onChange={formik.handleChange}
                 sx={{ mt: 2 }}
                 type="number"
-                inputProps={{ min: "1", step: "10000" }}
+                inputProps={{ min: "10000", step: "10000" }}
                 value={formik.values.newPrice}
               />
             </Grid>

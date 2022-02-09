@@ -1,12 +1,65 @@
 import { Box, Button, Grid, Link, MenuItem, Select, TextField, Typography } from '@mui/material';
+import toast from 'react-hot-toast';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
+import axios from 'axios'
 
 export const ContactForm = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-  };
-
+  const formik = useFormik({
+    initialValues: {
+      full_name: '',
+      company_name: '',
+      email: '',
+      phone: '',
+      company_size: "",
+      team: "",
+      message: "",
+      submit: null
+    },
+    validationSchema: Yup.object({
+      full_name: Yup.string().max(20).required(),
+      company_name: Yup.string().max(20).required(),
+      email: Yup.string().max(30).required(),
+      phone: Yup.number()
+      .typeError("That doesn't look like a phone number")
+      .positive("A phone number can't start with a minus")
+      .integer("A phone number can't include a decimal point")
+      .required(),
+      company_size: Yup.string().max(255),
+      team: Yup.string().max(255),
+      message: Yup.string().max(255).required()
+    }),
+    onSubmit: async (values, helpers) => {
+      try{
+        axios.post("/api/emails/contact_us", { 
+          full_name: values.full_name,
+          company_name: values.company_name,
+          email: values.email,
+          phone: values.phone,
+          company_size: values.company_size && values.company_size,
+          team: values.team && values.team,
+          message: values.message,
+        })
+        .catch(error => console.log(error));
+        axios.post("/api/emails/contact_us_reply", { 
+          full_name: values.full_name,
+          email: values.email,
+          phone: values.phone
+        })
+        .catch(error => console.log(error));
+        
+        toast.success("Message sent successfully!")
+        location.reload();
+      }
+      catch(error){
+        console.log(error)
+        toast.error('Something went wrong!')
+        location.reload();
+      }
+    }
+  });
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={formik.handleSubmit}>
       <Grid
         container
         spacing={3}
@@ -23,8 +76,13 @@ export const ContactForm = () => {
             Full Name *
           </Typography>
           <TextField
+            error={Boolean(formik.touched.full_name && formik.errors.full_name)}
             fullWidth
-            name="name"
+            helperText={formik.touched.full_name && formik.errors.full_name && "Full Name is a required field"}
+            name="full_name"
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            value={formik.values.full_name}
             required
           />
         </Grid>
@@ -40,8 +98,13 @@ export const ContactForm = () => {
             Company Name*
           </Typography>
           <TextField
+            error={Boolean(formik.touched.company_name && formik.errors.company_name)}
             fullWidth
-            name="company"
+            helperText={formik.touched.company_name && formik.errors.company_name && "Company name is a required field"}
+            name="company_name"
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            value={formik.values.company_name}
             required
           />
         </Grid>
@@ -57,7 +120,12 @@ export const ContactForm = () => {
             Work Email *
           </Typography>
           <TextField
+            error={Boolean(formik.touched.email && formik.errors.email)}
             fullWidth
+            helperText={formik.touched.email && formik.errors.email}
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            value={formik.values.email}
             name="email"
             type="email"
             required
@@ -75,6 +143,11 @@ export const ContactForm = () => {
             Phone Number *
           </Typography>
           <TextField
+            error={Boolean(formik.touched.phone && formik.errors.phone)}
+            helperText={formik.touched.phone && formik.errors.phone}
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            value={formik.values.phone}
             fullWidth
             name="phone"
             required
@@ -92,7 +165,15 @@ export const ContactForm = () => {
           >
             Company Size
           </Typography>
-          <Select fullWidth>
+          <Select 
+            error={Boolean( formik.touched.company_size && formik.errors.company_size)}
+            name="company_size"
+            type="text"
+            helperText={formik.touched.company_size && formik.errors.company_size}
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            value = {formik.values.company_size}
+            fullWidth>
             <MenuItem value="10-20">1-10</MenuItem>
             <MenuItem value="11-30">11-30</MenuItem>
             <MenuItem value="31-50">31-50</MenuItem>
@@ -109,7 +190,15 @@ export const ContactForm = () => {
           >
             Team
           </Typography>
-          <Select fullWidth>
+          <Select 
+            error={Boolean( formik.touched.team && formik.errors.team)}
+            name="team"
+            type="text"
+            helperText={formik.touched.team && formik.errors.team}
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            value = {formik.values.team}
+            fullWidth>
             <MenuItem value="engineering">Engineering</MenuItem>
             <MenuItem value="design">Design</MenuItem>
           </Select>
@@ -125,6 +214,11 @@ export const ContactForm = () => {
             Message
           </Typography>
           <TextField
+            error={Boolean(formik.touched.message && formik.errors.message)}
+            helperText={formik.touched.message && formik.errors.message}
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            value={formik.values.message}
             fullWidth
             name="message"
             required
@@ -141,7 +235,7 @@ export const ContactForm = () => {
         }}
       >
         <Button
-          onClick={handleSubmit}
+          type="submit"
           fullWidth
           size="large"
           variant="contained"

@@ -94,7 +94,7 @@ export const DashboardSidebar = (props) => {
     axios.get(`/api/user/${user}`)
     .then(res => setUser(res.data.data))
     .catch(error => console.log(error));
-  },[])
+  })
 
   const handleClick = (e) =>{
     e.preventDefault();

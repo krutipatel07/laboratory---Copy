@@ -33,19 +33,22 @@ export const SharePopover = (props) => {
 
     const [email, setEmail] = useState('');
 
-    const [designData, setDesignData] = useState();   
+    const [designData, setDesignData] = useState();
+    const [collaboratorData, setCollaboratorData] = useState();   
     const {projectId, designId} = router.query;
 
     useEffect(() => {
       axios.get(`/api/projects/_/design/${designId}`)
-      .then(res => setDesignData(res.data.data))
+      .then(res => {
+        setCollaboratorData([...new Set(res.data.data.collaborators)]);
+        setDesignData(res.data.data)})
       .catch(error => console.log(error));
     }, [email]);
 
     const handleSubmit = async event => {
       event.preventDefault();
       const designId = router.query.designId;
-      axios.post("/api/invite", {
+      axios.post("/api/emails/invite", {
        email,
        projectId,
        designId
@@ -140,7 +143,7 @@ export const SharePopover = (props) => {
         </Typography>
       </Box>
       <Box sx={{ my: 1 }}>
-      {designData? designData.collaborators.length? designData.collaborators.map((collaborator, i) => 
+      {designData? collaboratorData.length? collaboratorData.map((collaborator, i) => 
           <MenuItem key={i} 
           component="a">
             <ListItemText
