@@ -11,7 +11,8 @@ import { Box,
   Tab,
   Tabs,
   TextField,
-  Typography } from '@mui/material';
+  Typography,
+  Modal } from '@mui/material';
 import { withAuthGuard } from '../../hocs/with-auth-guard';
 import { withWorkspaceLayout } from '../../hocs/with-workspace-layout';
 import { useMounted } from '../../hooks/use-mounted';
@@ -25,7 +26,11 @@ import { withRouter } from 'next/router';
 import CommentList from '../../components/commentList/commentList';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import {InvitedUserModal} from "../../components/workspace/invitedUserModal/invitedUserModal"
-
+import dynamic from 'next/dynamic'
+const DynamicComponentWithNoSSR = dynamic(
+  () => import("../../components/editor"),
+  {ssr : false}
+)
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
     const nameMatched = product.name.toLowerCase().includes(filters.name.toLowerCase());
@@ -69,7 +74,19 @@ const applyPagination = (products, page, rowsPerPage) => products.slice(page * r
   page * rowsPerPage + rowsPerPage);
 
 const ProductList = withRouter((props) => {
-  
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+  };
+
   const isMounted = useMounted();
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(0);
@@ -184,6 +201,7 @@ const ProductList = withRouter((props) => {
           <img
             alt=""
             src={variantData.url}
+            onClick={handleOpen}
           />
         </Box>
       </Box>
@@ -219,6 +237,16 @@ const ProductList = withRouter((props) => {
           {/* <Legends/> */}
         </Paper>
       </Box>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <DynamicComponentWithNoSSR src={variantData.url}></DynamicComponentWithNoSSR>
+        </Box>
+      </Modal>
     </>
   );
 })
