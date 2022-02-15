@@ -2,15 +2,8 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import PeopleIcon from '@mui/icons-material/People';
-import Box from '@mui/material/Box';
-import NextLink from 'next/link';
-import DesignServicesIcon from '@mui/icons-material/DesignServices';
-import CommentIcon from '@mui/icons-material/Comment';
 import { makeStyles } from '@material-ui/styles';
 import Stack from '@mui/material/Stack';
 import { purple } from '@mui/material/colors';
@@ -18,7 +11,8 @@ import { styled } from '@mui/material/styles';
 import axios from 'axios'
 import toast from 'react-hot-toast';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-
+import dateFormat from "../../utils/dateFormat"
+import { useRouter } from 'next/router';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,29 +45,19 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const ColorButton = styled(Button)(({ theme }) => ({
-  color: '#10B981',
-  // color: theme.palette.getContrastText('#10B981'),
-  backgroundColor: 'rgba(16, 185, 129, 0.08)',
-  '&:hover': {
-    backgroundColor: 'rgba(16, 185, 129, 0.08)',
-  },
-  borderRadius: '16px',
-}));
-
-
-const GenerateDesignCard = (props) => {
-    const {
-        designId,
-        link,
-        image
-    } = props;
-
+const GenerateDesignCard = ({image}) => {
     const classes = useStyles();
-    const saveDesign = async () => {
-      const deleted = await axios.delete(`/api/projects/_/design/${designId}`);
-      deleted && toast.success("Design deleted");
-      location.reload();
+  
+  const router = useRouter();
+  const time = dateFormat(new Date());
+  const title = time.replaceAll(" ", "").replaceAll(",", "").replaceAll("pm", "").replaceAll("at", "").replaceAll("th", "");
+
+    const saveDesign = async () => {   
+      await axios.post(`/api/projects/${router.query.id}/design`, {
+        title: `Design-${title}`,
+        url: image
+      })
+    toast.success(`Design added!`)
     }
     
   return (
@@ -87,10 +71,6 @@ const GenerateDesignCard = (props) => {
             } }}
             variant="elevation">
 
-      <NextLink
-        href={link}
-        passHref
-      >
         <CardMedia
           className={classes.image}
           sx={{
@@ -102,7 +82,6 @@ const GenerateDesignCard = (props) => {
           padding="0 24px"
           src={image}
         />
-      </NextLink>
         <CardActions>
           <Stack direction="row" 
           width='100%'

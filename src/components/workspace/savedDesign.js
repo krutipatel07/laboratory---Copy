@@ -1,15 +1,9 @@
 import { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import VariantCard from './variantCard';
 import axios from 'axios';
-import { Plus as PlusIcon } from '../../icons/plus';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
 import CircularProgress from '@mui/material/CircularProgress';
 
 export default function SavedDesign({projectId}) {

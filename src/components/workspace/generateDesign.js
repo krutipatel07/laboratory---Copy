@@ -14,9 +14,6 @@ import { withRouter, useRouter } from 'next/router'
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import axios from 'axios'
 import toast from 'react-hot-toast';
-import { margin } from '@mui/system';
-
-const dateFormat = require('../../utils/dateFormat');
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -71,6 +68,7 @@ const ProductList = withRouter((props) => {
 
   const isMounted = useMounted();
   const [products, setProducts] = useState([]);
+  const [generatedData, setGeneratedData] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [filters, setFilters] = useState({
@@ -80,29 +78,9 @@ const ProductList = withRouter((props) => {
     inStock: undefined
   });
 
-  const time = dateFormat(new Date());
-  const title = time.replaceAll(" ", "").replaceAll(",", "").replaceAll("pm", "").replaceAll("at", "").replaceAll("th", "");
-
   useEffect(() => {
     gtm.push({ event: 'page_view' });
   }, []);
-
-  const addDesign = async (generatedData) => {
-    if (!generatedData.length) {
-      toast.error('No data found')
-      return
-    }
-    generatedData.forEach( async (element,i) => {      
-      await axios.post(`/api/projects/${props.router.query.id}/design`, {
-        title: `Design-${i+1}-${title}`,
-        url: element.url
-      })
-      .catch(error => console.log(error));
-    });
-    
-    toast.success(`${generatedData.length} Design added`)
-    location.reload();
-  }
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
@@ -133,7 +111,18 @@ const ProductList = withRouter((props) => {
     const { floor, squarefeet, bed, bath, garages } = state
     const {data} = await axios.get(`/api/parameters?baths=${bath}&beds=${bed}&floor=${floor}&garages=${garages}&sqft=${squarefeet}`)
     .catch(error => console.log(error));
-    addDesign(data.data);
+    if(!data.data.length) {
+      toast.error("Designs not found! Try using different values.")
+      return
+    }
+    setGeneratedData(data.data);
+    setState({
+      floor: "",
+      squarefeet: "",
+      bed: "",
+      bath: "",
+      garages: ""
+    })
   };
 
   // Usually query is done on backend with indexing solutions
@@ -309,7 +298,7 @@ const ProductList = withRouter((props) => {
         }}
       >
         <Container maxWidth="xl">
-            <DesignGrid projectId= {props.router.query.id}/>
+            {generatedData.length ? <DesignGrid data={generatedData}/> : <h1>Generate Designs</h1> }
         </Container>
       </Box>
     </>
