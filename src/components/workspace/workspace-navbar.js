@@ -353,7 +353,7 @@ const ExportButton = () => {
       link.setAttribute("download", "maket-design.jpg");
       document.body.appendChild(link);
       link.click();
-    });
+    }).catch(error => toast.error("Something went wrong!"));
   }
 
   const useStyles = makeStyles((theme) => ({

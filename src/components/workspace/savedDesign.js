@@ -9,11 +9,12 @@ import { Typography } from '@mui/material';
 
 export default function SavedDesign({projectId}) {
   const [projectData, setProjectData] = useState([]);
+  const [update, setUpdate] = useState(true);
   useEffect(() => {
     axios.get(`/api/projects/${projectId}`)
     .then(res => setProjectData(res.data.data))
     .catch(error => console.log(error));
-  }, [projectId])
+  }, [projectId, update])
 
   return (
     <Box
@@ -42,6 +43,7 @@ export default function SavedDesign({projectId}) {
                       comments = {design.comments.length}
                       image={design.url}
                       link={`/workspace/${projectData.id}?designId=${design.id}`}
+                      setUpdate = {setUpdate}
                       />
                   </Grid> )})
                  : 

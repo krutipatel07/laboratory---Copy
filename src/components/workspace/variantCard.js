@@ -76,14 +76,15 @@ const VariantCard = (props) => {
         members,
         comments,
         link,
-        image
+        image,
+        setUpdate
     } = props;
 
     const classes = useStyles();
     const deleteDesign = async () => {
       const deleted = await axios.delete(`/api/projects/_/design/${designId}`);
       deleted && toast.success("Design deleted");
-      location.reload();
+      setUpdate((prev) => !prev)
     }
     
   return (
