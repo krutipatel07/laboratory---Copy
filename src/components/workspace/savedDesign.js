@@ -5,6 +5,7 @@ import Grid from '@mui/material/Grid';
 import VariantCard from './variantCard';
 import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
+import { Typography } from '@mui/material';
 
 export default function SavedDesign({projectId}) {
   const [projectData, setProjectData] = useState([]);
@@ -42,7 +43,14 @@ export default function SavedDesign({projectId}) {
                       image={design.url}
                       link={`/workspace/${projectData.id}?designId=${design.id}`}
                       />
-                  </Grid> )}) : <h3 style={{fontSize:24, color:"#F0C88E", margin:"50px auto 0"}}>No designs</h3> }
+                  </Grid> )})
+                 : 
+                 <Typography style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:100}}>
+                    You do not have any designs for this project <br/>
+                    To begin, return to the generate page and set your design constraints <br/>
+                    or<br/>
+                    Import a design
+                 </Typography> }
             </Grid>
            : <Box sx={{ 
                 width: "100%",

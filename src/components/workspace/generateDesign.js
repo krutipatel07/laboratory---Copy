@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import NextLink from 'next/link';
-import { Box, Button, TextField, Container } from '@mui/material';
+import { Box, Button, TextField, Container, Typography } from '@mui/material';
 import { withAuthGuard } from '../../hocs/with-auth-guard';
 import { withWorkspaceLayout } from '../../hocs/with-workspace-layout';
 import { useMounted } from '../../hooks/use-mounted';
@@ -14,6 +14,7 @@ import { withRouter, useRouter } from 'next/router'
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import axios from 'axios'
 import toast from 'react-hot-toast';
+import { style } from '@mui/system';
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -298,7 +299,10 @@ const ProductList = withRouter((props) => {
         }}
       >
         <Container maxWidth="xl">
-            {generatedData.length ? <DesignGrid data={generatedData}/> : <h1>Generate Designs</h1> }
+            {generatedData.length ? 
+            <DesignGrid data={generatedData}/> 
+            : 
+            <Typography sx={{textAlign:'center', fontSize:'20px', paddingTop:'100px'}}>Set your design constraints to begin</Typography> }
         </Container>
       </Box>
     </>
