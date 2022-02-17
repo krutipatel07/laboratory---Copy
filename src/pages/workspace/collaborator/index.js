@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
+import PropTypes from 'prop-types';
 import { Box,
   Button,
   Card,
@@ -22,6 +23,8 @@ import { withRouter } from 'next/router';
 import CommentList from '../../../components/commentList/commentList';
 import {InvitedUserModal} from "../../../components/workspace/invitedUserModal/invitedUserModal"
 import Legends from "../../../components/workspace/variant/variant-legends";
+import AssetsGrid from '../../../components/workspace/assets-grid';
+
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -65,6 +68,39 @@ const applyFilters = (products, filters) => products.filter((product) => {
 const applyPagination = (products, page, rowsPerPage) => products.slice(page * rowsPerPage,
   page * rowsPerPage + rowsPerPage);
 
+  function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+  
+    return (
+      <div
+        role="tabpanel"
+        hidden={value !== index}
+        id={`simple-tabpanel-${index}`}
+        aria-labelledby={`simple-tab-${index}`}
+        {...other}
+      >
+        {value === index && (
+          <Box sx={{ p: 3 }}>
+            <Typography>{children}</Typography>
+          </Box>
+        )}
+      </div>
+    );
+  }
+  
+  TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+  };
+  
+  function a11yProps(index) {
+    return {
+      id: `simple-tab-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`,
+    };
+  }  
+
 const InvitedUSerPage = withRouter((props) => {
   const isMounted = useMounted();
   const [products, setProducts] = useState([]);
@@ -78,6 +114,11 @@ const InvitedUSerPage = withRouter((props) => {
     inStock: undefined
   });
   const [variantData, setVariantData] = useState([]);  
+
+  const [value, setValue] = React.useState(0);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
@@ -118,13 +159,13 @@ const InvitedUSerPage = withRouter((props) => {
         </title>
       </Head>
       
-       <Box
+      <Box
         sx={{
           alignItems: 'center',
           display: 'flex',
           justifyContent: 'space-between',
           flexWrap: 'wrap',
-          m: -1.5,
+          // m: -1.5,
           p: 3
         }}
       >
@@ -134,64 +175,74 @@ const InvitedUSerPage = withRouter((props) => {
         component="main"
         sx={{
           flexGrow: 1,
-          py: 8
+          py: 8,
+          width: '100%'
         }}
       >
-        <Grid container 
-        spacing={2}>
-          <Grid item 
-          xs={8}>
-
-            <Container maxWidth="xl"> 
-          <Box
-        sx={{
-          maxWidth: 980,
-          width: '100%',
-          mx: 'auto'
-        }}
-      >
-        <Box
-          sx={{
-            position: 'relative',
-            pt: 'calc(600 / 980 * 100%)',
-            '& img': {
-              height: 'auto',
-              position: 'absolute',
-              top: 0,
-              width: '100%',
-              height: '100%'
-            }
-          }}
-        >
-          <img
-            alt=""
-            src={variantData.url}
-          />
+        <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: '30px' }}>
+          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
+            <Tab label="Design" {...a11yProps(0)} style={{fontSize: '1.5rem'}} />
+            <Tab label="Assets" {...a11yProps(1)} style={{fontSize: '1.5rem'}} />
+          </Tabs>
         </Box>
-      </Box>
-          <Box
-        sx={{
-          maxWidth: 980,
-          width: '100%',
-          mx: 'auto'
-        }}
-      >
-      </Box>
-            </Container>
-          </Grid>
+        <TabPanel value={value} index={0}>
+          <Grid container 
+          spacing={2}>
+            <Grid item 
+            xs={8}>
+              <Container maxWidth="xl"> 
+                <Box
+                sx={{
+                  maxWidth: 980,
+                  width: '100%',
+                  mx: 'auto'
+                }}
+                >
+                  <Box
+                    sx={{
+                      position: 'relative',
+                      pt: 'calc(600 / 980 * 100%)',
+                      '& img': {
+                        height: 'auto',
+                        position: 'absolute',
+                        top: 0,
+                        width: '100%',
+                        height: '100%'
+                      }
+                    }}
+                  >
+                    <img
+                      alt=""
+                      src={variantData.url}
+                    />
+                  </Box>
+                </Box>
+                <Box
+                  sx={{
+                    maxWidth: 980,
+                    width: '100%',
+                    mx: 'auto'
+                  }}
+                >
+                </Box>
+              </Container>
+            </Grid>
 
-          <Grid item 
-          xs={4}
-          style={{maxHeight: '600px', overflow: 'auto', display:'inline-flex', flexFlow:'column-reverse'}}
-          >
-            <Box            
+            <Grid item 
+            xs={4}
+            style={{maxHeight: '600px', overflow: 'auto', display:'inline-flex', flexFlow:'column-reverse'}}
             >
-              {
-                variantData.comments && variantData.comments.map(comment => <CommentList key={comment.id} comment={comment}/> )
-              }
-            </Box>
+              <Box>
+                {
+                  variantData.comments && variantData.comments.map(comment => <CommentList key={comment.id} comment={comment}/> )
+                }
+              </Box>
+            </Grid>
           </Grid>
-        </Grid>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <AssetsGrid projectId= {props.router.query.projectId}/>
+        </TabPanel>
 
         <Paper 
         sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} 

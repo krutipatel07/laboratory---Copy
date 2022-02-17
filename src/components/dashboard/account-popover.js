@@ -96,12 +96,12 @@ export const AccountPopover = (props) => {
         >
           <MenuItem component="a">
             <ListItemIcon>
-              <CogIcon fontSize="small" />
+              <UserCircleIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText
               primary={(
                 <Typography variant="body1">
-                  Settings
+                  Account
                 </Typography>
               )}
             />
