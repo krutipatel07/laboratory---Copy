@@ -157,7 +157,8 @@ return (
         spacing={2} 
         style={{width: "100%"}}>
           <Grid item 
-          xs={8}>
+          xs={12}
+          >
             <Container maxWidth="xl"> 
               <Box
               sx={{
