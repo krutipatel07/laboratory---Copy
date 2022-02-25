@@ -51,6 +51,7 @@
     "@toast-ui/react-image-editor": "^3.15.2",
     "@types/material-ui": "^0.21.12",
     "apexcharts": "^3.23.1",
+    "api": "^4.2.0",
     "aws-amplify": "^4.3.4",
     "axios": "^0.24.0",
     "date-fns": "^2.21.3",

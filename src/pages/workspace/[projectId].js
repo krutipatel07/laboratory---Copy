@@ -92,7 +92,6 @@ const ProductList = withRouter((props) => {
     .catch(error => console.log(error));
   },[designId]);
 
-
   useEffect(() => {
     gtm.push({ event: 'page_view' });
   }, []);
@@ -113,7 +112,7 @@ const ProductList = withRouter((props) => {
   const filteredProducts = applyFilters(products, filters);
   const paginatedProducts = applyPagination(filteredProducts, page, rowsPerPage);
 
-  return (
+return ( 
     <>
       <Head>
         <title>
@@ -159,46 +158,41 @@ const ProductList = withRouter((props) => {
         style={{width: "100%"}}>
           <Grid item 
           xs={8}>
-
-        <Container maxWidth="xl"> 
-          <Box
-        sx={{
-          maxWidth: 980,
-          width: '100%',
-          mx: 'auto'
-        }}
-      >
-        <Box
-          sx={{
-            position: 'relative',
-            pt: 'calc(600 / 980 * 100%)',
-            '& img': {
-              height: 'auto',
-              position: 'absolute',
-              top: 0,
-              width: '100%',
-              height: '100%'
-            }
-          }}
-        >
-          <img
-            alt=""
-            src={variantData.url}
-          />
-        </Box>
-      </Box>
-          <Box
-        sx={{
-          maxWidth: 980,
-          width: '100%',
-          mx: 'auto'
-        }}
-      >
-      </Box>
+            <Container maxWidth="xl"> 
+              <Box
+              sx={{
+                maxWidth: 980,
+                width: '100%',
+                mx: 'auto'
+              }}>
+                <Box
+                  sx={{
+                    position: 'relative',
+                    pt: 'calc(600 / 980 * 100%)',
+                    '& img': {
+                      height: 'auto',
+                      position: 'absolute',
+                      top: 0,
+                      width: '100%',
+                      height: '100%'
+                    }
+                  }}
+                >
+                  {variantData.limnu_boardUrl ? 
+                    <iframe src="https://apix.limnu.com/d/draw.html?b=B_PUYIaDLGQJGmgt&" title="description" 
+                      style={{width: '100%', height: '100%'}}
+                    ></iframe>
+                    :  
+                    <img
+                      alt=""
+                      src={variantData.url}
+                  />}
+                </Box>
+              </Box>
             </Container>
           </Grid>
 
-          <Grid item 
+          {/* <Grid item 
           xs={4}
           style={{maxHeight: '600px', overflow: 'auto', display:'inline-flex', flexFlow:'column-reverse'}}
           >
@@ -208,7 +202,7 @@ const ProductList = withRouter((props) => {
                 variantData.comments && variantData.comments.map(comment => <CommentList key={comment.id} comment={comment}/> )
               }
             </Box>
-          </Grid>
+          </Grid> */}
         </Grid>
 
         <Paper 
@@ -216,7 +210,6 @@ const ProductList = withRouter((props) => {
         style={{display: 'flex'}} 
         elevation={3}>
           <BottomNav/>
-          {/* <Legends/> */}
         </Paper>
       </Box>
     </>

@@ -49,6 +49,14 @@ export default async (req, res) => {
                         new: true,
                         runValidators: true
                     });
+                }                
+                if(req.body.limnu_boardUrl){                    
+                    await Design.findByIdAndUpdate(designId, 
+                        { limnu_boardUrl : req.body.limnu_boardUrl}, 
+                        {
+                        new: true,
+                        runValidators: true
+                    });
                 }
                 res.status(200).json({ success: true, data: design})
                 

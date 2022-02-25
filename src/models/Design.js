@@ -27,6 +27,9 @@ const DesignSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    limnu_boardUrl : {
+      type: String
+    },
     comments: [CommentSchema],
     collaborators: [
       {

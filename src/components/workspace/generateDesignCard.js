@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardMedia from '@mui/material/CardMedia';
@@ -11,9 +11,9 @@ import { styled } from '@mui/material/styles';
 import axios from 'axios'
 import toast from 'react-hot-toast';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import dateFormat from "../../utils/dateFormat"
 import { useRouter } from 'next/router';
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -42,35 +42,54 @@ const useStyles = makeStyles((theme) => ({
     marginRight: 'auto',
     padding: '8px 10px'
   }
-
 }));
-
 const GenerateDesignCard = ({image}) => {
-    const classes = useStyles();
-  
+  const [clicked, setClicked] = useState(false)
+  const classes = useStyles();
   const router = useRouter();
   const time = dateFormat(new Date());
   const title = time.replaceAll(" ", "").replaceAll(",", "").replaceAll("pm", "").replaceAll("at", "").replaceAll("th", "");
 
     const saveDesign = async () => {   
-      await axios.post(`/api/projects/${router.query.id}/design`, {
+      
+    setClicked(true)
+      const {data} = await axios.post(`/api/projects/${router.query.id}/design`, {
         title: `Design-${title}`,
         url: image
+      }).catch(error => 
+        setClicked(false))
+
+      const limnu_boardCreate = await axios.post("https://api.apix.limnu.com/v1/boardCreate", {
+              apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
+              boardName: `Board-${title}`
+            })
+            .catch(error => console.log(error));
+            
+      await axios.post("https://api.apix.limnu.com/v1/boardImageURLUpload", {
+        apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
+        boardId: limnu_boardCreate.data.boardId,
+        imageURL: image
       })
+      .catch(error => console.log(error));
+      
+     await axios.put(`/api/projects/_/design/${data.data._id}`, {
+      limnu_boardUrl : limnu_boardCreate.data.boardUrl,
+    })
+    .catch(error => console.log(error));
+
     toast.success(`Design added!`)
     }
     
-  return (
-      <Card 
+    return (
+      <Card
       sx={{
-            maxWidth: 300, 
+            maxWidth: 300,
             minWidth: 400,
             backgroundColor: 'background.paper',
             '&:hover': {
               backgroundColor: 'background.hover',
             } }}
             variant="elevation">
-
         <CardMedia
           className={classes.image}
           sx={{
@@ -83,15 +102,18 @@ const GenerateDesignCard = ({image}) => {
           src={image}
         />
         <CardActions>
-          <Stack direction="row" 
+          <Stack direction="row"
           width='100%'
           spacing={2}>
-            <IconButton aria-label="save" 
+            <IconButton aria-label="save"
             onClick={saveDesign}  
-            className={classes.savebtn} 
+            className={classes.savebtn}
             // style={{marginLeft: 'auto'}}
             >
-              <FavoriteBorderIcon style={{color:'#D14343', marginRight: '5px'}}/>
+              {clicked ?
+              <FavoriteIcon style={{color:'#D14343', marginRight: '5px'}}/>
+               :
+               <FavoriteBorderIcon style={{color:'#D14343', marginRight: '5px'}}/>}
               <Typography>
                 Save
               </Typography>
@@ -101,5 +123,4 @@ const GenerateDesignCard = ({image}) => {
       </Card>
   );
 };
-
 export default GenerateDesignCard

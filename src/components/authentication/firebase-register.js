@@ -84,7 +84,19 @@ export const FirebaseRegister = (props) => {
               localStorage.setItem("lab-user", data.data.id);
               const returnUrl = router.query.returnUrl || '/dashboard/projects';
               router.push(returnUrl);
-        } finally {          
+        } finally {
+            const user_id = localStorage.getItem("lab-user");
+            const limnu_userCreate = await axios.post("https://api.apix.limnu.com/v1/userCreate", {
+              apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
+              displayName: values.name
+            })
+            .catch(error => console.log(error));
+
+            await axios.put(`/api/user/${user_id}`, {
+              limnu_userId: limnu_userCreate.data.userId
+            })
+            .catch(error => console.log(error)); 
+
             await axios.post("/api/emails/welcome_email", {
               name: values.name,
               email: values.email

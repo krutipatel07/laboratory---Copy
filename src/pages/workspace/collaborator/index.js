@@ -211,10 +211,15 @@ const InvitedUSerPage = withRouter((props) => {
                       }
                     }}
                   >
-                    <img
-                      alt=""
-                      src={variantData.url}
-                    />
+                    {variantData.limnu_boardUrl ? 
+                      <iframe src="https://apix.limnu.com/d/draw.html?b=B_PUYIaDLGQJGmgt&" title="description" 
+                        style={{width: '100%', height: '100%'}}
+                      ></iframe>
+                      :  
+                      <img
+                        alt=""
+                        src={variantData.url}
+                    />}
                   </Box>
                 </Box>
                 <Box
@@ -228,7 +233,7 @@ const InvitedUSerPage = withRouter((props) => {
               </Container>
             </Grid>
 
-            <Grid item 
+            {/* <Grid item 
             xs={4}
             style={{maxHeight: '600px', overflow: 'auto', display:'inline-flex', flexFlow:'column-reverse'}}
             >
@@ -237,7 +242,7 @@ const InvitedUSerPage = withRouter((props) => {
                   variantData.comments && variantData.comments.map(comment => <CommentList key={comment.id} comment={comment}/> )
                 }
               </Box>
-            </Grid>
+            </Grid> */}
           </Grid>
         </TabPanel>
         <TabPanel value={value} index={1}>

@@ -65,6 +65,11 @@ export const InvitedUserModal = (props) => {
             })
             .catch(error => console.log(error));
           }
+
+          if(!data.data.limnu_userId){
+            createLimnuUser(data.data)
+          }
+
           localStorage.setItem("lab-user", id);
           }
         } catch (err) {
@@ -89,19 +94,40 @@ export const InvitedUserModal = (props) => {
     }
   },[])
 
+  const createLimnuUser = async ({name, _id }) => {
+    const limnu_userCreate = await axios.post("https://api.apix.limnu.com/v1/userCreate", {
+      apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
+      displayName: name
+    })
+    .catch(error => console.log(error));
+    await axios.put(`/api/user/${_id}`, {
+      limnu_userId: limnu_userCreate.data.userId
+    })
+    .catch(error => console.log(error));
+  }
+
   const createCollaborator = async (values, projectId) => {
+    const limnu_userCreate = await axios.post("https://api.apix.limnu.com/v1/userCreate", {
+      apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
+      displayName: values.name
+    })
+    .catch(error => console.log(error));
+
     const {data} = await axios.post("/api/user", {
       name: values.name,
       email: values.email,
-      role: "Collaborator"
+      role: "Collaborator",
+      limnu_userId: limnu_userCreate.data.userId
     })
     .catch(error => console.log(error));
+
     const id = data.data.id;
+    localStorage.setItem("lab-user", id);
+
     await axios.put(`/api/projects/${projectId}`, {
      collaborators : id,
    })
    .catch(error => console.log(error));
-    localStorage.setItem("lab-user", id);
   }
 
    return (

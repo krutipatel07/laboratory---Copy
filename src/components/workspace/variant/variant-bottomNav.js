@@ -161,7 +161,7 @@ export default function BottomNav() {
             }}
             style={{justifyContent:"space-around"}}
           >
-            <Comment/>
+            {/* <Comment/> */}
             {/* <Note/> */}
             <Version/>
 

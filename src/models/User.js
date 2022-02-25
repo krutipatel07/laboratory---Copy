@@ -50,6 +50,9 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default:true
     },
+    limnu_userId: {
+      type: String,
+    },
     dateCreated: {
       type: Date,
       default: Date.now,
