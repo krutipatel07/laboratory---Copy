@@ -162,14 +162,15 @@ return (
             <Container maxWidth="xl"> 
               <Box
               sx={{
-                maxWidth: 980,
+                maxWidth: 1260,
                 width: '100%',
-                mx: 'auto'
+                mx: 'auto',
+                height: '600px'
               }}>
                 <Box
                   sx={{
                     position: 'relative',
-                    pt: 'calc(600 / 980 * 100%)',
+                    height: '100%',
                     '& img': {
                       height: 'auto',
                       position: 'absolute',
