@@ -4,16 +4,7 @@ import { useFormik } from 'formik';
 import {
   Box,
   Button,
-  Checkbox,
-  Divider,
-  FormHelperText,
-  Link,
   TextField,
-  Typography,
-  InputLabel,
-  Select,
-  MenuItem,
-  FormControl
 } from '@mui/material';
 import { useMounted } from '../../../hooks/use-mounted';
 import axios from 'axios'
@@ -74,10 +65,11 @@ export const InvitedUserModal = (props) => {
           }
         } catch (err) {
           createCollaborator(values, projectId);
+        } finally {
+          setOpen(false);
+          toast.success("Collaborator verified")
+          location.reload();
         }
-        setOpen(false);
-        toast.success("Collaborator verified")
-        location.reload();
       }
       else{
         toast.error("Please enter correct email address")
@@ -103,7 +95,8 @@ export const InvitedUserModal = (props) => {
     await axios.put(`/api/user/${_id}`, {
       limnu_userId: limnu_userCreate.data.userId
     })
-    .catch(error => console.log(error));
+    .catch(error => console.log(error));    
+    localStorage.setItem('limnu_token', limnu_userCreate.data.token)
   }
 
   const createCollaborator = async (values, projectId) => {
@@ -112,6 +105,7 @@ export const InvitedUserModal = (props) => {
       displayName: values.name
     })
     .catch(error => console.log(error));
+    localStorage.setItem('limnu_token', limnu_userCreate.data.token)
 
     const {data} = await axios.post("/api/user", {
       name: values.name,

@@ -114,6 +114,7 @@ const InvitedUSerPage = withRouter((props) => {
     inStock: undefined
   });
   const [variantData, setVariantData] = useState([]);  
+  const limnu_token = localStorage.getItem("limnu_token");
 
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
@@ -187,21 +188,23 @@ const InvitedUSerPage = withRouter((props) => {
         </Box>
         <TabPanel value={value} index={0}>
           <Grid container 
-          spacing={2}>
+          spacing={2}
+          style={{width: "100%"}}>
             <Grid item 
-            xs={8}>
+            xs={12}>
               <Container maxWidth="xl"> 
                 <Box
                 sx={{
-                  maxWidth: 980,
+                  maxWidth: 1260,
                   width: '100%',
-                  mx: 'auto'
+                  mx: 'auto',
+                  height: '600px'
                 }}
                 >
                   <Box
                     sx={{
                       position: 'relative',
-                      pt: 'calc(600 / 980 * 100%)',
+                      height: '100%',
                       '& img': {
                         height: 'auto',
                         position: 'absolute',
@@ -212,7 +215,7 @@ const InvitedUSerPage = withRouter((props) => {
                     }}
                   >
                     {variantData.limnu_boardUrl ? 
-                      <iframe src="https://apix.limnu.com/d/draw.html?b=B_PUYIaDLGQJGmgt&" title="description" 
+                      <iframe src={`${variantData.limnu_boardUrl}t=${limnu_token}&video=0`} title="description" 
                         style={{width: '100%', height: '100%'}}
                       ></iframe>
                       :  

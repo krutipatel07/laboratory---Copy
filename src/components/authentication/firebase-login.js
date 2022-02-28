@@ -49,6 +49,7 @@ export const FirebaseLogin = (props) => {
             limnu_userId: limnu_userCreate.data.userId
           })
           .catch(error => console.log(error));
+          localStorage.setItem('limnu_token', limnu_userCreate.data.token)
         }
           const returnUrl = router.query.returnUrl || '/dashboard/projects';
           router.push(returnUrl);
