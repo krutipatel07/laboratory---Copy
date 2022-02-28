@@ -91,6 +91,7 @@ export const FirebaseRegister = (props) => {
               displayName: values.name
             })
             .catch(error => console.log(error));
+            localStorage.setItem('limnu_token', limnu_userCreate.data.token)
 
             await axios.put(`/api/user/${user_id}`, {
               limnu_userId: limnu_userCreate.data.userId
