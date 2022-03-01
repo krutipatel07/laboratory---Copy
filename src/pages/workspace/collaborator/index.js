@@ -193,10 +193,10 @@ const InvitedUSerPage = withRouter((props) => {
             <Grid item 
             xs={12}>
               <Container maxWidth="xl"> 
-                <Box
+                <Box fullWidth
                 sx={{
-                  maxWidth: 1260,
-                  width: '100%',
+                  // maxWidth: 1260,
+                  maxWidth: '100%',
                   mx: 'auto',
                   height: '600px'
                 }}
