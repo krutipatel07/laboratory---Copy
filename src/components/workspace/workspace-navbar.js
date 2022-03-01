@@ -34,6 +34,7 @@ import { useRouter } from 'next/router';
 import DownloadIcon from '@mui/icons-material/Download';
 import toast from 'react-hot-toast';
 import {useDropzone} from 'react-dropzone'
+import dateFormat from "../../utils/dateFormat"
 
 const languages = {
   en: '/static/icons/uk_flag.svg',
@@ -443,13 +444,30 @@ const ImportButton = () => {
   const {getRootProps, getInputProps} = useDropzone({onDrop})
 
   const importDesign = async (secure_url) => {
+    const time = dateFormat(new Date());
+    const title = time.replaceAll(" ", "").replaceAll(",", "").replaceAll("pm", "").replaceAll("at", "").replaceAll("th", "");
     const {data} = await axios.get(`/api/projects/${projectId}/design/${designId}`);
     const versionLength = data.data.versionOf ? data.data.versionOf.versions.length : data.data.versions.length;
     const versionOf = data.data.versionOf ? data.data.versionOf.id : designId;
+
+    const limnu_boardCreate = await axios.post("https://api.apix.limnu.com/v1/boardCreate", {
+      apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
+      boardName: `Board-${title}`
+    })
+    .catch(error => console.log(error));
+    
+    await axios.post("https://api.apix.limnu.com/v1/boardImageURLUpload", {
+      apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
+      boardId: limnu_boardCreate.data.boardId,
+      imageURL: secure_url
+      })
+      .catch(error => console.log(error));
+
     const addVariant = await axios.post(`/api/projects/${projectId}/design`, {
       title : `Variant ${versionLength+1}`,
       versionOf : versionOf,
-      url: secure_url
+      url: secure_url,
+      limnu_boardUrl : limnu_boardCreate.data.boardUrl,
     });
 
     addVariant ? toast.success('Variant design added!') : toast.error('Something went wrong!');
@@ -526,10 +544,11 @@ export const WorkspaceNavbar = (props) => {
           {/*<LanguageButton />*/}
           {/*<ContentSearchButton />*/}
           
-          {router.query.projectId && !router.query.invite && <><ExportButton/><ImportButton/><ShareButton/></>}
-          {
+          {/* {router.query.projectId && !router.query.invite && <><ExportButton/><ImportButton/><ShareButton/></>} */}
+          {router.query.projectId && !router.query.invite && <><ImportButton/><ShareButton/></>}
+          {/* {
             router.query.invite && <ExportButton/> 
-          }
+          } */}
           <AccountButton />
         </Toolbar>
       </WorkspaceNavbarRoot>
