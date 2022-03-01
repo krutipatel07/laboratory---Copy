@@ -47,7 +47,7 @@ function a11yProps(index) {
 }
 
 const ProjectWorkspace = withRouter((props) => {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(1);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

@@ -37,21 +37,24 @@ export const FirebaseLogin = (props) => {
         if (isMounted()) {    
           const {data} = await axios.get(`/api/owner/${values.email}`)
           .catch(error => console.log(error));
-          localStorage.setItem("lab-user", data.data._id);
-          const token = localStorage.getItem("limnu_token")
-          
-          if(!token || !data.data.limnu_userId){            
+          localStorage.setItem("lab-user", data.data._id);        
+
+          if(!data.data.limnu_userId || !data.data.limnu_token){   
             const limnu_userCreate = await axios.post("https://api.apix.limnu.com/v1/userCreate", {
               apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
               displayName: data.data.name
             })
             .catch(error => console.log(error));
             await axios.put(`/api/user/${data.data._id}`, {
-              limnu_userId: limnu_userCreate.data.userId
+              limnu_userId: limnu_userCreate.data.userId,
+              limnu_token: limnu_userCreate.data.token
             })
             .catch(error => console.log(error));
             localStorage.setItem('limnu_token', limnu_userCreate.data.token)
+          }else{
+            localStorage.setItem("limnu_token", data.data.limnu_token)
           }
+
           const returnUrl = router.query.returnUrl || '/dashboard/projects';
           router.push(returnUrl);
         }

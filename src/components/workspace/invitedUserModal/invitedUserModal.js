@@ -49,7 +49,6 @@ export const InvitedUserModal = (props) => {
             const projects = await axios.get(`/api/projects/${projectId}`)
             const projectsCollaborators = projects.data.data.collaborators
             const filteredProjectsCollaborators = projectsCollaborators.filter(collaborator => collaborator._id === id)
-            const token = localStorage.getItem("limnu_token")
             
             if(filteredProjectsCollaborators.length === 0) {
             await axios.put(`/api/projects/${projectId}`, {
@@ -58,8 +57,10 @@ export const InvitedUserModal = (props) => {
             .catch(error => console.log(error));
           }
 
-          if(!token || !data.data.limnu_userId){
+          if(!data.data.limnu_userId || !data.data.limnu_token){
             await createLimnuUser(data.data)
+          } else{
+            localStorage.setItem("limnu_token", data.data.limnu_token)
           }
 
           localStorage.setItem("lab-user", id);
@@ -98,7 +99,8 @@ export const InvitedUserModal = (props) => {
     })
     .catch(error => console.log(error));
     await axios.put(`/api/user/${_id}`, {
-      limnu_userId: limnu_userCreate.data.userId
+      limnu_userId: limnu_userCreate.data.userId,
+      limnu_token: limnu_userCreate.data.token
     })
     .catch(error => console.log(error));    
     localStorage.setItem('limnu_token', limnu_userCreate.data.token)

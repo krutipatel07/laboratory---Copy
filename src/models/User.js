@@ -53,6 +53,9 @@ const UserSchema = new mongoose.Schema(
     limnu_userId: {
       type: String,
     },
+    limnu_token: {
+      type: String,
+    },
     dateCreated: {
       type: Date,
       default: Date.now,
