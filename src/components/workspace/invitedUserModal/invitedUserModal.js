@@ -49,6 +49,7 @@ export const InvitedUserModal = (props) => {
             const projects = await axios.get(`/api/projects/${projectId}`)
             const projectsCollaborators = projects.data.data.collaborators
             const filteredProjectsCollaborators = projectsCollaborators.filter(collaborator => collaborator._id === id)
+            const token = localStorage.getItem("limnu_token")
             
             if(filteredProjectsCollaborators.length === 0) {
             await axios.put(`/api/projects/${projectId}`, {
@@ -57,14 +58,14 @@ export const InvitedUserModal = (props) => {
             .catch(error => console.log(error));
           }
 
-          if(!data.data.limnu_userId){
-            createLimnuUser(data.data)
+          if(!token || !data.data.limnu_userId){
+            await createLimnuUser(data.data)
           }
 
           localStorage.setItem("lab-user", id);
           }
         } catch (err) {
-          createCollaborator(values, projectId);
+          await createCollaborator(values, projectId);
         } finally {
           setOpen(false);
           toast.success("Collaborator verified")
