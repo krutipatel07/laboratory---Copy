@@ -64,12 +64,16 @@ export const InvitedUserModal = (props) => {
 
           localStorage.setItem("lab-user", id);
           }
-        } catch (err) {
-          await createCollaborator(values, projectId);
-        } finally {
           setOpen(false);
           toast.success("Collaborator verified")
           location.reload();
+        } catch (err) {
+          const created = await createCollaborator(values, projectId);
+          if(created){ 
+            setOpen(false);
+            toast.success("Collaborator verified")
+            location.reload();
+          }
         }
       }
       else{
@@ -114,7 +118,10 @@ export const InvitedUserModal = (props) => {
       role: "Collaborator",
       limnu_userId: limnu_userCreate.data.userId
     })
-    .catch(error => console.log(error));
+    .catch(error => {
+      toast.error("This name is already taken!")
+      return false
+    });
 
     const id = data.data.id;
     localStorage.setItem("lab-user", id);
@@ -123,6 +130,7 @@ export const InvitedUserModal = (props) => {
      collaborators : id,
    })
    .catch(error => console.log(error));
+   return true;
   }
 
    return (
