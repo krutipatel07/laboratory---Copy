@@ -101,15 +101,26 @@ const storeFiles = async (file, formData) => {
                   sx={{
                   maxWidth: 300, 
                   minWidth: 400, }}>
-                    {asset[0].images && <img 
-                          style={{maxWidth: '100%', minWidth: '100%', height:200}}
-                          alt=""
-                          src={asset[0].images}
-                      />}
-                    {asset[0].documents && <img 
+                    {asset.images && <img 
+                        style={{maxWidth: '100%', minWidth: '100%', height:200}}
+                        alt=""
+                        src={asset.images}
+                    />}
+                    {asset.length && asset[0].images && <img 
+                        style={{maxWidth: '100%', minWidth: '100%', height:200}}
+                        alt=""
+                        src={asset[0].images}
+                    />}
+
+                    {asset.documents && <img 
                         style={{maxWidth: '100%', maxHeight: '100%'}}
                         alt=""
-                        src={asset[0].documents}
+                        src={asset.documents}
+                    />}
+                    {asset.length && asset[0].documents && <img 
+                      style={{maxWidth: '100%', maxHeight: '100%'}}
+                      alt=""
+                      src={asset[0].documents}
                     />}
                   </Box>
                 </Grid> )}) 
