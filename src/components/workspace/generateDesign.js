@@ -148,27 +148,6 @@ const ProductList = withRouter((props) => {
             m: 1.5
           }}
         >
-          <NextLink
-            href="/dashboard/projects"
-            passHref
-          >
-            <Button
-              sx={{ m: 1.5 }}
-              component="a"
-              variant="text"
-              style={{margin:7}}
-            >
-              <ArrowBackOutlinedIcon/>
-            </Button>
-          </NextLink>
-        </Box>
-        <Box
-          component="form"
-          sx={{
-            flexGrow: 1,
-            m: 1.5
-          }}
-        >
           <TextField
             defaultValue="$500,000"
             width="50%"

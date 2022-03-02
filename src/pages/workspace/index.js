@@ -11,7 +11,9 @@ import GenerateDesign from '../../components/workspace/generateDesign';
 import { withRouter, useRouter } from 'next/router';
 import { withWorkspaceLayout } from '../../hocs/with-workspace-layout';
 import { withAuthGuard } from '../../hocs/with-auth-guard'
-
+import { Button } from '@mui/material';
+import NextLink from 'next/link';
+import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -67,6 +69,27 @@ const ProjectWorkspace = withRouter((props) => {
         mb: 8
       }}
     >
+    <Box
+      component="form"
+      sx={{
+        flexGrow: 1,
+        m: 1.5
+      }}
+    >
+      <NextLink
+        href="/dashboard/projects"
+        passHref
+      >
+        <Button
+          sx={{ m: 1.5 }}
+          component="a"
+          variant="text"
+          style={{margin:7}}
+        >
+          <ArrowBackOutlinedIcon/>
+        </Button>
+      </NextLink>
+    </Box>
       <Container maxWidth="xl">
         <Box sx={{ width: '100%' }}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: '30px' }}>
