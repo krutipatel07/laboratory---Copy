@@ -1,11 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import VariantCard from './variantCard';
 import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
-import { Typography } from '@mui/material';
+import { Typography, Button} from '@mui/material';
+import {useDropzone} from 'react-dropzone'
+import dateFormat from "../../utils/dateFormat"
+import toast from 'react-hot-toast';
 
 export default function SavedDesign({projectId}) {
   const [projectData, setProjectData] = useState([]);
@@ -15,6 +18,57 @@ export default function SavedDesign({projectId}) {
     .then(res => setProjectData(res.data.data))
     .catch(error => console.log(error));
   }, [projectId, update])
+  
+  const onDrop = useCallback(acceptedFiles => {
+    const formData = new FormData();
+    formData.append('file', acceptedFiles[0])
+    formData.append('upload_preset', 'maket_design');
+
+    const url = "https://api.cloudinary.com/v1_1/maket/image/upload";
+    fetch(url, {
+      method: "POST",
+      body: formData
+    }).then(res => res.json())
+    .then(res =>{
+      if(res.error) {
+        toast.error(res.error.message)
+        return
+      }
+      importDesign(res.secure_url);
+    }).catch(err => console.log(err))
+}, [])
+
+const importDesign = async (secure_url) => {
+  const time = dateFormat(new Date());
+  const title = time.replaceAll(" ", "").replaceAll(",", "").replaceAll("pm", "").replaceAll("at", "").replaceAll("th", "");
+  
+  const limnu_boardCreate = await axios.post("https://api.apix.limnu.com/v1/boardCreate", {
+    apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
+    boardName: `Board-${title}`
+  })
+  .catch(error => console.log(error));
+  
+  await axios.post("https://api.apix.limnu.com/v1/boardImageURLUpload", {
+    apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
+    boardId: limnu_boardCreate.data.boardId,
+    imageURL: secure_url
+    })
+    .catch(error => console.log(error));
+
+  const addDesign = await axios.post(`/api/projects/${projectId}/design`, {
+    title : `Design-${title}`,
+    url: secure_url,
+    limnu_boardUrl : limnu_boardCreate.data.boardUrl,
+  });
+
+  addDesign ? toast.success('Design imported!') : toast.error('Something went wrong!');
+  addDesign && setUpdate((prev) => !prev)
+};
+
+const {getRootProps,getInputProps} = useDropzone({
+  onDrop,
+  accept: 'image/jpeg, image/png'
+});
 
   return (
     <Box
@@ -23,6 +77,17 @@ export default function SavedDesign({projectId}) {
           
         }}
       >
+      <div {...getRootProps()}>
+        <input {...getInputProps()} />
+          <Button
+            component="a"
+            variant="contained"
+            type="submit"
+          >
+            Import Design
+          </Button>
+      </div>
+
       <Grid container style={{width:'100%', marginLeft:0}}
       spacing={3}>        
         {projectData.designs ? 
