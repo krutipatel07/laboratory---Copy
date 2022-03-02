@@ -8,8 +8,6 @@ import axios from 'axios'
 
 export const FirebaseLogin = (props) => {
 
-  console.log(process.env.LIMNU_API_KEY);
-
   const isMounted = useMounted();
   const router = useRouter();
   const { signInWithEmailAndPassword, signInWithGoogle } = useAuth();
