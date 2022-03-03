@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import { DashboardNavbar } from './dashboard-navbar';
 import { DashboardSidebar } from './dashboard-sidebar';
 import { Box } from '@mui/material';
+import axios from 'axios'
 
 const DashboardLayoutRoot = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -18,6 +19,20 @@ const DashboardLayoutRoot = styled('div')(({ theme }) => ({
 export const DashboardLayout = (props) => {
   const { children } = props;
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [projectList, setProjectList] = useState();
+
+  useEffect(() => {
+    const user = localStorage.getItem("lab-user");
+    axios.get(`/api/user/${user}`)
+    .then(res => {
+    const project_list = res.data.data.projects.map(project => ({
+        title : project.title,
+        path : `/workspace?id=${project._id}`
+      }))
+      setProjectList(project_list.reverse())
+    })
+    .catch(error => console.log(error));
+  },[])
 
   return (
     <>
@@ -34,10 +49,11 @@ export const DashboardLayout = (props) => {
         </Box>
       </DashboardLayoutRoot>
       <DashboardNavbar onOpenSidebar={() => setIsSidebarOpen(true)} />
-      <DashboardSidebar
+      {projectList && <DashboardSidebar
         onClose={() => setIsSidebarOpen(false)}
         open={isSidebarOpen}
-      />
+        projectList={projectList}
+      />}
     </>
   );
 };

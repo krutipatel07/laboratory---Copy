@@ -20,7 +20,7 @@ import DashboardModal from '../../components/modal/dashboard-modal';
 import { useAuth } from '../../hooks/use-auth';
 import axios from 'axios'
 
-const getSections = (t) => [
+const getSections = (t, projectList) => [
   {
     title: t('Workspace'),
     items: [
@@ -43,7 +43,8 @@ const getSections = (t) => [
         children: [
           {
             title: t('List'),
-            path: '/dashboard/projects'
+            path: '/dashboard/projects',
+            children: projectList
           },
           {
             title: t('Create'),
@@ -66,7 +67,7 @@ const getSections = (t) => [
 ];
 
 export const DashboardSidebar = (props) => {
-  const { onClose, open } = props;
+  const { onClose, open, projectList } = props;
   const [isModalShown, setModalShown] = useState(false)
   const [isOpen, setOpen] = React.useState(false);
   const router = useRouter();
@@ -74,7 +75,7 @@ export const DashboardSidebar = (props) => {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'), {
     noSsr: true
   });
-  const sections = useMemo(() => getSections(t), [t]);
+  const sections = useMemo(() => getSections(t, projectList), [t]);
   // const { user } = useAuth();
 
   const handlePathChange = () => {
