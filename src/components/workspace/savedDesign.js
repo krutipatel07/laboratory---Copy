@@ -88,10 +88,10 @@ const {getRootProps,getInputProps} = useDropzone({
           </Button>
       </div>
 
-      <Grid container style={{width:'100%', marginLeft:0}}
+      <Grid container style={{width:'100%', marginLeft:0, marginTop:20}}
       spacing={3}>        
         {projectData.designs ? 
-          <Grid container
+          <Grid container style={{width:'100%', marginLeft:0}}
           spacing={3}
           >
           {projectData.designs.length ?
