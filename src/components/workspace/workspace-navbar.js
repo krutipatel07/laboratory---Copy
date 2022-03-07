@@ -525,7 +525,7 @@ export const WorkspaceNavbar = withRouter((props) => {
           }}
         >
         <NextLink
-                href="/dashboard/projects"
+                href={router.query.invite ? "#" : "/dashboard/projects" }
                 passHref
               >
                 <a>

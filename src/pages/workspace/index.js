@@ -9,11 +9,11 @@ import DesignSavedGrid from '../../components/workspace/savedDesign';
 import AssetsGrid from '../../components/workspace/assets-grid';
 import GenerateDesign from '../../components/workspace/generateDesign';
 import { withRouter, useRouter } from 'next/router';
-import { withWorkspaceLayout } from '../../hocs/with-workspace-layout';
 import { withAuthGuard } from '../../hocs/with-auth-guard'
 import { Button } from '@mui/material';
 import NextLink from 'next/link';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
+import { withDashboardLayout } from '../../hocs/with-dashboard-layout';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -115,4 +115,4 @@ const ProjectWorkspace = withRouter((props) => {
     </>
   );
 })
-export default withAuthGuard(withWorkspaceLayout(ProjectWorkspace));
+export default withAuthGuard(withDashboardLayout(ProjectWorkspace));
