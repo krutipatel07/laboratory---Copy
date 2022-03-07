@@ -9,7 +9,8 @@ import {
   ButtonBase,
   IconButton,
   Toolbar,
-  Tooltip
+  Tooltip,
+  Typography
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Menu as MenuIcon } from '../../icons/menu';
@@ -35,6 +36,11 @@ import DownloadIcon from '@mui/icons-material/Download';
 import toast from 'react-hot-toast';
 import {useDropzone} from 'react-dropzone'
 import dateFormat from "../../utils/dateFormat"
+import AssetsGrid from '../../components/workspace/assets-grid';
+import { withRouter} from 'next/router';
+import AssetSideBar from './projectAssetSidebar'
+
+// const [click, setClick] = useState(false)
 
 const languages = {
   en: '/static/icons/uk_flag.svg',
@@ -43,16 +49,19 @@ const languages = {
 };
 
 const WorkspaceNavbarRoot = styled(AppBar)(({ theme }) => ({
-  backgroundColor: theme.palette.background.paper,
+  // backgroundColor: theme.palette.background.paper,
+  backgroundColor: "#0B0F19",
+  width: "calc(100% - 280px)",
   ...(theme.palette.mode === 'light'
     ? {
-      boxShadow: theme.shadows[3]
+      boxShadow: theme.shadows[3],
+      backgroundColor: "#F9FAFC"
     }
     : {
-      backgroundColor: theme.palette.background.paper,
-      borderBottomColor: theme.palette.divider,
-      borderBottomStyle: 'solid',
-      borderBottomWidth: 1,
+      // backgroundColor: theme.palette.background.paper,
+      // borderBottomColor: theme.palette.divider,
+      // borderBottomStyle: 'solid',
+      // borderBottomWidth: 1,
       boxShadow: 'none'
     })
 }));
@@ -499,9 +508,19 @@ const ImportButton = () => {
   );
 };
 
-export const WorkspaceNavbar = (props) => {
+
+
+export const WorkspaceNavbar = withRouter((props) => {
   const { onOpenSidebar, ...other } = props;
   const router = useRouter();
+
+  const projectId = router.query.id;
+  const [projectTitle, setProjectTitle] = useState();
+  useEffect(() => {
+    axios.get(`/api/projects/${projectId}`)
+    .then(res => setProjectTitle(res.data.data.title))
+    .catch(error => console.log(error));
+  },[projectId]);
 
   return (
     <>
@@ -515,7 +534,7 @@ export const WorkspaceNavbar = (props) => {
             px: 2
           }}
         >
-        <NextLink
+        {/* <NextLink
                 href={router.query.invite ? "#" : "/dashboard/projects" }
                 passHref
               >
@@ -534,13 +553,21 @@ export const WorkspaceNavbar = (props) => {
             sx={{
               display: {
                 xs: 'inline-flex',
-                lg: 'none'
+                // lg: 'none'
               }
             }}
           >
-            {/* <MenuIcon fontSize="small" /> */}
-          </IconButton>
-          <Box sx={{ flexGrow: 1 }} />
+            <MenuIcon fontSize="small" />
+          </IconButton> */}
+          <Box sx={{ flexGrow: 1, px: 2 }} style={{color:'#F0C88E'}}>
+            {
+              !router.query.designId  && 
+              <Typography variant="h5">
+              Project: <span>{projectTitle && projectTitle}</span>
+            </Typography>
+            }
+
+          </Box>
           {/*<LanguageButton />*/}
           {/*<ContentSearchButton />*/}
           
@@ -549,12 +576,14 @@ export const WorkspaceNavbar = (props) => {
           {/* {
             router.query.invite && <ExportButton/> 
           } */}
-          <AccountButton />
+          {/* <AccountButton /> */}
+          <AssetSideBar/>
+
         </Toolbar>
       </WorkspaceNavbarRoot>
     </>
   );
-};
+});
 
 WorkspaceNavbar.propTypes = {
   onOpenSidebar: PropTypes.func

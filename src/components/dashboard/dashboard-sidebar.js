@@ -125,7 +125,7 @@ export const DashboardSidebar = (props) => {
           }}
         >
           <div>
-            <Box sx={{ p: 3 }}>
+            <Box sx={{ p: 3 }} style={{textAlign:'center'}}>
               <NextLink
                 href="/dashboard/projects"
                 passHref

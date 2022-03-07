@@ -84,7 +84,7 @@ const GenerateDesignCard = ({image}) => {
       <Card
       sx={{
             maxWidth: 300,
-            minWidth: 400,
+            minWidth: 350,
             backgroundColor: 'background.paper',
             '&:hover': {
               backgroundColor: 'background.hover',

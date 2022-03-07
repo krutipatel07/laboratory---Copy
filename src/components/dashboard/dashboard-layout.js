@@ -48,7 +48,7 @@ export const DashboardLayout = (props) => {
           {children}
         </Box>
       </DashboardLayoutRoot>
-      <DashboardNavbar onOpenSidebar={() => setIsSidebarOpen(true)} />
+      {/* <DashboardNavbar onOpenSidebar={() => setIsSidebarOpen(true)} /> */}
       {projectList && <DashboardSidebar
         onClose={() => setIsSidebarOpen(false)}
         open={isSidebarOpen}

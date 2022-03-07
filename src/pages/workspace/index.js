@@ -11,6 +11,7 @@ import GenerateDesign from '../../components/workspace/generateDesign';
 import { withRouter, useRouter } from 'next/router';
 import { withAuthGuard } from '../../hocs/with-auth-guard'
 import { withDashboardLayout } from '../../hocs/with-dashboard-layout';
+import { withWorkspaceLayout } from '../../hocs/with-workspace-layout';
 import axios from 'axios'
 
 function TabPanel(props) {
@@ -53,16 +54,6 @@ const ProjectWorkspace = withRouter((props) => {
     setValue(newValue);
   };
 
-  const router = useRouter();
-  const projectId = router.query.id;
-  const [projectTitle, setProjectTitle] = useState();
-  useEffect(() => {
-    axios.get(`/api/projects/${projectId}`)
-    .then(res => setProjectTitle(res.data.data.title))
-    .catch(error => console.log(error));
-  },[]);
-  projectTitle && console.log(projectTitle);
-
   return (
     <>
     <Head>
@@ -74,24 +65,18 @@ const ProjectWorkspace = withRouter((props) => {
       component="main"
       sx={{
         flexGrow: 1,
-        mb: 8
+        mb: 8,
+        mt:'-50px'
       }}
     >
-    <Box
-      component="form"
-      sx={{
-        flexGrow: 1,
-        m: 1.5
-      }}
-    >
-    </Box>
+
       <Container maxWidth="xl">
         <Box sx={{ width: '100%' }}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: '30px' }}>
-            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: '10px' }}>
+            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
               <Tab label="Generate" {...a11yProps(0)} style={{fontSize: '1.5rem'}} />
               <Tab label="Design" {...a11yProps(1)} style={{fontSize: '1.5rem'}} />
-              <Tab label="Assets" {...a11yProps(2)} style={{fontSize: '1.5rem'}} />
+              {/* <Tab label="Assets" {...a11yProps(2)} style={{fontSize: '1.5rem'}} /> */}
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
@@ -100,9 +85,9 @@ const ProjectWorkspace = withRouter((props) => {
           <TabPanel value={value} index={1}>
             <DesignSavedGrid projectId= {props.router.query.id}/>
           </TabPanel>
-          <TabPanel value={value} index={2}>
+          {/* <TabPanel value={value} index={2}>
             <AssetsGrid projectId= {props.router.query.id}/>
-          </TabPanel>
+          </TabPanel> */}
         </Box>
       </Container>
     </Box>
@@ -110,4 +95,5 @@ const ProjectWorkspace = withRouter((props) => {
     </>
   );
 })
-export default withAuthGuard(withDashboardLayout(ProjectWorkspace));
+// export default withAuthGuard(withDashboardLayout(ProjectWorkspace));
+export default withAuthGuard(withDashboardLayout(withWorkspaceLayout(ProjectWorkspace)));
