@@ -165,31 +165,19 @@ const InvitedUSerPage = withRouter((props) => {
           Variant | Maket Colaboratory
         </title>
       </Head>
-      
-      <Box
-        sx={{
-          alignItems: 'center',
-          display: 'flex',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
-          // m: -1.5,
-          p: 3
-        }}
-      >
-      </Box>
 
       <Box
         component="main"
         sx={{
           flexGrow: 1,
-          py: 8,
+          pb: 8,
           width: '100%'
         }}
       >
         <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: '30px' }}>
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
             <Tab label="Design" {...a11yProps(0)} style={{fontSize: '1.5rem'}} />
-            <Tab label="Assets" {...a11yProps(1)} style={{fontSize: '1.5rem'}} />
+            {/* <Tab label="Assets" {...a11yProps(1)} style={{fontSize: '1.5rem'}} /> */}
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
@@ -262,9 +250,9 @@ const InvitedUSerPage = withRouter((props) => {
             </Grid> */}
           </Grid>}
         </TabPanel>
-        <TabPanel value={value} index={1}>
+        {/* <TabPanel value={value} index={1}>
           <AssetsGrid projectId= {props.router.query.projectId}/>
-        </TabPanel>
+        </TabPanel> */}
 
         <Paper 
         sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} 
