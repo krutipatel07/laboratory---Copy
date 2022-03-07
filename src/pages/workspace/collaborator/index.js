@@ -113,7 +113,7 @@ const InvitedUSerPage = withRouter((props) => {
     status: [],
     inStock: undefined
   });
-  const [variantData, setVariantData] = useState([]);  
+  const [variantData, setVariantData] = useState();  
   const [error, setError] = useState({
     status: false,
     message: undefined,
@@ -228,14 +228,14 @@ const InvitedUSerPage = withRouter((props) => {
                       }
                     }}
                   >
-                    {variantData.limnu_boardUrl ? 
+                    {variantData && variantData.limnu_boardUrl ? 
                       <iframe src={`${variantData.limnu_boardUrl}t=${limnu_token}&video=0`} title="description" 
                         style={{width: '100%', height: '100%'}}
                       ></iframe>
                       :  
                       <img
                         alt=""
-                        src={variantData.url}
+                        src={variantData && variantData.url}
                     />}
                   </Box>
                 </Box>
