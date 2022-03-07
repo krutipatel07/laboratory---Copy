@@ -534,31 +534,6 @@ export const WorkspaceNavbar = withRouter((props) => {
             px: 2
           }}
         >
-        {/* <NextLink
-                href={router.query.invite ? "#" : "/dashboard/projects" }
-                passHref
-              >
-                <a>
-                  <Logo
-                    sx={{
-                      height: 42,
-                      width: 42,
-                    }}
-                    variant="primary"
-                  />
-                </a>
-              </NextLink>
-          <IconButton
-            onClick={onOpenSidebar}
-            sx={{
-              display: {
-                xs: 'inline-flex',
-                // lg: 'none'
-              }
-            }}
-          >
-            <MenuIcon fontSize="small" />
-          </IconButton> */}
           <Box sx={{ flexGrow: 1, px: 2 }} style={{color:'#F0C88E'}}>
             {
               !router.query.designId  && 
