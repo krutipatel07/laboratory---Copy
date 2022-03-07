@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Tabs from '@mui/material/Tabs';
@@ -10,10 +10,8 @@ import AssetsGrid from '../../components/workspace/assets-grid';
 import GenerateDesign from '../../components/workspace/generateDesign';
 import { withRouter, useRouter } from 'next/router';
 import { withAuthGuard } from '../../hocs/with-auth-guard'
-import { Button } from '@mui/material';
-import NextLink from 'next/link';
-import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import { withDashboardLayout } from '../../hocs/with-dashboard-layout';
+import axios from 'axios'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -55,6 +53,16 @@ const ProjectWorkspace = withRouter((props) => {
     setValue(newValue);
   };
 
+  const router = useRouter();
+  const projectId = router.query.id;
+  const [projectTitle, setProjectTitle] = useState();
+  useEffect(() => {
+    axios.get(`/api/projects/${projectId}`)
+    .then(res => setProjectTitle(res.data.data.title))
+    .catch(error => console.log(error));
+  },[]);
+  projectTitle && console.log(projectTitle);
+
   return (
     <>
     <Head>
@@ -76,19 +84,6 @@ const ProjectWorkspace = withRouter((props) => {
         m: 1.5
       }}
     >
-      <NextLink
-        href="/dashboard/projects"
-        passHref
-      >
-        <Button
-          sx={{ m: 1.5 }}
-          component="a"
-          variant="text"
-          style={{margin:7}}
-        >
-          <ArrowBackOutlinedIcon/>
-        </Button>
-      </NextLink>
     </Box>
       <Container maxWidth="xl">
         <Box sx={{ width: '100%' }}>

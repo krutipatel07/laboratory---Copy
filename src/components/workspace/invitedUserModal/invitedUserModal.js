@@ -5,6 +5,8 @@ import {
   Box,
   Button,
   TextField,
+  Grid, 
+  Typography
 } from '@mui/material';
 import { useMounted } from '../../../hooks/use-mounted';
 import axios from 'axios'
@@ -19,7 +21,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 export const InvitedUserModal = (props) => {
   const isMounted = useMounted();
   const router = useRouter();
-  const projectId = router.query.projectId;
+  const projectId = router.query.projectId; 
+  const [error, setError] = React.useState({
+    status: false,
+    message: undefined,
+  });
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -38,6 +44,12 @@ export const InvitedUserModal = (props) => {
         .required('Email is required'),
     }),
     onSubmit: async (values) => {
+      if(!props.variantData.length){
+        setError({
+                  status: true,
+                  message : "OOPS! This design is not available or deleted by owner of the project!"})
+        return
+      }
       const existingCollaboratorList = props.variantData.collaborators;
       const isExisting = existingCollaboratorList.filter(collaborator => collaborator===values.email);
       if(isExisting.length){
@@ -138,8 +150,17 @@ export const InvitedUserModal = (props) => {
    return (
     <div {...props}>
       <Dialog open={open}>
-        <DialogTitle>Please confirm your identity</DialogTitle>
-        <DialogContent>
+        { error.status ? 
+          <Grid container style={{width:'100%', marginLeft:0}}
+          spacing={3}
+          >
+            <Typography style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:100}}>
+              {error.message}
+            </Typography> 
+          </Grid>: 
+          <>
+          <DialogTitle>Please confirm your identity</DialogTitle>
+          <DialogContent>
             <form
             noValidate
             onSubmit={formik.handleSubmit}
@@ -182,7 +203,7 @@ export const InvitedUserModal = (props) => {
                     </Box>
                 </DialogActions>
             </form>
-        </DialogContent>
+        </DialogContent></>}
       </Dialog>
     </div>
   );
