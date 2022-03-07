@@ -44,7 +44,8 @@ export const InvitedUserModal = (props) => {
         .required('Email is required'),
     }),
     onSubmit: async (values) => {
-      if(!props.variantData.length){
+      console.log(props.variantData)
+      if(!props.variantData ){
         setError({
                   status: true,
                   message : "OOPS! This design is not available or deleted by owner of the project!"})
