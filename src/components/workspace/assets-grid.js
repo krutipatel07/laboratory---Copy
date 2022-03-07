@@ -75,7 +75,7 @@ const storeFiles = async (file, formData) => {
           backgroundColor: 'background.default',
           flexGrow: 1
         }}
-        style={{paddingTop:'60px', width:650}}
+        style={{paddingTop:'65px', width:650}}
       > 
         <section>
           <div {...getRootProps()}>

@@ -77,7 +77,7 @@ const {getRootProps,getInputProps} = useDropzone({
           
         }}
       >
-      <div {...getRootProps()}>
+      <div {...getRootProps()} style={{display:'flex', justifyContent:'end'}}>
         <input {...getInputProps()} />
           <Button
             component="a"
