@@ -114,6 +114,10 @@ const InvitedUSerPage = withRouter((props) => {
     inStock: undefined
   });
   const [variantData, setVariantData] = useState([]);  
+  const [error, setError] = useState({
+    status: false,
+    message: undefined,
+  });  
   const limnu_token = localStorage.getItem("limnu_token");
 
   const [value, setValue] = React.useState(0);
@@ -128,7 +132,9 @@ const InvitedUSerPage = withRouter((props) => {
   useEffect(() => {
     axios.get(`/api/projects/_/design/${designId}`)
     .then(res => setVariantData(res.data.data))
-    .catch(error => console.log(error));
+    .catch(error => setError({
+      status: true,
+      message : "OOPS! This design is not available or deleted by owner of the project!"}));
   }, [designId]);
 
 
@@ -187,6 +193,14 @@ const InvitedUSerPage = withRouter((props) => {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
+        { error.status ? 
+          <Grid container style={{width:'100%', marginLeft:0}}
+          spacing={3}
+          >
+            <Typography style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:100}}>
+              {error.message}
+            </Typography> 
+          </Grid>:
           <Grid container 
           spacing={2}
           style={{width: "100%"}}>
@@ -246,7 +260,7 @@ const InvitedUSerPage = withRouter((props) => {
                 }
               </Box>
             </Grid> */}
-          </Grid>
+          </Grid>}
         </TabPanel>
         <TabPanel value={value} index={1}>
           <AssetsGrid projectId= {props.router.query.projectId}/>

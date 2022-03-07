@@ -81,6 +81,10 @@ const ProductList = withRouter((props) => {
     inStock: undefined
   });
   const [variantData, setVariantData] = useState([]);  
+  const [error, setError] = useState({
+    status: false,
+    message: undefined,
+  });  
   const designId = props.router.query.designId;
   const limnu_token = localStorage.getItem("limnu_token");
   useEffect(() => {
@@ -90,7 +94,9 @@ const ProductList = withRouter((props) => {
   useEffect(() => {
     axios.get(`/api/projects/_/design/${designId}`)
     .then(res => setVariantData(res.data.data))
-    .catch(error => console.log(error));
+    .catch(error => setError({
+      status: true,
+      message : "OOPS! This design is not available or deleted by owner of the project!"}));
   },[designId]);
 
   useEffect(() => {
@@ -167,6 +173,14 @@ return (
                 mx: 'auto',
                 height: '600px'
               }}>
+                { error.status ? 
+                <Grid container style={{width:'100%', marginLeft:0}}
+                spacing={3}
+                >
+                  <Typography style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:100}}>
+                    {error.message}
+                  </Typography> 
+                </Grid> :
                 <Box
                   sx={{
                     position: 'relative',
@@ -189,7 +203,7 @@ return (
                       alt=""
                       src={variantData.url}
                   />}
-                </Box>
+                </Box>}
               </Box>
             </Container>
           </Grid>
