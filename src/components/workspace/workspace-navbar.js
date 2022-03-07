@@ -51,9 +51,11 @@ const languages = {
 const WorkspaceNavbarRoot = styled(AppBar)(({ theme }) => ({
   // backgroundColor: theme.palette.background.paper,
   backgroundColor: "#0B0F19",
+  width: "calc(100% - 280px)",
   ...(theme.palette.mode === 'light'
     ? {
-      boxShadow: theme.shadows[3]
+      boxShadow: theme.shadows[3],
+      backgroundColor: "#F9FAFC"
     }
     : {
       // backgroundColor: theme.palette.background.paper,
@@ -512,6 +514,14 @@ export const WorkspaceNavbar = withRouter((props) => {
   const { onOpenSidebar, ...other } = props;
   const router = useRouter();
 
+  const projectId = router.query.id;
+  const [projectTitle, setProjectTitle] = useState();
+  useEffect(() => {
+    axios.get(`/api/projects/${projectId}`)
+    .then(res => setProjectTitle(res.data.data.title))
+    .catch(error => console.log(error));
+  },[projectId]);
+
   return (
     <>
       <WorkspaceNavbarRoot
@@ -524,7 +534,7 @@ export const WorkspaceNavbar = withRouter((props) => {
             px: 2
           }}
         >
-        <NextLink
+        {/* <NextLink
                 href={router.query.invite ? "#" : "/dashboard/projects" }
                 passHref
               >
@@ -547,12 +557,16 @@ export const WorkspaceNavbar = withRouter((props) => {
               }
             }}
           >
-            {/* <MenuIcon fontSize="small" /> */}
-          </IconButton>
-          <Box sx={{ flexGrow: 1, px: 2 }}>
-            <Typography variant="h6">
-              Project: <span>ABC</span>
+            <MenuIcon fontSize="small" />
+          </IconButton> */}
+          <Box sx={{ flexGrow: 1, px: 2 }} style={{color:'#F0C88E'}}>
+            {
+              !router.query.designId  && 
+              <Typography variant="h5">
+              Project: <span>{projectTitle && projectTitle}</span>
             </Typography>
+            }
+
           </Box>
           {/*<LanguageButton />*/}
           {/*<ContentSearchButton />*/}

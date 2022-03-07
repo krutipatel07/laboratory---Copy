@@ -12,6 +12,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import AssetsGrid from './assets-grid'
 import { useRouter } from 'next/router';
 import { withCoalescedInvoke } from 'next/dist/lib/coalesced-function';
+import { RotateRight } from '@mui/icons-material';
 
 
 export default function AssetSideBar() {
@@ -28,38 +29,6 @@ export default function AssetSideBar() {
 
     setState({ ...state, [anchor]: open });
   };
-
-  const list = (anchor) => (
-    <Box
-    //   sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
-      role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
-    >
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-    </Box>
-  );
-
   return (
     <div>
         <React.Fragment>
@@ -69,7 +38,7 @@ export default function AssetSideBar() {
             open={state["right"]}
             onClose={toggleDrawer("right", false)}
           >
-              <AssetsGrid projectId={router.query.id}/>
+              <AssetsGrid projectId={router.query.id || router.query.projectId}/>
           </Drawer>
         </React.Fragment>
     </div>
