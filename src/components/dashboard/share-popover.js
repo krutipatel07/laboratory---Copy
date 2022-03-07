@@ -156,7 +156,7 @@ export const SharePopover = (props) => {
             />
           </MenuItem> 
           // <Divider />
-          ): <h5>add collaborator</h5>  : <h5>loading...</h5>}
+          ): <Typography style={{paddingLeft: '20px'}}>Add collaborator</Typography>  : <h5>loading...</h5>}
       </Box>
     </Popover>
   );

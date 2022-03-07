@@ -154,7 +154,7 @@ export const InvitedUserModal = (props) => {
           <Grid container style={{width:'100%', marginLeft:0}}
           spacing={3}
           >
-            <Typography style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:100}}>
+            <Typography style={{fontSize:20, textAlign:"center", width:'100%', padding:50}}>
               {error.message}
             </Typography> 
           </Grid>: 
