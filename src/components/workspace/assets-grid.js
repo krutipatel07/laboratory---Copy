@@ -75,21 +75,22 @@ const storeFiles = async (file, formData) => {
           backgroundColor: 'background.default',
           flexGrow: 1
         }}
+        style={{paddingTop:'60px', width:650}}
       > 
         <section>
           <div {...getRootProps()}>
               <input {...getInputProps()} />
               <Button
-                      component="a"
-                      variant="contained"
-                      type="submit"
-                    >
-                      UPLOAD
-                    </Button>
+                style={{padding: 5, fontSize: 12}}
+                variant="contained"
+                type="submit"
+              >
+                UPLOAD
+              </Button>
             </div>
         </section>
 
-        <Grid container spacing={3} style={{marginLeft:0, width: "100%", justifyContent:'center', marginTop: "10px"}}>
+        <Grid container spacing={3} style={{marginLeft:0, width: "100%", justifyContent:'center', marginTop: "10px", paddingLeft:10}}>
           {assetData ? assetData.length ?   
             assetData.map((asset, i) => {
               return (                
@@ -99,8 +100,8 @@ const storeFiles = async (file, formData) => {
                 xs>
                   <Box
                   sx={{
-                  maxWidth: 300, 
-                  minWidth: 400, }}>
+                  maxWidth: 200, 
+                  minWidth: 280, }}>
                     {asset.images && <img 
                         style={{maxWidth: '100%', minWidth: '100%', height:200}}
                         alt=""

@@ -92,11 +92,11 @@ const ProjectWorkspace = withRouter((props) => {
     </Box>
       <Container maxWidth="xl">
         <Box sx={{ width: '100%' }}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: '30px' }}>
-            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: '10px' }}>
+            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
               <Tab label="Generate" {...a11yProps(0)} style={{fontSize: '1.5rem'}} />
               <Tab label="Design" {...a11yProps(1)} style={{fontSize: '1.5rem'}} />
-              <Tab label="Assets" {...a11yProps(2)} style={{fontSize: '1.5rem'}} />
+              {/* <Tab label="Assets" {...a11yProps(2)} style={{fontSize: '1.5rem'}} /> */}
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
@@ -105,9 +105,9 @@ const ProjectWorkspace = withRouter((props) => {
           <TabPanel value={value} index={1}>
             <DesignSavedGrid projectId= {props.router.query.id}/>
           </TabPanel>
-          <TabPanel value={value} index={2}>
+          {/* <TabPanel value={value} index={2}>
             <AssetsGrid projectId= {props.router.query.id}/>
-          </TabPanel>
+          </TabPanel> */}
         </Box>
       </Container>
     </Box>

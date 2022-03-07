@@ -138,14 +138,15 @@ const ProductList = withRouter((props) => {
           alignItems: 'center',
           display: 'flex',
           flexWrap: 'wrap',
-          p: 3
+          // p: 3,
         }}
+        style={{marginTop:'-30px'}}
       >
         <Box
           component="form"
           sx={{
             flexGrow: 1,
-            m: 1.5
+            // m: 1.5
           }}
         >
           <TextField
