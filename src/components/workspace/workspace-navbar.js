@@ -54,7 +54,7 @@ const WorkspaceNavbarRoot = styled(AppBar)(({ theme }) => ({
   width: "calc(100% - 280px)",
   ...(theme.palette.mode === 'light'
     ? {
-      // boxShadow: theme.shadows[3],
+      color:'#002E4E',
       boxShadow: theme.shadows[0],
       backgroundColor: "#F9FAFC"
     }
@@ -63,8 +63,15 @@ const WorkspaceNavbarRoot = styled(AppBar)(({ theme }) => ({
       // borderBottomColor: theme.palette.divider,
       // borderBottomStyle: 'solid',
       // borderBottomWidth: 1,
-      boxShadow: 'none'
+      boxShadow: 'none',
+      color:'#F0C88E'
     })
+}));
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
 }));
 
 const LanguageButton = () => {
@@ -523,6 +530,7 @@ export const WorkspaceNavbar = withRouter((props) => {
     .catch(error => console.log(error));
   },[projectId]);
 
+  const classes = useStyles();
   return (
     <>
       <WorkspaceNavbarRoot
@@ -535,11 +543,11 @@ export const WorkspaceNavbar = withRouter((props) => {
             px: 2
           }}
         >
-          <Box sx={{ flexGrow: 1, px: 2 }} style={{color:'#F0C88E'}}>
+          <Box sx={{ flexGrow: 1, px: 2 }}>
             {
               !router.query.designId  && 
               <Typography variant="h5">
-              Project: <span>{projectTitle && projectTitle}</span>
+              Project: <span className={classes.projectTitle }>{projectTitle && projectTitle}</span>
             </Typography>
             }
 
