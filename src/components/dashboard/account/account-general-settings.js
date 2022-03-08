@@ -1,5 +1,6 @@
 import { useState, useEffect} from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 import {
   Avatar,
   Box,
@@ -23,6 +24,9 @@ export const AccountGeneralSettings = (props) => {
   const [user, setUser] = useState();
   const [name, setName] = useState();
   const [reload, setReload] = useState(false);
+
+  const router = useRouter();
+  const { logout } = useAuth();
   
   useEffect(() => {
     const user = localStorage.getItem("lab-user");
@@ -45,6 +49,16 @@ export const AccountGeneralSettings = (props) => {
     setReload(true);
     setName();
   }
+  const handleLogout = async () => {
+    try {
+      onClose?.();
+      await logout();
+      router.push('/');
+    } catch (err) {
+      console.error(err);
+      toast.error('Unable to logout.');
+    }
+  };
 
   return (
     <Box
@@ -136,6 +150,21 @@ export const AccountGeneralSettings = (props) => {
                   Edit
                 </Button> */}
               </Box>
+            </Grid>
+            <Grid
+              item
+              md={8}
+              xs={12}>
+              <Button 
+              color="primary"
+              component="a"
+              variant="contained"
+              type="submit"
+              onClick={handleLogout}>
+                <Typography variant="body1">
+                  Logout
+                </Typography>
+              </Button>
             </Grid>
           </Grid>
         </CardContent>

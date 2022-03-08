@@ -54,7 +54,8 @@ const WorkspaceNavbarRoot = styled(AppBar)(({ theme }) => ({
   width: "calc(100% - 280px)",
   ...(theme.palette.mode === 'light'
     ? {
-      boxShadow: theme.shadows[3],
+      // boxShadow: theme.shadows[3],
+      boxShadow: theme.shadows[0],
       backgroundColor: "#F9FAFC"
     }
     : {
