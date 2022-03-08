@@ -48,7 +48,7 @@ const ProductCard = (props) => {
   return (
       <Card sx={{
             maxWidth: 300, 
-            minWidth: 400,
+            minWidth: 370,
             margin: "auto",
             cursor :"pointer",
             backgroundColor: 'background.paper',

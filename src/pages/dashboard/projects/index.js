@@ -151,11 +151,10 @@ const ProductList = () => {
                 >
                   <Button
                     component="a"
-                    startIcon={<PlusIcon 
-                    fontSize="small" />}
+                    // startIcon={<PlusIcon fontSize="small" />}
                     variant="contained"
                   >
-                    Add
+                    Create New Project
                   </Button>
                 </NextLink>
               </Grid>
