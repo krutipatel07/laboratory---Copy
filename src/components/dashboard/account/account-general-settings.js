@@ -51,7 +51,6 @@ export const AccountGeneralSettings = (props) => {
   }
   const handleLogout = async () => {
     try {
-      onClose?.();
       await logout();
       router.push('/');
     } catch (err) {
