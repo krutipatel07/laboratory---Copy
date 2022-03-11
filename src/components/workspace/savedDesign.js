@@ -99,7 +99,7 @@ const {getRootProps,getInputProps} = useDropzone({
                 return (                
                   !design.versionOf && <Grid item 
                   key = {design.id}
-                  style = {{paddingLeft: 0}}
+                  style = {{padding: 30 }}
                   xs>
                       <VariantCard
                       designId = {design.id}                     
@@ -109,6 +109,7 @@ const {getRootProps,getInputProps} = useDropzone({
                       image={design.url}
                       link={`/workspace/${projectData.id}?designId=${design.id}`}
                       setUpdate = {setUpdate}
+                      versions = {design.versions.length}
                       />
                   </Grid> )})
                  : 

@@ -16,15 +16,12 @@ import { withAuthGuard } from '../../hocs/with-auth-guard';
 import { withWorkspaceLayout } from '../../hocs/with-workspace-layout';
 import { useMounted } from '../../hooks/use-mounted';
 import { gtm } from '../../lib/gtm';
-import { Search as SearchIcon } from '../../icons/search';
 import Paper from '@mui/material/Paper';
-import BottomNav from "../../components/workspace/variant/variant-bottomNav";
-import Legends from "../../components/workspace/variant/variant-legends";
 import axios from 'axios';
 import { withRouter } from 'next/router';
-import CommentList from '../../components/commentList/commentList';
-import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
-import {InvitedUserModal} from "../../components/workspace/invitedUserModal/invitedUserModal"
+import { withDashboardLayout } from '../../hocs/with-dashboard-layout';
+import Chip from '@mui/material/Chip';
+import AddIcon from '@mui/icons-material/Add';
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -85,8 +82,9 @@ const ProductList = withRouter((props) => {
     status: false,
     message: undefined,
   });  
-  const designId = props.router.query.designId;
+  const {designId, projectId, invite} = props.router.query;
   const limnu_token = localStorage.getItem("limnu_token");
+
   useEffect(() => {
     gtm.push({ event: 'page_view' });
   }, []);
@@ -115,6 +113,12 @@ const ProductList = withRouter((props) => {
     setRowsPerPage(parseInt(event.target.value, 10));
   };
 
+  const [value, setValue] = React.useState(1);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   // Usually query is done on backend with indexing solutions
   const filteredProducts = applyFilters(products, filters);
   const paginatedProducts = applyPagination(filteredProducts, page, rowsPerPage);
@@ -133,23 +137,23 @@ return (
           display: 'flex',
           justifyContent: 'space-between',
           flexWrap: 'wrap',
+          backgroundColor: 'rgba(255, 255, 255)',
           // m: -1.5,
-          p: 3
+          m: 0,
+          p: 0
         }}
       >
-        <Box>         
-          <NextLink
-          href={`/workspace?id=${props.router.query.projectId}`}
-          passHref
-        >
-            <Button
-              sx={{ m: 1.5 }}
-              component="a"
-              variant="text"
+        <Box>  
+          <Tabs value={value} onChange={handleChange} aria-label="nav tabs example">
+            <Tab label="Generate" />
+            <NextLink
+              href={`/workspace?id=${projectId}`}
+              passHref
             >
-              <ArrowBackOutlinedIcon/>
-            </Button>
-          </NextLink>
+              <Tab label="Designs" />
+            </NextLink>
+            <Tab label={variantData && variantData.title} disabled />
+          </Tabs>
         </Box>
       </Box>
 
@@ -157,7 +161,8 @@ return (
         component="main"
         sx={{
           flexGrow: 1,
-          pb: 8
+          backgroundColor: 'rgba(255, 255, 255)',
+          // pb: 8
         }}
       >
         <Grid container 
@@ -208,28 +213,32 @@ return (
             </Container>
           </Grid>
 
-          {/* <Grid item 
-          xs={4}
-          style={{maxHeight: '600px', overflow: 'auto', display:'inline-flex', flexFlow:'column-reverse'}}
-          >
-            <Box            
-            >
-              {
-                variantData.comments && variantData.comments.map(comment => <CommentList key={comment.id} comment={comment}/> )
-              }
-            </Box>
-          </Grid> */}
-        </Grid>
-
-        <Paper 
-        sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} 
-        style={{display: 'flex'}} 
-        elevation={3}>
-          <BottomNav/>
-        </Paper>
+          <Paper 
+            sx={{ width: '100%', height: '100%', padding: 3}} 
+            style={{display: 'flex'}} 
+            elevation={3}>
+            {
+              variantData && variantData.versions && variantData.versions.map(version =>
+                <NextLink 
+                href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${version._id}&isVersion=true` :`/workspace/${projectId}?designId=${version._id}&isVersion=true`}    
+                passHref
+                >
+                  <Chip 
+                    label={`${version.title}`} 
+                    variant="outlined" 
+                    sx={{borderWidth: '2px', m: 1}}
+                  />
+                </NextLink>
+                )
+            }
+            <Typography>
+              <AddIcon></AddIcon>
+            </Typography>
+          </Paper>
+        </Grid>        
       </Box>
     </>
   );
 })
 
-export default withAuthGuard(withWorkspaceLayout(ProductList));
+export default withAuthGuard(withDashboardLayout(withWorkspaceLayout(ProductList)));

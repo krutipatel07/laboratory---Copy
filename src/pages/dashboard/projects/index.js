@@ -129,11 +129,12 @@ const ProductList = () => {
         component="main"
         sx={{
           flexGrow: 1,
-          py: 2
+          py: 0,
+          height: '100%',
         }}
       >
-        <Container maxWidth="xl">
-          <Box sx={{ mb: 4 }}>
+        <Container maxWidth="xl" sx={{backgroundColor: "white"}}>
+          <Box sx={{ mb: 4 , backgroundColor: "white"}}>
             <Grid
               container
               justifyContent="space-between"
@@ -153,9 +154,8 @@ const ProductList = () => {
                     component="a"
                     startIcon={<PlusIcon 
                     fontSize="small" />}
-                    variant="contained"
                   >
-                    Add
+                    CREATE NEW PROJECT
                   </Button>
                 </NextLink>
               </Grid>
