@@ -5,13 +5,13 @@ dbConnect();
 
 export default async (req, res) => {
     const { 
-        query: {baths, beds, floor, garages, sqft}
+        query: {baths, beds, garages, sqft}
         , method } = req;
     switch (method) { 
         case 'GET':
             try {
                 const parameters = await Parameter
-                .find({baths, beds, floor, garages, sqft: { $gt: (sqft - 750), $lt: (sqft + 750) }})
+                .find({baths, beds, garages, sqft: { $gt: (sqft - 750), $lt: (sqft + 750) }})
                 .limit(9);
                 res.status(200).json({ success: true, data: parameters})              
             } catch (error) {

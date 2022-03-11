@@ -60,7 +60,6 @@ const applyPagination = (products, page, rowsPerPage) => products.slice(page * r
 
 const ProductList = withRouter((props) => {
   const [state, setState] = React.useState({
-    floor: "",
     squarefeet: "",
     bed: "",
     bath: "",
@@ -109,8 +108,8 @@ const ProductList = withRouter((props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const { floor, squarefeet, bed, bath, garages } = state
-    const {data} = await axios.get(`/api/parameters?baths=${bath}&beds=${bed}&floor=${floor}&garages=${garages}&sqft=${squarefeet}`)
+    const { squarefeet, bed, bath, garages } = state
+    const {data} = await axios.get(`/api/parameters?baths=${bath}&beds=${bed}&garages=${garages}&sqft=${squarefeet}`)
     .catch(error => console.log(error));
     if(!data.data.length) {
       toast.error("Designs not found! Try using different values.")
@@ -118,7 +117,6 @@ const ProductList = withRouter((props) => {
     }
     setGeneratedData(data.data);
     setState({
-      floor: "",
       squarefeet: "",
       bed: "",
       bath: "",
@@ -158,26 +156,6 @@ const ProductList = withRouter((props) => {
             value={state.squarefeet}
             onChange={handleChange}
           />
-        </Box>
-
-        <Box 
-        component="form"
-          sx={{flexGrow: 1, m: 1.5 }}>
-          <FormControl fullWidth>
-            <InputLabel id="floor_select_label">Floor</InputLabel>
-            <Select
-              labelId="floor_select_label"
-              id="floor_select"
-              name='floor'
-              value={state.floor}
-              label="Floor"
-              onChange={handleChange}
-            >
-              <MenuItem value={1}>One</MenuItem>
-              <MenuItem value={2}>Two</MenuItem>
-              <MenuItem value={3}>Three</MenuItem>
-            </Select>
-          </FormControl>
         </Box>
 
         <Box
