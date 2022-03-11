@@ -45,10 +45,6 @@ const getSections = (t, projectList) => [
             title: t('List'),
             path: '/dashboard/projects',
             children: projectList
-          },
-          {
-            title: t('Create'),
-            path: '/dashboard/projects/new'
           }
         ]
       },

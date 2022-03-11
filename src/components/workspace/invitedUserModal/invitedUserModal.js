@@ -44,7 +44,6 @@ export const InvitedUserModal = (props) => {
         .required('Email is required'),
     }),
     onSubmit: async (values) => {
-      console.log(props.variantData)
       if(!props.variantData ){
         setError({
                   status: true,

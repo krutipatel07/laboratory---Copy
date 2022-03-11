@@ -84,13 +84,9 @@ const ProjectWorkspace = withRouter((props) => {
           <TabPanel value={value} index={1}>
             <DesignSavedGrid projectId= {props.router.query.id}/>
           </TabPanel>
-          {/* <TabPanel value={value} index={2}>
-            <AssetsGrid projectId= {props.router.query.id}/>
-          </TabPanel> */}
         </Box>
       </Container>
     </Box>
-
     </>
   );
 })

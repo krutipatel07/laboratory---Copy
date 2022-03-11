@@ -22,6 +22,10 @@ import { withRouter } from 'next/router';
 import { withDashboardLayout } from '../../hocs/with-dashboard-layout';
 import Chip from '@mui/material/Chip';
 import AddIcon from '@mui/icons-material/Add';
+import {useDropzone} from 'react-dropzone'
+import dateFormat from "../../utils/dateFormat"
+import Stack from '@mui/material/Stack';
+import toast from 'react-hot-toast';
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -78,23 +82,31 @@ const ProductList = withRouter((props) => {
     inStock: undefined
   });
   const [variantData, setVariantData] = useState([]);  
+  const [versions, setVersions] = useState();
+
   const [error, setError] = useState({
     status: false,
     message: undefined,
   });  
-  const {designId, projectId, invite} = props.router.query;
+  const {designId, projectId, invite, isVersion} = props.router.query;
   const limnu_token = localStorage.getItem("limnu_token");
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
   }, []);
 
-  useEffect(() => {
-    axios.get(`/api/projects/_/design/${designId}`)
-    .then(res => setVariantData(res.data.data))
+  useEffect(async () => {
+    await axios.get(`/api/projects/${projectId}/design/${designId}`)
+    .then(res => {
+      setVariantData(res.data.data)
+      setVersions(res.data.data.versions)
+    })
     .catch(error => setError({
       status: true,
       message : "OOPS! This design is not available or deleted by owner of the project!"}));
+
+    isVersion && getParentDesignVersions()
+
   },[designId]);
 
   useEffect(() => {
@@ -122,6 +134,68 @@ const ProductList = withRouter((props) => {
   // Usually query is done on backend with indexing solutions
   const filteredProducts = applyFilters(products, filters);
   const paginatedProducts = applyPagination(filteredProducts, page, rowsPerPage);
+    
+  const onDrop = useCallback(acceptedFiles => {
+    const formData = new FormData();
+    formData.append('file', acceptedFiles[0])
+    formData.append('upload_preset', 'maket_design');
+
+    const url = "https://api.cloudinary.com/v1_1/maket/image/upload";
+    fetch(url, {
+      method: "POST",
+      body: formData
+    }).then(res => res.json())
+    .then(res =>{
+      if(res.error) {
+        toast.error(res.error.message)
+        return
+      }
+      importDesign(res.secure_url);
+    }).catch(err => console.log(err))
+}, [])
+const {getRootProps, getInputProps} = useDropzone({onDrop})
+
+const importDesign = async (secure_url) => {
+  const time = dateFormat(new Date());
+  const title = time.replaceAll(" ", "").replaceAll(",", "").replaceAll("pm", "").replaceAll("at", "").replaceAll("th", "");
+  const {data} = await axios.get(`/api/projects/${projectId}/design/${designId}`);
+  const versionLength = data.data.versionOf ? data.data.versionOf.versions.length : data.data.versions.length;
+  const versionOf = data.data.versionOf ? data.data.versionOf.id : designId;
+
+  const limnu_boardCreate = await axios.post("https://api.apix.limnu.com/v1/boardCreate", {
+    apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
+    boardName: `Board-${title}`
+  })
+  .catch(error => console.log(error));
+  
+  await axios.post("https://api.apix.limnu.com/v1/boardImageURLUpload", {
+    apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
+    boardId: limnu_boardCreate.data.boardId,
+    imageURL: secure_url
+    })
+    .catch(error => console.log(error));
+
+  const addVariant = await axios.post(`/api/projects/${projectId}/design`, {
+    title : `Variant ${versionLength+1}`,
+    versionOf : versionOf,
+    url: secure_url,
+    limnu_boardUrl : limnu_boardCreate.data.boardUrl,
+  });
+
+  addVariant ? toast.success('Variant design added!') : toast.error('Something went wrong!');
+  location.reload();
+};
+
+const getParentDesignVersions = () =>{
+  axios.get(`/api/projects/${projectId}/design/${designId}`)
+  .then(res => {
+    const designId = res.data.data.versionOf._id;
+    axios.get(`/api/projects/${projectId}/design/${designId}`)
+    .then(res => setVersions(res.data.data.versions))
+    .catch(error => console.log(error))
+  })
+  .catch(error => console.log(error))
+}
 
 return ( 
     <>
@@ -217,8 +291,20 @@ return (
             sx={{ width: '100%', height: '100%', padding: 3}} 
             style={{display: 'flex'}} 
             elevation={3}>
+            { isVersion && variantData && variantData.versionOf &&
+              <NextLink
+                href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${variantData.versionOf._id}` :`/workspace/${projectId}?designId=${variantData.versionOf._id}`}
+                passHref
+              >
+                <Chip 
+                  label="Default" 
+                  variant="outlined" 
+                  sx={{borderWidth: '2px', m: 1}}
+                />
+              </NextLink>
+            }
             {
-              variantData && variantData.versions && variantData.versions.map(version =>
+              versions && versions.map(version =>
                 <NextLink 
                 href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${version._id}&isVersion=true` :`/workspace/${projectId}?designId=${version._id}&isVersion=true`}    
                 passHref
@@ -231,9 +317,22 @@ return (
                 </NextLink>
                 )
             }
-            <Typography>
-              <AddIcon></AddIcon>
-            </Typography>
+            <Box
+              sx={{
+                alignItems: 'center',
+                display: 'flex',
+                ml: 2,
+                cursor: 'pointer'
+              }}
+            >
+              <Stack spacing={2} 
+              direction="row">
+                <div {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  <AddIcon></AddIcon>
+                </div>
+              </Stack>
+            </Box>
           </Paper>
         </Grid>        
       </Box>
