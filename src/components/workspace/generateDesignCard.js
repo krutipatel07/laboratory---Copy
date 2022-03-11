@@ -3,6 +3,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import { makeStyles } from '@material-ui/styles';
 import Stack from '@mui/material/Stack';
@@ -11,6 +12,7 @@ import toast from 'react-hot-toast';
 import dateFormat from "../../utils/dateFormat"
 import { useRouter } from 'next/router';
 import AddIcon from '@mui/icons-material/Add';
+import Backdrop from '@mui/material/Backdrop';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,6 +49,13 @@ const GenerateDesignCard = ({image}) => {
   const router = useRouter();
   const time = dateFormat(new Date());
   const title = time.replaceAll(" ", "").replaceAll(",", "").replaceAll("pm", "").replaceAll("at", "").replaceAll("th", "");
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleToggle = () => {
+    setOpen(!open);
+  };
 
     const saveDesign = async () => {   
       
@@ -77,7 +86,7 @@ const GenerateDesignCard = ({image}) => {
 
     toast.success(`Design added!`)
     }
-    
+
     return (
       <Card
       sx={{
@@ -98,7 +107,27 @@ const GenerateDesignCard = ({image}) => {
           height="200"
           padding="0 24px"
           src={image}
-        />
+          onClick={handleToggle}
+        /> 
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+          onClick={handleClose}
+        >
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              height: '60%',
+              width: '60%',
+            }}
+          >
+            <img
+              alt=""
+              src={image}
+            />
+          </Box>
+        </Backdrop>
         <CardActions>
           <Stack direction="row"
           width='100%'
