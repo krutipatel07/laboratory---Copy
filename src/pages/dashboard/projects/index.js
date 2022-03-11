@@ -141,11 +141,12 @@ const ProductList = () => {
         component="main"
         sx={{
           flexGrow: 1,
-          py: 2
+          py: 0,
+          height: '100%',
         }}
       >
-        <Container maxWidth="xl">
-          <Box sx={{ mb: 4 }}>
+        <Container maxWidth="xl" sx={{backgroundColor: "white"}}>
+          <Box sx={{ mb: 4 , backgroundColor: "white"}}>
             <Grid
               container
               justifyContent="space-between"
@@ -160,11 +161,17 @@ const ProductList = () => {
                 <NextLink href="/dashboard/projects/new" passHref>
                   <Button
                     component="a"
+<<<<<<< HEAD
                     // startIcon={<PlusIcon fontSize="small" />}
                     variant="contained"
                     // onClick={handleClick}
                   > 
                   <AddIcon/>
+=======
+                    startIcon={<PlusIcon 
+                    fontSize="small" />}
+                  >
+>>>>>>> d739e04f5a24832a1263d3952218ed28d8d339f2
                     CREATE NEW PROJECT
                   </Button>
                 </NextLink>

@@ -1,19 +1,15 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import PeopleIcon from '@mui/icons-material/People';
-import Box from '@mui/material/Box';
 import NextLink from 'next/link';
 import axios from 'axios'
 import toast from 'react-hot-toast';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { makeStyles } from '@material-ui/styles';
+import CardHeader from '@mui/material/CardHeader';
+import Chip from '@mui/material/Chip';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,8 +30,9 @@ const ProductCard = (props) => {
         description,
         members,
         link,
-        image
-    } = props;
+        image,
+        designsLength
+    } = props; 
 
     const classes = useStyles();
     
@@ -46,58 +43,39 @@ const ProductCard = (props) => {
     }
 
   return (
-      <Card sx={{
-            maxWidth: 300, 
-            minWidth: 370,
-            margin: "auto",
-            cursor :"pointer",
-            backgroundColor: 'background.paper',
-            '&:hover': {
-              backgroundColor: 'background.hover',
-            } }}
-            variant="elevation">
-        <NextLink
+    <Card 
+      sx={{ maxWidth: 345,
+            cursor :"pointer"}}>
+      <CardHeader
+        sx={{ padding: 1, }}
+              action={
+                <IconButton aria-label="settings">
+                  <MoreVertIcon />
+                </IconButton>
+              }
+        title={title}
+      />
+      <NextLink
           href={link}
           passHref
-        ><CardMedia
+        >
+        <CardMedia
           component="img"
-          alt="green iguana"
-          height="160"
-          src={image}
+          height="194"
+          image={image}
+          alt="Project cover image"
         />
-        </NextLink>
-        <NextLink
-          href={link}
-          passHref
-        ><CardContent className={classes.projectListContent}>
-            <Typography gutterBottom 
-            variant="subtitle1" 
-            component="div" 
-            color="text.primary">
-              {title}
-            </Typography>
-            <Typography 
-            variant="body2" 
-            color="text.secondary">
-                {description}
-            </Typography>
-          </CardContent>
-        </NextLink>
-        <CardActions disableSpacing>
-              <IconButton aria-label="share">
-              <PeopleIcon />
-              </IconButton>
-              <Typography>
-              {members}
-              </Typography>
-              <IconButton aria-label="delete" 
-                onClick={deleteProject}  
-                style={{marginLeft: 'auto'}}>
-                  <DeleteIcon 
-                    style={{color:'#D14343'}} />
-              </IconButton>
-        </CardActions>
-      </Card>
+      </NextLink>
+      <CardActions sx={{
+        px:"0",
+        display: 'flex', 
+        justifyContent:'space-between'
+      }}>
+        <Chip label={`${designsLength} Designs`} variant="outlined" sx={{borderWidth: '2px'}}/>
+        <Chip label={`0 Comments`} variant="outlined" sx={{borderWidth: '2px'}}/>
+        <Chip label={`${members} Collaborators`} variant="outlined" sx={{borderWidth: '2px'}} />
+      </CardActions>
+    </Card>
   );
 };
 

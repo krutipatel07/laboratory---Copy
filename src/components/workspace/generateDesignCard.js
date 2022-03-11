@@ -6,14 +6,12 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import { makeStyles } from '@material-ui/styles';
 import Stack from '@mui/material/Stack';
-import { purple } from '@mui/material/colors';
-import { styled } from '@mui/material/styles';
 import axios from 'axios'
 import toast from 'react-hot-toast';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 import dateFormat from "../../utils/dateFormat"
 import { useRouter } from 'next/router';
+import AddIcon from '@mui/icons-material/Add';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -110,13 +108,13 @@ const GenerateDesignCard = ({image}) => {
             className={classes.savebtn}
             // style={{marginLeft: 'auto'}}
             >
-              {clicked ?
-              <FavoriteIcon style={{color:'#D14343', marginRight: '5px'}}/>
-               :
-               <FavoriteBorderIcon style={{color:'#D14343', marginRight: '5px'}}/>}
+              {!clicked ?
+              <><AddIcon style={{color:'#111827'}}/>
               <Typography>
-                Save
-              </Typography>
+                Add to project
+              </Typography> </>: <Typography>
+                Added to project
+              </Typography> }
             </IconButton>
           </Stack>
         </CardActions>

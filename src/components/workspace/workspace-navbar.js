@@ -526,7 +526,7 @@ export const WorkspaceNavbar = withRouter((props) => {
   const { onOpenSidebar, ...other } = props;
   const router = useRouter();
 
-  const projectId = router.query.id;
+  const projectId = router.query.id || router.query.projectId;
   const [projectTitle, setProjectTitle] = useState();
   useEffect(() => {
     axios.get(`/api/projects/${projectId}`)
@@ -544,29 +544,20 @@ export const WorkspaceNavbar = withRouter((props) => {
           sx={{
             minHeight: 64,
             left: 0,
-            px: 2
+            px: 2,
+            py:1,
+            backgroundColor: 'rgba(255, 255, 255)',
           }}
         >
-          <Box sx={{ flexGrow: 1, px: 2 }}>
-            {
-              !router.query.designId  && 
+          <Box sx={{ flexGrow: 1, px: 2 }}>    
               <Typography variant="h6">
-              Project: <span className={classes.projectTitle }>{projectTitle && projectTitle}</span>
-            </Typography>
-            }
-
+                <span>Project/</span>
+              </Typography>
+              <Typography variant="h5">
+                <span>{projectTitle && projectTitle}</span>
+              </Typography>
           </Box>
-          {/*<LanguageButton />*/}
-          {/*<ContentSearchButton />*/}
-          
-          {/* {router.query.projectId && !router.query.invite && <><ExportButton/><ImportButton/><ShareButton/></>} */}
-          {router.query.projectId && !router.query.invite && <><ImportButton/><ShareButton/></>}
-          {/* {
-            router.query.invite && <ExportButton/> 
-          } */}
-          {/* <AccountButton /> */}
           <AssetSideBar/>
-
         </Toolbar>
       </WorkspaceNavbarRoot>
     </>

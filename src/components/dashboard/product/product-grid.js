@@ -47,6 +47,7 @@ export default function ProjectGrid() {
                     // description={(project.description.replace(/\s+/, " "))}
                     members = {project.collaborators.length}
                     image={project.cover_image || images}
+                    designsLength = {project.designs.length}
                     link= {`/workspace?id=${project.id}`}
                   />
                 </Grid> )})
