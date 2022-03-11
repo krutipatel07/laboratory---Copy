@@ -101,6 +101,7 @@ const GenerateDesignCard = ({image}) => {
           className={classes.image}
           sx={{
               objectFit:"fill",
+              cursor : "pointer"
               }}
           component="img"
           alt="green iguana"
