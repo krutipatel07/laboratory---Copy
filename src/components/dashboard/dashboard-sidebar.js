@@ -61,7 +61,7 @@ const getSections = (t, projectList) => [
         title: t('Account'),
         path: '/dashboard/account',
         icon: <UserCircleIcon fontSize="small" />
-      }
+      },
     ]
   }
 ];
@@ -133,15 +133,15 @@ export const DashboardSidebar = (props) => {
                 <a>
                   <Logo
                     sx={{
-                      height: 42,
-                      width: 42,
+                      height: 55,
+                      width: 55,
                     }}
                     variant="light"
                   />
                 </a>
               </NextLink>
             </Box>
-            <Box sx={{ px: 2 }}>
+            {/* <Box sx={{ px: 2 }}>
               <Box
                 sx={{
                   alignItems: 'center',
@@ -171,14 +171,14 @@ export const DashboardSidebar = (props) => {
                   </Typography></> : <h3>loading...</h3>}
                 </div>
               </Box>
-            </Box>
+            </Box> */}
           </div>
-          <Divider
+          {/* <Divider
             sx={{
               borderColor: '#2D3748',
               my: 3
             }}
-          />
+          /> */}
           <Box sx={{ flexGrow: 1 }}>
             {sections.map((section) => (
               <DashboardSidebarSection
@@ -214,7 +214,7 @@ export const DashboardSidebar = (props) => {
             }}
           />
           <Box sx={{ p: 2 }}>
-            <Typography
+            {/* <Typography
               color="neutral.100"
               variant="subtitle2"
             >
@@ -225,7 +225,7 @@ export const DashboardSidebar = (props) => {
               variant="body2"
             >
               {t('Reach out to us')}
-            </Typography>
+            </Typography> */}
             <NextLink
               href="/contact"
               passHref
@@ -237,6 +237,7 @@ export const DashboardSidebar = (props) => {
                 sx={{ mt: 2 }}
                 variant="contained"
               >
+
                 {t('Contact us')}
               </Button>
             </NextLink>

@@ -9,6 +9,7 @@ import { Typography, Button} from '@mui/material';
 import {useDropzone} from 'react-dropzone'
 import dateFormat from "../../utils/dateFormat"
 import toast from 'react-hot-toast';
+import AddIcon from '@mui/icons-material/Add';
 
 export default function SavedDesign({projectId}) {
   const [projectData, setProjectData] = useState([]);
@@ -84,7 +85,8 @@ const {getRootProps,getInputProps} = useDropzone({
             variant="contained"
             type="submit"
           >
-            Import Design
+            <AddIcon/>
+            IMPORT
           </Button>
       </div>
 

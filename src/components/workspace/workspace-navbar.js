@@ -72,6 +72,10 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  projectTitle: {
+    fontSize:28,
+    display: 'block'
+  }
 }));
 
 const LanguageButton = () => {
@@ -546,7 +550,7 @@ export const WorkspaceNavbar = withRouter((props) => {
           <Box sx={{ flexGrow: 1, px: 2 }}>
             {
               !router.query.designId  && 
-              <Typography variant="h5">
+              <Typography variant="h6">
               Project: <span className={classes.projectTitle }>{projectTitle && projectTitle}</span>
             </Typography>
             }
