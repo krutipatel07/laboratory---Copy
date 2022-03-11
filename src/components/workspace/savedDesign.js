@@ -74,15 +74,14 @@ const {getRootProps,getInputProps} = useDropzone({
   return (
     <Box
         sx={{
-          backgroundColor: 'background.default',
-          
+          // backgroundColor: 'background.default',
+          backgroundColor: '#fffff'
         }}
       >
-      <div {...getRootProps()} style={{display:'flex', justifyContent:'end'}}>
+      <div {...getRootProps()} style={{display:'block', marginLeft: 'auto', width: '112px'}}>
         <input {...getInputProps()} />
           <Button
             component="a"
-            variant="contained"
             type="submit"
           >
             <AddIcon/>

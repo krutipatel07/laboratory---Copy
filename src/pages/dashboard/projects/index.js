@@ -161,17 +161,9 @@ const ProductList = () => {
                 <NextLink href="/dashboard/projects/new" passHref>
                   <Button
                     component="a"
-<<<<<<< HEAD
-                    // startIcon={<PlusIcon fontSize="small" />}
-                    variant="contained"
-                    // onClick={handleClick}
-                  > 
-                  <AddIcon/>
-=======
                     startIcon={<PlusIcon 
                     fontSize="small" />}
                   >
->>>>>>> d739e04f5a24832a1263d3952218ed28d8d339f2
                     CREATE NEW PROJECT
                   </Button>
                 </NextLink>

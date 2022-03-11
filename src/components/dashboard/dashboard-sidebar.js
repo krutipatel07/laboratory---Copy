@@ -11,6 +11,7 @@ import { ClipboardList as ClipboardListIcon } from '../../icons/clipboard-list';
 import { Mail as MailIcon } from '../../icons/mail';
 import { ShoppingBag as ShoppingBagIcon } from '../../icons/shopping-bag';
 import { UserCircle as UserCircleIcon } from '../../icons/user-circle';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Users as UsersIcon } from '../../icons/users';
 import { Logo } from '../logo';
 import { Scrollbar } from '../scrollbar';
@@ -27,7 +28,7 @@ const getSections = (t, projectList) => [
       {
         title: t('Collaborators'),
         path: '/dashboard/customers',
-        icon: <UsersIcon fontSize="small" />,
+        // icon: <UsersIcon fontSize="small" />,
         children: [
           {
             title: t('List'),
@@ -39,7 +40,7 @@ const getSections = (t, projectList) => [
       {
         title: t('Projects'),
         path: '/dashboard/projects',
-        icon: <DesignServicesIcon fontSize="small" />,
+        // icon: <DesignServicesIcon fontSize="small" />,
         children: [
           {
             title: t('List'),
@@ -54,6 +55,19 @@ const getSections = (t, projectList) => [
       },
     ]
   },
+  // {
+  //   title: t('General'),
+  //   items: [
+  //     {
+  //       title: t('Account'),
+  //       path: '/dashboard/account',
+  //       icon: <UserCircleIcon fontSize="small" />
+  //     },
+  //   ]
+  // }
+];
+
+const getBottomSections = (t) => [
   {
     title: t('General'),
     items: [
@@ -61,6 +75,11 @@ const getSections = (t, projectList) => [
         title: t('Account'),
         path: '/dashboard/account',
         icon: <UserCircleIcon fontSize="small" />
+      },
+      {
+        title: t('Contact us'),
+        path: '/contact',
+        icon: <InfoOutlinedIcon fontSize="small" />
       },
     ]
   }
@@ -76,6 +95,7 @@ export const DashboardSidebar = (props) => {
     noSsr: true
   });
   const sections = useMemo(() => getSections(t, projectList), [t]);
+  const BottomSections = useMemo(() => getBottomSections(t), [t]);
   // const { user } = useAuth();
 
   const handlePathChange = () => {
@@ -194,7 +214,7 @@ export const DashboardSidebar = (props) => {
             ))}
           </Box>
 
-          <Box sx={{p:2}}>
+          {/* <Box sx={{p:2}}>
             <Button
                 color="primary"
                 component="a"
@@ -206,14 +226,14 @@ export const DashboardSidebar = (props) => {
                 REVISIT GUIDE
             </Button>
             {isModalShown && <DashboardModal open={isOpen}/>}
-          </Box>
+          </Box> */}
 
-          <Divider
+          {/* <Divider
             sx={{
               borderColor: '#2D3748'  // dark divider
             }}
-          />
-          <Box sx={{ p: 2 }}>
+          /> */}
+          <Box>
             {/* <Typography
               color="neutral.100"
               variant="subtitle2"
@@ -226,7 +246,21 @@ export const DashboardSidebar = (props) => {
             >
               {t('Reach out to us')}
             </Typography> */}
-            <NextLink
+            <Box sx={{ flexGrow: 1 }}>
+              {BottomSections.map((section) => (
+                <DashboardSidebarSection
+                  key={section.title}
+                  path={router.asPath}
+                  sx={{
+                    mt: 2,
+                    '& + &': {
+                      mt: 2
+                    }
+                  }}
+                  {...section} />
+              ))}
+            </Box>
+            {/* <NextLink
               href="/contact"
               passHref
             >
@@ -240,7 +274,7 @@ export const DashboardSidebar = (props) => {
 
                 {t('Contact us')}
               </Button>
-            </NextLink>
+            </NextLink> */}
           </Box>
         </Box>
       </Scrollbar>
@@ -254,7 +288,8 @@ export const DashboardSidebar = (props) => {
         open
         PaperProps={{
           sx: {
-            backgroundColor: 'neutral.900',
+            // backgroundColor: 'neutral.900',
+            backgroundColor: '#212121',
             borderRightColor: 'divider',
             borderRightStyle: 'solid',
             borderRightWidth: (theme) => theme.palette.mode === 'dark' ? 1 : 0,
@@ -277,6 +312,7 @@ export const DashboardSidebar = (props) => {
       PaperProps={{
         sx: {
           backgroundColor: 'neutral.900',
+          backgroundColor: '#212121',
           color: '#FFFFFF',
           width: 280
         }

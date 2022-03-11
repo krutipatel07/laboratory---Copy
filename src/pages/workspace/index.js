@@ -65,7 +65,8 @@ const ProjectWorkspace = withRouter((props) => {
       component="main"
       sx={{
         flexGrow: 1,
-        mb: 8
+        // mb: 8,
+        backgroundColor:'#ffffff'
       }}
     >
 

@@ -14,7 +14,8 @@ const neutral = {
 };
 
 const background = {
-  default: '#F9FAFC',
+  // default: '#F9FAFC',
+  default: '#FFFFFF',
   paper: '#FFFFFF',
   hover: neutral[100]
 };
@@ -22,10 +23,13 @@ const background = {
 const divider = '#E6E8F0';
 
 const primary = {
-  main: '#002E4E',
+  // main: '#002E4E',
+  main: '#212121',
   light: '#828DF8',
+  // light: '#000000',
   dark: '#3832A0',
-  contrastText: '#FFFFFF'
+  // contrastText: '#FFFFFF'
+  contrastText: '#F0C88E'
 };
 
 const secondary = {
@@ -65,6 +69,9 @@ const error = {
 
 const text = {
   primary: '#121828',
+  // secondary: '#65748B',
+  // disabled: 'rgba(55, 65, 81, 0.48)',
+  // primary: '#ffffff',
   secondary: '#65748B',
   disabled: 'rgba(55, 65, 81, 0.48)'
 };

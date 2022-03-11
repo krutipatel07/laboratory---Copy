@@ -17,6 +17,8 @@ import toast from 'react-hot-toast';
 import { style } from '@mui/system';
 import BathtubIcon from '@mui/icons-material/Bathtub';
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/styles';
+
 
 const theme = createTheme({
   overrides: {
@@ -29,8 +31,37 @@ const theme = createTheme({
           borderColor: "green"
         },
       }
-    }
+    },
+    'input': {
+      '&::placeholder': {
+        textOverflow: 'ellipsis !important',
+        color: '#EA0707DE'
+      }
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        input: {
+          '&::placeholder': {
+            opacity: 1,
+            color: '#EA0707DE'
+          }
+        }
+      }
+    },
   }
+});
+
+const useStyles = makeStyles({
+  MuiInputBase: {
+    styleOverrides: {
+      input: {
+        '&::placeholder': {
+          opacity: 1,
+          color: '#EA0707DE'
+        }
+      }
+    }
+  },
 });
 
 const applyFilters = (products, filters) => products.filter((product) => {
@@ -83,6 +114,7 @@ const ProductList = withRouter((props) => {
     bath: "",
     garages: ""
   });
+  const classes = useStyles();
 
   const isMounted = useMounted();
   const [products, setProducts] = useState([]);
@@ -142,7 +174,7 @@ const ProductList = withRouter((props) => {
           // p: 3,
           px:2
         }}
-        style={{marginTop:'-30px', border: '1px solid #E6E8F0', borderRadius:'50px'}}
+        style={{marginTop:'-30px', border: '1px solid #E6E8F0', borderRadius:'10px'}}
       >
       <ThemeProvider  theme={theme}>
 
@@ -157,17 +189,19 @@ const ProductList = withRouter((props) => {
         >
           <TextField
             defaultValue="$500,000"
-            placeholder="Square feet"
+            // placeholder="Square feet"
+            label="Square feet"
             type="number"
             name="squarefeet"
             value={state.squarefeet}
             onChange={handleChange}
             style={{color: '#EA0707DE'}}
-            inputProps={{ style: { border: 'none'}}}
+            inputProps={{ className: classes.input }}
+            // InputProps={{ classes: {input: props.classes['input']} }} 
           />
         </Box>
 
-        <Box 
+        {/* <Box 
         component="form"
           sx={{flexGrow: 1, m: 1.5 }}>
           <FormControl fullWidth>
@@ -186,9 +220,9 @@ const ProductList = withRouter((props) => {
               <MenuItem value={3}>Three</MenuItem>
             </Select>
           </FormControl>
-        </Box>
+        </Box> */}
 
-        <Box 
+        {/* <Box 
         component="form"
           sx={{flexGrow: 1, m: 1.5 }}>
           <FormControl fullWidth>
@@ -206,7 +240,7 @@ const ProductList = withRouter((props) => {
               <MenuItem value={3}>Three</MenuItem>
             </Select>
           </FormControl>
-        </Box>
+        </Box> */}
 
         <Box
           component="form"
@@ -242,11 +276,9 @@ const ProductList = withRouter((props) => {
           }}
         >
           <FormControl fullWidth>
-
-            <InputLabel id="bath_select_label" style={{color: '#1F77B4'}}>            
-            <IconButton>
-              <BathtubIcon/>
-            </IconButton>Bath</InputLabel>
+            <InputLabel id="bath_select_label" style={{color: '#1F77B4', width: '300px'}}>            
+            {/* <BathtubIcon/> */}
+            Bath</InputLabel>
             <Select
               labelId="bath_select_label"
               id="bath_select"
