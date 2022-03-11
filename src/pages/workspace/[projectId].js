@@ -10,7 +10,7 @@ import { Box,
   InputAdornment,
   Tab,
   Tabs,
-  TextField,
+  IconButton,
   Typography } from '@mui/material';
 import { withAuthGuard } from '../../hocs/with-auth-guard';
 import { withWorkspaceLayout } from '../../hocs/with-workspace-layout';
@@ -22,10 +22,7 @@ import { withRouter } from 'next/router';
 import { withDashboardLayout } from '../../hocs/with-dashboard-layout';
 import Chip from '@mui/material/Chip';
 import AddIcon from '@mui/icons-material/Add';
-import {useDropzone} from 'react-dropzone'
-import dateFormat from "../../utils/dateFormat"
-import Stack from '@mui/material/Stack';
-import toast from 'react-hot-toast';
+import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -217,15 +214,19 @@ return (
           p: 0
         }}
       >
-        <Box>  
+        <Box sx={{px:2}}>  
           <Tabs value={value} onChange={handleChange} aria-label="nav tabs example">
-            <Tab label="Generate" />
+            <Tab label="Generate" style={{marginRight: '10px'}}/>
             <NextLink
               href={`/workspace?id=${projectId}`}
               passHref
             >
-              <Tab label="Designs" />
+              <Tab label="Designs" style={{marginRight: '10px'}} />
             </NextLink>
+            <IconButton style={{margingTop: '10px', display:'block'}}>
+              <ArrowForwardIosOutlinedIcon style={{ paddingTop:'12px'}}/>
+            </IconButton>
+            
             <Tab label={variantData && variantData.title} disabled />
           </Tabs>
         </Box>
@@ -250,7 +251,7 @@ return (
                 // maxWidth: 1260,
                 maxWidth: '100%',
                 mx: 'auto',
-                height: '600px'
+                height: '500px'
               }}>
                 { error.status ? 
                 <Grid container style={{width:'100%', marginLeft:0}}

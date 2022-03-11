@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import * as React from 'react';
 import axios from 'axios';
 import Head from 'next/head';
 import NextLink from 'next/link';
@@ -10,7 +11,9 @@ import { Plus as PlusIcon } from '../../../icons/plus';
 import { gtm } from '../../../lib/gtm';
 import ProjectGrid from '../../../components/dashboard/product/product-grid.js';
 import DashboardModal from '../../../components/modal/dashboard-modal';
+import CreateProjectModal from '../../../components/modal/createProject-modal'
 import { useAuth } from '../../../hooks/use-auth';
+import AddIcon from '@mui/icons-material/Add';
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -69,6 +72,9 @@ const ProductList = () => {
   const [projectsData, setProjectsData] = useState();
   const [userData, setUserData] = useState();
 
+  const [isModalShown, setModalShown] = useState(false)
+  const [isOpen, setOpen] = React.useState(false);
+
   useEffect(() => {
     gtm.push({ event: 'page_view' });
   }, []);
@@ -118,6 +124,12 @@ const ProductList = () => {
   const filteredProducts = applyFilters(products, filters);
   const paginatedProducts = applyPagination(filteredProducts, page, rowsPerPage);
 
+  const handleClick = (e) =>{
+    e.preventDefault();
+    setModalShown(true);
+    setOpen(true);
+  };
+
   return (
     <>
       <Head>
@@ -146,10 +158,7 @@ const ProductList = () => {
                 </Typography>
               </Grid>
               <Grid item>
-                <NextLink
-                  href="/dashboard/projects/new"
-                  passHref
-                >
+                <NextLink href="/dashboard/projects/new" passHref>
                   <Button
                     component="a"
                     startIcon={<PlusIcon 
@@ -158,6 +167,7 @@ const ProductList = () => {
                     CREATE NEW PROJECT
                   </Button>
                 </NextLink>
+                  {/* {isModalShown && <CreateProjectModal open={isOpen}/>} */}
               </Grid>
             </Grid>
           </Box>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import NextLink from 'next/link';
-import { Box, Button, TextField, Container, Typography } from '@mui/material';
+import { Box, Button, TextField, Container, Typography, IconButton } from '@mui/material';
 import { withAuthGuard } from '../../hocs/with-auth-guard';
 import { withWorkspaceLayout } from '../../hocs/with-workspace-layout';
 import { useMounted } from '../../hooks/use-mounted';
@@ -15,6 +15,54 @@ import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import axios from 'axios'
 import toast from 'react-hot-toast';
 import { style } from '@mui/system';
+import BathtubIcon from '@mui/icons-material/Bathtub';
+import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/styles';
+
+
+const theme = createTheme({
+  overrides: {
+    MuiOutlinedInput: {
+      root: {
+        "& $notchedOutline": {
+          borderColor: "pink"
+        },
+        "& .MuiSelect-root ~ $notchedOutline": {
+          borderColor: "green"
+        },
+      }
+    },
+    'input': {
+      '&::placeholder': {
+        textOverflow: 'ellipsis !important',
+        color: '#EA0707DE'
+      }
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        input: {
+          '&::placeholder': {
+            opacity: 1,
+            color: '#EA0707DE'
+          }
+        }
+      }
+    },
+  }
+});
+
+const useStyles = makeStyles({
+  MuiInputBase: {
+    styleOverrides: {
+      input: {
+        '&::placeholder': {
+          opacity: 1,
+          color: '#EA0707DE'
+        }
+      }
+    }
+  },
+});
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -65,6 +113,7 @@ const ProductList = withRouter((props) => {
     bath: "",
     garages: ""
   });
+  const classes = useStyles();
 
   const isMounted = useMounted();
   const [products, setProducts] = useState([]);
@@ -81,22 +130,6 @@ const ProductList = withRouter((props) => {
   useEffect(() => {
     gtm.push({ event: 'page_view' });
   }, []);
-
-  useEffect(() => {
-    gtm.push({ event: 'page_view' });
-  }, []);
-
-  const handleFiltersChange = (filters) => {
-    setFilters(filters);
-  };
-
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleRowsPerPageChange = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-  };
 
   const handleChange = (event) => {
     const value = event.target.value;
@@ -137,24 +170,32 @@ const ProductList = withRouter((props) => {
           display: 'flex',
           flexWrap: 'wrap',
           // p: 3,
+          px:2
         }}
-        style={{marginTop:'-30px'}}
+        style={{marginTop:'-30px', border: '1px solid #E6E8F0', borderRadius:'10px'}}
       >
+      <ThemeProvider  theme={theme}>
+
         <Box
           component="form"
           sx={{
             flexGrow: 1,
-            // m: 1.5
+            m:1.2
+            // m: 1.5,
           }}
+          style={{width: 55}}
         >
           <TextField
             defaultValue="$500,000"
-            width="50%"
-            placeholder="Square feet"
+            // placeholder="Square feet"
+            label="Square feet"
             type="number"
             name="squarefeet"
             value={state.squarefeet}
             onChange={handleChange}
+            style={{color: '#EA0707DE'}}
+            inputProps={{ className: classes.input }}
+            // InputProps={{ classes: {input: props.classes['input']} }} 
           />
         </Box>
 
@@ -166,7 +207,7 @@ const ProductList = withRouter((props) => {
           }}
         >
           <FormControl fullWidth>
-            <InputLabel id="bed_select_label">Bed</InputLabel>
+            <InputLabel id="bed_select_label" style={{color: '#2CA02C'}}>Bed</InputLabel>
             <Select
               labelId="bed_select_label"
               id="bed_select"
@@ -192,7 +233,9 @@ const ProductList = withRouter((props) => {
           }}
         >
           <FormControl fullWidth>
-            <InputLabel id="bath_select_label">Bath</InputLabel>
+            <InputLabel id="bath_select_label" style={{color: '#1F77B4', width: '300px'}}>            
+            {/* <BathtubIcon/> */}
+            Bath</InputLabel>
             <Select
               labelId="bath_select_label"
               id="bath_select"
@@ -221,7 +264,7 @@ const ProductList = withRouter((props) => {
           }}
         >
           <FormControl fullWidth>
-            <InputLabel id="garages_select_label">Garages</InputLabel>
+            <InputLabel id="garages_select_label" style={{color: '#8C564B'}}>Garages</InputLabel>
             <Select
               labelId="garages_select_label"
               id="garages_select"
@@ -245,9 +288,11 @@ const ProductList = withRouter((props) => {
             onClick={handleSubmit}
             type="submit"
           >
-            Generate
+            GENERATE
           </Button>
         </Box>
+        
+      </ThemeProvider >
       </Box>
       <Box
         component="main"

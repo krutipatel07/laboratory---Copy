@@ -32,7 +32,7 @@ export default function AssetSideBar() {
   return (
     <div>
         <React.Fragment>
-          <Button onClick={toggleDrawer("right", true)}>Project Asset</Button>
+          <Button onClick={toggleDrawer("right", true)}>PROJECT ASSETS</Button>
           <Drawer
             anchor={"right"}
             open={state["right"]}

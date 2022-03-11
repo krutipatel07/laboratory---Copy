@@ -9,6 +9,7 @@ import { Typography, Button} from '@mui/material';
 import {useDropzone} from 'react-dropzone'
 import dateFormat from "../../utils/dateFormat"
 import toast from 'react-hot-toast';
+import AddIcon from '@mui/icons-material/Add';
 
 export default function SavedDesign({projectId}) {
   const [projectData, setProjectData] = useState([]);
@@ -73,18 +74,18 @@ const {getRootProps,getInputProps} = useDropzone({
   return (
     <Box
         sx={{
-          backgroundColor: 'background.default',
-          
+          // backgroundColor: 'background.default',
+          backgroundColor: '#fffff'
         }}
       >
-      <div {...getRootProps()} style={{display:'flex', justifyContent:'end'}}>
+      <div {...getRootProps()} style={{display:'block', marginLeft: 'auto', width: '112px'}}>
         <input {...getInputProps()} />
           <Button
             component="a"
-            variant="contained"
             type="submit"
           >
-            Import Design
+            <AddIcon/>
+            IMPORT
           </Button>
       </div>
 
