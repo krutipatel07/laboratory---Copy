@@ -7,7 +7,7 @@ import { Box,
   Container,
   Divider,
   Grid,
-  InputAdornment,
+  Stack ,
   Tab,
   Tabs,
   IconButton,
@@ -23,6 +23,11 @@ import { withDashboardLayout } from '../../hocs/with-dashboard-layout';
 import Chip from '@mui/material/Chip';
 import AddIcon from '@mui/icons-material/Add';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
+import { useDropzone } from 'react-dropzone';
+import dateFormat from "../../utils/dateFormat"
+import toast from 'react-hot-toast';
+
+
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
