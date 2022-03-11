@@ -72,6 +72,10 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  projectTitle: {
+    fontSize:28,
+    display: 'block'
+  }
 }));
 
 const LanguageButton = () => {
@@ -540,16 +544,17 @@ export const WorkspaceNavbar = withRouter((props) => {
           sx={{
             minHeight: 64,
             left: 0,
-            px: 2,
-            py:1,
+            p: 1,
             backgroundColor: 'rgba(255, 255, 255)',
+            borderBottom: '1px solid black',
+            mx:1
           }}
         >
           <Box sx={{ flexGrow: 1, px: 2 }}>    
-              <Typography variant="h6">
+              <Typography variant="h6" style={{fontSize:12, color:'rgba(0, 0, 0, 0.6)'}}>
                 <span>Project/</span>
               </Typography>
-              <Typography variant="h5">
+              <Typography variant="h4" style={{color:'#000000'}}>
                 <span>{projectTitle && projectTitle}</span>
               </Typography>
           </Box>

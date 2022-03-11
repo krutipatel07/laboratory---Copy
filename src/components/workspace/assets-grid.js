@@ -72,10 +72,11 @@ const storeFiles = async (file, formData) => {
   return (
     <Box
         sx={{
-          backgroundColor: 'background.default',
+          // backgroundColor: 'background.default',
+          backgroundColor: '#ffffff',
           flexGrow: 1
         }}
-        style={{paddingTop:'65px', width:650}}
+        style={{paddingTop:'80px', width:650}}
       > 
         <section>
           <div {...getRootProps()}>

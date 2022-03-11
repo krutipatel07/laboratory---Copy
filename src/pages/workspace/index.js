@@ -65,16 +65,20 @@ const ProjectWorkspace = withRouter((props) => {
       component="main"
       sx={{
         flexGrow: 1,
-        mb: 8
+        // mb: 8,
+        backgroundColor:'#ffffff'
       }}
     >
 
       <Container maxWidth="xl">
         <Box sx={{ width: '100%' }}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: '10px' }}>
+          <Box 
+          sx={{ 
+            // borderBottom: 1, borderColor: 'divider', 
+            marginBottom: '10px' }}>
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-              <Tab label="Generate" {...a11yProps(0)} style={{fontSize: '1.5rem'}} />
-              <Tab label="Design" {...a11yProps(1)} style={{fontSize: '1.5rem'}} />
+              <Tab label="GENERATE" {...a11yProps(0)} style={{fontSize: '1.5rem'}} />
+              <Tab label="DESIGNS" {...a11yProps(1)} style={{fontSize: '1.5rem'}} />
               {/* <Tab label="Assets" {...a11yProps(2)} style={{fontSize: '1.5rem'}} /> */}
             </Tabs>
           </Box>

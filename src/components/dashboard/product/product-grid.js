@@ -26,8 +26,8 @@ export default function ProjectGrid() {
   return (
     <Box
         sx={{
-          backgroundColor: 'background.default',
-          
+          // backgroundColor: 'background.default',
+          backgroundColor: '#ffffff'
         }}
       >
         {projectsData ? 

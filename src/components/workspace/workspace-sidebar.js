@@ -228,7 +228,8 @@ export const WorkspaceSidebar = (props) => {
               <Box
                 sx={{
                   alignItems: 'center',
-                  backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                  // backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                  backgroundColor: '#000000',
                   cursor: 'pointer',
                   display: 'flex',
                   justifyContent: 'space-between',
@@ -321,7 +322,8 @@ export const WorkspaceSidebar = (props) => {
         open
         PaperProps={{
           sx: {
-            backgroundColor: 'neutral.900',
+            // backgroundColor: 'neutral.900',
+            backgroundColor: '#212121',
             borderRightColor: 'divider',
             borderRightStyle: 'solid',
             borderRightWidth: (theme) => theme.palette.mode === 'dark' ? 1 : 0,
@@ -343,7 +345,8 @@ export const WorkspaceSidebar = (props) => {
       open={open}
       PaperProps={{
         sx: {
-          backgroundColor: 'neutral.900',
+          // backgroundColor: 'neutral.900',
+          backgroundColor: '#212121',
           color: '#FFFFFF',
           width: 280
         }
