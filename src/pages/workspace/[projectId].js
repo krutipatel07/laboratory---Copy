@@ -308,6 +308,7 @@ return (
                 <NextLink 
                 href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${version._id}&isVersion=true` :`/workspace/${projectId}?designId=${version._id}&isVersion=true`}    
                 passHref
+                key = { version._id}
                 >
                   <Chip 
                     label={`${version.title}`} 
