@@ -210,9 +210,10 @@ const importDesign = async (secure_url) => {
   const versionLength = data.data.versionOf ? data.data.versionOf.versions.length : data.data.versions.length;
   const versionOf = data.data.versionOf ? data.data.versionOf.id : designId;
 
-  const limnu_boardCreate = await axios.post("https://api.apix.limnu.com/v1/boardCreate?whiteLable=true", {
+  const limnu_boardCreate = await axios.post("https://api.apix.limnu.com/v1/boardCreate", {
     apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
-    boardName: `Board-${title}`
+    boardName: `Board-${title}`,
+    whiteLabel: true
   })
   .catch(error => console.log(error));
   

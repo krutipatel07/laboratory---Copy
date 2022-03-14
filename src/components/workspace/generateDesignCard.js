@@ -66,9 +66,10 @@ const GenerateDesignCard = ({image}) => {
       }).catch(error => 
         setClicked(false))
 
-      const limnu_boardCreate = await axios.post("https://api.apix.limnu.com/v1/boardCreate?whiteLable=true", {
+      const limnu_boardCreate = await axios.post("https://api.apix.limnu.com/v1/boardCreate", {
               apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
-              boardName: `Board-${title}`
+              boardName: `Board-${title}`,
+              whiteLabel: true,
             })
             .catch(error => console.log(error));
             
