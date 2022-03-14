@@ -2,7 +2,6 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardMedia from '@mui/material/CardMedia';
-import IconButton from '@mui/material/IconButton';
 import NextLink from 'next/link';
 import axios from 'axios'
 import toast from 'react-hot-toast';
@@ -10,6 +9,11 @@ import { makeStyles } from '@material-ui/styles';
 import CardHeader from '@mui/material/CardHeader';
 import Chip from '@mui/material/Chip';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Popper from '@mui/material/Popper';
+import Button from '@mui/material/Button';
+import Fade from '@mui/material/Fade';
+import Paper from '@mui/material/Paper';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,6 +39,15 @@ const ProductCard = (props) => {
     } = props; 
 
     const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [open, setOpen] = React.useState(false);
+  const [placement, setPlacement] = React.useState();
+
+  const handleClick = (newPlacement) => (event) => {
+    setAnchorEl(event.currentTarget);
+    setOpen((prev) => placement !== newPlacement || !prev);
+    setPlacement(newPlacement);
+  };
     
     const deleteProject = async () => {
       const deleted = await axios.delete(`/api/projects/${id}`);
@@ -43,16 +56,28 @@ const ProductCard = (props) => {
     }
 
   return (
+    <>
+    <Popper open={open} anchorEl={anchorEl} placement={placement} transition>
+      {({ TransitionProps }) => (
+        <Fade {...TransitionProps} timeout={350}>
+          <Paper>
+            <Button variant="outlined" startIcon={<DeleteIcon />} onClick={deleteProject}>
+              Delete
+            </Button>
+          </Paper>
+        </Fade>
+      )}
+    </Popper>
     <Card 
       sx={{ maxWidth: 345,
             cursor :"pointer"}}>
       <CardHeader
         sx={{ padding: 1, }}
               action={
-                <IconButton aria-label="settings">
+                <Button onClick={handleClick('bottom-end')}>
                   <MoreVertIcon />
-                </IconButton>
-              }
+                </Button>
+                }
         title={title}
       />
       <NextLink
@@ -76,6 +101,7 @@ const ProductCard = (props) => {
         <Chip label={`${members} Collaborators`} variant="outlined" sx={{borderWidth: '2px'}} />
       </CardActions>
     </Card>
+    </>
   );
 };
 

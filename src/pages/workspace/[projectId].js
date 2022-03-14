@@ -198,7 +198,7 @@ const importDesign = async (secure_url) => {
   const versionLength = data.data.versionOf ? data.data.versionOf.versions.length : data.data.versions.length;
   const versionOf = data.data.versionOf ? data.data.versionOf.id : designId;
 
-  const limnu_boardCreate = await axios.post("https://api.apix.limnu.com/v1/boardCreate", {
+  const limnu_boardCreate = await axios.post("https://api.apix.limnu.com/v1/boardCreate?whiteLable=true", {
     apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
     boardName: `Board-${title}`
   })
@@ -290,12 +290,10 @@ return (
         <Box sx={{px:2}}>  
           <Tabs value={value} onChange={handleChange} aria-label="nav tabs example">
             <NextLink
-              href={`/workspace?id=${projectId}`}
-              passHref
-            >
-              <Tab label="Generate" style={{marginRight: '10px'}}/>
+                href={`/workspace?id=${projectId}`}
+                passHref
+              ><Tab label="Generate" style={{marginRight: '10px'}}/>
             </NextLink>
-            
             <NextLink
               href={`/workspace?id=${projectId}`}
               passHref

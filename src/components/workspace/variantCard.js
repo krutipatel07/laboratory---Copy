@@ -1,11 +1,8 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
 import NextLink from 'next/link';
 import { makeStyles } from '@material-ui/styles';
 import { styled } from '@mui/material/styles';
@@ -15,6 +12,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CardHeader from '@mui/material/CardHeader';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Chip from '@mui/material/Chip';
+import Popper from '@mui/material/Popper';
+import Fade from '@mui/material/Fade';
+import Paper from '@mui/material/Paper';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -76,7 +76,18 @@ const VariantCard = (props) => {
         versions
     } = props;
 
-    const classes = useStyles();
+    const classes = useStyles();    
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [open, setOpen] = React.useState(false);
+  const [placement, setPlacement] = React.useState();
+
+  const handleClick = (newPlacement) => (event) => {
+    setAnchorEl(event.currentTarget);
+    setOpen((prev) => placement !== newPlacement || !prev);
+    setPlacement(newPlacement);
+  };
+
     const deleteDesign = async () => {
       const deleted = await axios.delete(`/api/projects/_/design/${designId}`);
       deleted && toast.success("Design deleted");
@@ -84,6 +95,18 @@ const VariantCard = (props) => {
     }
     
   return (
+    <>
+      <Popper open={open} anchorEl={anchorEl} placement={placement} transition>
+        {({ TransitionProps }) => (
+          <Fade {...TransitionProps} timeout={350}>
+            <Paper>
+              <Button variant="outlined" startIcon={<DeleteIcon />} onClick={deleteDesign}>
+                Delete
+              </Button>
+            </Paper>
+          </Fade>
+        )}
+      </Popper>
       <Card 
         sx={{ maxWidth: 345,
               cursor :"pointer",
@@ -93,9 +116,9 @@ const VariantCard = (props) => {
         <CardHeader
           sx={{ padding: 1, }}
           action={
-            <IconButton aria-label="settings">
+            <Button onClick={handleClick('bottom-end')}>
               <MoreVertIcon />
-            </IconButton>
+            </Button>
           }
           title={title}
         />
@@ -120,6 +143,7 @@ const VariantCard = (props) => {
           <Chip label={`0 Comments`} variant="outlined" sx={{borderWidth: '2px'}}/>
         </CardActions>
       </Card>
+    </>
   );
 };
 
