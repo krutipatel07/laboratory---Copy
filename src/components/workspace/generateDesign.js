@@ -170,9 +170,10 @@ const ProductList = withRouter((props) => {
           display: 'flex',
           flexWrap: 'wrap',
           // p: 3,
-          px:2
+          px:2,
+          mt: '-30px'
         }}
-        style={{marginTop:'-30px', border: '1px solid #E6E8F0', borderRadius:'10px'}}
+        style={{marginTop:'-64px'}}
       >
       <ThemeProvider  theme={theme}>
 

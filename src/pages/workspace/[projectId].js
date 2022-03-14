@@ -3,7 +3,7 @@ import Head from 'next/head';
 import NextLink from 'next/link';
 import { Box,
   Button,
-  TextField,
+  TextField,Toolbar,
   Container,
   Popover ,
   Grid,
@@ -276,9 +276,10 @@ return (
       </Head>
       
       <Box
+        component="main"
         sx={{
           alignItems: 'center',
-          display: 'flex',
+          // display: 'flex',
           justifyContent: 'space-between',
           flexWrap: 'wrap',
           backgroundColor: 'rgba(255, 255, 255)',
@@ -287,106 +288,93 @@ return (
           p: 0
         }}
       >
-        <Box sx={{px:2}}>  
-          <Tabs value={value} onChange={handleChange} aria-label="nav tabs example">
-            <NextLink
+      
+        <Box sx={{display: 'flex'}}>
+          <Box sx={{px:2, display: 'flex', pt: '12px'}}>  
+              <NextLink
                 href={`/workspace?id=${projectId}`}
                 passHref
-              ><Tab label="Generate" style={{marginRight: '10px'}}/>
-            </NextLink>
-            <NextLink
-              href={`/workspace?id=${projectId}`}
-              passHref
+              >
+                <Typography style={{color:'rgba(0, 0, 0, 0.6)'}}>DESIGNS</Typography>
+              </NextLink>
+
+              <IconButton style={{display:'block', marginTop:'-24px'}}>
+                <ArrowForwardIosOutlinedIcon style={{ paddingTop:'12px'}}/>
+              </IconButton>
+              
+              <Typography disabled style={{color:'rgba(0, 0, 0, 0.87)'}}>{variantData && variantData.title}</Typography>
+          </Box>
+      
+          <Box style={{display: 'block', marginLeft: 'auto'}}>
+            <Button onClick={handleClick}>
+              <IconButton><PersonAddAltIcon/></IconButton>
+              COLLABORATORS 
+            </Button>
+            <Popover
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
             >
-              <Tab label="Designs" style={{marginRight: '10px'}} />
-            </NextLink>
-            <IconButton style={{margingTop: '10px', display:'block'}}>
-              <ArrowForwardIosOutlinedIcon style={{ paddingTop:'12px'}}/>
-            </IconButton>
-            
-            <Tab label={variantData && variantData.title} disabled />
-          </Tabs>
-        </Box>
-      </Box>
-
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          backgroundColor: 'rgba(255, 255, 255)',
-          // pb: 8
-        }}
-      >
-
-        <Grid container 
-        spacing={2} 
-        style={{width: "100%"}}>
-          <Grid item 
-          xs={12}>
-
-            <Box style={{display: 'block', marginLeft: 'auto', width:'182px'}}>
-              <Button onClick={handleClick}>
-                <IconButton><PersonAddAltIcon/></IconButton>
-                COLLABORATORS 
-              </Button>
-              <Popover
-                open={open}
-                anchorEl={anchorEl}
-                onClose={handleClose}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
+              <Box
+                sx={{
+                  alignItems: 'center',
+                  p: 2,
+                  display: 'flex',
+                  fontSize: '14px'
                 }}
               >
-                <Box
-                  sx={{
-                    alignItems: 'center',
-                    p: 2,
-                    display: 'flex',
-                    fontSize: '14px'
-                  }}
-                >
-                  <form onSubmit={handleSubmit} 
-                  method={'post'} 
-                  style={{display:"inline-flex", justifyContent:'space-between', width:'100%'}}>
-                      <TextField label="Collaborator email" 
-                      type="email" 
-                      required value={email} onInput={ e=>setEmail(e.target.value)}/>
-                      <Stack spacing={2} 
-                      direction="row">
-                          <Button 
-                          type="submit" 
-                          variant="contained" 
-                          className={classes.invitebtn}>Invite</Button>
-                      </Stack>
+                <form onSubmit={handleSubmit} 
+                method={'post'} 
+                style={{display:"inline-flex", justifyContent:'space-between', width:'100%'}}>
+                    <TextField label="Collaborator email" 
+                    type="email" 
+                    required value={email} onInput={ e=>setEmail(e.target.value)}/>
+                    <Stack spacing={2} 
+                    direction="row">
+                        <Button 
+                        type="submit" 
+                        variant="contained" 
+                        >Invite</Button>
+                    </Stack>
 
-                  </form>
-                </Box>
-                <Box sx={{ my: 1 }} 
-                className={classes.text}>
-                  <Typography 
-                  className={classes.p}>
-                      COLLABORATORS
-                  </Typography>
-                </Box>
-                <Box sx={{ my: 1 }}>
-                {designData? collaboratorData.length? collaboratorData.map((collaborator, i) => 
-                    <MenuItem key={i} 
-                    component="a">
-                      <ListItemText
-                        primary={(
-                          <Typography 
-                          variant="body1">
-                            {collaborator}
-                          </Typography>
-                        )}
-                      />
-                    </MenuItem> 
-                    // <Divider />
-                    ): <Typography style={{paddingLeft: '20px'}}>Add collaborator</Typography>  : <Typography style={{paddingLeft: '20px'}}>loading...</Typography>}
-                </Box>
-              </Popover>
-            </Box>
+                </form>
+              </Box>
+              <Box sx={{ my: 1 }} 
+              className={classes.text}>
+                <Typography 
+                className={classes.p}>
+                    COLLABORATORS
+                </Typography>
+              </Box>
+              <Box sx={{ my: 1 }}>
+              {designData? collaboratorData.length? collaboratorData.map((collaborator, i) => 
+                  <MenuItem key={i} 
+                  component="a">
+                    <ListItemText
+                      primary={(
+                        <Typography 
+                        variant="body1">
+                          {collaborator}
+                        </Typography>
+                      )}
+                    />
+                  </MenuItem> 
+                  // <Divider />
+                  ): <Typography style={{paddingLeft: '20px'}}>Add collaborator</Typography>  : <Typography style={{paddingLeft: '20px'}}>loading...</Typography>}
+              </Box>
+            </Popover>
+          </Box>
+        </Box>
+
+        <Grid container 
+              spacing={2} 
+              style={{width: "100%"}}>
+                <Grid item 
+                xs={12}>  
 
             <Container maxWidth="xl"> 
               <Box fullWidth
@@ -394,8 +382,9 @@ return (
                 // maxWidth: 1260,
                 maxWidth: '100%',
                 mx: 'auto',
-                height: '400px'
-              }}>
+                height: '550px',
+              }}
+              >
                 { error.status ? 
                 <Grid container style={{width:'100%', marginLeft:0}}
                 spacing={3}
@@ -432,10 +421,19 @@ return (
           </Grid>
 
           <Paper 
-            sx={{ width: '100%', height: '100%', padding: 3}} 
-            // style={{display: 'flex'}} 
+            sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
+            style={{display: 'flex'}} 
             elevation={3}>
-            <Box style={{ position: 'fixed', bottom: 0 }} >
+            <Box >
+              <Toolbar
+                disableGutters
+                sx={{
+                  minHeight: 64,
+                  left: 280,
+                  px: 2
+                }}
+              >
+              
             { isVersion && variantData && variantData.versionOf &&
               <NextLink
                 href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${variantData.versionOf._id}` :`/workspace/${projectId}?designId=${variantData.versionOf._id}`}
@@ -479,7 +477,8 @@ return (
                 </div>
               </Stack>
             </Box>
-          </Box>
+              </Toolbar>
+            </Box>
           </Paper>
         </Grid>        
       </Box>
