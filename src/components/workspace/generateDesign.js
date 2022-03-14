@@ -62,6 +62,12 @@ const useStyles = makeStyles({
       }
     }
   },
+  button: {
+    '&:hover': {
+      backgroundColor: '#D8AC6E',
+      color: 'white',
+    },
+  }
 });
 
 const applyFilters = (products, filters) => products.filter((product) => {
@@ -288,6 +294,7 @@ const ProductList = withRouter((props) => {
             variant="contained"
             onClick={handleSubmit}
             type="submit"
+            className={classes.button}
           >
             GENERATE
           </Button>
