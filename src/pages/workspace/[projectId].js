@@ -84,24 +84,19 @@ const applyPagination = (products, page, rowsPerPage) => products.slice(page * r
         },}
       }
     },
-    
-    invitebtn: {
-      fontWeight: 'bold',
-      fontSize: '0.885rem',
-      padding: '7px 27px',
-      borderRadius: '8px',
-      color: 'white',
-      transition: 'all 150ms ease', 
-      cursor: 'pointer',
-      border: 'none',
-      backgroundColor: '#007FFF',
-    },
     text: {
         padding: '6px 19px',
     }, 
     p: {
         fontWeight: 600,
         fontSize: '1.1rem'
+    },
+    button: {
+      '&:hover': {
+        backgroundColor: '#D8AC6E',
+        color: 'white',
+      },
+      cursor: 'pointer'
     }
   }));
 
@@ -306,7 +301,7 @@ return (
                 href={`/workspace?id=${projectId}`}
                 passHref
               >
-                <Typography style={{color:'rgba(0, 0, 0, 0.6)'}}>DESIGNS</Typography>
+                <Typography style={{color:'rgba(0, 0, 0, 0.6)', cursor:'pointer'}}>DESIGNS</Typography>
               </NextLink>
 
               <IconButton style={{display:'block', marginTop:'-24px'}}>
@@ -349,6 +344,7 @@ return (
                         <Button 
                         type="submit" 
                         variant="contained" 
+                        className={classes.button}
                         >Invite</Button>
                     </Stack>
 
