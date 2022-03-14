@@ -3,15 +3,16 @@ import Head from 'next/head';
 import NextLink from 'next/link';
 import { Box,
   Button,
-  Card,
+  TextField,
   Container,
-  Divider,
+  Popover ,
   Grid,
   Stack ,
   Tab,
   Tabs,
   IconButton,
   Typography } from '@mui/material';
+import { useRouter } from 'next/router';
 import { withAuthGuard } from '../../hocs/with-auth-guard';
 import { withWorkspaceLayout } from '../../hocs/with-workspace-layout';
 import { useMounted } from '../../hooks/use-mounted';
@@ -26,8 +27,8 @@ import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutl
 import { useDropzone } from 'react-dropzone';
 import dateFormat from "../../utils/dateFormat"
 import toast from 'react-hot-toast';
-
-
+import { makeStyles } from '@material-ui/styles';
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -71,8 +72,40 @@ const applyFilters = (products, filters) => products.filter((product) => {
 const applyPagination = (products, page, rowsPerPage) => products.slice(page * rowsPerPage,
   page * rowsPerPage + rowsPerPage);
 
-const ProductList = withRouter((props) => {
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+      '& .MuiOutlinedInput-root':{
+      input: {
+        "&:-webkit-autofill": {
+          WebkitBoxShadow: "0 0 0 1000px black inset"
+        },}
+      }
+    },
+    
+    invitebtn: {
+      fontWeight: 'bold',
+      fontSize: '0.885rem',
+      padding: '7px 27px',
+      borderRadius: '8px',
+      color: 'white',
+      transition: 'all 150ms ease', 
+      cursor: 'pointer',
+      border: 'none',
+      backgroundColor: '#007FFF',
+    },
+    text: {
+        padding: '6px 19px',
+    }, 
+    p: {
+        fontWeight: 600,
+        fontSize: '1.1rem'
+    }
+  }));
 
+
+const ProductList = withRouter((props) => {
+  const router = useRouter();
   const isMounted = useMounted();
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(0);
@@ -128,6 +161,7 @@ const ProductList = withRouter((props) => {
   };
 
   const [value, setValue] = React.useState(1);
+  const [designData, setDesignData] = useState();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -199,6 +233,40 @@ const getParentDesignVersions = () =>{
   .catch(error => console.log(error))
 }
 
+const handleSubmit = async event => {
+  event.preventDefault();
+  const designId = router.query.designId;
+  axios.post("/api/emails/invite", {
+   email,
+   projectId,
+   designId
+ })
+ .catch(error => console.log(error));
+
+ await axios.put(`/api/projects/_/design/${designId}`, {
+  collaborators : email,
+})
+.catch(error => console.log(error));
+
+ toast.success('Collaborator invited!');
+ setEmail('');
+}
+
+const [email, setEmail] = useState('');
+
+const [anchorEl, setAnchorEl] = React.useState(null);
+
+const handleClick = (event) => {
+  setAnchorEl(event.currentTarget);
+};
+
+const handleClose = () => {
+  setAnchorEl(null);
+};
+
+const open = Boolean(anchorEl);
+const classes = useStyles();
+
 return ( 
     <>
       <Head>
@@ -221,7 +289,13 @@ return (
       >
         <Box sx={{px:2}}>  
           <Tabs value={value} onChange={handleChange} aria-label="nav tabs example">
-            <Tab label="Generate" style={{marginRight: '10px'}}/>
+            <NextLink
+              href={`/workspace?id=${projectId}`}
+              passHref
+            >
+              <Tab label="Generate" style={{marginRight: '10px'}}/>
+            </NextLink>
+            
             <NextLink
               href={`/workspace?id=${projectId}`}
               passHref
@@ -245,18 +319,84 @@ return (
           // pb: 8
         }}
       >
+
         <Grid container 
         spacing={2} 
         style={{width: "100%"}}>
           <Grid item 
           xs={12}>
+
+            <Box style={{display: 'block', marginLeft: 'auto', width:'182px'}}>
+              <Button onClick={handleClick}>
+                <IconButton><PersonAddAltIcon/></IconButton>
+                COLLABORATORS 
+              </Button>
+              <Popover
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+              >
+                <Box
+                  sx={{
+                    alignItems: 'center',
+                    p: 2,
+                    display: 'flex',
+                    fontSize: '14px'
+                  }}
+                >
+                  <form onSubmit={handleSubmit} 
+                  method={'post'} 
+                  style={{display:"inline-flex", justifyContent:'space-between', width:'100%'}}>
+                      <TextField label="Collaborator email" 
+                      type="email" 
+                      required value={email} onInput={ e=>setEmail(e.target.value)}/>
+                      <Stack spacing={2} 
+                      direction="row">
+                          <Button 
+                          type="submit" 
+                          variant="contained" 
+                          className={classes.invitebtn}>Invite</Button>
+                      </Stack>
+
+                  </form>
+                </Box>
+                <Box sx={{ my: 1 }} 
+                className={classes.text}>
+                  <Typography 
+                  className={classes.p}>
+                      COLLABORATORS
+                  </Typography>
+                </Box>
+                <Box sx={{ my: 1 }}>
+                {designData? collaboratorData.length? collaboratorData.map((collaborator, i) => 
+                    <MenuItem key={i} 
+                    component="a">
+                      <ListItemText
+                        primary={(
+                          <Typography 
+                          variant="body1">
+                            {collaborator}
+                          </Typography>
+                        )}
+                      />
+                    </MenuItem> 
+                    // <Divider />
+                    ): <Typography style={{paddingLeft: '20px'}}>Add collaborator</Typography>  : <Typography style={{paddingLeft: '20px'}}>loading...</Typography>}
+                </Box>
+              </Popover>
+            </Box>
+
             <Container maxWidth="xl"> 
               <Box fullWidth
               sx={{
                 // maxWidth: 1260,
                 maxWidth: '100%',
                 mx: 'auto',
-                height: '500px'
+                height: '400px'
               }}>
                 { error.status ? 
                 <Grid container style={{width:'100%', marginLeft:0}}
@@ -295,8 +435,9 @@ return (
 
           <Paper 
             sx={{ width: '100%', height: '100%', padding: 3}} 
-            style={{display: 'flex'}} 
+            // style={{display: 'flex'}} 
             elevation={3}>
+            <Box style={{ position: 'fixed', bottom: 0 }} >
             { isVersion && variantData && variantData.versionOf &&
               <NextLink
                 href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${variantData.versionOf._id}` :`/workspace/${projectId}?designId=${variantData.versionOf._id}`}
@@ -340,6 +481,7 @@ return (
                 </div>
               </Stack>
             </Box>
+          </Box>
           </Paper>
         </Grid>        
       </Box>
