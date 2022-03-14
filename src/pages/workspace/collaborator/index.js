@@ -3,15 +3,11 @@ import Head from 'next/head';
 import NextLink from 'next/link';
 import PropTypes from 'prop-types';
 import { Box,
-  Button,
-  Card,
   Container,
-  Divider,
   Grid,
-  InputAdornment,
   Tab,
   Tabs,
-  TextField,
+  Chip,
   Typography } from '@mui/material';
 import { withWorkspaceLayout } from '../../../hocs/with-workspace-layout';
 import { useMounted } from '../../../hooks/use-mounted';
@@ -106,7 +102,7 @@ const InvitedUSerPage = withRouter((props) => {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const designId = props.router.query.designId;
+  const {designId, projectId, invite, isVersion} = props.router.query;
   const [filters, setFilters] = useState({
     name: undefined,
     category: [],
@@ -119,6 +115,7 @@ const InvitedUSerPage = withRouter((props) => {
     message: undefined,
   });  
   const limnu_token = localStorage.getItem("limnu_token");
+  const [versions, setVersions] = useState();
 
   const [value, setValue] = React.useState(0);
   const handleChange = (event, newValue) => {
@@ -129,13 +126,19 @@ const InvitedUSerPage = withRouter((props) => {
     gtm.push({ event: 'page_view' });
   }, []);
 
-  useEffect(() => {
-    axios.get(`/api/projects/_/design/${designId}`)
-    .then(res => setVariantData(res.data.data))
+  useEffect(async () => {
+    await axios.get(`/api/projects/${projectId}/design/${designId}`)
+    .then(res => {
+      setVariantData(res.data.data)
+      setVersions(res.data.data.versions)
+    })
     .catch(error => setError({
       status: true,
       message : "OOPS! This design is not available or deleted by owner of the project!"}));
-  }, [designId]);
+
+    isVersion && getParentDesignVersions()
+
+  },[designId]);
 
 
   useEffect(() => {
@@ -158,6 +161,17 @@ const InvitedUSerPage = withRouter((props) => {
   const filteredProducts = applyFilters(products, filters);
   const paginatedProducts = applyPagination(filteredProducts, page, rowsPerPage);
 
+  const getParentDesignVersions = () =>{
+    axios.get(`/api/projects/${projectId}/design/${designId}`)
+    .then(res => {
+      const designId = res.data.data.versionOf._id;
+      axios.get(`/api/projects/${projectId}/design/${designId}`)
+      .then(res => setVersions(res.data.data.versions))
+      .catch(error => console.log(error))
+    })
+    .catch(error => console.log(error))
+  }
+
   return (
     <>
       <Head>
@@ -169,98 +183,111 @@ const InvitedUSerPage = withRouter((props) => {
       <Box
         component="main"
         sx={{
-          flexGrow: 1,
-          pb: 8,
-          width: '100%'
+          flexGrow: 1
         }}
-      >
-        <Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: '30px' }}>
-          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
-            <Tab label="Design" {...a11yProps(0)} style={{fontSize: '1.5rem'}} />
-            {/* <Tab label="Assets" {...a11yProps(1)} style={{fontSize: '1.5rem'}} /> */}
-          </Tabs>
+      > 
+        <Box
+          sx={{
+            alignItems: 'center',
+            display: 'flex',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            backgroundColor: 'rgba(255, 255, 255)',
+            // m: -1.5,
+            m: 0,
+            p: 0
+          }}
+        >
+          <Box sx={{px:2}}> 
+            <Tabs> 
+              <Tab label={variantData && variantData.title} disabled />
+            </Tabs> 
+          </Box>
         </Box>
-        <TabPanel value={value} index={0}>
-        { error.status ? 
-          <Grid container style={{width:'100%', marginLeft:0}}
-          spacing={3}
-          >
-            <Typography style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:100}}>
-              {error.message}
-            </Typography> 
-          </Grid>:
-          <Grid container 
-          spacing={2}
-          style={{width: "100%"}}>
-            <Grid item 
-            xs={12}>
-              <Container maxWidth="xl"> 
-                <Box fullWidth
-                sx={{
-                  // maxWidth: 1260,
-                  maxWidth: '100%',
-                  mx: 'auto',
-                  height: '600px'
-                }}
+        <Grid container 
+        spacing={2} 
+        style={{width: "100%"}}>
+          <Grid item 
+          xs={12}>
+            <Container maxWidth="xl"> 
+              <Box fullWidth
+              sx={{
+                // maxWidth: 1260,
+                maxWidth: '100%',
+                mx: 'auto',
+                height: '400px'
+              }}>
+                { error.status ? 
+                <Grid container style={{width:'100%', marginLeft:0}}
+                spacing={3}
                 >
-                  <Box
-                    sx={{
-                      position: 'relative',
-                      height: '100%',
-                      '& img': {
-                        height: 'auto',
-                        position: 'absolute',
-                        top: 0,
-                        width: '100%',
-                        height: '100%'
-                      }
-                    }}
-                  >
-                    {variantData && variantData.limnu_boardUrl ? 
-                      <iframe src={`${variantData.limnu_boardUrl}t=${limnu_token}&video=0`} title="description" 
-                        style={{width: '100%', height: '100%'}}
-                      ></iframe>
-                      :  
-                      <img
-                        alt=""
-                        src={variantData && variantData.url}
-                    />}
-                  </Box>
-                </Box>
+                  <Typography style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:100}}>
+                    {error.message}
+                  </Typography> 
+                </Grid> :
                 <Box
                   sx={{
-                    maxWidth: 980,
-                    width: '100%',
-                    mx: 'auto'
+                    position: 'relative',
+                    height: '100%',
+                    '& img': {
+                      height: 'auto',
+                      position: 'absolute',
+                      top: 0,
+                      width: '100%',
+                      height: '100%'
+                    }
                   }}
                 >
-                </Box>
-              </Container>
-            </Grid>
-
-            {/* <Grid item 
-            xs={4}
-            style={{maxHeight: '600px', overflow: 'auto', display:'inline-flex', flexFlow:'column-reverse'}}
-            >
-              <Box>
-                {
-                  variantData.comments && variantData.comments.map(comment => <CommentList key={comment.id} comment={comment}/> )
-                }
+                  {variantData && variantData.limnu_boardUrl ? 
+                    <iframe src={`${variantData.limnu_boardUrl}t=${limnu_token}&video=0`} title="description" 
+                      style={{width: '100%', height: '100%'}}
+                    ></iframe>
+                    :  
+                    <img
+                      alt=""
+                      src={variantData && variantData.url}
+                  />
+                  }
+                </Box>}
               </Box>
-            </Grid> */}
-          </Grid>}
-        </TabPanel>
-        {/* <TabPanel value={value} index={1}>
-          <AssetsGrid projectId= {props.router.query.projectId}/>
-        </TabPanel> */}
+            </Container>
+          </Grid>
 
-        <Paper 
-        sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} 
-        style={{display: 'flex'}} 
-        elevation={3}>
-          <BottomNav/>
-          {/* <Legends/> */}
-        </Paper>
+          <Paper 
+            sx={{ width: '100%', height: '100%', padding: 3}} 
+            // style={{display: 'flex'}} 
+            elevation={3}>
+            <Box style={{ position: 'fixed', bottom: 0 }} >
+            { isVersion && variantData && variantData.versionOf &&
+              <NextLink
+                href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${variantData.versionOf._id}` :`/workspace/${projectId}?designId=${variantData.versionOf._id}`}
+                passHref
+              >
+                <Chip 
+                  label="Default" 
+                  variant="outlined" 
+                  sx={{borderWidth: '2px', m: 1}}
+                />
+              </NextLink>
+            }
+            {
+              versions && versions.map(version =>
+                <NextLink 
+                href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${version._id}&isVersion=true` :`/workspace/${projectId}?designId=${version._id}&isVersion=true`}    
+                passHref
+                key = { version._id}
+                >
+                  <Chip 
+                    label={`${version.title}`} 
+                    variant="outlined" 
+                    sx={{borderWidth: '2px', m: 1}}
+                  />
+                </NextLink>
+                )
+            }
+          </Box>
+          </Paper>
+        </Grid>        
         <InvitedUserModal variantData={variantData}/>
       </Box>
     </>

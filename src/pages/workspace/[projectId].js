@@ -255,7 +255,7 @@ const handleSubmit = async event => {
  })
  .catch(error => console.log(error));
 
- await axios.put(`/api/projects/_/design/${designId}`, {
+ await axios.put(`/api/projects/${projectId}/design/${designId}`, {
   collaborators : email,
 })
 .catch(error => console.log(error));
