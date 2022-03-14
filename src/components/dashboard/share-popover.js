@@ -17,11 +17,7 @@ import {
   Button,
   FormControl
 } from '@mui/material';
-import { Logout as LogoutIcon } from '@mui/icons-material';
 import { useAuth } from '../../hooks/use-auth';
-import { Cog as CogIcon } from '../../icons/cog';
-import { UserCircle as UserCircleIcon } from '../../icons/user-circle';
-import { SwitchHorizontalOutlined as SwitchHorizontalOutlinedIcon } from '../../icons/switch-horizontal-outlined';
 import { makeStyles } from '@material-ui/styles';
 import Stack from '@mui/material/Stack';
 import axios from 'axios';

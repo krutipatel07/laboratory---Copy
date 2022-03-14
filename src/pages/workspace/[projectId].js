@@ -11,6 +11,8 @@ import { Box,
   Tab,
   Tabs,
   IconButton,
+  MenuItem,
+  ListItemText,
   Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { withAuthGuard } from '../../hocs/with-auth-guard';
@@ -125,6 +127,11 @@ const ProductList = withRouter((props) => {
   });  
   const {designId, projectId, invite, isVersion} = props.router.query;
   const limnu_token = localStorage.getItem("limnu_token");
+  const [email, setEmail] = useState('');
+
+  const [value, setValue] = React.useState(1);
+  const [designData, setDesignData] = useState();
+  const [collaboratorData, setCollaboratorData] = useState();   
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
@@ -148,6 +155,14 @@ const ProductList = withRouter((props) => {
     gtm.push({ event: 'page_view' });
   }, []);
 
+  useEffect(() => {
+    axios.get(`/api/projects/_/design/${designId}`)
+    .then(res => {
+      setCollaboratorData([...new Set(res.data.data.collaborators)]);
+      setDesignData(res.data.data)})
+    .catch(error => console.log(error));
+  }, [email]);
+
   const handleFiltersChange = (filters) => {
     setFilters(filters);
   };
@@ -159,9 +174,6 @@ const ProductList = withRouter((props) => {
   const handleRowsPerPageChange = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
   };
-
-  const [value, setValue] = React.useState(1);
-  const [designData, setDesignData] = useState();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -251,8 +263,6 @@ const handleSubmit = async event => {
  toast.success('Collaborator invited!');
  setEmail('');
 }
-
-const [email, setEmail] = useState('');
 
 const [anchorEl, setAnchorEl] = React.useState(null);
 
