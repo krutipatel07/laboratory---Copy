@@ -13,6 +13,18 @@ import { withAuthGuard } from '../../hocs/with-auth-guard'
 import { withDashboardLayout } from '../../hocs/with-dashboard-layout';
 import { withWorkspaceLayout } from '../../hocs/with-workspace-layout';
 import axios from 'axios'
+import { makeStyles } from '@material-ui/core';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+
+const useStyles = makeStyles((theme) => ({
+  font: {
+    fontSize: '1.5rem',
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 16,
+    },
+  }
+}));
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -54,6 +66,9 @@ const ProjectWorkspace = withRouter((props) => {
     setValue(newValue);
   };
 
+  const classes = useStyles();
+  const theme = useTheme();
+
   return (
     <>
     <Head>
@@ -77,8 +92,8 @@ const ProjectWorkspace = withRouter((props) => {
             // borderBottom: 1, borderColor: 'divider', 
             marginBottom: '10px' }}>
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-              <Tab label="GENERATE" {...a11yProps(0)} style={{fontSize: '1.5rem'}} />
-              <Tab label="DESIGNS" {...a11yProps(1)} style={{fontSize: '1.5rem'}} />
+              <Tab label="GENERATE" {...a11yProps(0)} className={classes.font} />
+              <Tab label="DESIGNS" {...a11yProps(1)} className={classes.font}/>
               {/* <Tab label="Assets" {...a11yProps(2)} style={{fontSize: '1.5rem'}} /> */}
             </Tabs>
           </Box>

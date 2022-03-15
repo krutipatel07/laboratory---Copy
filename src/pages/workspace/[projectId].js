@@ -6,7 +6,6 @@ import { Box,
 import { useRouter } from 'next/router';
 import { withAuthGuard } from '../../hocs/with-auth-guard';
 import { withWorkspaceLayout } from '../../hocs/with-workspace-layout';
-import { useMounted } from '../../hooks/use-mounted';
 import { gtm } from '../../lib/gtm';
 import Paper from '@mui/material/Paper';
 import axios from 'axios';
@@ -18,9 +17,10 @@ import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutl
 import { useDropzone } from 'react-dropzone';
 import dateFormat from "../../utils/dateFormat"
 import toast from 'react-hot-toast';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
-import { createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 
   const useStyles = makeStyles((theme) => ({
@@ -47,11 +47,23 @@ import { createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
       },
       cursor: 'pointer'
     },
-    // name: {
-    //   [theme.breakpoints.down('md')]: {
-    //     display: 'block',
-    //   },
-    // }
+    name: {
+      [theme.breakpoints.down("xs")]: {
+        display: 'block',
+      },
+    },
+    versionList: {
+      [theme.breakpoints.down("xs")]: {
+        left: 0,
+      },
+    },
+    icon: {
+      display:'block', 
+      marginTop:'-29px',
+      [theme.breakpoints.down("xs")]: {
+        marginTop: '-15px',
+      },
+    }
   }));
 
 
@@ -203,9 +215,12 @@ const handleClose = () => {
 
 const open = Boolean(anchorEl);
 const classes = useStyles();
-
+const theme = useTheme();
+const matches = useMediaQuery(theme.breakpoints.down('xs'));
+console.log(matches)
 return ( 
     <>
+    {/* <ThemeProvider theme={theme}> */}
       <Head>
         <title>
           Variant | Maket Colaboratory
@@ -215,11 +230,9 @@ return (
         component="main"
         sx={{
           alignItems: 'center',
-          // display: 'flex',
           justifyContent: 'space-between',
           flexWrap: 'wrap',
           backgroundColor: 'rgba(255, 255, 255)',
-          // m: -1.5,
           m: 0,
           p: 0
         }}
@@ -234,7 +247,7 @@ return (
                 <Typography style={{color:'rgba(0, 0, 0, 0.6)', cursor:'pointer'}}>DESIGNS</Typography>
               </NextLink>
 
-              <IconButton style={{display:'block', marginTop:'-24px'}}>
+              <IconButton className={classes.icon}>
                 <ArrowForwardIosOutlinedIcon style={{ paddingTop:'12px'}}/>
               </IconButton>
               
@@ -308,64 +321,64 @@ return (
         </Box>
 
         <Grid container 
-              spacing={2} 
-              style={{width: "100%"}}>
-                <Grid item 
-                xs={12}>  
-
-            <Container maxWidth="xl"> 
-              <Box fullWidth
-              sx={{
-                // maxWidth: 1260,
-                maxWidth: '100%',
-                mx: 'auto',
-                height: '550px',
-              }}
-              >
-                { error.status ? 
-                <Grid container style={{width:'100%', marginLeft:0}}
-                spacing={3}
+          spacing={2} 
+          style={{width: "100%"}}>
+            <Grid item 
+            xs={12}>  
+              <Container maxWidth="xl"> 
+                <Box fullWidth
+                sx={{
+                  // maxWidth: 1260,
+                  maxWidth: '100%',
+                  mx: 'auto',
+                  height: '550px',
+                }}
                 >
-                  <Typography style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:100}}>
-                    {error.message}
-                  </Typography> 
-                </Grid> :
-                <Box
-                  sx={{
-                    position: 'relative',
-                    height: '100%',
-                    '& img': {
-                      height: 'auto',
-                      position: 'absolute',
-                      top: 0,
-                      width: '100%',
-                      height: '100%'
-                    }
-                  }}
-                >
-                  {variantData.limnu_boardUrl ? 
-                    <iframe src={`${variantData.limnu_boardUrl}t=${limnu_token}&video=0`} title="description" 
-                      style={{width: '100%', height: '100%'}}
-                    ></iframe>
-                    :  
-                    <img
-                      alt=""
-                      src={variantData.url}
-                  />}
-                </Box>}
-              </Box>
-            </Container>
-          </Grid>
+                  { error.status ? 
+                  <Grid container style={{width:'100%', marginLeft:0}}
+                  spacing={3}
+                  >
+                    <Typography style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:100}}>
+                      {error.message}
+                    </Typography> 
+                  </Grid> :
+                  <Box
+                    sx={{
+                      position: 'relative',
+                      height: '100%',
+                      '& img': {
+                        height: 'auto',
+                        position: 'absolute',
+                        top: 0,
+                        width: '100%',
+                        height: '100%'
+                      }
+                    }}
+                  >
+                    {variantData.limnu_boardUrl ? 
+                      <iframe src={`${variantData.limnu_boardUrl}t=${limnu_token}&video=0`} title="description" 
+                        style={{width: '100%', height: '100%'}}
+                      ></iframe>
+                      :  
+                      <img
+                        alt=""
+                        src={variantData.url}
+                    />}
+                  </Box>}
+                </Box>
+              </Container>
+            </Grid>
 
           <Paper 
-            sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, display: 'flex' }}
+            style={{ display: 'inline-flex', bottom: 0, width: '100%', paddingLeft:12}} 
             elevation={3}>
             <Box >
               <Toolbar
+              className={classes.versionList}
                 disableGutters
                 sx={{
                   minHeight: 64,
-                  left: 280,
+                  // left: 280,
                   px: 2
                 }}
               >
@@ -418,6 +431,7 @@ return (
           </Paper>
         </Grid>        
       </Box>
+      {/* </ThemeProvider> */}
     </>
   );
 })

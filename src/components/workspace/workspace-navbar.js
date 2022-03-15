@@ -29,7 +29,7 @@ import { Logo } from '../logo';
 import { useAuth } from '../../hooks/use-auth';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core';
 import axios from 'axios'
 import { useRouter } from 'next/router';
 import DownloadIcon from '@mui/icons-material/Download';
@@ -39,6 +39,8 @@ import dateFormat from "../../utils/dateFormat"
 import AssetsGrid from '../../components/workspace/assets-grid';
 import { withRouter} from 'next/router';
 import AssetSideBar from './projectAssetSidebar'
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 // const [click, setClick] = useState(false)
 
@@ -55,6 +57,17 @@ const useStyles = makeStyles((theme) => ({
   projectTitle: {
     fontSize:28,
     display: 'block'
+  },
+  projectName: {
+    [theme.breakpoints.down("xs")]: {
+      paddingLeft: 0
+    },
+  },
+  title: {
+    color:'#000000',
+    [theme.breakpoints.down("xs")]: {
+      fontSize: 14
+    },
   }
 }));
 
@@ -514,8 +527,6 @@ export const WorkspaceNavbar = withRouter((props) => {
     .catch(error => console.log(error));
   },[projectId]);
 
-  const classes = useStyles();
-
   const isInvited = router.query.invite
   let width;
   isInvited ? width = '100%': width = "calc(100% - 280px)"
@@ -543,6 +554,9 @@ export const WorkspaceNavbar = withRouter((props) => {
       })
   }));
 
+  const classes = useStyles();
+  const theme = useTheme();
+
   return (
     <>
       <WorkspaceNavbarRoot
@@ -558,11 +572,11 @@ export const WorkspaceNavbar = withRouter((props) => {
             mx:1
           }}
         >
-          <Box sx={{ flexGrow: 1, px: 2 }}>    
+          <Box sx={{ flexGrow: 1, px: 2 }} className={classes.projectName}>    
               <Typography variant="h6"  style={{fontSize:12, color:'rgba(0, 0, 0, 0.6)'}}>
                 <span>Project/</span>
               </Typography>
-              <Typography variant="h4" style={{color:'#000000'}}>
+              <Typography variant="h4" className={classes.title}>
                 <span>{projectTitle && projectTitle}</span>
               </Typography>
           </Box>

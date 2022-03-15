@@ -6,16 +6,21 @@ import axios from 'axios';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import toast from 'react-hot-toast';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core';
 import { useDropzone } from 'react-dropzone';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
   mainBox: {
+    width: "650px",
+    [theme.breakpoints.down("xs")]: {
       width: '100%',
-  }
+    },
+  },
 }));
 
 export default function AssetsGrid({projectId, props}) {
@@ -80,8 +85,12 @@ const storeFiles = async (file, formData) => {
   }, [projectId])
 
   const classes = useStyles();
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down('xs'));
+  console.log(matches)
 
   return (
+
     <Box
         sx={{
           // backgroundColor: 'background.default',
@@ -153,5 +162,6 @@ const storeFiles = async (file, formData) => {
             </Box>}
         </Grid>
     </Box>
+
   );
 }
