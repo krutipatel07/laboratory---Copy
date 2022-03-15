@@ -6,7 +6,17 @@ import axios from 'axios';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import toast from 'react-hot-toast';
+import { makeStyles } from '@material-ui/styles';
 import { useDropzone } from 'react-dropzone';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  mainBox: {
+      width: '100%',
+  }
+}));
 
 export default function AssetsGrid({projectId, props}) {
   const [assetData, setAssetData] = useState();
@@ -69,6 +79,8 @@ const storeFiles = async (file, formData) => {
     .catch(error => console.log(error));
   }, [projectId])
 
+  const classes = useStyles();
+
   return (
     <Box
         sx={{
@@ -76,7 +88,11 @@ const storeFiles = async (file, formData) => {
           backgroundColor: '#ffffff',
           flexGrow: 1
         }}
-        style={{paddingTop:'80px', width:650}}
+        className={classes.mainBox}
+        style={{paddingTop:'80px', 
+        // width:650
+      }}
+        
       > 
         <section>
           <div {...getRootProps()}>

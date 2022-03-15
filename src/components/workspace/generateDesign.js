@@ -62,7 +62,7 @@ const useStyles = makeStyles({
       }
     }
   },
-  button: {
+  generatebutton: {
     '&:hover': {
       backgroundColor: '#D8AC6E',
       color: 'white',
@@ -294,7 +294,7 @@ const ProductList = withRouter((props) => {
             variant="contained"
             onClick={handleSubmit}
             type="submit"
-            className={classes.button}
+            className={classes.generatebutton}
           >
             GENERATE
           </Button>

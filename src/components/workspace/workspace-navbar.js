@@ -48,26 +48,6 @@ const languages = {
   es: '/static/icons/es_flag.svg'
 };
 
-const WorkspaceNavbarRoot = styled(AppBar)(({ theme }) => ({
-  // backgroundColor: theme.palette.background.paper,
-  backgroundColor: "#0B0F19",
-  width: "calc(100% - 280px)",
-  ...(theme.palette.mode === 'light'
-    ? {
-      color:'#002E4E',
-      boxShadow: theme.shadows[0],
-      backgroundColor: "#F9FAFC"
-    }
-    : {
-      // backgroundColor: theme.palette.background.paper,
-      // borderBottomColor: theme.palette.divider,
-      // borderBottomStyle: 'solid',
-      // borderBottomWidth: 1,
-      boxShadow: 'none',
-      color:'#F0C88E'
-    })
-}));
-
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -535,6 +515,34 @@ export const WorkspaceNavbar = withRouter((props) => {
   },[projectId]);
 
   const classes = useStyles();
+
+  const isInvited = router.query.invite
+  let width;
+  isInvited ? width = '100%': width = "calc(100% - 280px)"
+
+  const WorkspaceNavbarRoot = styled(AppBar)(({ theme }) => ({
+    // backgroundColor: theme.palette.background.paper,
+    backgroundColor: "#0B0F19",
+    width: width,
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+    },
+    ...(theme.palette.mode === 'light'
+      ? {
+        color:'#002E4E',
+        boxShadow: theme.shadows[0],
+        backgroundColor: "#F9FAFC"
+      }
+      : {
+        // backgroundColor: theme.palette.background.paper,
+        // borderBottomColor: theme.palette.divider,
+        // borderBottomStyle: 'solid',
+        // borderBottomWidth: 1,
+        boxShadow: 'none',
+        color:'#F0C88E'
+      })
+  }));
+
   return (
     <>
       <WorkspaceNavbarRoot
@@ -551,7 +559,7 @@ export const WorkspaceNavbar = withRouter((props) => {
           }}
         >
           <Box sx={{ flexGrow: 1, px: 2 }}>    
-              <Typography variant="h6" style={{fontSize:12, color:'rgba(0, 0, 0, 0.6)'}}>
+              <Typography variant="h6"  style={{fontSize:12, color:'rgba(0, 0, 0, 0.6)'}}>
                 <span>Project/</span>
               </Typography>
               <Typography variant="h4" style={{color:'#000000'}}>

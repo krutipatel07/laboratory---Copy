@@ -2,18 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { Box,
-  Button,
-  TextField,Toolbar,
-  Container,
-  Popover ,
-  Grid,
-  Stack ,
-  Tab,
-  Tabs,
-  IconButton,
-  MenuItem,
-  ListItemText,
-  Typography } from '@mui/material';
+  Button,TextField,Toolbar,Container,Popover ,Grid,Stack ,IconButton,MenuItem,ListItemText,Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { withAuthGuard } from '../../hocs/with-auth-guard';
 import { withWorkspaceLayout } from '../../hocs/with-workspace-layout';
@@ -31,48 +20,8 @@ import dateFormat from "../../utils/dateFormat"
 import toast from 'react-hot-toast';
 import { makeStyles } from '@material-ui/styles';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import { createTheme, ThemeProvider, useTheme } from '@mui/material/styles';
 
-const applyFilters = (products, filters) => products.filter((product) => {
-  if (filters.name) {
-    const nameMatched = product.name.toLowerCase().includes(filters.name.toLowerCase());
-
-    if (!nameMatched) {
-      return false;
-    }
-  }
-
-  // It is possible to select multiple category options
-  if (filters.category?.length > 0) {
-    const categoryMatched = filters.category.includes(product.category);
-
-    if (!categoryMatched) {
-      return false;
-    }
-  }
-
-  // It is possible to select multiple status options
-  if (filters.status?.length > 0) {
-    const statusMatched = filters.status.includes(product.status);
-
-    if (!statusMatched) {
-      return false;
-    }
-  }
-
-  // Present only if filter required
-  if (typeof filters.inStock !== 'undefined') {
-    const stockMatched = product.inStock === filters.inStock;
-
-    if (!stockMatched) {
-      return false;
-    }
-  }
-
-  return true;
-});
-
-const applyPagination = (products, page, rowsPerPage) => products.slice(page * rowsPerPage,
-  page * rowsPerPage + rowsPerPage);
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -97,13 +46,17 @@ const applyPagination = (products, page, rowsPerPage) => products.slice(page * r
         color: 'white',
       },
       cursor: 'pointer'
-    }
+    },
+    // name: {
+    //   [theme.breakpoints.down('md')]: {
+    //     display: 'block',
+    //   },
+    // }
   }));
 
 
 const ProductList = withRouter((props) => {
   const router = useRouter();
-  const isMounted = useMounted();
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -123,8 +76,6 @@ const ProductList = withRouter((props) => {
   const {designId, projectId, invite, isVersion} = props.router.query;
   const limnu_token = localStorage.getItem("limnu_token");
   const [email, setEmail] = useState('');
-
-  const [value, setValue] = React.useState(1);
   const [designData, setDesignData] = useState();
   const [collaboratorData, setCollaboratorData] = useState();   
 
@@ -157,26 +108,6 @@ const ProductList = withRouter((props) => {
       setDesignData(res.data.data)})
     .catch(error => console.log(error));
   }, [email]);
-
-  const handleFiltersChange = (filters) => {
-    setFilters(filters);
-  };
-
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleRowsPerPageChange = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-  };
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  // Usually query is done on backend with indexing solutions
-  const filteredProducts = applyFilters(products, filters);
-  const paginatedProducts = applyPagination(filteredProducts, page, rowsPerPage);
     
   const onDrop = useCallback(acceptedFiles => {
     const formData = new FormData();
@@ -280,7 +211,6 @@ return (
           Variant | Maket Colaboratory
         </title>
       </Head>
-      
       <Box
         component="main"
         sx={{
@@ -295,7 +225,7 @@ return (
         }}
       >
       
-        <Box sx={{display: 'flex'}}>
+        <Box sx={{display: 'flex'}} className={classes.name}>
           <Box sx={{px:2, display: 'flex', pt: '12px'}}>  
               <NextLink
                 href={`/workspace?id=${projectId}`}
@@ -428,8 +358,7 @@ return (
           </Grid>
 
           <Paper 
-            sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}
-            style={{display: 'flex'}} 
+            sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, display: 'flex' }}
             elevation={3}>
             <Box >
               <Toolbar

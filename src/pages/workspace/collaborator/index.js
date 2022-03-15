@@ -16,7 +16,7 @@ import Paper from '@mui/material/Paper';
 import BottomNav from "../../../components/workspace/variant/variant-bottomNav";
 import axios from 'axios';
 import { withRouter } from 'next/router';
-import CommentList from '../../../components/commentList/commentList';
+import { Logo } from '../../../components/logo';
 import {InvitedUserModal} from "../../../components/workspace/invitedUserModal/invitedUserModal"
 import Legends from "../../../components/workspace/variant/variant-legends";
 import AssetsGrid from '../../../components/workspace/assets-grid';
@@ -198,7 +198,7 @@ const InvitedUSerPage = withRouter((props) => {
             p: 0
           }}
         >
-          <Box sx={{px:2}}> 
+          <Box sx={{px:2, pt: 1}}> 
             <Tabs> 
               <Tab label={variantData && variantData.title} disabled />
             </Tabs> 
@@ -206,16 +206,16 @@ const InvitedUSerPage = withRouter((props) => {
         </Box>
         <Grid container 
         spacing={2} 
-        style={{width: "100%"}}>
+        style={{width: "100%", marginLeft: 0}}>
           <Grid item 
-          xs={12}>
+          xs={12} style={{display: 'inline-flex', paddingLeft: 0}}>
             <Container maxWidth="xl"> 
               <Box fullWidth
               sx={{
                 // maxWidth: 1260,
                 maxWidth: '100%',
                 mx: 'auto',
-                height: '400px'
+                height: '550px'
               }}>
                 { error.status ? 
                 <Grid container style={{width:'100%', marginLeft:0}}
@@ -254,10 +254,9 @@ const InvitedUSerPage = withRouter((props) => {
           </Grid>
 
           <Paper 
-            sx={{ width: '100%', height: '100%', padding: 3}} 
-            // style={{display: 'flex'}} 
+            style={{ display: 'inline-flex', bottom: 0, width: '100%', paddingLeft:12}} 
             elevation={3}>
-            <Box style={{ position: 'fixed', bottom: 0 }} >
+            <Box >
             { isVersion && variantData && variantData.versionOf &&
               <NextLink
                 href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${variantData.versionOf._id}` :`/workspace/${projectId}?designId=${variantData.versionOf._id}`}
