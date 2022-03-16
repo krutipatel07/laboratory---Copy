@@ -54,7 +54,7 @@ const sections = [
     links: [
       {
         title: 'Instagram',
-        href: '#'
+        href: 'https://www.instagram.com/maket.ai/'
       },
       {
         title: 'LinkedIn',
