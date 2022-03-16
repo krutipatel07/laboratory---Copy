@@ -15,33 +15,37 @@ import { MinusOutlined as MinusOutlinedIcon } from '../icons/minus-outlined';
 import { Logo } from './logo';
 
 const sections = [
-  {
-    title: 'Menu',
-    links: [
-      {
-        title: 'Browse Components',
-        href: '/browse'
-      },
-      {
-        title: 'Documentation',
-        href: '/docs/welcome'
-      }
-    ]
-  },
+  // {
+  //   title: 'Menu',
+  //   links: [
+  //     {
+  //       title: 'Browse Components',
+  //       href: '/browse'
+  //     },
+  //     {
+  //       title: 'Documentation',
+  //       href: '/docs/welcome'
+  //     }
+  //   ]
+  // },
   {
     title: 'Placeholders',
     links: [
-      {
-        title: 'Terms & Conditions',
-        href: '#'
-      },
-      {
-        title: 'License',
-        href: '#'
-      },
+      // {
+      //   title: 'Terms & Conditions',
+      //   href: '#'
+      // },
+      // {
+      //   title: 'License',
+      //   href: '#'
+      // },
       {
         title: 'Contact',
-        href: '#'
+        href: '/contact'
+      },
+      {
+        title: 'Email',
+        href : 'mailto:info@maket.ca'
       }
     ]
   },

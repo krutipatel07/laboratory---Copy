@@ -12,6 +12,7 @@ const Contact = () => {
     gtm.push({ event: 'page_view' });
   }, []);
 
+  const user = localStorage.getItem("lab-user");
   return (
     <>
       <Head>
@@ -44,17 +45,20 @@ const Contact = () => {
               }
             }}
           >
-            <NextLink
-              href="/dashboard/projects"
-              passHref
-            >
-              <Button
-                component="a"
-                startIcon={<ArrowLeftIcon fontSize="small" />}
+            {user && 
+              <NextLink
+                href="/dashboard/projects"
+                passHref
               >
-                Dashboard
-              </Button>
-            </NextLink>
+                <Button
+                  component="a"
+                  startIcon={<ArrowLeftIcon fontSize="small" />}
+                >
+                  Dashboard
+                </Button>
+              </NextLink>
+            }
+            
             <Typography
               variant="h3"
               sx={{ mt: 3 }}

@@ -32,7 +32,7 @@ export const HomeHero = (props) => {
           align="center"
           variant="h1"
         >
-          Maket Colaboratory v1.0
+          Architectural Prototyping, Simplified
         </Typography>
         <Typography
           align="center"
@@ -143,7 +143,8 @@ export const HomeHero = (props) => {
         >
           <img
             alt=""
-            src={`/static/home/hero_${theme.palette.mode}.png`}
+            // src={`/static/home/hero_${theme.palette.mode}.png`}
+            src={`/static/home/new_hero.png`}
           />
         </Box>
       </Box>
