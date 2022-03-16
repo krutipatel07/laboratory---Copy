@@ -11,7 +11,7 @@ export const MainNavbar = (props) => {
     <AppBar
       elevation={0}
       sx={{
-        backgroundColor: 'background.paper',
+        backgroundColor: 'background.nav',
         borderBottomColor: 'divider',
         borderBottomStyle: 'solid',
         borderBottomWidth: 1,
