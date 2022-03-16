@@ -1,12 +1,23 @@
 import NextLink from 'next/link';
-import { Box, Button, Container, Typography } from '@mui/material';
+import { Box, Button, Container, Typography, AppBar } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { ArrowRight as ArrowRight } from '../../icons/arrow-right';
+import { styled } from '@mui/material/styles';
+import { makeStyles } from '@material-ui/core';
 
+
+const useStyles = makeStyles((theme) => ({
+  button: {
+    '&:hover': {
+      backgroundColor: '#000',
+      color: '#fff',
+      border: '1px solid #F0C88E'
+  },
+}
+}));
 
 export const HomeHero = (props) => {
-  const theme = useTheme();
-  
+  const classes = useStyles();
   return (
     <Box
       sx={{
@@ -110,6 +121,7 @@ export const HomeHero = (props) => {
               component="a"
               size="large"
               variant="contained"
+              className={classes.button}
             >
               Sign up
             </Button>
@@ -171,5 +183,6 @@ export const HomeHero = (props) => {
         </Container>
       </Box>
     </Box>
+
   );
 };

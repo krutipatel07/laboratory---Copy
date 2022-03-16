@@ -17,7 +17,8 @@ const background = {
   // default: '#F9FAFC',
   default: '#FFFFFF',
   paper: '#FFFFFF',
-  hover: neutral[100]
+  hover: neutral[100],
+  nav: '#ffffff'
 };
 
 const divider = '#E6E8F0';
