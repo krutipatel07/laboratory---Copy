@@ -14,6 +14,7 @@ import Button from '@mui/material/Button';
 import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Typography } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,7 +79,7 @@ const ProductCard = (props) => {
                   <MoreVertIcon />
                 </Button>
                 }
-        title={title}
+        title={<Typography style={{fontSize: '15px' }}>{title}</Typography>}
       />
       <NextLink
           href={link}

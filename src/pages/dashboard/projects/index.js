@@ -153,7 +153,7 @@ const ProductList = () => {
               spacing={3}
             >
               <Grid item>
-                <Typography variant="h4">
+                <Typography variant="h4" style={{fontSize: '24px'}}>
                   Projects
                 </Typography>
               </Grid>
