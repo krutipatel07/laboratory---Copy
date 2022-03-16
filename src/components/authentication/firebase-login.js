@@ -5,6 +5,18 @@ import { Alert, Box, Button, Divider, FormHelperText, TextField, Typography } fr
 import { useAuth } from '../../hooks/use-auth';
 import { useMounted } from '../../hooks/use-mounted';
 import axios from 'axios'
+import { makeStyles } from '@material-ui/core';
+
+
+const useStyles = makeStyles((theme) => ({
+  button: {
+    '&:hover': {
+      backgroundColor: '#000',
+      color: '#fff',
+      border: '1px solid #F0C88E'
+  },
+}
+}));
 
 export const FirebaseLogin = (props) => {
 
@@ -84,6 +96,8 @@ export const FirebaseLogin = (props) => {
       console.error(err);
     }
   };
+  const classes = useStyles();
+
 
   return (
     <div {...props}>
@@ -172,6 +186,8 @@ export const FirebaseLogin = (props) => {
             size="large"
             type="submit"
             variant="contained"
+          className={classes.button}
+
           >
             Log In
           </Button>

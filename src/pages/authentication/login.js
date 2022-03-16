@@ -12,6 +12,7 @@ import { withGuestGuard } from '../../hocs/with-guest-guard';
 import { useAuth } from '../../hooks/use-auth';
 import { gtm } from '../../lib/gtm';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
+import { makeStyles } from '@material-ui/core';
 
 const platformIcons = {
   Amplify: '/static/icons/amplify.svg',
@@ -28,6 +29,7 @@ const Login = () => {
   useEffect(() => {
     gtm.push({ event: 'page_view' });
   }, []);
+
 
   return (
     <>

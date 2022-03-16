@@ -3,6 +3,18 @@ import { useRouter } from 'next/router';
 import { Box, Button, FormHelperText } from '@mui/material';
 import { useAuth } from '../../hooks/use-auth';
 import { useMounted } from '../../hooks/use-mounted';
+import { makeStyles } from '@material-ui/core';
+
+
+const useStyles = makeStyles((theme) => ({
+  button: {
+    '&:hover': {
+      backgroundColor: '#000',
+      color: '#fff',
+      border: '1px solid #F0C88E'
+  },
+}
+}));
 
 export const Auth0Login = (props) => {
   const isMounted = useMounted();
@@ -26,6 +38,8 @@ export const Auth0Login = (props) => {
       }
     }
   };
+  const classes = useStyles();
+
 
   return (
     <div {...props}>
@@ -45,6 +59,7 @@ export const Auth0Login = (props) => {
         <Button
           onClick={handleLogin}
           variant="contained"
+          className={classes.button}
         >
           Log In
         </Button>
