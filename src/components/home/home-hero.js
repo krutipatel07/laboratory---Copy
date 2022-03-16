@@ -32,7 +32,13 @@ export const HomeHero = (props) => {
           align="center"
           variant="h1"
         >
-          Architectural Prototyping, Simplified
+          Architectural Prototyping,
+        </Typography>
+        <Typography
+          align="center"
+          variant="h1"
+        >
+          Simplified
         </Typography>
         <Typography
           align="center"
