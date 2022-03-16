@@ -19,7 +19,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 const useStyles = makeStyles((theme) => ({
   font: {
-    fontSize: '1.5rem',
+    fontSize: '18px',
     [theme.breakpoints.down("xs")]: {
       fontSize: 16,
     },
@@ -92,8 +92,8 @@ const ProjectWorkspace = withRouter((props) => {
             // borderBottom: 1, borderColor: 'divider', 
             marginBottom: '10px' }}>
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-              <Tab label="GENERATE" {...a11yProps(0)} className={classes.font} />
-              <Tab label="DESIGNS" {...a11yProps(1)} className={classes.font}/>
+              <Tab label="Generate" {...a11yProps(0)} className={classes.font} />
+              <Tab label="Design" {...a11yProps(1)} className={classes.font}/>
               {/* <Tab label="Assets" {...a11yProps(2)} style={{fontSize: '1.5rem'}} /> */}
             </Tabs>
           </Box>

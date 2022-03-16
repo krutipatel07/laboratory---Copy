@@ -15,6 +15,7 @@ import Chip from '@mui/material/Chip';
 import Popper from '@mui/material/Popper';
 import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
+import { Typography } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -114,13 +115,14 @@ const VariantCard = (props) => {
               px:2 
             }}>
         <CardHeader
-          sx={{ padding: 1, }}
+          
           action={
             <Button onClick={handleClick('bottom-end')}>
               <MoreVertIcon />
             </Button>
           }
-          title={title}
+          style={{ padding: 1}}
+          title={<Typography style={{fontSize: '15px' }}>{title}</Typography>}
         />
         <NextLink
             href={link}

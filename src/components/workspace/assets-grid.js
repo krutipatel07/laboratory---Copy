@@ -107,7 +107,7 @@ const storeFiles = async (file, formData) => {
           <div {...getRootProps()}>
               <input {...getInputProps()} />
               <Button
-                style={{padding: 5, fontSize: 12}}
+                style={{padding: 5, fontSize: 12, margin: 12}}
                 variant="contained"
                 type="submit"
               >

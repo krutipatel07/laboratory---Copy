@@ -244,7 +244,7 @@ return (
                 href={`/workspace?id=${projectId}`}
                 passHref
               >
-                <Typography style={{color:'rgba(0, 0, 0, 0.6)', cursor:'pointer'}}>DESIGNS</Typography>
+                <Typography style={{color:'rgba(0, 0, 0, 0.6)', cursor:'pointer'}}>Designs</Typography>
               </NextLink>
 
               <IconButton className={classes.icon}>
