@@ -41,13 +41,7 @@ const getSections = (t, projectList) => [
         title: t('Projects'),
         path: '/dashboard/projects',
         // icon: <DesignServicesIcon fontSize="small" />,
-        children: [
-          {
-            title: t('List'),
-            path: '/dashboard/projects',
-            children: projectList
-          }
-        ]
+        children: projectList
       },
     ]
   },
