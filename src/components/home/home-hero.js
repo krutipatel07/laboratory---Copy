@@ -138,7 +138,7 @@ export const HomeHero = (props) => {
         <Box
           sx={{
             position: 'relative',
-            pt: 'calc(600 / 980 * 100%)',
+            pt: 'calc(500 / 980 * 100%)',
             '& img': {
               height: 'auto',
               position: 'absolute',
@@ -154,7 +154,7 @@ export const HomeHero = (props) => {
           />
         </Box>
       </Box>
-      <Box sx={{ py: 8 }}>
+      <Box sx={{ py: 0 }}>
         <Container
           maxWidth="md"
           sx={{
