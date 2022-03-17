@@ -14,10 +14,14 @@ const neutral = {
 };
 
 const background = {
-  default: '#0B0F19',
-  paper: neutral[900],
-  hover: neutral[800]
+  // default: '#0B0F19',
+  default: '#000000',
+  // paper: neutral[900],
+  paper: '#000000',
+  hover: neutral[800],
+  nav: '#000000'
 };
+
 
 const divider = '#2D3748';
 
@@ -179,7 +183,7 @@ export const darkThemeOptions = {
     secondary,
     success,
     text,
-    warning
+    warning,
   },
   shadows: [
     'none',

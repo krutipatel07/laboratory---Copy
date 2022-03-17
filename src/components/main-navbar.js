@@ -3,15 +3,29 @@ import NextLink from 'next/link';
 import { AppBar, Box, Button, Container, IconButton, Link, Toolbar } from '@mui/material';
 import { Menu as MenuIcon } from '../icons/menu';
 import { Logo } from './logo';
+import { makeStyles } from '@material-ui/core';
+
+
+const useStyles = makeStyles((theme) => ({
+  button: {
+    '&:hover': {
+      backgroundColor: '#000',
+      color: '#fff',
+      border: '1px solid #F0C88E'
+  },
+}
+}));
 
 export const MainNavbar = (props) => {
   const { onOpenSidebar } = props;
+  const classes = useStyles();
+
 
   return (
     <AppBar
       elevation={0}
       sx={{
-        backgroundColor: 'background.paper',
+        backgroundColor: 'background.nav',
         borderBottomColor: 'divider',
         borderBottomStyle: 'solid',
         borderBottomWidth: 1,
@@ -81,6 +95,7 @@ export const MainNavbar = (props) => {
               sx={{ ml: 2 }}
               target="_blank"
               variant="contained"
+              className={classes.button}
             >
               Sign up
             </Button>
