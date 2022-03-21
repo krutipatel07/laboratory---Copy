@@ -11,10 +11,11 @@ import dateFormat from "../../utils/dateFormat"
 import toast from 'react-hot-toast';
 import AddIcon from '@mui/icons-material/Add';
 
-export default function SavedDesign({projectId}) {
+export default function SavedDesign({projectId, setNewDesign}) {
   const [projectData, setProjectData] = useState([]);
   const [update, setUpdate] = useState(true);
   useEffect(() => {
+    setNewDesign(0)
     axios.get(`/api/projects/${projectId}`)
     .then(res => setProjectData(res.data.data))
     .catch(error => console.log(error));

@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '8px 10px'
   }
 }));
-const GenerateDesignCard = ({image}) => {
+const GenerateDesignCard = ({image, setNewDesign}) => {
   const [clicked, setClicked] = useState(false)
   const classes = useStyles();
   const router = useRouter();
@@ -60,6 +60,7 @@ const GenerateDesignCard = ({image}) => {
     const saveDesign = async () => {   
       
     setClicked(true)
+    setNewDesign((prev) => prev+1)
       const {data} = await axios.post(`/api/projects/${router.query.id}/design`, {
         title: `Design-${title}`,
         url: image
@@ -142,9 +143,9 @@ const GenerateDesignCard = ({image}) => {
               {!clicked ?
               <><AddIcon style={{color:'#111827'}}/>
               <Typography>
-                Add to project
+                Add to Design
               </Typography> </>: <Typography>
-                Added to project
+                Added to Design
               </Typography> }
             </IconButton>
           </Stack>

@@ -61,6 +61,7 @@ function a11yProps(index) {
 
 const ProjectWorkspace = withRouter((props) => {
   const [value, setValue] = React.useState(1);
+  const [newDesign, setNewDesign] = React.useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -93,15 +94,14 @@ const ProjectWorkspace = withRouter((props) => {
             marginBottom: '10px' }}>
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
               <Tab label="Generate" {...a11yProps(0)} className={classes.font} />
-              <Tab label="Design" {...a11yProps(1)} className={classes.font}/>
-              {/* <Tab label="Assets" {...a11yProps(2)} style={{fontSize: '1.5rem'}} /> */}
+              <Tab label={`Design ${newDesign !== 0 ? `(${newDesign})` : ""}`} {...a11yProps(1)} className={classes.font}/>
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
-            <GenerateDesign projectId= {props.router.query.id}/>
+            <GenerateDesign projectId= {props.router.query.id} setNewDesign={setNewDesign}/>
           </TabPanel>
           <TabPanel value={value} index={1}>
-            <DesignSavedGrid projectId= {props.router.query.id}/>
+            <DesignSavedGrid projectId= {props.router.query.id} setNewDesign={setNewDesign}/>
           </TabPanel>
         </Box>
       </Container>

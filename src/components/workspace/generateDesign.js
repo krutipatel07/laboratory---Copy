@@ -311,7 +311,7 @@ const ProductList = withRouter((props) => {
       >
         <Container maxWidth="xl">
             {generatedData.length ? 
-            <DesignGrid data={generatedData}/> 
+            <DesignGrid data={generatedData} setNewDesign={props.setNewDesign}/> 
             : 
             <Typography sx={{textAlign:'center', fontSize:'20px', paddingTop:'100px'}}>Set your design constraints to begin</Typography> }
         </Container>
