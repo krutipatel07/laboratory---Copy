@@ -89,7 +89,7 @@ const ProjectWorkspace = withRouter((props) => {
       <Container maxWidth="xl">
         <Box sx={{ width: '100%' }}>
           <Box 
-          sx={{ 
+          sx={{ pl:1.1,
             // borderBottom: 1, borderColor: 'divider', 
             marginBottom: '10px' }}>
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">

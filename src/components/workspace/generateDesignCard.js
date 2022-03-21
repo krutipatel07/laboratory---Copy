@@ -13,6 +13,7 @@ import dateFormat from "../../utils/dateFormat"
 import { useRouter } from 'next/router';
 import AddIcon from '@mui/icons-material/Add';
 import Backdrop from '@mui/material/Backdrop';
+import Button from '@mui/material/Button';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,7 +33,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   image: {
-    padding: '24px 24px 0'
+    padding: '24px 24px 0',
+    // '&:hover': {
+    //   transform: 'scale(1.5)'
+    // }
   },
   title: {
     paddingTop: '15px'
@@ -41,6 +45,18 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: 'auto',
     marginRight: 'auto',
     padding: '8px 10px'
+  },
+  designAdded: {
+    backgroundColor: '#212121',
+    color: '#F0C88E',
+    '&:hover': {
+      backgroundColor: '#212121',
+    },
+    buttonadd: {
+      '&:hover': {
+        backgroundColor: 'rgba(107, 114, 128, 0.04)'
+      }
+    }
   }
 }));
 const GenerateDesignCard = ({image, setNewDesign}) => {
@@ -142,11 +158,11 @@ const GenerateDesignCard = ({image, setNewDesign}) => {
             >
               {!clicked ?
               <><AddIcon style={{color:'#111827'}}/>
-              <Typography>
+              <Button className={classes.buttonadd}>
                 Add to Design
-              </Typography> </>: <Typography>
+              </Button > </>: <Button className={classes.designAdded}>
                 Added to Design
-              </Typography> }
+              </Button> }
             </IconButton>
           </Stack>
         </CardActions>
