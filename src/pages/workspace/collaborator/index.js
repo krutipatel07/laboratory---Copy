@@ -257,7 +257,7 @@ const InvitedUSerPage = withRouter((props) => {
             style={{ display: 'inline-flex', bottom: 0, width: '100%', paddingLeft:12}} 
             elevation={3}>
             <Box >
-            { isVersion && variantData && variantData.versionOf &&
+            { variantData && variantData.versionOf ?
               <NextLink
                 href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${variantData.versionOf._id}` :`/workspace/${projectId}?designId=${variantData.versionOf._id}`}
                 passHref
@@ -267,10 +267,20 @@ const InvitedUSerPage = withRouter((props) => {
                   variant="outlined" 
                   sx={{borderWidth: '2px', m: 1}}
                 />
-              </NextLink>
+              </NextLink> : <Chip 
+                  label="Default" 
+                  color="primary" 
+                  sx={{borderWidth: '2px', m: 1}}
+                />
             }
             {
-              versions && versions.map(version =>
+              versions && variantData &&  versions.map(version =>
+                version.title === variantData.title ? 
+                <Chip 
+                  label={`${version.title}`} 
+                  color = "primary"
+                  sx={{borderWidth: '2px', m: 1}}
+                /> : 
                 <NextLink 
                 href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${version._id}&isVersion=true` :`/workspace/${projectId}?designId=${version._id}&isVersion=true`}    
                 passHref

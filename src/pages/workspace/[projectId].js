@@ -217,7 +217,7 @@ const open = Boolean(anchorEl);
 const classes = useStyles();
 const theme = useTheme();
 const matches = useMediaQuery(theme.breakpoints.down('xs'));
-console.log(matches)
+
 return ( 
     <>
     {/* <ThemeProvider theme={theme}> */}
@@ -383,7 +383,7 @@ return (
                 }}
               >
               
-            { isVersion && variantData && variantData.versionOf &&
+            { variantData && variantData.versionOf ?
               <NextLink
                 href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${variantData.versionOf._id}` :`/workspace/${projectId}?designId=${variantData.versionOf._id}`}
                 passHref
@@ -393,10 +393,20 @@ return (
                   variant="outlined" 
                   sx={{borderWidth: '2px', m: 1}}
                 />
-              </NextLink>
+              </NextLink> : <Chip 
+                  label="Default" 
+                  color="primary" 
+                  sx={{borderWidth: '2px', m: 1}}
+                />
             }
             {
-              versions && versions.map(version =>
+              versions && variantData && versions.map(version =>
+                version.title === variantData.title ? 
+                <Chip 
+                  label={`${version.title}`} 
+                  color = "primary"
+                  sx={{borderWidth: '2px', m: 1}}
+                /> : 
                 <NextLink 
                 href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${version._id}&isVersion=true` :`/workspace/${projectId}?designId=${version._id}&isVersion=true`}    
                 passHref
