@@ -256,7 +256,7 @@ export const baseThemeOptions = {
       fontWeight: 600
     },
     // fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
-    fontFamily: '"Roboto", sans-serif',
+    fontFamily: "'IBM Plex Sans', sans-serif",
     body1: {
       fontSize: '1rem',
       fontWeight: 400,
