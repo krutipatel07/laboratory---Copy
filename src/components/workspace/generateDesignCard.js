@@ -155,11 +155,7 @@ const GenerateDesignCard = ({image, setNewDesign}) => {
           className={classes.image}
           sx={{
               objectFit:"fill",
-              cursor : "pointer",
-              transition: '0.5s ease-out',
-                "&:hover": {
-                  transform: 'scale(1.3)'
-                }
+              cursor: 'zoom-in'
               }}
           component="img"
           alt="green iguana"
