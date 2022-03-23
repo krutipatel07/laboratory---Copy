@@ -14,6 +14,9 @@ import { useRouter } from 'next/router';
 import AddIcon from '@mui/icons-material/Add';
 import Backdrop from '@mui/material/Backdrop';
 import Button from '@mui/material/Button';
+import { FormHelperText, TextField, Modal } from '@mui/material';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -73,12 +76,42 @@ const GenerateDesignCard = ({image, setNewDesign}) => {
     setOpen(!open);
   };
 
-    const saveDesign = async () => {   
-      
+  const [openModal, setOpenModal] = useState(false);
+  const handleOpenModal = () => !clicked && setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 500,
+    bgcolor: 'background.paper',
+    boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
+    p: 4,
+  };
+  
+  const formik = useFormik({
+    initialValues: {
+      designName: '',
+      submit: null
+    },
+    validationSchema: Yup.object({
+      designName: Yup
+        .string()
+        .max(255)
+        .required('Design name is required'),
+    }),
+    onSubmit: async (values) => {
+      saveDesign(values.designName)
+      handleCloseModal();
+    }})
+
+    const saveDesign = async (designName) => {   
     setClicked(true)
     setNewDesign((prev) => prev+1)
       const {data} = await axios.post(`/api/projects/${router.query.id}/design`, {
-        title: `Design-${title}`,
+        title: designName,
         url: image
       }).catch(error => 
         setClicked(false))
@@ -106,6 +139,7 @@ const GenerateDesignCard = ({image, setNewDesign}) => {
     }
 
     return (
+    <>
       <Card
       sx={{
             maxWidth: 300,
@@ -119,7 +153,11 @@ const GenerateDesignCard = ({image, setNewDesign}) => {
           className={classes.image}
           sx={{
               objectFit:"fill",
-              cursor : "pointer"
+              cursor : "pointer",
+              transition: '0.5s ease-out',
+                "&:hover": {
+                  transform: 'scale(1.3)'
+                }
               }}
           component="img"
           alt="green iguana"
@@ -152,7 +190,7 @@ const GenerateDesignCard = ({image, setNewDesign}) => {
           width='100%'
           spacing={2}>
             <IconButton aria-label="save"
-            onClick={saveDesign}  
+            onClick={handleOpenModal}
             className={classes.savebtn}
             // style={{marginLeft: 'auto'}}
             >
@@ -167,6 +205,52 @@ const GenerateDesignCard = ({image, setNewDesign}) => {
           </Stack>
         </CardActions>
       </Card>
+      <Modal
+        open={openModal}
+        onClose={handleCloseModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>  
+        <Typography variant="h6">Design Name</Typography>
+          <form
+            noValidate
+            onSubmit={formik.handleSubmit}
+          >
+            <TextField
+              error={Boolean(formik.touched.designName && formik.errors.designName)}
+              fullWidth
+              helperText={formik.touched.designName && formik.errors.designName}
+              label="name"
+              margin="normal"
+              name="designName"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              value={formik.values.designName}
+              variant="standard"
+            />
+            {formik.errors.submit && (
+              <Box sx={{ mt: 3 }}>
+                <FormHelperText error>
+                  {formik.errors.submit}
+                </FormHelperText>
+              </Box>
+            )}
+            <Box sx={{ display: 'flex' , justifyContent: 'flex-end' }}>
+              <Button onClick={handleCloseModal}>
+                CANCEL
+              </Button>
+              <Button
+                disabled={formik.isSubmitting}
+                type="submit"
+              >
+                SAVE
+              </Button>
+            </Box>
+          </form>
+        </Box>
+      </Modal>
+    </>
   );
 };
 export default GenerateDesignCard
