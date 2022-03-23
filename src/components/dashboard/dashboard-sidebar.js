@@ -20,6 +20,15 @@ import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import DashboardModal from '../../components/modal/dashboard-modal';
 import { useAuth } from '../../hooks/use-auth';
 import axios from 'axios'
+import MenuIcon from '@mui/icons-material/Menu';
+import { useTheme } from '@mui/material/styles';
+
+const drawerWidthOpen = 240;
+const paddingIconButton = 10;
+const marginIconButton = 14;
+const iconFontSize = 20;
+const drawerWidthClose =
+  (paddingIconButton + marginIconButton) * 2 + iconFontSize;
 
 const getSections = (t, projectList) => [
   {
@@ -76,9 +85,9 @@ const getBottomSections = (t) => [
 ];
 
 export const DashboardSidebar = (props) => {
-  const { onClose, open, projectList } = props;
+  const { onClose, projectList } = props;
   const [isModalShown, setModalShown] = useState(false)
-  const [isOpen, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const router = useRouter();
   const { t } = useTranslation();
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'), {
@@ -151,6 +160,23 @@ export const DashboardSidebar = (props) => {
                 </a>
               </NextLink>
             </Box>
+            <Button
+              onClick={toogleOpen}
+              sx={{
+                minWidth: 'initial',
+                padding: '10px',
+                color: 'gray',
+                borderRadius: '8px',
+                backgroundColor: open ? 'transparent' : 'transparent',
+                '&:hover': {
+                  backgroundColor: '#26284687',
+                },
+              }}
+            >
+              <MenuIcon
+                sx={{ fontSize: '20px', color: open ? 'lightgray' : 'lightGray' }}
+              ></MenuIcon>
+            </Button>
             {/* <Box sx={{ px: 2 }}>
               <Box
                 sx={{
@@ -294,21 +320,56 @@ export const DashboardSidebar = (props) => {
     );
   }
 
+  function toogleOpen() {
+    setOpen(!open);
+    console.log("....")
+  }
+
   return (
     <Drawer
-      anchor="left"
-      onClose={onClose}
+      variant="permanent"
       open={open}
-      PaperProps={{
-        sx: {
-          backgroundColor: 'neutral.900',
-          backgroundColor: '#212121',
-          color: '#FFFFFF',
-          width: 280
-        }
+      sx={{
+        width: open
+          ? { xs: '0px', sm: drawerWidthClose }
+          : { xs: drawerWidthClose, sm: drawerWidthOpen },
+        transition: theme.transitions.create('width', {
+          easing: theme.transitions.easing.sharp,
+          duration: open
+            ? theme.transitions.duration.leavingScreen
+            : theme.transitions.duration.enteringScreen,
+        }),
+        '& .MuiDrawer-paper': {
+          justifyContent: 'space-between',
+          overflowX: 'hidden',
+          width: open
+            ? { xs: '0px', sm: drawerWidthClose }
+            : { xs: drawerWidthClose, sm: drawerWidthOpen },
+          borderRight: '0px',
+          borderRadius: '0px 16px 16px 0px',
+          boxShadow: theme.shadows[8],
+          backgroundColor: open ? '#11101D' : '#11101D',
+          transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: open
+              ? theme.transitions.duration.leavingScreen
+              : theme.transitions.duration.enteringScreen,
+          }),
+        },
       }}
-      sx={{ zIndex: (theme) => theme.zIndex.appBar + 100 }}
-      variant="temporary"
+      // anchor="left"
+      // onClose={onClose}
+      // open={open}
+      // PaperProps={{
+      //   sx: {
+      //     backgroundColor: 'neutral.900',
+      //     backgroundColor: '#212121',
+      //     color: '#FFFFFF',
+      //     width: 280
+      //   }
+      // }}
+      // sx={{ zIndex: (theme) => theme.zIndex.appBar + 100 }}
+      // variant="temporary"
     >
       {content}
     </Drawer>

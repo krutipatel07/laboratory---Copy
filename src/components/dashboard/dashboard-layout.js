@@ -19,7 +19,7 @@ const DashboardLayoutRoot = styled('div')(({ theme }) => ({
 
 export const DashboardLayout = (props) => {
   const { children } = props;
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [projectList, setProjectList] = useState();
 
   useEffect(() => {
@@ -51,8 +51,8 @@ export const DashboardLayout = (props) => {
       </DashboardLayoutRoot>
       {/* <DashboardNavbar onOpenSidebar={() => setIsSidebarOpen(true)} /> */}
       {projectList && <DashboardSidebar
-        onClose={() => setIsSidebarOpen(false)}
-        open={isSidebarOpen}
+        // onClose={() => setIsSidebarOpen(false)}
+        // open={isSidebarOpen}
         projectList={projectList}
       />}
     </>
