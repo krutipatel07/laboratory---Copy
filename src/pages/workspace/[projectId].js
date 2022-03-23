@@ -170,7 +170,8 @@ const importDesign = async (secure_url) => {
   });
 
   addVariant ? toast.success('Variant design added!') : toast.error('Something went wrong!');
-  location.reload();
+  const returnUrl = `/workspace/${addVariant.data.data.project}?designId=${addVariant.data.data.id}&isVersion=true`
+  router.push(returnUrl);
 };
 
 const getParentDesignVersions = () =>{

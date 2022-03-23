@@ -17,6 +17,7 @@ import Button from '@mui/material/Button';
 import { FormHelperText, TextField, Modal } from '@mui/material';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import CheckIcon from '@mui/icons-material/Check';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -199,7 +200,7 @@ const GenerateDesignCard = ({image, setNewDesign}) => {
               <Button className={classes.buttonadd}>
                 Add to Design
               </Button > </>: <Button className={classes.designAdded}>
-                Added to Design
+                <CheckIcon></CheckIcon>
               </Button> }
             </IconButton>
           </Stack>
