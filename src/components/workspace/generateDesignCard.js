@@ -17,6 +17,7 @@ import Button from '@mui/material/Button';
 import { FormHelperText, TextField, Modal } from '@mui/material';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import CheckIcon from '@mui/icons-material/Check';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,15 +51,16 @@ const useStyles = makeStyles((theme) => ({
     padding: '8px 10px'
   },
   designAdded: {
-    backgroundColor: '#212121',
-    color: '#F0C88E',
+    color: 'geen'
+    // backgroundColor: '#212121',
+    // color: '#F0C88E',
+    // '&:hover': {
+    //   backgroundColor: '#212121',
+    // },
+  },
+  buttonadd: {
     '&:hover': {
-      backgroundColor: '#212121',
-    },
-    buttonadd: {
-      '&:hover': {
-        backgroundColor: 'rgba(107, 114, 128, 0.04)'
-      }
+      backgroundColor: 'rgba(107, 114, 128, 0.04)'
     }
   }
 }));
@@ -198,8 +200,9 @@ const GenerateDesignCard = ({image, setNewDesign}) => {
               <><AddIcon style={{color:'#111827'}}/>
               <Button className={classes.buttonadd}>
                 Add to Design
-              </Button > </>: <Button className={classes.designAdded}>
-                Added to Design
+              </Button > </>: 
+              <Button style={{color: '#4CAF50'}}>
+                <CheckIcon/>
               </Button> }
             </IconButton>
           </Stack>
