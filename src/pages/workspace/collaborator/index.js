@@ -239,7 +239,7 @@ const InvitedUSerPage = withRouter((props) => {
                   }}
                 >
                   {variantData && variantData.limnu_boardUrl ? 
-                    <iframe src={`${variantData.limnu_boardUrl}t=${limnu_token}`} title="description" 
+                    <iframe src={`${variantData.limnu_boardUrl}t=${limnu_token}`} allow="camera;microphone" title="description" 
                       style={{width: '100%', height: '100%'}}
                     ></iframe>
                     :  
