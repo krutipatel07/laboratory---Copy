@@ -4,12 +4,7 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, Chip, Divider, Drawer, Typography, useMediaQuery } from '@mui/material';
-import { Calendar as CalendarIcon } from '../../icons/calendar';
-import { ChatAlt2 as ChatAlt2Icon } from '../../icons/chat-alt2';
-import { ClipboardList as ClipboardListIcon } from '../../icons/clipboard-list';
-import { Mail as MailIcon } from '../../icons/mail';
-import { ShoppingBag as ShoppingBagIcon } from '../../icons/shopping-bag';
+import { Box, Button, IconButton, Divider, Drawer, Typography, useMediaQuery } from '@mui/material';
 import { UserCircle as UserCircleIcon } from '../../icons/user-circle';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Users as UsersIcon } from '../../icons/users';
@@ -20,10 +15,11 @@ import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import DashboardModal from '../../components/modal/dashboard-modal';
 import { useAuth } from '../../hooks/use-auth';
 import axios from 'axios'
-import MenuIcon from '@mui/icons-material/Menu';
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from "@mui/material/styles";
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
-const drawerWidthOpen = 240;
+const drawerWidthOpen = 280;
 const paddingIconButton = 10;
 const marginIconButton = 14;
 const iconFontSize = 20;
@@ -87,10 +83,13 @@ const getBottomSections = (t) => [
 export const DashboardSidebar = (props) => {
   const { onClose, projectList } = props;
   const [isModalShown, setModalShown] = useState(false)
-  const [open, setOpen] = useState(false);
+  // const [isOpen, setOpen] = React.useState(false);
   const router = useRouter();
   const { t } = useTranslation();
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'), {
+    noSsr: true
+  });
+  const lgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'), {
     noSsr: true
   });
   const sections = useMemo(() => getSections(t, projectList), [t]);
@@ -126,6 +125,13 @@ export const DashboardSidebar = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [router.isReady, router.asPath]);
 
+    const theme = useTheme();
+    const [open, setOpen] = useState(false);
+
+    function toogleOpen() {
+      setOpen(!open);
+    }
+
   const content = (
     <>
       <Scrollbar
@@ -144,77 +150,49 @@ export const DashboardSidebar = (props) => {
           }}
         >
           <div>
-            <Box sx={{ p: 3 }} style={{textAlign:'center'}}>
+
+            <Box sx={open ? { p: 1, mt: 4 } : {p: 3}} style={{textAlign: 'center'}}>
               <NextLink
                 href="/dashboard/projects"
                 passHref
               >
                 <a>
-                  <Logo
-                    sx={{
-                      height: 55,
-                      width: 55,
-                    }}
-                    variant="light"
-                  />
-                </a>
+                <Logo
+                  sx={{
+                    height: open ? 45 : 55,
+                    width: open ? 55 : 55,
+                    justifyContent: 'center'
+                  }}
+                  variant="light"
+                />
+              </a> 
+                
               </NextLink>
             </Box>
             <Button
               onClick={toogleOpen}
               sx={{
-                minWidth: 'initial',
-                padding: '10px',
-                color: 'gray',
-                borderRadius: '8px',
-                backgroundColor: open ? 'transparent' : 'transparent',
-                '&:hover': {
-                  backgroundColor: '#26284687',
-                },
+                position: 'absolute',
+                top: 10,
+                right: 0,
+                minWidth: "initial",
+                padding: "10px",
+                color: "gray",
+                borderRadius: "8px",
+                backgroundColor: open ? "transparent" : "transparent",
+                "&:hover": {
+                  backgroundColor: "#26284687"
+                }
               }}
             >
-              <MenuIcon
-                sx={{ fontSize: '20px', color: open ? 'lightgray' : 'lightGray' }}
-              ></MenuIcon>
+              {open 
+              ? <ChevronRightIcon sx={{ fontSize: "20px", color: open ? "lightgray" : "lightGray" }}></ChevronRightIcon>
+              : <ChevronLeftIcon sx={{ fontSize: "20px", color: open ? "lightgray" : "lightGray" }}></ChevronLeftIcon>}
+              
             </Button>
-            {/* <Box sx={{ px: 2 }}>
-              <Box
-                sx={{
-                  alignItems: 'center',
-                  backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                  cursor: 'pointer',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  px: 3,
-                  py: '11px',
-                  borderRadius: 1
-                }}
-              >
-                <div>
-                  {user ? <><Typography
-                    color="inherit"
-                    variant="subtitle1"
-                  >
-                    {user.name}
-                  </Typography>
-                  <Typography
-                    color="neutral.400"
-                    variant="body2"
-                  >
-                    {t('Your tier')}
-                    {' '}
-                    : {user.tier}
-                  </Typography></> : <h3>loading...</h3>}
-                </div>
-              </Box>
-            </Box> */}
           </div>
-          {/* <Divider
-            sx={{
-              borderColor: '#2D3748',
-              my: 3
-            }}
-          /> */}
+          {open ?
+           '' : 
           <Box sx={{ flexGrow: 1 }}>
             {sections.map((section) => (
               <DashboardSidebarSection
@@ -229,7 +207,7 @@ export const DashboardSidebar = (props) => {
                 {...section} />
             ))}
           </Box>
-
+          }
           {/* <Box sx={{p:2}}>
             <Button
                 color="primary"
@@ -250,18 +228,8 @@ export const DashboardSidebar = (props) => {
             }}
           /> */}
           <Box>
-            {/* <Typography
-              color="neutral.100"
-              variant="subtitle2"
-            >
-              {t('Need Help?')}
-            </Typography>
-            <Typography
-              color="neutral.500"
-              variant="body2"
-            >
-              {t('Reach out to us')}
-            </Typography> */}
+            {open ?
+            '' :
             <Box sx={{ flexGrow: 1 }}>
               {BottomSections.map((section) => (
                 <DashboardSidebarSection
@@ -276,21 +244,7 @@ export const DashboardSidebar = (props) => {
                   {...section} />
               ))}
             </Box>
-            {/* <NextLink
-              href="/contact"
-              passHref
-            >
-              <Button
-                color="secondary"
-                component="a"
-                fullWidth
-                sx={{ mt: 2 }}
-                variant="contained"
-              >
-
-                {t('Contact us')}
-              </Button>
-            </NextLink> */}
+            }
           </Box>
         </Box>
       </Scrollbar>
@@ -300,76 +254,72 @@ export const DashboardSidebar = (props) => {
   if (lgUp) {
     return (
       <Drawer
-        anchor="left"
-        open
-        PaperProps={{
-          sx: {
-            // backgroundColor: 'neutral.900',
-            backgroundColor: '#212121',
-            borderRightColor: 'divider',
-            borderRightStyle: 'solid',
-            borderRightWidth: (theme) => theme.palette.mode === 'dark' ? 1 : 0,
-            color: '#FFFFFF',
-            width: 280
+
+      variant="permanent"
+        open={open}
+        sx={{
+          width: open
+            ? { xs: "0px", sm: drawerWidthClose }
+            : { xs: drawerWidthClose, sm: drawerWidthOpen },
+          transition: theme.transitions.create("width", {
+            easing: theme.transitions.easing.sharp,
+            duration: open
+              ? theme.transitions.duration.leavingScreen
+              : theme.transitions.duration.enteringScreen
+          }),
+          "& .MuiDrawer-paper": {
+            justifyContent: "space-between",
+            overflowX: "hidden",
+            width: open
+              ? { xs: "0px", sm: drawerWidthClose }
+              : { xs: drawerWidthClose, sm: drawerWidthOpen },
+            borderRight: "0px",
+            // borderRadius: "0px 16px 16px 0px",
+            boxShadow: theme.shadows[8],
+            backgroundColor: open ? "#212121" : "#212121",
+            transition: theme.transitions.create("width", {
+              easing: theme.transitions.easing.sharp,
+              duration: open
+                ? theme.transitions.duration.leavingScreen
+                : theme.transitions.duration.enteringScreen
+            })
           }
         }}
-        variant="permanent"
+        // anchor="left"
+        // open
+        // PaperProps={{
+        //   sx: {
+        //     // backgroundColor: 'neutral.900',
+        //     backgroundColor: '#212121',
+        //     borderRightColor: 'divider',
+        //     borderRightStyle: 'solid',
+        //     borderRightWidth: (theme) => theme.palette.mode === 'dark' ? 1 : 0,
+        //     color: '#FFFFFF',
+        //     width: 280
+        //   }
+        // }}
+        // variant="permanent"
       >
         {content}
       </Drawer>
     );
   }
 
-  function toogleOpen() {
-    setOpen(!open);
-    console.log("....")
-  }
-
   return (
     <Drawer
-      variant="permanent"
+      anchor="left"
+      onClose={onClose}
       open={open}
-      sx={{
-        width: open
-          ? { xs: '0px', sm: drawerWidthClose }
-          : { xs: drawerWidthClose, sm: drawerWidthOpen },
-        transition: theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: open
-            ? theme.transitions.duration.leavingScreen
-            : theme.transitions.duration.enteringScreen,
-        }),
-        '& .MuiDrawer-paper': {
-          justifyContent: 'space-between',
-          overflowX: 'hidden',
-          width: open
-            ? { xs: '0px', sm: drawerWidthClose }
-            : { xs: drawerWidthClose, sm: drawerWidthOpen },
-          borderRight: '0px',
-          borderRadius: '0px 16px 16px 0px',
-          boxShadow: theme.shadows[8],
-          backgroundColor: open ? '#11101D' : '#11101D',
-          transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: open
-              ? theme.transitions.duration.leavingScreen
-              : theme.transitions.duration.enteringScreen,
-          }),
-        },
+      PaperProps={{
+        sx: {
+          backgroundColor: 'neutral.900',
+          backgroundColor: '#212121',
+          color: '#FFFFFF',
+          width: 280
+        }
       }}
-      // anchor="left"
-      // onClose={onClose}
-      // open={open}
-      // PaperProps={{
-      //   sx: {
-      //     backgroundColor: 'neutral.900',
-      //     backgroundColor: '#212121',
-      //     color: '#FFFFFF',
-      //     width: 280
-      //   }
-      // }}
-      // sx={{ zIndex: (theme) => theme.zIndex.appBar + 100 }}
-      // variant="temporary"
+      sx={{ zIndex: (theme) => theme.zIndex.appBar + 100 }}
+      variant="temporary"
     >
       {content}
     </Drawer>
