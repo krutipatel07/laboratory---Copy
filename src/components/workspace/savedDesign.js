@@ -43,7 +43,9 @@ export default function SavedDesign({projectId, setNewDesign}) {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 700,
+    width: {
+      lg: '700px'
+    },
     bgcolor: 'background.paper',
     boxShadow: 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
     p: 4,
@@ -173,6 +175,7 @@ const importDesign = async (secure_url, designName) => {
         onClose={handleCloseModal}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
+        sx={{overflow: "scroll"}}
       >
         <Box sx={style}>  
           <Typography variant="h6">Import Design</Typography>
