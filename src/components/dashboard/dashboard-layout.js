@@ -13,13 +13,13 @@ const DashboardLayoutRoot = styled('div')(({ theme }) => ({
   // paddingTop: 64,
   paddingTop: 15,
   [theme.breakpoints.up('lg')]: {
-    paddingLeft: 280
+    // paddingLeft: 280
   }
 }));
 
 export const DashboardLayout = (props) => {
   const { children } = props;
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [projectList, setProjectList] = useState();
 
   useEffect(() => {
@@ -51,8 +51,8 @@ export const DashboardLayout = (props) => {
       </DashboardLayoutRoot>
       {/* <DashboardNavbar onOpenSidebar={() => setIsSidebarOpen(true)} /> */}
       {projectList && <DashboardSidebar
-        onClose={() => setIsSidebarOpen(false)}
-        open={isSidebarOpen}
+        // onClose={() => setIsSidebarOpen(false)}
+        // open={isSidebarOpen}
         projectList={projectList}
       />}
     </>

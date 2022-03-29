@@ -16,6 +16,8 @@ import axios from 'axios'
 import { makeStyles } from '@material-ui/core';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import {DashboardSidebar} from '../../components/dashboard/dashboard-sidebar';
+import {WorkspaceNavbar} from '../../components/workspace/workspace-navbar'
 
 const useStyles = makeStyles((theme) => ({
   font: {
@@ -82,11 +84,13 @@ const ProjectWorkspace = withRouter((props) => {
       sx={{
         flexGrow: 1,
         // mb: 8,
-        backgroundColor:'#ffffff'
+        backgroundColor:'#ffffff',
+        display: 'flex'
       }}
     >
-
+      <DashboardSidebar/>
       <Container maxWidth="xl">
+        <WorkspaceNavbar/>
         <Box sx={{ width: '100%' }}>
           <Box 
           sx={{ pl:1.1,
@@ -109,5 +113,5 @@ const ProjectWorkspace = withRouter((props) => {
     </>
   );
 })
-// export default withAuthGuard(withDashboardLayout(ProjectWorkspace));
-export default withAuthGuard(withDashboardLayout(withWorkspaceLayout(ProjectWorkspace)));
+export default withAuthGuard(ProjectWorkspace)
+// export default withAuthGuard(withDashboardLayout(withWorkspaceLayout(ProjectWorkspace)));

@@ -14,6 +14,7 @@ import DashboardModal from '../../../components/modal/dashboard-modal';
 import CreateProjectModal from '../../../components/modal/createProject-modal'
 import { useAuth } from '../../../hooks/use-auth';
 import AddIcon from '@mui/icons-material/Add';
+import {DashboardSidebar} from '../../../components/dashboard/dashboard-sidebar'
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -58,6 +59,7 @@ const applyPagination = (products, page, rowsPerPage) => products.slice(page * r
   page * rowsPerPage + rowsPerPage);
 
 const ProductList = () => {
+
   const isMounted = useMounted();
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(0);
@@ -143,8 +145,10 @@ const ProductList = () => {
           flexGrow: 1,
           py: 0,
           height: '100%',
+          display: 'flex'
         }}
       >
+        <DashboardSidebar/>
         <Container maxWidth="xl" sx={{backgroundColor: "white"}}>
           <Box sx={{ mb: 4 , backgroundColor: "white"}}>
             <Grid
@@ -179,9 +183,10 @@ const ProductList = () => {
       {
         userData && userData.isFirstTime ? 
         <DashboardModal/> : ''
-        }
+      }
     </>
   );
 };
 
-export default withAuthGuard(withDashboardLayout(ProductList));
+// export default withAuthGuard(withDashboardLayout(ProductList));
+export default withAuthGuard(ProductList);

@@ -529,21 +529,23 @@ export const WorkspaceNavbar = withRouter((props) => {
   },[projectId]);
 
   const isInvited = router.query.invite
-  let width;
-  isInvited ? width = '100%': width = "calc(100% - 280px)"
+  // let width;
+  // isInvited ? width = '100%': width = "calc(100% - 280px)"
 
   const WorkspaceNavbarRoot = styled(AppBar)(({ theme }) => ({
     // backgroundColor: theme.palette.background.paper,
     backgroundColor: "#0B0F19",
-    width: width,
-    [theme.breakpoints.down('md')]: {
-      width: '100%',
-    },
+    // width: width,
+    // [theme.breakpoints.down('md')]: {
+    //   width: '100%',
+    // },
     ...(theme.palette.mode === 'light'
       ? {
         color:'#002E4E',
         boxShadow: theme.shadows[0],
-        backgroundColor: "#F9FAFC"
+        backgroundColor: "#F9FAFC",
+        right: 'auto',
+        display: 'contents'
       }
       : {
         // backgroundColor: theme.palette.background.paper,
@@ -567,18 +569,18 @@ export const WorkspaceNavbar = withRouter((props) => {
           sx={{
             minHeight: 64,
             left: 0,
-            p: 1,
+            // p: 1,
             backgroundColor: 'rgba(255, 255, 255)',
             borderBottom: '1px solid black',
-            mx:1
+            // mx:1
           }}
         >
-          <Box sx={{ flexGrow: 1, px: 2 }} className={classes.projectName}>
+          <Box sx={{ flexGrow: 1, pl: 1 }} className={classes.projectName}>
               <NextLink
                 href="/dashboard/projects"
                 passHref
               >
-                <Typography variant="h6"  style={{fontSize:12, color:'rgba(0, 0, 0, 0.6)'}}>
+                <Typography variant="h6"  style={{fontSize:12, color:'rgba(0, 0, 0, 0.6)', cursor: 'pointer'}}>
                   <span>Project/</span>
                 </Typography>
               </NextLink>   

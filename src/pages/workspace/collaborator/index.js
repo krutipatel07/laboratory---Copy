@@ -20,6 +20,10 @@ import { Logo } from '../../../components/logo';
 import {InvitedUserModal} from "../../../components/workspace/invitedUserModal/invitedUserModal"
 import Legends from "../../../components/workspace/variant/variant-legends";
 import AssetsGrid from '../../../components/workspace/assets-grid';
+import {DashboardSidebar} from '../../../components/dashboard/dashboard-sidebar';
+import {WorkspaceNavbar} from '../../../components/workspace/workspace-navbar'
+import { withAuthGuard } from '../../../hocs/with-auth-guard';
+
 
 
 const applyFilters = (products, filters) => products.filter((product) => {
@@ -183,124 +187,117 @@ const InvitedUSerPage = withRouter((props) => {
       <Box
         component="main"
         sx={{
-          flexGrow: 1
+          display: 'flex',
+          flexGrow: 1,
         }}
-      > 
-        <Box
-          sx={{
-            alignItems: 'center',
-            display: 'flex',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            backgroundColor: 'rgba(255, 255, 255)',
-            // m: -1.5,
-            m: 0,
-            p: 0
-          }}
-        >
+      >
+        <DashboardSidebar/>
+        <Container maxWidth="xl" style={{width:'100%'}}>
+          <WorkspaceNavbar/>
+          
           <Box sx={{px:2, pt: 1}}> 
             <Tabs> 
               <Tab label={variantData && variantData.title} disabled />
             </Tabs> 
           </Box>
-        </Box>
-        <Grid container 
-        spacing={2} 
-        style={{width: "100%", marginLeft: 0}}>
-          <Grid item 
-          xs={12} style={{display: 'inline-flex', paddingLeft: 0}}>
-            <Container maxWidth="xl"> 
-              <Box fullWidth
-              sx={{
-                // maxWidth: 1260,
-                maxWidth: '100%',
-                mx: 'auto',
-                height: '550px'
-              }}>
-                { error.status ? 
-                <Grid container style={{width:'100%', marginLeft:0}}
-                spacing={3}
-                >
-                  <Typography style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:100}}>
-                    {error.message}
-                  </Typography> 
-                </Grid> :
-                <Box
-                  sx={{
-                    position: 'relative',
-                    height: '100%',
-                    '& img': {
-                      height: 'auto',
-                      position: 'absolute',
-                      top: 0,
-                      width: '100%',
-                      height: '100%'
-                    }
-                  }}
-                >
-                  {variantData && variantData.limnu_boardUrl ? 
-                    <iframe src={`${variantData.limnu_boardUrl}t=${limnu_token}`} allow="camera;microphone" title="description" 
-                      style={{width: '100%', height: '100%'}}
-                    ></iframe>
-                    :  
-                    <img
-                      alt=""
-                      src={variantData && variantData.url}
-                  />
-                  }
-                </Box>}
-              </Box>
-            </Container>
-          </Grid>
 
-          <Paper 
-            style={{ display: 'inline-flex', bottom: 0, width: '100%', paddingLeft:12}} 
-            elevation={3}>
-            <Box >
-            { variantData && variantData.versionOf ?
-              <NextLink
-                href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${variantData.versionOf._id}` :`/workspace/${projectId}?designId=${variantData.versionOf._id}`}
-                passHref
-              >
-                <Chip 
-                  label="Default" 
-                  variant="outlined" 
-                  sx={{borderWidth: '2px', m: 1}}
-                />
-              </NextLink> : <Chip 
-                  label="Default" 
-                  color="primary" 
-                  sx={{borderWidth: '2px', m: 1}}
-                />
-            }
-            {
-              versions && variantData &&  versions.map(version =>
-                version.title === variantData.title ? 
-                <Chip 
-                  label={`${version.title}`} 
-                  color = "primary"
-                  sx={{borderWidth: '2px', m: 1}}
-                /> : 
-                <NextLink 
-                href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${version._id}&isVersion=true` :`/workspace/${projectId}?designId=${version._id}&isVersion=true`}    
-                passHref
-                key = { version._id}
+          <Box 
+          style={{width: "100%", marginLeft: 0}}>
+            <Box xs={12}>
+              <Container maxWidth="xl"> 
+                <Box fullWidth
+                sx={{
+                  // maxWidth: 1260,
+                  maxWidth: '100%',
+                  mx: 'auto',
+                  height: '550px'
+                }}>
+                  { error.status ? 
+                  <Grid container style={{width:'100%', marginLeft:0}}
+                  spacing={3}
+                  >
+                    <Typography style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:100}}>
+                      {error.message}
+                    </Typography> 
+                  </Grid> :
+                  <Box
+                    sx={{
+                      position: 'relative',
+                      height: '100%',
+                      '& img': {
+                        height: 'auto',
+                        position: 'absolute',
+                        top: 0,
+                        width: '100%',
+                        height: '100%'
+                      }
+                    }}
+                  >
+                    {variantData && variantData.limnu_boardUrl ? 
+                      <iframe src={`${variantData.limnu_boardUrl}t=${limnu_token}&video=0`} title="description" 
+                        style={{width: '100%', height: '100%'}}
+                      ></iframe>
+                      :  
+                      <img
+                        alt=""
+                        src={variantData && variantData.url}
+                    />
+                    }
+                  </Box>}
+                </Box>
+              </Container>
+            </Box>
+
+            <Paper 
+              style={{ display: 'inline-flex', bottom: 0, width: '100%', paddingLeft:12}} 
+              elevation={3}>
+              <Box >
+              { variantData && variantData.versionOf ?
+                <NextLink
+                  href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${variantData.versionOf._id}` :`/workspace/${projectId}?designId=${variantData.versionOf._id}`}
+                  passHref
                 >
                   <Chip 
-                    label={`${version.title}`} 
+                    label="Default" 
                     variant="outlined" 
                     sx={{borderWidth: '2px', m: 1}}
                   />
-                </NextLink>
-                )
-            }
-          </Box>
-          </Paper>
-        </Grid>        
-        <InvitedUserModal variantData={variantData}/>
+                </NextLink> : <Chip 
+                    label="Default" 
+                    color="primary" 
+                    sx={{borderWidth: '2px', m: 1}}
+                  />
+              }
+              {
+                versions && variantData &&  versions.map(version =>
+                  version.title === variantData.title ? 
+                  <Chip 
+                    label={`${version.title}`} 
+                    color = "primary"
+                    sx={{borderWidth: '2px', m: 1}}
+                  /> : 
+                  <NextLink 
+                  href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${version._id}&isVersion=true` :`/workspace/${projectId}?designId=${version._id}&isVersion=true`}    
+                  passHref
+                  key = { version._id}
+                  >
+                    <Chip 
+                      label={`${version.title}`} 
+                      variant="outlined" 
+                      sx={{borderWidth: '2px', m: 1}}
+                    />
+                  </NextLink>
+                  )
+              }
+            </Box>
+            </Paper>
+          </Box>        
+        
+          <InvitedUserModal variantData={variantData}/>
+        </Container>
       </Box>
     </>
   );
 })
 
-export default withWorkspaceLayout(InvitedUSerPage);
+export default withAuthGuard(InvitedUSerPage);
