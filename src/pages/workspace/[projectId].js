@@ -21,7 +21,8 @@ import { makeStyles } from '@material-ui/core';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-
+import {DashboardSidebar} from '../../components/dashboard/dashboard-sidebar';
+import {WorkspaceNavbar} from '../../components/workspace/workspace-navbar'
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -230,145 +231,141 @@ return (
       <Box
         component="main"
         sx={{
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          flexWrap: 'wrap',
           backgroundColor: 'rgba(255, 255, 255)',
           m: 0,
-          p: 0
+          p: 0,
+          display: 'flex',
+          flexGrow: 1,
         }}
       >
-      
-        <Box sx={{display: 'flex'}} className={classes.name}>
-          <Box sx={{px:2, display: 'flex', pt: '12px'}}>  
-              <NextLink
-                href={`/workspace?id=${projectId}`}
-                passHref
-              >
-                <Typography style={{color:'rgba(0, 0, 0, 0.6)', cursor:'pointer'}}>Designs</Typography>
-              </NextLink>
-
-              <IconButton className={classes.icon}>
-                <ArrowForwardIosOutlinedIcon style={{ paddingTop:'12px'}}/>
-              </IconButton>
-              
-              <Typography disabled style={{color:'rgba(0, 0, 0, 0.87)'}}>{variantData && variantData.title}</Typography>
-          </Box>
-      
-          <Box style={{display: 'block', marginLeft: 'auto'}}>
-            <Button onClick={handleClick}>
-              <IconButton><PersonAddAltIcon/></IconButton>
-              COLLABORATORS 
-            </Button>
-            <Popover
-              open={open}
-              anchorEl={anchorEl}
-              onClose={handleClose}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-            >
-              <Box
-                sx={{
-                  alignItems: 'center',
-                  p: 2,
-                  display: 'flex',
-                  fontSize: '14px'
-                }}
-              >
-                <form onSubmit={handleSubmit} 
-                method={'post'} 
-                style={{display:"inline-flex", justifyContent:'space-between', width:'100%'}}>
-                    <TextField label="Collaborator email" 
-                    type="email" 
-                    required value={email} onInput={ e=>setEmail(e.target.value)}/>
-                    <Stack spacing={2} 
-                    direction="row">
-                        <Button 
-                        type="submit" 
-                        variant="contained" 
-                        className={classes.button}
-                        >Invite</Button>
-                    </Stack>
-
-                </form>
-              </Box>
-              <Box sx={{ my: 1 }} 
-              className={classes.text}>
-                <Typography 
-                className={classes.p}>
-                    COLLABORATORS
-                </Typography>
-              </Box>
-              <Box sx={{ my: 1 }}>
-              {designData? collaboratorData.length? collaboratorData.map((collaborator, i) => 
-                  <MenuItem key={i} 
-                  component="a">
-                    <ListItemText
-                      primary={(
-                        <Typography 
-                        variant="body1">
-                          {collaborator}
-                        </Typography>
-                      )}
-                    />
-                  </MenuItem> 
-                  // <Divider />
-                  ): <Typography style={{paddingLeft: '20px'}}>Add collaborator</Typography>  : <Typography style={{paddingLeft: '20px'}}>loading...</Typography>}
-              </Box>
-            </Popover>
-          </Box>
-        </Box>
-
-        <Grid container 
-          spacing={2} 
-          style={{width: "100%"}}>
-            <Grid item 
-            xs={12}>  
-              <Container maxWidth="xl"> 
-                <Box fullWidth
-                sx={{
-                  // maxWidth: 1260,
-                  maxWidth: '100%',
-                  mx: 'auto',
-                  height: '550px',
-                }}
+        <DashboardSidebar/>
+        <Container maxWidth="xl" style={{width:'100%'}}>
+          <WorkspaceNavbar/>
+          <Box sx={{display: 'flex'}} className={classes.name}>
+            <Box sx={{px:2, display: 'flex', pt: '12px'}}>  
+                <NextLink
+                  href={`/workspace?id=${projectId}`}
+                  passHref
                 >
-                  { error.status ? 
-                  <Grid container style={{width:'100%', marginLeft:0}}
-                  spacing={3}
-                  >
-                    <Typography style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:100}}>
-                      {error.message}
-                    </Typography> 
-                  </Grid> :
-                  <Box
-                    sx={{
-                      position: 'relative',
-                      height: '100%',
-                      '& img': {
-                        height: 'auto',
-                        position: 'absolute',
-                        top: 0,
-                        width: '100%',
-                        height: '100%'
-                      }
-                    }}
-                  >
-                    {variantData.limnu_boardUrl ? 
-                      <iframe src={`${variantData.limnu_boardUrl}t=${limnu_token}&video=0`} title="description" 
-                        style={{width: '100%', height: '100%'}}
-                      ></iframe>
-                      :  
-                      <img
-                        alt=""
-                        src={variantData.url}
-                    />}
-                  </Box>}
+                  <Typography style={{color:'rgba(0, 0, 0, 0.6)', cursor:'pointer'}}>Designs</Typography>
+                </NextLink>
+
+                <IconButton className={classes.icon}>
+                  <ArrowForwardIosOutlinedIcon style={{ paddingTop:'12px'}}/>
+                </IconButton>
+                
+                <Typography disabled style={{color:'rgba(0, 0, 0, 0.87)'}}>{variantData && variantData.title}</Typography>
+            </Box>
+        
+            <Box style={{display: 'block', marginLeft: 'auto'}}>
+              <Button onClick={handleClick}>
+                <IconButton><PersonAddAltIcon/></IconButton>
+                COLLABORATORS 
+              </Button>
+              <Popover
+                open={open}
+                anchorEl={anchorEl}
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+              >
+                <Box
+                  sx={{
+                    alignItems: 'center',
+                    p: 2,
+                    display: 'flex',
+                    fontSize: '14px'
+                  }}
+                >
+                  <form onSubmit={handleSubmit} 
+                  method={'post'} 
+                  style={{display:"inline-flex", justifyContent:'space-between', width:'100%'}}>
+                      <TextField label="Collaborator email" 
+                      type="email" 
+                      required value={email} onInput={ e=>setEmail(e.target.value)}/>
+                      <Stack spacing={2} 
+                      direction="row">
+                          <Button 
+                          type="submit" 
+                          variant="contained" 
+                          className={classes.button}
+                          >Invite</Button>
+                      </Stack>
+
+                  </form>
                 </Box>
-              </Container>
-            </Grid>
+                <Box sx={{ my: 1 }} 
+                className={classes.text}>
+                  <Typography 
+                  className={classes.p}>
+                      COLLABORATORS
+                  </Typography>
+                </Box>
+                <Box sx={{ my: 1 }}>
+                {designData? collaboratorData.length? collaboratorData.map((collaborator, i) => 
+                    <MenuItem key={i} 
+                    component="a">
+                      <ListItemText
+                        primary={(
+                          <Typography 
+                          variant="body1">
+                            {collaborator}
+                          </Typography>
+                        )}
+                      />
+                    </MenuItem> 
+                    // <Divider />
+                    ): <Typography style={{paddingLeft: '20px'}}>Add collaborator</Typography>  : <Typography style={{paddingLeft: '20px'}}>loading...</Typography>}
+                </Box>
+              </Popover>
+            </Box>
+          </Box>
+          <Box xs={12}>  
+            <Container maxWidth="xl"> 
+              <Box fullWidth
+              sx={{
+                // maxWidth: 1260,
+                maxWidth: '100%',
+                mx: 'auto',
+                height: '550px',
+              }}
+              >
+                { error.status ? 
+                <Grid container style={{width:'100%', marginLeft:0}}
+                spacing={3}
+                >
+                  <Typography style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:100}}>
+                    {error.message}
+                  </Typography> 
+                </Grid> :
+                <Box
+                  sx={{
+                    position: 'relative',
+                    height: '100%',
+                    '& img': {
+                      height: 'auto',
+                      position: 'absolute',
+                      top: 0,
+                      width: '100%',
+                      height: '100%'
+                    }
+                  }}
+                >
+                  {variantData.limnu_boardUrl ? 
+                    <iframe src={`${variantData.limnu_boardUrl}t=${limnu_token}&video=0`} title="description" 
+                      style={{width: '100%', height: '100%'}}
+                    ></iframe>
+                    :  
+                    <img
+                      alt=""
+                      src={variantData.url}
+                  />}
+                </Box>}
+              </Box>
+            </Container>
+          </Box>
 
           <Paper 
             style={{ display: 'inline-flex', bottom: 0, width: '100%', paddingLeft:12}} 
@@ -440,11 +437,12 @@ return (
               </Toolbar>
             </Box>
           </Paper>
-        </Grid>        
+        </Container>     
       </Box>
       {/* </ThemeProvider> */}
     </>
   );
 })
 
-export default withAuthGuard(withDashboardLayout(withWorkspaceLayout(ProductList)));
+// export default withAuthGuard(ProductList);
+export default withAuthGuard(ProductList);

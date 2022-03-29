@@ -132,6 +132,8 @@ export const DashboardSidebar = (props) => {
       setOpen(!open);
     }
 
+    const isInvited = router.query.invite
+
   const content = (
     <>
       <Scrollbar
@@ -191,8 +193,17 @@ export const DashboardSidebar = (props) => {
               
             </Button>
           </div>
-          {open ?
-           '' : 
+          {open ? 
+          <Box sx={{ flexGrow: 1 }}>
+           <IconButton style={{display: 'grid', width: '100%'}}>
+             <NextLink href="/dashboard/customers">
+              <UsersIcon fontSize="small" />
+             </NextLink>
+             <NextLink href="/dashboard/projects">
+              <DesignServicesIcon fontSize="small" style={{display:'block', marginTop: 30}}/>
+             </NextLink>
+           </IconButton>
+          </Box> : 
           <Box sx={{ flexGrow: 1 }}>
             {sections.map((section) => (
               <DashboardSidebarSection
@@ -229,7 +240,16 @@ export const DashboardSidebar = (props) => {
           /> */}
           <Box>
             {open ?
-            '' :
+            <Box sx={{ flexGrow: 1 }}>
+              <IconButton style={{display: 'grid', width: '100%'}}>
+                <NextLink href="/dashboard/account">
+                  <UserCircleIcon fontSize="small" />
+                </NextLink>
+                <NextLink href="/contact">
+                  <InfoOutlinedIcon fontSize="small" style={{display:'block', marginTop: 30}}/>
+                </NextLink>
+              </IconButton>
+            </Box> :
             <Box sx={{ flexGrow: 1 }}>
               {BottomSections.map((section) => (
                 <DashboardSidebarSection
@@ -303,6 +323,10 @@ export const DashboardSidebar = (props) => {
         {content}
       </Drawer>
     );
+  }
+
+  if (lgDown) {
+    
   }
 
   return (

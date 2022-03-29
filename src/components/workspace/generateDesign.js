@@ -179,7 +179,7 @@ const ProductList = withRouter((props) => {
           px:2,
           mt: '-30px'
         }}
-        style={{marginTop:'-64px'}}
+        // style={{marginTop:'-64px'}}
       >
       <ThemeProvider  theme={theme}>
 
@@ -320,4 +320,5 @@ const ProductList = withRouter((props) => {
   );
 })
 
-export default withAuthGuard(withWorkspaceLayout(ProductList));
+export default withAuthGuard(ProductList);
+// export default withAuthGuard(withWorkspaceLayout(ProductList));
