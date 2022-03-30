@@ -18,6 +18,8 @@ import axios from 'axios'
 import { useTheme } from "@mui/material/styles";
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import LogoutIcon from '@mui/icons-material/Logout';
+import toast from 'react-hot-toast';
 
 const drawerWidthOpen = 280;
 const paddingIconButton = 10;
@@ -80,7 +82,18 @@ const getBottomSections = (t) => [
   }
 ];
 
-export const DashboardSidebar = (props) => {
+export const DashboardSidebar = (props) => {  
+  const { logout } = useAuth();
+  const handleLogout = async () => {
+    try {
+      await logout();
+      router.push('/');
+    } catch (err) {
+      console.error(err);
+      toast.error('Unable to logout.');
+    }
+  };
+
   const { onClose, projectList } = props;
   const [isModalShown, setModalShown] = useState(false)
   // const [isOpen, setOpen] = React.useState(false);
@@ -94,7 +107,6 @@ export const DashboardSidebar = (props) => {
   });
   const sections = useMemo(() => getSections(t, projectList), [t]);
   const BottomSections = useMemo(() => getBottomSections(t), [t]);
-  // const { user } = useAuth();
 
   const handlePathChange = () => {
     if (!router.isReady) {
@@ -107,7 +119,7 @@ export const DashboardSidebar = (props) => {
   };
   
   const [user, setUser] = useState();
-  
+  const [open, setOpen] = useState(`${localStorage.getItem('sidebar_open')}` || false);
   useEffect(() => {
     const user = localStorage.getItem("lab-user");
     axios.get(`/api/user/${user}`)
@@ -126,9 +138,9 @@ export const DashboardSidebar = (props) => {
     [router.isReady, router.asPath]);
 
     const theme = useTheme();
-    const [open, setOpen] = useState(false);
 
     function toogleOpen() {
+      localStorage.sidebar_open = `${!open}`;
       setOpen(!open);
     }
 
@@ -155,7 +167,7 @@ export const DashboardSidebar = (props) => {
 
             <Box sx={open ? { p: 1, mt: 4 } : {p: 3}} style={{textAlign: 'center'}}>
               <NextLink
-                href="/dashboard/projects"
+                href={isInvited ? "#" : "/dashboard/projects"}
                 passHref
               >
                 <a>
@@ -171,6 +183,7 @@ export const DashboardSidebar = (props) => {
                 
               </NextLink>
             </Box>
+            {!isInvited &&
             <Button
               onClick={toogleOpen}
               sx={{
@@ -191,9 +204,9 @@ export const DashboardSidebar = (props) => {
               ? <ChevronRightIcon sx={{ fontSize: "20px", color: open ? "lightgray" : "lightGray" }}></ChevronRightIcon>
               : <ChevronLeftIcon sx={{ fontSize: "20px", color: open ? "lightgray" : "lightGray" }}></ChevronLeftIcon>}
               
-            </Button>
+            </Button> }
           </div>
-          {open ? 
+          {!isInvited ? (open ? 
           <Box sx={{ flexGrow: 1 }}>
            <IconButton style={{display: 'grid', width: '100%'}}>
              <NextLink href="/dashboard/customers">
@@ -217,7 +230,7 @@ export const DashboardSidebar = (props) => {
                 }}
                 {...section} />
             ))}
-          </Box>
+          </Box>) : <Box sx={{ flexGrow: 1 }}></Box>
           }
           {/* <Box sx={{p:2}}>
             <Button
@@ -242,11 +255,12 @@ export const DashboardSidebar = (props) => {
             {open ?
             <Box sx={{ flexGrow: 1 }}>
               <IconButton style={{display: 'grid', width: '100%'}}>
-                <NextLink href="/dashboard/account">
+                {!isInvited ? <NextLink href="/dashboard/account">
                   <UserCircleIcon fontSize="small" />
-                </NextLink>
+                </NextLink> : <LogoutIcon onClick={handleLogout} fontSize="small" style={{display:'block', marginTop: 30}}/>
+                }
                 <NextLink href="/contact">
-                  <InfoOutlinedIcon fontSize="small" style={{display:'block', marginTop: 30}}/>
+                  <InfoOutlinedIcon fontSize="small" style={{display:'block', marginTop: 30, marginBottom: 30}}/>
                 </NextLink>
               </IconButton>
             </Box> :
@@ -305,28 +319,10 @@ export const DashboardSidebar = (props) => {
             })
           }
         }}
-        // anchor="left"
-        // open
-        // PaperProps={{
-        //   sx: {
-        //     // backgroundColor: 'neutral.900',
-        //     backgroundColor: '#212121',
-        //     borderRightColor: 'divider',
-        //     borderRightStyle: 'solid',
-        //     borderRightWidth: (theme) => theme.palette.mode === 'dark' ? 1 : 0,
-        //     color: '#FFFFFF',
-        //     width: 280
-        //   }
-        // }}
-        // variant="permanent"
       >
         {content}
       </Drawer>
     );
-  }
-
-  if (lgDown) {
-    
   }
 
   return (

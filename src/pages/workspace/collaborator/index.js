@@ -300,4 +300,4 @@ const InvitedUSerPage = withRouter((props) => {
   );
 })
 
-export default withAuthGuard(InvitedUSerPage);
+export default InvitedUSerPage;

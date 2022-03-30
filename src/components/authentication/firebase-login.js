@@ -64,7 +64,7 @@ export const FirebaseLogin = (props) => {
           }else{
             localStorage.setItem("limnu_token", data.data.limnu_token)
           }
-
+          localStorage.setItem("sidebar_open", false)
           const returnUrl = router.query.returnUrl || '/dashboard/projects';
           router.push(returnUrl);
         }
@@ -192,19 +192,6 @@ export const FirebaseLogin = (props) => {
             Log In
           </Button>
         </Box>
-        {/* <Box sx={{ mt: 2 }}>
-          <Alert severity="info">
-            <div>
-              You can use
-              {' '}
-              <b>builder@maket.ca</b>
-              {' '}
-              and password
-              {' '}
-              <b>maket123</b>
-            </div>
-          </Alert>
-        </Box> */}
       </form>
     </div>
   );
