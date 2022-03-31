@@ -9,6 +9,7 @@ import { AccountSecuritySettings } from '../../components/dashboard/account/acco
 import { withAuthGuard } from '../../hocs/with-auth-guard';
 import { withDashboardLayout } from '../../hocs/with-dashboard-layout';
 import { gtm } from '../../lib/gtm';
+import {DashboardSidebar} from '../../components/dashboard/dashboard-sidebar'
 
 const tabs = [
   { label: 'General', value: 'general' },
@@ -40,9 +41,11 @@ const Account = () => {
         component="main"
         sx={{
           flexGrow: 1,
-          py: 8
+          py: 8,
+          display: 'flex'
         }}
       >
+        <DashboardSidebar/>
         <Container maxWidth="md">
           <Typography variant="h4">
             Account
@@ -76,4 +79,4 @@ const Account = () => {
   );
 };
 
-export default withAuthGuard(withDashboardLayout(Account));
+export default withAuthGuard(Account);
