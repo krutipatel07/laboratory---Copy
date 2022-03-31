@@ -1,12 +1,10 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import * as React from 'react';
 import axios from 'axios';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { Box, Button, Card, Container, Grid, Typography } from '@mui/material';
 import { withAuthGuard } from '../../../hocs/with-auth-guard';
-import { withDashboardLayout } from '../../../hocs/with-dashboard-layout';
-import { useMounted } from '../../../hooks/use-mounted';
 import { Plus as PlusIcon } from '../../../icons/plus';
 import { gtm } from '../../../lib/gtm';
 import ProjectGrid from '../../../components/dashboard/product/product-grid.js';
@@ -59,8 +57,6 @@ const applyPagination = (products, page, rowsPerPage) => products.slice(page * r
   page * rowsPerPage + rowsPerPage);
 
 const ProductList = () => {
-
-  const isMounted = useMounted();
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -70,23 +66,11 @@ const ProductList = () => {
     status: [],
     inStock: undefined
   });
-  const { user} = useAuth();
-  const [projectsData, setProjectsData] = useState();
   const [userData, setUserData] = useState();
-
-  const [isModalShown, setModalShown] = useState(false)
-  const [isOpen, setOpen] = React.useState(false);
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
   }, []);
-
-  // useEffect(() => {
-  //   const owner = localStorage.getItem("lab-user");
-  //   axios.get(`/api/${owner}/projects`)
-  //   .then(res => setProjectsData(res.data.data))
-  //   .catch(error => console.log(error));
-  // },[]);
 
   // Added a new column in the User Model 
   // Called the User Model 
@@ -171,7 +155,6 @@ const ProductList = () => {
                     CREATE NEW PROJECT
                   </Button>
                 </NextLink>
-                  {/* {isModalShown && <CreateProjectModal open={isOpen}/>} */}
               </Grid>
             </Grid>
           </Box>
@@ -188,5 +171,4 @@ const ProductList = () => {
   );
 };
 
-// export default withAuthGuard(withDashboardLayout(ProductList));
 export default withAuthGuard(ProductList);

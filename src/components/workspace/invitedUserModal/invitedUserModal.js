@@ -79,13 +79,11 @@ export const InvitedUserModal = (props) => {
           }
           setOpen(false);
           toast.success("Collaborator verified")
-          location.reload();
         } catch (err) {
           const created = await createCollaborator(values, projectId);
           if(created){ 
             setOpen(false);
             toast.success("Collaborator verified")
-            location.reload();
           }
         }
       }
