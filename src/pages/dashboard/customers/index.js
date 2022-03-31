@@ -21,6 +21,8 @@ import { Plus as PlusIcon } from '../../../icons/plus';
 import { Search as SearchIcon } from '../../../icons/search';
 import { gtm } from '../../../lib/gtm';
 import axios from 'axios'
+import {DashboardSidebar} from '../../../components/dashboard/dashboard-sidebar'
+
 
 const tabs = [
   {
@@ -217,9 +219,11 @@ const CustomerList = () => {
         component="main"
         sx={{
           flexGrow: 1,
-          py: 8
+          py: 8,
+          display: 'flex'
         }}
       >
+        <DashboardSidebar/>
         <Container maxWidth="xl">
           <Box sx={{ mb: 4 }}>
             <Grid
@@ -300,4 +304,4 @@ const CustomerList = () => {
   );
 };
 
-export default withAuthGuard(withDashboardLayout(CustomerList));
+export default withAuthGuard(CustomerList);
