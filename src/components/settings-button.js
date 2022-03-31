@@ -16,7 +16,7 @@ export const SettingsButton = () => {
 
   return (
     <>
-      <Tooltip title="Settings">
+      {/* <Tooltip title="Settings">
         <Fab
           color="primary"
           onClick={handleOpen}
@@ -31,7 +31,7 @@ export const SettingsButton = () => {
         >
           <AdjustmentsIcon fontSize="small" />
         </Fab>
-      </Tooltip>
+      </Tooltip> */}
       <SettingsDrawer
         onClose={handleClose}
         open={open}
