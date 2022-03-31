@@ -4,7 +4,7 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, IconButton, Divider, Drawer, Typography, useMediaQuery } from '@mui/material';
+import { Box, Button, IconButton, Drawer, Typography, useMediaQuery } from '@mui/material';
 import { UserCircle as UserCircleIcon } from '../../icons/user-circle';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Users as UsersIcon } from '../../icons/users';
@@ -20,6 +20,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import LogoutIcon from '@mui/icons-material/Logout';
 import toast from 'react-hot-toast';
+import Tooltip from '@mui/material/Tooltip';
 
 const drawerWidthOpen = 280;
 const paddingIconButton = 10;
@@ -47,6 +48,7 @@ const getSections = (t) => [
       },
       {
         title: t('Projects'),
+        // style: {backgroundColor: 'yellow'},
         path: '/dashboard/projects',
         // icon: <DesignServicesIcon fontSize="small" />,
         children: JSON.parse(localStorage.getItem('project_list') || "[]")
@@ -203,12 +205,22 @@ export const DashboardSidebar = (props) => {
           {!isInvited ? (open ? 
           <Box sx={{ flexGrow: 1 }}>
            <IconButton style={{display: 'grid', width: '100%'}}>
-             <NextLink href="/dashboard/customers">
-              <UsersIcon fontSize="small" />
-             </NextLink>
-             <NextLink href="/dashboard/projects">
-              <DesignServicesIcon fontSize="small" style={{display:'block', marginTop: 30}}/>
-             </NextLink>
+             <Tooltip title="collaborators">
+               <IconButton>
+                <NextLink href="/dashboard/customers">
+                  <UsersIcon fontSize="small" />
+                </NextLink>
+               </IconButton>
+             </Tooltip>
+
+             <Tooltip title="Projects">
+               <IconButton>
+                <NextLink href="/dashboard/projects">
+                  <DesignServicesIcon fontSize="small" style={{display:'block', marginTop: 30}}/>
+                </NextLink>
+               </IconButton>
+             </Tooltip>
+
            </IconButton>
           </Box> : 
           <Box sx={{ flexGrow: 1 }}>
@@ -249,13 +261,29 @@ export const DashboardSidebar = (props) => {
             {open ?
             <Box sx={{ flexGrow: 1 }}>
               <IconButton style={{display: 'grid', width: '100%'}}>
-                {!isInvited ? <NextLink href="/dashboard/account">
-                  <UserCircleIcon fontSize="small" />
-                </NextLink> : <LogoutIcon onClick={handleLogout} fontSize="small" style={{display:'block', marginTop: 30}}/>
+                {!isInvited ? 
+                <Tooltip title="Account">
+                  <IconButton>
+                    <NextLink href="/dashboard/account">
+                      <UserCircleIcon fontSize="small" />
+                    </NextLink>
+                  </IconButton>
+                </Tooltip> : 
+
+                <Tooltip title='Logout'>
+                  <IconButton>
+                    <LogoutIcon onClick={handleLogout} fontSize="small" style={{display:'block', marginTop: 30}}/>
+                  </IconButton>
+                </Tooltip>
+                
                 }
-                <NextLink href="/contact">
-                  <InfoOutlinedIcon fontSize="small" style={{display:'block', marginTop: 30, marginBottom: 30}}/>
-                </NextLink>
+                <Tooltip title='Info' placement="left-end">
+                  <IconButton>
+                    <NextLink href="/contact">
+                      <InfoOutlinedIcon fontSize="small" style={{display:'block', marginTop: 30, marginBottom: 30}}/>
+                    </NextLink>
+                  </IconButton>
+                </Tooltip>
               </IconButton>
             </Box> :
             <Box sx={{ flexGrow: 1 }}>
