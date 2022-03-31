@@ -27,6 +27,7 @@ const marginIconButton = 14;
 const iconFontSize = 20;
 const drawerWidthClose =
   (paddingIconButton + marginIconButton) * 2 + iconFontSize;
+const smDrawerWidthClose = 40;
 
 const getSections = (t) => [
   {
@@ -91,7 +92,7 @@ export const DashboardSidebar = (props) => {
   const { t } = useTranslation();
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'), {
     noSsr: true
-  });
+  });  
   const lgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'), {
     noSsr: true
   });
@@ -165,7 +166,10 @@ export const DashboardSidebar = (props) => {
                   sx={{
                     height: open ? 45 : 55,
                     width: open ? 55 : 55,
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    [theme.breakpoints.down('sm')]: {
+                      width: '25px',
+                    },
                   }}
                   variant="light"
                 />
@@ -297,6 +301,46 @@ export const DashboardSidebar = (props) => {
             width: open
               ? { xs: "0px", sm: drawerWidthClose }
               : { xs: drawerWidthClose, sm: drawerWidthOpen },
+            borderRight: "0px",
+            // borderRadius: "0px 16px 16px 0px",
+            boxShadow: theme.shadows[8],
+            backgroundColor: open ? "#212121" : "#212121",
+            transition: theme.transitions.create("width", {
+              easing: theme.transitions.easing.sharp,
+              duration: open
+                ? theme.transitions.duration.leavingScreen
+                : theme.transitions.duration.enteringScreen
+            })
+          }
+        }}
+      >
+        {content}
+      </Drawer>
+    );
+  }
+
+  if (lgDown) {
+    return (
+      <Drawer
+
+      variant="permanent"
+        open={open}
+        sx={{
+          width: open
+            ? { xs: smDrawerWidthClose, sm: drawerWidthClose }
+            : { xs: drawerWidthOpen, sm: drawerWidthOpen },
+          transition: theme.transitions.create("width", {
+            easing: theme.transitions.easing.sharp,
+            duration: open
+              ? theme.transitions.duration.leavingScreen
+              : theme.transitions.duration.enteringScreen
+          }),
+          "& .MuiDrawer-paper": {
+            justifyContent: "space-between",
+            overflowX: "hidden",
+            width: open
+              ? { xs: smDrawerWidthClose, sm: drawerWidthClose }
+              : { xs: drawerWidthOpen, sm: drawerWidthOpen },
             borderRight: "0px",
             // borderRadius: "0px 16px 16px 0px",
             boxShadow: theme.shadows[8],
