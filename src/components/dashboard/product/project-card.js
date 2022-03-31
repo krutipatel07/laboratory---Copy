@@ -53,6 +53,11 @@ const ProductCard = (props) => {
     const deleteProject = async () => {
       const deleted = await axios.delete(`/api/projects/${id}`);
       deleted && toast.success("Project deleted");
+
+      const projectList = JSON.parse(localStorage.getItem('project_list'))
+      const newProjectList = projectList.filter(project => project.id !== id)
+      localStorage.project_list = JSON.stringify(newProjectList);
+      
       location.reload();
     }
 

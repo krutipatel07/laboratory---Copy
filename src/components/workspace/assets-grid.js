@@ -87,7 +87,6 @@ const storeFiles = async (file, formData) => {
   const classes = useStyles();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('xs'));
-  console.log(matches)
 
   return (
 

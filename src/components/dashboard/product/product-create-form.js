@@ -78,6 +78,12 @@ export const ProductCreateForm = (props) => {
             })
             .catch(error => console.log(error));
 
+            localStorage.project_list = JSON.stringify([... JSON.parse(localStorage.getItem('project_list') || "[]") , {
+              id: data.data._id,
+              title : data.data.title,
+              path : `/workspace?id=${data.data._id}`
+            }])
+
             toast.success('Project created!');
             router.push(`/workspace?id=${data.data._id}`);
         } catch (err) {

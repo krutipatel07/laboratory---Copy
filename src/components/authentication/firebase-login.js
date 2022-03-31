@@ -47,7 +47,14 @@ export const FirebaseLogin = (props) => {
         if (isMounted()) {    
           const {data} = await axios.get(`/api/owner/${values.email}`)
           .catch(error => console.log(error));
-          localStorage.setItem("lab-user", data.data._id);        
+          
+          localStorage.setItem("lab-user", data.data._id); 
+          const project_list = data.data.projects.map(project => ({
+            id: project._id,
+            title : project.title,
+            path : `/workspace?id=${project._id}`
+          }))
+          localStorage.setItem('project_list', JSON.stringify(project_list));   
 
           if(!data.data.limnu_userId || !data.data.limnu_token){   
             const limnu_userCreate = await axios.post("https://api.apix.limnu.com/v1/userCreate", {

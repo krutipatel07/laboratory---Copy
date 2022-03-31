@@ -28,7 +28,7 @@ const iconFontSize = 20;
 const drawerWidthClose =
   (paddingIconButton + marginIconButton) * 2 + iconFontSize;
 
-const getSections = (t, projectList) => [
+const getSections = (t) => [
   {
     title: t('Workspace'),
     items: [
@@ -48,20 +48,10 @@ const getSections = (t, projectList) => [
         title: t('Projects'),
         path: '/dashboard/projects',
         // icon: <DesignServicesIcon fontSize="small" />,
-        children: projectList
+        children: JSON.parse(localStorage.getItem('project_list') || "[]")
       },
     ]
-  },
-  // {
-  //   title: t('General'),
-  //   items: [
-  //     {
-  //       title: t('Account'),
-  //       path: '/dashboard/account',
-  //       icon: <UserCircleIcon fontSize="small" />
-  //     },
-  //   ]
-  // }
+  }
 ];
 
 const getBottomSections = (t) => [
@@ -96,7 +86,7 @@ export const DashboardSidebar = (props) => {
 
   const { onClose, projectList } = props;
   const [isModalShown, setModalShown] = useState(false)
-  // const [isOpen, setOpen] = React.useState(false);
+  
   const router = useRouter();
   const { t } = useTranslation();
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'), {
@@ -105,7 +95,7 @@ export const DashboardSidebar = (props) => {
   const lgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'), {
     noSsr: true
   });
-  const sections = useMemo(() => getSections(t, projectList), [t]);
+  const sections = useMemo(() => getSections(t), [t]);
   const BottomSections = useMemo(() => getBottomSections(t), [t]);
 
   const handlePathChange = () => {
@@ -125,7 +115,7 @@ export const DashboardSidebar = (props) => {
     axios.get(`/api/user/${user}`)
     .then(res => setUser(res.data.data))
     .catch(error => console.log(error));
-  })
+  },[])
 
   const handleClick = (e) =>{
     e.preventDefault();
