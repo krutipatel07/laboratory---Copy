@@ -124,8 +124,8 @@ export const DashboardSidebar = (props) => {
 
   const handleClick = (e) =>{
     e.preventDefault();
-    setModalShown(true);
-    setIsOpen(true);
+    setModalShown((prevState) => !prevState);
+    setIsOpen((prevState) => !prevState);
   };
 
   useEffect(handlePathChange,
@@ -221,13 +221,6 @@ export const DashboardSidebar = (props) => {
                 </NextLink>
                </IconButton>
              </Tooltip>
-
-             <Tooltip title="tutorial">
-               <IconButton>
-                <StarBorderIcon fontSize="small" style={{display:'block', marginTop: 10}} onClick={handleClick}></StarBorderIcon>
-               </IconButton>
-             </Tooltip>
-
            </IconButton>
           </Box> : 
           <Box sx={{ flexGrow: 1 }}>
@@ -245,26 +238,21 @@ export const DashboardSidebar = (props) => {
             ))}
           </Box>) : <Box sx={{ flexGrow: 1 }}></Box>
           }
-          <Box sx={{p:2}}>
-            <Button
-                color="primary"
-                component="a"
-                variant="contained"
-                type="submit"
-                fullWidth
-                onClick={handleClick}
-              >
-                <StarBorderIcon></StarBorderIcon>
-                Tutorial
-            </Button>
-            {isModalShown && <DashboardModal open={isOpen}/>}
-          </Box>
+          
+          {!isInvited && <Box>
+            <Box sx={{ flexGrow: 1, }}>
+              <IconButton style={{width: '100%'}}>
+                <Tooltip title="tutorial">
+                  <IconButton onClick={handleClick}>
+                    <StarBorderIcon fontSize="small" style={{display:'block'}} ></StarBorderIcon>
+                    {!open && <Typography variant="h6" style={{marginLeft:'10'}}>Tutorial</Typography>}
+                  </IconButton>
+                </Tooltip>
+              </IconButton>
+            </Box>
+            {isModalShown && <DashboardModal open={isOpen} setIsOpen={setIsOpen} setModalShown={setModalShown}/>}
+          </Box>}
 
-          {/* <Divider
-            sx={{
-              borderColor: '#2D3748'  // dark divider
-            }}
-          /> */}
           <Box>
             {open ?
             <Box sx={{ flexGrow: 1 }}>

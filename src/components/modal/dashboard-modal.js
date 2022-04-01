@@ -23,8 +23,10 @@ DashboardModal.propTypes = {
 
 export default function DashboardModal(props) {
   const [open, setOpen] = React.useState(true);
-  // const images = "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2352&q=80"
   const [index, setIndex] = useState(0);
+
+  const setIsOpen = props.setIsOpen;
+  const setModalShown = props.setModalShown;
   
   const welcomeGuide = [{
     img: 'https://maket-laboratory-content.s3.ca-central-1.amazonaws.com/onboarding/onboarding_1.png',
@@ -69,7 +71,9 @@ export default function DashboardModal(props) {
   }]
 
   const handleClose = () => {
-    setOpen(false);
+    setOpen((prevState) => !prevState);
+    setIsOpen((prevState) => !prevState)
+    setModalShown((prevState) => !prevState);
   };
   const handleNext = () => {
     setIndex((prev)=>prev+1)
