@@ -171,7 +171,7 @@ export const ProductCreateForm = (props) => {
                 onChange={formik.handleChange}
                 value={formik.values.name}
               />
-              <Typography
+              {/* <Typography
                 color="textSecondary"
                 sx={{
                   mb: 2,
@@ -195,7 +195,7 @@ export const ProductCreateForm = (props) => {
                     {formik.errors.description}
                   </FormHelperText>
                 </Box>
-              )}
+              )} */}
             </Grid>
           </Grid>
         </CardContent>

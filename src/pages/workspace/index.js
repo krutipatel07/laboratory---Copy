@@ -6,16 +6,11 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import { Box, Container} from '@mui/material';
 import DesignSavedGrid from '../../components/workspace/savedDesign';
-import AssetsGrid from '../../components/workspace/assets-grid';
 import GenerateDesign from '../../components/workspace/generateDesign';
 import { withRouter, useRouter } from 'next/router';
 import { withAuthGuard } from '../../hocs/with-auth-guard'
-import { withDashboardLayout } from '../../hocs/with-dashboard-layout';
-import { withWorkspaceLayout } from '../../hocs/with-workspace-layout';
-import axios from 'axios'
 import { makeStyles } from '@material-ui/core';
 import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import {DashboardSidebar} from '../../components/dashboard/dashboard-sidebar';
 import {WorkspaceNavbar} from '../../components/workspace/workspace-navbar'
 
@@ -114,4 +109,3 @@ const ProjectWorkspace = withRouter((props) => {
   );
 })
 export default withAuthGuard(ProjectWorkspace)
-// export default withAuthGuard(withDashboardLayout(withWorkspaceLayout(ProjectWorkspace)));

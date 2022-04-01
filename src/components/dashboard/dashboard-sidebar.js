@@ -20,6 +20,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import LogoutIcon from '@mui/icons-material/Logout';
 import toast from 'react-hot-toast';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 
 const drawerWidthOpen = 280;
 const paddingIconButton = 10;
@@ -84,7 +85,7 @@ export const DashboardSidebar = (props) => {
     }
   };
 
-  const { onClose, projectList } = props;
+  const { onClose } = props;
   const [isModalShown, setModalShown] = useState(false)
   
   const router = useRouter();
@@ -109,7 +110,8 @@ export const DashboardSidebar = (props) => {
   };
   
   const [user, setUser] = useState();
-  const [open, setOpen] = useState(`${localStorage.getItem('sidebar_open')}` || false);
+  const [open, setOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
     const user = localStorage.getItem("lab-user");
     axios.get(`/api/user/${user}`)
@@ -120,7 +122,7 @@ export const DashboardSidebar = (props) => {
   const handleClick = (e) =>{
     e.preventDefault();
     setModalShown(true);
-    setOpen(true);
+    setIsOpen(true);
   };
 
   useEffect(handlePathChange,
@@ -130,7 +132,6 @@ export const DashboardSidebar = (props) => {
     const theme = useTheme();
 
     function toogleOpen() {
-      localStorage.sidebar_open = `${!open}`;
       setOpen(!open);
     }
 
@@ -205,6 +206,7 @@ export const DashboardSidebar = (props) => {
              <NextLink href="/dashboard/projects">
               <DesignServicesIcon fontSize="small" style={{display:'block', marginTop: 30}}/>
              </NextLink>
+            <StarBorderIcon fontSize="small" style={{display:'block', marginTop: 30}} onClick={handleClick}></StarBorderIcon>
            </IconButton>
           </Box> : 
           <Box sx={{ flexGrow: 1 }}>
@@ -222,7 +224,7 @@ export const DashboardSidebar = (props) => {
             ))}
           </Box>) : <Box sx={{ flexGrow: 1 }}></Box>
           }
-          {/* <Box sx={{p:2}}>
+          <Box sx={{p:2}}>
             <Button
                 color="primary"
                 component="a"
@@ -231,10 +233,11 @@ export const DashboardSidebar = (props) => {
                 fullWidth
                 onClick={handleClick}
               >
-                REVISIT GUIDE
+                <StarBorderIcon></StarBorderIcon>
+                Tutorial
             </Button>
             {isModalShown && <DashboardModal open={isOpen}/>}
-          </Box> */}
+          </Box>
 
           {/* <Divider
             sx={{

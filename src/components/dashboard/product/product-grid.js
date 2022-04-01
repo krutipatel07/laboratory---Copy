@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import ProductCard from './project-card';
 import axios from 'axios';
@@ -20,7 +18,18 @@ export default function ProjectGrid() {
   useEffect(() => {
     const owner = localStorage.getItem("lab-user");
     axios.get(`/api/${owner}/projects`)
-    .then(res => setProjectsData(res.data.data))
+    .then(res => {
+      const proj_list = JSON.parse(localStorage.getItem('project_list'))
+      if (!proj_list) {
+        const project_list = res.data.data.map(project => ({
+          id: project._id,
+          title : project.title,
+          path : `/workspace?id=${project._id}`
+        }))
+        localStorage.setItem('project_list', JSON.stringify(project_list));   
+      }
+      setProjectsData(res.data.data)
+    })
     .catch(error => console.log(error));
   },[])
   return (
