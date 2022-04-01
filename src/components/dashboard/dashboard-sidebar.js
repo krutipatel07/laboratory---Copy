@@ -4,7 +4,7 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, IconButton, Divider, Drawer, Typography, useMediaQuery } from '@mui/material';
+import { Box, Button, IconButton, Drawer, Typography, useMediaQuery } from '@mui/material';
 import { UserCircle as UserCircleIcon } from '../../icons/user-circle';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Users as UsersIcon } from '../../icons/users';
@@ -21,6 +21,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import LogoutIcon from '@mui/icons-material/Logout';
 import toast from 'react-hot-toast';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import Tooltip from '@mui/material/Tooltip';
 
 const drawerWidthOpen = 280;
 const paddingIconButton = 10;
@@ -28,6 +29,7 @@ const marginIconButton = 14;
 const iconFontSize = 20;
 const drawerWidthClose =
   (paddingIconButton + marginIconButton) * 2 + iconFontSize;
+const smDrawerWidthClose = 40;
 
 const getSections = (t) => [
   {
@@ -47,6 +49,7 @@ const getSections = (t) => [
       },
       {
         title: t('Projects'),
+        // style: {backgroundColor: 'yellow'},
         path: '/dashboard/projects',
         // icon: <DesignServicesIcon fontSize="small" />,
         children: JSON.parse(localStorage.getItem('project_list') || "[]")
@@ -92,7 +95,7 @@ export const DashboardSidebar = (props) => {
   const { t } = useTranslation();
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'), {
     noSsr: true
-  });
+  });  
   const lgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'), {
     noSsr: true
   });
@@ -166,7 +169,10 @@ export const DashboardSidebar = (props) => {
                   sx={{
                     height: open ? 45 : 55,
                     width: open ? 55 : 55,
-                    justifyContent: 'center'
+                    justifyContent: 'center',
+                    [theme.breakpoints.down('sm')]: {
+                      width: '25px',
+                    },
                   }}
                   variant="light"
                 />
@@ -199,14 +205,29 @@ export const DashboardSidebar = (props) => {
           </div>
           {!isInvited ? (open ? 
           <Box sx={{ flexGrow: 1 }}>
-           <IconButton style={{display: 'grid', width: '100%'}}>
-             <NextLink href="/dashboard/customers">
-              <UsersIcon fontSize="small" />
-             </NextLink>
-             <NextLink href="/dashboard/projects">
-              <DesignServicesIcon fontSize="small" style={{display:'block', marginTop: 30}}/>
-             </NextLink>
-            <StarBorderIcon fontSize="small" style={{display:'block', marginTop: 30}} onClick={handleClick}></StarBorderIcon>
+           <IconButton style={{display: 'grid', width: '100%'}}>            
+             <Tooltip title="collaborators">
+               <IconButton>
+                <NextLink href="/dashboard/customers">
+                  <UsersIcon fontSize="small" />
+                </NextLink>
+               </IconButton>
+             </Tooltip>
+
+             <Tooltip title="Projects">
+               <IconButton>
+                <NextLink href="/dashboard/projects">
+                  <DesignServicesIcon fontSize="small" style={{display:'block', marginTop: 10}}/>
+                </NextLink>
+               </IconButton>
+             </Tooltip>
+
+             <Tooltip title="tutorial">
+               <IconButton>
+                <StarBorderIcon fontSize="small" style={{display:'block', marginTop: 10}} onClick={handleClick}></StarBorderIcon>
+               </IconButton>
+             </Tooltip>
+
            </IconButton>
           </Box> : 
           <Box sx={{ flexGrow: 1 }}>
@@ -248,13 +269,29 @@ export const DashboardSidebar = (props) => {
             {open ?
             <Box sx={{ flexGrow: 1 }}>
               <IconButton style={{display: 'grid', width: '100%'}}>
-                {!isInvited ? <NextLink href="/dashboard/account">
-                  <UserCircleIcon fontSize="small" />
-                </NextLink> : <LogoutIcon onClick={handleLogout} fontSize="small" style={{display:'block', marginTop: 30}}/>
+                {!isInvited ? 
+                <Tooltip title="Account">
+                  <IconButton>
+                    <NextLink href="/dashboard/account">
+                      <UserCircleIcon fontSize="small" />
+                    </NextLink>
+                  </IconButton>
+                </Tooltip> : 
+
+                <Tooltip title='Logout'>
+                  <IconButton>
+                    <LogoutIcon onClick={handleLogout} fontSize="small" style={{display:'block', marginTop: 30}}/>
+                  </IconButton>
+                </Tooltip>
+                
                 }
-                <NextLink href="/contact">
-                  <InfoOutlinedIcon fontSize="small" style={{display:'block', marginTop: 30, marginBottom: 30}}/>
-                </NextLink>
+                <Tooltip title='Info' placement="left-end">
+                  <IconButton>
+                    <NextLink href="/contact">
+                      <InfoOutlinedIcon fontSize="small" style={{display:'block', marginTop: 10, marginBottom: 10}}/>
+                    </NextLink>
+                  </IconButton>
+                </Tooltip>
               </IconButton>
             </Box> :
             <Box sx={{ flexGrow: 1 }}>
@@ -300,6 +337,46 @@ export const DashboardSidebar = (props) => {
             width: open
               ? { xs: "0px", sm: drawerWidthClose }
               : { xs: drawerWidthClose, sm: drawerWidthOpen },
+            borderRight: "0px",
+            // borderRadius: "0px 16px 16px 0px",
+            boxShadow: theme.shadows[8],
+            backgroundColor: open ? "#212121" : "#212121",
+            transition: theme.transitions.create("width", {
+              easing: theme.transitions.easing.sharp,
+              duration: open
+                ? theme.transitions.duration.leavingScreen
+                : theme.transitions.duration.enteringScreen
+            })
+          }
+        }}
+      >
+        {content}
+      </Drawer>
+    );
+  }
+
+  if (lgDown) {
+    return (
+      <Drawer
+
+      variant="permanent"
+        open={open}
+        sx={{
+          width: open
+            ? { xs: smDrawerWidthClose, sm: drawerWidthClose }
+            : { xs: drawerWidthOpen, sm: drawerWidthOpen },
+          transition: theme.transitions.create("width", {
+            easing: theme.transitions.easing.sharp,
+            duration: open
+              ? theme.transitions.duration.leavingScreen
+              : theme.transitions.duration.enteringScreen
+          }),
+          "& .MuiDrawer-paper": {
+            justifyContent: "space-between",
+            overflowX: "hidden",
+            width: open
+              ? { xs: smDrawerWidthClose, sm: drawerWidthClose }
+              : { xs: drawerWidthOpen, sm: drawerWidthOpen },
             borderRight: "0px",
             // borderRadius: "0px 16px 16px 0px",
             boxShadow: theme.shadows[8],

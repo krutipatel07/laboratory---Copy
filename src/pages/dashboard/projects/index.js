@@ -133,7 +133,7 @@ const ProductList = () => {
         }}
       >
         <DashboardSidebar/>
-        <Container maxWidth="xl" sx={{backgroundColor: "white"}}>
+        <Container maxWidth="xl" sx={{backgroundColor: "white" }}>
           <Box sx={{ mb: 4 , backgroundColor: "white"}}>
             <Grid
               container
