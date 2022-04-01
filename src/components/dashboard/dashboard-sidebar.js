@@ -241,11 +241,14 @@ export const DashboardSidebar = (props) => {
           
           {!isInvited && <Box>
             <Box sx={{ flexGrow: 1, }}>
-              <IconButton style={{width: '100%'}}>
-                <Tooltip title="tutorial">
+              <IconButton style={{width: '100%', justifyContent: 'flex-start'}}>
+                <Tooltip title="Tutorial">
                   <IconButton onClick={handleClick}>
-                    <StarBorderIcon fontSize="small" style={{display:'block'}} ></StarBorderIcon>
-                    {!open && <Typography variant="h6" style={{marginLeft:'10'}}>Tutorial</Typography>}
+                    {open ? <StarBorderIcon fontSize="small" style={{marginLeft:'7px'}} ></StarBorderIcon> :
+                    <><StarBorderIcon fontSize="small" style={{marginLeft:'18px'}} ></StarBorderIcon>
+                    <Typography variant="h6">Tutorial</Typography></>
+                    }
+
                   </IconButton>
                 </Tooltip>
               </IconButton>
