@@ -20,6 +20,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import LogoutIcon from '@mui/icons-material/Logout';
 import toast from 'react-hot-toast';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
 import Tooltip from '@mui/material/Tooltip';
 
 const drawerWidthOpen = 280;
@@ -87,7 +88,7 @@ export const DashboardSidebar = (props) => {
     }
   };
 
-  const { onClose, projectList } = props;
+  const { onClose } = props;
   const [isModalShown, setModalShown] = useState(false)
   
   const router = useRouter();
@@ -112,7 +113,8 @@ export const DashboardSidebar = (props) => {
   };
   
   const [user, setUser] = useState();
-  const [open, setOpen] = useState(`${localStorage.getItem('sidebar_open')}` || false);
+  const [open, setOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
     const user = localStorage.getItem("lab-user");
     axios.get(`/api/user/${user}`)
@@ -123,7 +125,7 @@ export const DashboardSidebar = (props) => {
   const handleClick = (e) =>{
     e.preventDefault();
     setModalShown(true);
-    setOpen(true);
+    setIsOpen(true);
   };
 
   useEffect(handlePathChange,
@@ -133,7 +135,6 @@ export const DashboardSidebar = (props) => {
     const theme = useTheme();
 
     function toogleOpen() {
-      localStorage.sidebar_open = `${!open}`;
       setOpen(!open);
     }
 
@@ -204,7 +205,7 @@ export const DashboardSidebar = (props) => {
           </div>
           {!isInvited ? (open ? 
           <Box sx={{ flexGrow: 1 }}>
-           <IconButton style={{display: 'grid', width: '100%'}}>
+           <IconButton style={{display: 'grid', width: '100%'}}>            
              <Tooltip title="collaborators">
                <IconButton>
                 <NextLink href="/dashboard/customers">
@@ -216,8 +217,14 @@ export const DashboardSidebar = (props) => {
              <Tooltip title="Projects">
                <IconButton>
                 <NextLink href="/dashboard/projects">
-                  <DesignServicesIcon fontSize="small" style={{display:'block', marginTop: 30}}/>
+                  <DesignServicesIcon fontSize="small" style={{display:'block', marginTop: 10}}/>
                 </NextLink>
+               </IconButton>
+             </Tooltip>
+
+             <Tooltip title="tutorial">
+               <IconButton>
+                <StarBorderIcon fontSize="small" style={{display:'block', marginTop: 10}} onClick={handleClick}></StarBorderIcon>
                </IconButton>
              </Tooltip>
 
@@ -238,7 +245,7 @@ export const DashboardSidebar = (props) => {
             ))}
           </Box>) : <Box sx={{ flexGrow: 1 }}></Box>
           }
-          {/* <Box sx={{p:2}}>
+          <Box sx={{p:2}}>
             <Button
                 color="primary"
                 component="a"
@@ -247,10 +254,11 @@ export const DashboardSidebar = (props) => {
                 fullWidth
                 onClick={handleClick}
               >
-                REVISIT GUIDE
+                <StarBorderIcon></StarBorderIcon>
+                Tutorial
             </Button>
             {isModalShown && <DashboardModal open={isOpen}/>}
-          </Box> */}
+          </Box>
 
           {/* <Divider
             sx={{
@@ -280,7 +288,7 @@ export const DashboardSidebar = (props) => {
                 <Tooltip title='Info' placement="left-end">
                   <IconButton>
                     <NextLink href="/contact">
-                      <InfoOutlinedIcon fontSize="small" style={{display:'block', marginTop: 30, marginBottom: 30}}/>
+                      <InfoOutlinedIcon fontSize="small" style={{display:'block', marginTop: 10, marginBottom: 10}}/>
                     </NextLink>
                   </IconButton>
                 </Tooltip>

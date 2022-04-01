@@ -19,21 +19,6 @@ const DashboardLayoutRoot = styled('div')(({ theme }) => ({
 
 export const DashboardLayout = (props) => {
   const { children } = props;
-  // const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [projectList, setProjectList] = useState();
-
-  useEffect(() => {
-    const user = localStorage.getItem("lab-user");
-    axios.get(`/api/user/${user}`)
-    .then(res => {
-    const project_list = res.data.data.projects.map(project => ({
-        title : project.title,
-        path : `/workspace?id=${project._id}`
-      }))
-      setProjectList(project_list.reverse())
-    })
-    .catch(error => console.log(error));
-  },[])
 
   return (
     <>
@@ -49,12 +34,6 @@ export const DashboardLayout = (props) => {
           {children}
         </Box>
       </DashboardLayoutRoot>
-      {/* <DashboardNavbar onOpenSidebar={() => setIsSidebarOpen(true)} /> */}
-      {projectList && <DashboardSidebar
-        // onClose={() => setIsSidebarOpen(false)}
-        // open={isSidebarOpen}
-        projectList={projectList}
-      />}
     </>
   );
 };
