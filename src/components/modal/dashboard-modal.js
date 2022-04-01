@@ -14,12 +14,26 @@ import CardMedia from '@mui/material/CardMedia';
 import Card from '@mui/material/Card';
 import Image from '../../../public/static/mock-images/products/product_6.png'
 import { setIn } from 'formik';
+import { makeStyles } from '@material-ui/styles';
 
 DashboardModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   selectedValue: PropTypes.string.isRequired,
 };
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  basicColor: {
+    color:'#F0C88E'
+  },
+  skipBtn: {
+    marginRight:'auto', 
+    color:'#BDBDBD'
+  }
+}));
 
 export default function DashboardModal(props) {
   const [open, setOpen] = React.useState(true);
@@ -29,7 +43,7 @@ export default function DashboardModal(props) {
   const welcomeGuide = [{
     img: 'https://maket-laboratory-content.s3.ca-central-1.amazonaws.com/onboarding/onboarding_1.png',
     title: 'Welcome to your Project Dashboard!',
-    description: 'This quick tutorial will show you how to navigate the platform and generate your first designs If you would like to skip and explore on your own, you can always revisit this tutorial in your side navigation bar'
+    description: 'This quick tutorial will show you how to navigate the platform and generate your first designs. If you would like to skip and explore on your own, you can always revisit this tutorial in your side navigation bar'
   },{
     img: 'https://maket-laboratory-content.s3.ca-central-1.amazonaws.com/onboarding/onboarding_2.png',
     title: 'Create a new project',
@@ -64,38 +78,43 @@ export default function DashboardModal(props) {
 
   },[index])
 
+  const classes = useStyles();
   
   return (
     <Dialog  open={open}>
       <DialogTitle id="alert-dialog-title">
-        <Card sx={{
-            margin: "auto",
-            backgroundColor: 'background.paper',
-            '&:hover': {
-              backgroundColor: 'background.hover',
-            } }}
-            variant="elevation">
-            <CardMedia
-              component="img"
-              alt="green iguana"
-              height="260"
-              src={welcomeGuide[index].img}
-            />
-        </Card>
-      </DialogTitle>
-      <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            {welcomeGuide[index].title}
-          </DialogContentText>
-          <DialogContentText id="alert-dialog-description">
+        <DialogContentText id="alert-dialog-description" style={{color:'#000000DE', fontSize:20, textAlign:'center'}}>
+          {welcomeGuide[index].title}
+        </DialogContentText>
+        <DialogContentText id="alert-dialog-description" style={{color:'#000000DE', fontSize:16, marginTop:10}}>
           {welcomeGuide[index].description}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          {index !== 0 && <Button onClick={handlePrevious}>PREVIOUS</Button>}
-          {index !== welcomeGuide.length-1 && <> <Button onClick={handleNext}>NEXT</Button>
-          <Button onClick={handleSkip} autoFocus>SKIP</Button></>}
-          {index === welcomeGuide.length-1 && <Button onClick={handleClose}>CLOSE</Button>}
+        </DialogContentText>
+      </DialogTitle>
+
+      <DialogContent>
+        <Card sx={{
+          margin: "auto",
+          backgroundColor: 'background.paper',
+          '&:hover': {
+            backgroundColor: 'background.hover',
+          } }}
+          variant="elevation">
+          <CardMedia
+            component="img"
+            alt="green iguana"
+            height="260"
+            src={welcomeGuide[index].img}
+          />
+        </Card>
+      </DialogContent>
+
+        <DialogActions style={{backgroundColor: '#000000DE'}}>
+          {index !== welcomeGuide.length-1 && <Button onClick={handleSkip} autoFocus className={classes.skipBtn}>SKIP</Button>}
+          
+          {index !== 0 && <Button onClick={handlePrevious} className={classes.basicColor} >PREVIOUS</Button>}
+          {index !== welcomeGuide.length-1 && <> <Button onClick={handleNext} className={classes.basicColor}>NEXT</Button>
+          </>}
+          {index === welcomeGuide.length-1 && <Button onClick={handleClose} className={classes.basicColor}>CLOSE</Button>}
         </DialogActions>
     </Dialog>
     
