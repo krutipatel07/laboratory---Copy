@@ -55,10 +55,20 @@ const getSections = (t) => [
         children: JSON.parse(localStorage.getItem('project_list') || "[]")
       },
     ]
-  }
+  },
+
 ];
 
 const getBottomSections = (t) => [
+  // {
+  //   items: [
+  //     {
+  //       title: t('Tutorial'),
+  //       path: '/dashboard/account',   
+  //       icon: <StarBorderIcon fontSize="small"/>
+  //     },
+  //   ],
+  // },
   {
     title: t('General'),
     items: [
@@ -72,8 +82,10 @@ const getBottomSections = (t) => [
         path: '/contact',
         icon: <InfoOutlinedIcon fontSize="small" />
       },
-    ]
-  }
+    ],
+  },
+
+
 ];
 
 export const DashboardSidebar = (props) => {  
@@ -239,13 +251,13 @@ export const DashboardSidebar = (props) => {
           </Box>) : <Box sx={{ flexGrow: 1 }}></Box>
           }
           
-          {!isInvited && <Box>
+          {!open && <Box>
             <Box sx={{ flexGrow: 1, }}>
-              <IconButton style={{width: '100%'}}>
-                <Tooltip title="tutorial">
+              <IconButton style={{width: '100%', justifyContent: 'flex-start'}}>
+                <Tooltip title="Tutorial">
                   <IconButton onClick={handleClick}>
-                    <StarBorderIcon fontSize="small" style={{display:'block'}} ></StarBorderIcon>
-                    {!open && <Typography variant="h6" style={{marginLeft:'10'}}>Tutorial</Typography>}
+                    <><StarBorderIcon fontSize="small" style={{marginLeft:'18px'}} ></StarBorderIcon>
+                    <Typography variant="h6" style={{color:'#D1D5DB', fontSize:14,letterSpacing:1,marginLeft:6}}>Tutorial</Typography></>
                   </IconButton>
                 </Tooltip>
               </IconButton>
@@ -258,13 +270,20 @@ export const DashboardSidebar = (props) => {
             <Box sx={{ flexGrow: 1 }}>
               <IconButton style={{display: 'grid', width: '100%'}}>
                 {!isInvited ? 
+                <>
+                <Tooltip title="Tutorial">
+                  <IconButton onClick={handleClick}>
+                    <StarBorderIcon fontSize="small"></StarBorderIcon>
+                  </IconButton>
+                </Tooltip>
                 <Tooltip title="Account">
                   <IconButton>
                     <NextLink href="/dashboard/account">
                       <UserCircleIcon fontSize="small" />
                     </NextLink>
                   </IconButton>
-                </Tooltip> : 
+                </Tooltip>
+                </> : 
 
                 <Tooltip title='Logout'>
                   <IconButton>
@@ -285,6 +304,7 @@ export const DashboardSidebar = (props) => {
             <Box sx={{ flexGrow: 1 }}>
               {BottomSections.map((section) => (
                 <DashboardSidebarSection
+                onClick= {handleClick}
                   key={section.title}
                   path={router.asPath}
                   sx={{

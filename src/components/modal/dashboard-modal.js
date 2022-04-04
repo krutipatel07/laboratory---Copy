@@ -14,12 +14,26 @@ import CardMedia from '@mui/material/CardMedia';
 import Card from '@mui/material/Card';
 import Image from '../../../public/static/mock-images/products/product_6.png'
 import { setIn } from 'formik';
+import { makeStyles } from '@material-ui/styles';
 
 DashboardModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   selectedValue: PropTypes.string.isRequired,
 };
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  basicColor: {
+    color:'#F0C88E'
+  },
+  skipBtn: {
+    marginRight:'auto', 
+    color:'#BDBDBD'
+  }
+}));
 
 export default function DashboardModal(props) {
   const [open, setOpen] = React.useState(true);
@@ -29,45 +43,25 @@ export default function DashboardModal(props) {
   const setModalShown = props.setModalShown;
   
   const welcomeGuide = [{
-    img: 'https://maket-laboratory-content.s3.ca-central-1.amazonaws.com/onboarding/onboarding_1.png',
-    title: 'Welcome',
-    description: 'You are now signed in. Would you like to get started with a guide on creating a project, and generating your first design? You can skip this guide and return to it at any time'
+    img: 'https://res.cloudinary.com/maket/image/upload/v1649078808/maket_design/Screen_Shot_2022-03-17_at_10.04_2_hs1y2m.png',
+    title: 'Welcome to your Project Dashboard!',
+    description: 'This quick tutorial will show you how to navigate the platform and generate your first designs. If you would like to skip and explore on your own, you can always revisit this tutorial in your side navigation bar'
   },{
-    img: 'https://maket-laboratory-content.s3.ca-central-1.amazonaws.com/onboarding/onboarding_2.png',
-    title: 'Projects',
-    description: 'To start a new project, simply select the add button to get started. New and existing projects will be displayed on this page of the site.'
+    img: 'https://res.cloudinary.com/maket/image/upload/v1649078053/maket_design/Screen_Shot_2022-03-17_at_10.13_1_zgu72s.png',
+    title: 'Create a new project',
+    description: 'To begin, click on the create new project button in the top right corner of the screen'
   },{
-    img: 'https://maket-laboratory-content.s3.ca-central-1.amazonaws.com/onboarding/onboarding_3.png',
-    title: 'Projects',
-    description: 'You can now enter a title and a description of your project'
+    img: 'https://res.cloudinary.com/maket/image/upload/v1649078053/maket_design/Screen_Shot_2022-03-17_at_10.20_1_opsydv.png',
+    title: 'Generate a design',
+    description: 'To generate your first design, input your design constraints using the dropdown menu When you’ve inputted all your constraints, click on the generate button'
   },{
-    img: 'https://maket-laboratory-content.s3.ca-central-1.amazonaws.com/onboarding/onboarding_4.png',
-    title: 'Projects',
-    description: 'Import the useful assets (documents, photos, etc.) for your project.'
+    img: 'https://res.cloudinary.com/maket/image/upload/v1649078052/maket_design/Screen_Shot_2022-03-17_at_10.25_1_e6ootj.png',
+    title: 'Save designs to your project',
+    description: 'Now that you’ve generated your floorplans using your specified constraints, you can browse the floorplans and save your favorite floorplans to your project. '
   },{
-    img: 'https://maket-laboratory-content.s3.ca-central-1.amazonaws.com/onboarding/onboarding_5.png',
-    title: 'Projects',
-    description: 'Set your project budget. This is for your information only and will not affect the outcome of your generative designs'
-  },{
-    img: 'https://maket-laboratory-content.s3.ca-central-1.amazonaws.com/onboarding/onboarding_6.png',
-    title: 'Projects',
-    description: 'Congrats! You’ve started your first project. You can view your created projects from your personal workspace at any time.'
-  },{
-    img: 'https://maket-laboratory-content.s3.ca-central-1.amazonaws.com/onboarding/onboarding_7.png',
-    title: 'Projects',
-    description: 'Invite collaborators to your project, you can add members at any point in the design process'
-  },{
-    img: 'https://maket-laboratory-content.s3.ca-central-1.amazonaws.com/onboarding/onboarding_8.png',
-    title: 'Collaborators',
-    description: 'You can view a list of the collaborators you’ve invited over at your personal workspace on the left hand side of the screen'
-  },{
-    img: 'https://maket-laboratory-content.s3.ca-central-1.amazonaws.com/onboarding/onboarding_9.png',
-    title: 'Revisit Guide',
-    description: 'Below the account button, you’ll find where you can open this startup guide again to view any aspect of the platform you may need help with'
-  },{
-    img: 'https://maket-laboratory-content.s3.ca-central-1.amazonaws.com/onboarding/onboarding_10.png',
-    title: 'View Profile',
-    description: 'Click on the “Account” button on the left hand side to view your profile, where you can change your infom billing, notification settings, and other useful options'
+    img: 'https://res.cloudinary.com/maket/image/upload/v1649078052/maket_design/Group_91_fg5dxg.png',
+    title: 'Save designs to your project',
+    description: 'Once you have saved your favorite designs, you can view and edit them on the designs page'
   }]
 
   const handleClose = () => {
@@ -88,38 +82,43 @@ export default function DashboardModal(props) {
 
   },[index])
 
+  const classes = useStyles();
   
   return (
     <Dialog  open={open}>
       <DialogTitle id="alert-dialog-title">
-        <Card sx={{
-            margin: "auto",
-            backgroundColor: 'background.paper',
-            '&:hover': {
-              backgroundColor: 'background.hover',
-            } }}
-            variant="elevation">
-            <CardMedia
-              component="img"
-              alt="green iguana"
-              height="260"
-              src={welcomeGuide[index].img}
-            />
-        </Card>
-      </DialogTitle>
-      <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            {welcomeGuide[index].title}
-          </DialogContentText>
-          <DialogContentText id="alert-dialog-description">
+        <DialogContentText id="alert-dialog-description" style={{color:'#000000DE', fontSize:20, textAlign:'center'}}>
+          {welcomeGuide[index].title}
+        </DialogContentText>
+        <DialogContentText id="alert-dialog-description" style={{color:'#000000DE', fontSize:16, marginTop:10}}>
           {welcomeGuide[index].description}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          {index !== 0 && <Button onClick={handlePrevious}>PREVIOUS</Button>}
-          {index !== welcomeGuide.length-1 && <> <Button onClick={handleNext}>NEXT</Button>
-          <Button onClick={handleSkip} autoFocus>SKIP</Button></>}
-          {index === welcomeGuide.length-1 && <Button onClick={handleClose}>CLOSE</Button>}
+        </DialogContentText>
+      </DialogTitle>
+
+      <DialogContent>
+        <Card sx={{
+          margin: "auto",
+          backgroundColor: 'background.paper',
+          '&:hover': {
+            backgroundColor: 'background.hover',
+          } }}
+          variant="elevation">
+          <CardMedia
+            component="img"
+            alt="green iguana"
+            height="260"
+            src={welcomeGuide[index].img}
+          />
+        </Card>
+      </DialogContent>
+
+        <DialogActions style={{backgroundColor: '#000000DE'}}>
+          {index !== welcomeGuide.length-1 && <Button onClick={handleSkip} autoFocus className={classes.skipBtn}>SKIP</Button>}
+          
+          {index !== 0 && <Button onClick={handlePrevious} className={classes.basicColor} >PREVIOUS</Button>}
+          {index !== welcomeGuide.length-1 && <> <Button onClick={handleNext} className={classes.basicColor}>NEXT</Button>
+          </>}
+          {index === welcomeGuide.length-1 && <Button onClick={handleClose} className={classes.basicColor}>CLOSE</Button>}
         </DialogActions>
     </Dialog>
     
