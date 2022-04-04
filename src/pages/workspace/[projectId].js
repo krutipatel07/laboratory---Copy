@@ -430,7 +430,12 @@ return (
               direction="row">
                 <div {...getRootProps()}>
                   <input {...getInputProps()} />
-                  <AddIcon></AddIcon>
+                  <Typography sx={{
+                    alignItems: 'center',
+                    display: 'flex',
+                  }}>
+                    <AddIcon></AddIcon> Add Variant
+                  </Typography>
                 </div>
               </Stack>
             </Box>

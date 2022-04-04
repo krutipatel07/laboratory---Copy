@@ -116,7 +116,7 @@ export const DashboardSidebar = (props) => {
   };
   
   const [user, setUser] = useState();
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
     const user = localStorage.getItem("lab-user");
