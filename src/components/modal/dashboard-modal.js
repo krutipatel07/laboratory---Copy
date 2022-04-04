@@ -43,23 +43,23 @@ export default function DashboardModal(props) {
   const setModalShown = props.setModalShown;
   
   const welcomeGuide = [{
-    img: 'https://maket-laboratory-content.s3.ca-central-1.amazonaws.com/onboarding/onboarding_1.png',
+    img: 'https://res.cloudinary.com/maket/image/upload/v1649078808/maket_design/Screen_Shot_2022-03-17_at_10.04_2_hs1y2m.png',
     title: 'Welcome to your Project Dashboard!',
     description: 'This quick tutorial will show you how to navigate the platform and generate your first designs. If you would like to skip and explore on your own, you can always revisit this tutorial in your side navigation bar'
   },{
-    img: 'https://maket-laboratory-content.s3.ca-central-1.amazonaws.com/onboarding/onboarding_2.png',
+    img: 'https://res.cloudinary.com/maket/image/upload/v1649078053/maket_design/Screen_Shot_2022-03-17_at_10.13_1_zgu72s.png',
     title: 'Create a new project',
     description: 'To begin, click on the create new project button in the top right corner of the screen'
   },{
-    img: 'https://maket-laboratory-content.s3.ca-central-1.amazonaws.com/onboarding/onboarding_3.png',
+    img: 'https://res.cloudinary.com/maket/image/upload/v1649078053/maket_design/Screen_Shot_2022-03-17_at_10.20_1_opsydv.png',
     title: 'Generate a design',
     description: 'To generate your first design, input your design constraints using the dropdown menu When you’ve inputted all your constraints, click on the generate button'
   },{
-    img: 'https://maket-laboratory-content.s3.ca-central-1.amazonaws.com/onboarding/onboarding_4.png',
+    img: 'https://res.cloudinary.com/maket/image/upload/v1649078052/maket_design/Screen_Shot_2022-03-17_at_10.25_1_e6ootj.png',
     title: 'Save designs to your project',
     description: 'Now that you’ve generated your floorplans using your specified constraints, you can browse the floorplans and save your favorite floorplans to your project. '
   },{
-    img: 'https://maket-laboratory-content.s3.ca-central-1.amazonaws.com/onboarding/onboarding_5.png',
+    img: 'https://res.cloudinary.com/maket/image/upload/v1649078052/maket_design/Group_91_fg5dxg.png',
     title: 'Save designs to your project',
     description: 'Once you have saved your favorite designs, you can view and edit them on the designs page'
   }]
