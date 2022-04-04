@@ -60,15 +60,6 @@ const getSections = (t) => [
 ];
 
 const getBottomSections = (t) => [
-  // {
-  //   items: [
-  //     {
-  //       title: t('Tutorial'),
-  //       path: '/dashboard/account',   
-  //       icon: <StarBorderIcon fontSize="small"/>
-  //     },
-  //   ],
-  // },
   {
     title: t('General'),
     items: [
@@ -251,7 +242,7 @@ export const DashboardSidebar = (props) => {
           </Box>) : <Box sx={{ flexGrow: 1 }}></Box>
           }
           
-          {!open && <Box>
+          {!open && !isInvited && <Box>
             <Box sx={{ flexGrow: 1, }}>
               <IconButton style={{width: '100%', justifyContent: 'flex-start'}}>
                 <Tooltip title="Tutorial">
@@ -262,9 +253,8 @@ export const DashboardSidebar = (props) => {
                 </Tooltip>
               </IconButton>
             </Box>
-            {isModalShown && <DashboardModal open={isOpen} setIsOpen={setIsOpen} setModalShown={setModalShown}/>}
           </Box>}
-
+          {isModalShown && <DashboardModal open={isOpen} setIsOpen={setIsOpen} setModalShown={setModalShown}/>}
           <Box>
             {open ?
             <Box sx={{ flexGrow: 1 }}>
@@ -304,7 +294,6 @@ export const DashboardSidebar = (props) => {
             <Box sx={{ flexGrow: 1 }}>
               {BottomSections.map((section) => (
                 <DashboardSidebarSection
-                onClick= {handleClick}
                   key={section.title}
                   path={router.asPath}
                   sx={{
