@@ -48,7 +48,7 @@ export default function ProjectGrid() {
                 <Grid 
                 key={project.id}
                 item 
-                xs>
+                xs={12} sm={6} md={4}>
                   <ProductCard
                     id={project.id}
                     title={project.title}
