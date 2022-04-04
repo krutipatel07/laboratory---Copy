@@ -62,6 +62,27 @@ export default function DashboardModal(props) {
     img: 'https://res.cloudinary.com/maket/image/upload/v1649078052/maket_design/Group_91_fg5dxg.png',
     title: 'Save designs to your project',
     description: 'Once you have saved your favorite designs, you can view and edit them on the designs page'
+  },
+
+  {
+    img: 'https://res.cloudinary.com/maket/image/upload/v1649078052/maket_design/Group_91_fg5dxg.png',
+    title: 'Edit and collaborate on your design',
+    description: 'Now that you are in your saved designs page, you can edit and collaborate on the floorplans. Click on the floorplan that you want to edit.'
+  },
+  {
+    img: 'https://res.cloudinary.com/maket/image/upload/v1649078052/maket_design/Group_91_fg5dxg.png',
+    title: 'Add collaborators',
+    description: 'You are now in the editing page. To add a collaborator to your design, click on the button on the top right corner of the page'
+  },
+  {
+    img: 'https://res.cloudinary.com/maket/image/upload/v1649078052/maket_design/Group_91_fg5dxg.png',
+    title: 'Edit your design',
+    description: 'Use the bottom tool bar to edit your design. You can add comments for your collaborators, you can draw on the plan, and add arrows and symbols.Once you have finished editing, you can also export your design.'
+  },
+  {
+    img: 'https://res.cloudinary.com/maket/image/upload/v1649078052/maket_design/Group_91_fg5dxg.png',
+    title: 'Save new versions',
+    description: 'After you have edited your design, you can create new versions of the design and start fresh by pressing on the button a the bottom left of the screen.'
   }]
 
   const handleClose = () => {

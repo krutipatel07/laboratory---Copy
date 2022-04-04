@@ -6,6 +6,8 @@ import { ProductCreateForm } from '../../../components/dashboard/product/product
 import { withAuthGuard } from '../../../hocs/with-auth-guard';
 import { withDashboardLayout } from '../../../hocs/with-dashboard-layout';
 import { gtm } from '../../../lib/gtm';
+import {DashboardSidebar} from '../../../components/dashboard/dashboard-sidebar'
+
 
 const ProductCreate = () => {
   useEffect(() => {
@@ -23,9 +25,11 @@ const ProductCreate = () => {
         component="main"
         sx={{
           flexGrow: 1,
-          py: 8
+          py: 8,
+          display: 'flex'
         }}
       >
+        <DashboardSidebar/>
         <Container maxWidth="md">
           <Box sx={{ mb: 3 }}>
             <Typography variant="h4">
@@ -39,5 +43,5 @@ const ProductCreate = () => {
   );
 };
 
-export default withAuthGuard(withDashboardLayout(ProductCreate));
+export default withAuthGuard(ProductCreate);
 
