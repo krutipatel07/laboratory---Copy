@@ -1,7 +1,4 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
 const { useState, useEffect } = React;
 import Dialog from '@mui/material/Dialog';
 import PropTypes from 'prop-types';
@@ -12,8 +9,6 @@ import DialogContentText from '@mui/material/DialogContentText';
 import Button from '@mui/material/Button';
 import CardMedia from '@mui/material/CardMedia';
 import Card from '@mui/material/Card';
-import Image from '../../../public/static/mock-images/products/product_6.png'
-import { setIn } from 'formik';
 
 DashboardModal.propTypes = {
   onClose: PropTypes.func.isRequired,
