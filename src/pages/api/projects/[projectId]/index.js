@@ -25,13 +25,21 @@ export default async (req, res) => {
             }
             break;
         case 'PUT':
-            try {                  
-                await Project.findByIdAndUpdate(projectId, 
-                    { $push : { collaborators : req.body.collaborators}}, 
+            try {
+                const project = await Project.findByIdAndUpdate(projectId, req.body, 
                     {
                     new: true,
                     runValidators: true
-                });
+                });    
+
+                if(req.body.collaborators){
+                    await Project.findByIdAndUpdate(projectId, 
+                    { $push : { collaborators : req.body.collaborators}}, 
+                    {
+                        new: true,
+                        runValidators: true
+                    });
+                }
             
                 if(req.body.assets){                    
                     await Project.findByIdAndUpdate(projectId, 

@@ -52,7 +52,7 @@ const getSections = (t) => [
         // style: {backgroundColor: 'yellow'},
         path: '/dashboard/projects',
         // icon: <DesignServicesIcon fontSize="small" />,
-        children: JSON.parse(localStorage.getItem('project_list') || "[]")
+        children: JSON.parse(localStorage.getItem('project_list') || "[]").reverse()
       },
     ]
   },
@@ -114,11 +114,13 @@ export const DashboardSidebar = (props) => {
       onClose?.();
     }
   };
-  
+
+  const isInvited = router.query.invite
   const [user, setUser] = useState();
   const [open, setOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
+    isInvited && setOpen(true);
     const user = localStorage.getItem("lab-user");
     axios.get(`/api/user/${user}`)
     .then(res => setUser(res.data.data))
@@ -140,8 +142,6 @@ export const DashboardSidebar = (props) => {
     function toogleOpen() {
       setOpen(!open);
     }
-
-    const isInvited = router.query.invite
 
   const content = (
     <>

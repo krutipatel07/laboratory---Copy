@@ -70,6 +70,14 @@ const ProductCard = (props) => {
             <Button variant="outlined" startIcon={<DeleteIcon />} onClick={deleteProject}>
               Delete
             </Button>
+            <NextLink
+                href={`/dashboard/projects/edit?id=${id}`}
+                passHref
+              >
+              <Button variant="outlined" startIcon={<DeleteIcon />}>
+                Edit
+              </Button>
+            </NextLink>
           </Paper>
         </Fade>
       )}
