@@ -25,13 +25,8 @@ export default async (req, res) => {
             }
             break;
         case 'PUT':
-            try {
-                const project = await Project.findByIdAndUpdate(projectId, req.body, 
-                    {
-                    new: true,
-                    runValidators: true
-                });    
-
+            let project;
+            try {   
                 if(req.body.collaborators){
                     await Project.findByIdAndUpdate(projectId, 
                     { $push : { collaborators : req.body.collaborators}}, 
@@ -41,7 +36,7 @@ export default async (req, res) => {
                     });
                 }
             
-                if(req.body.assets){                    
+                else if(req.body.assets){                    
                     await Project.findByIdAndUpdate(projectId, 
                         { $push : { assets : req.body.assets}}, 
                         {
@@ -50,6 +45,13 @@ export default async (req, res) => {
                     });
                 }
                 
+                else {
+                    project = await Project.findByIdAndUpdate(projectId, req.body, 
+                    {
+                    new: true,
+                    runValidators: true
+                }); }
+
                 if (!project){
                     res.status(404).json({ success: false, message: error})
                 }
