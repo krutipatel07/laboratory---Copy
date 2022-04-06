@@ -14,7 +14,8 @@ import Button from '@mui/material/Button';
 import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Typography } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import { ListItemButton, Typography, List, ListItemIcon, ListItemText  } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,17 +68,22 @@ const ProductCard = (props) => {
       {({ TransitionProps }) => (
         <Fade {...TransitionProps} timeout={350}>
           <Paper>
-            <Button variant="outlined" startIcon={<DeleteIcon />} onClick={deleteProject}>
-              Delete
-            </Button>
-            <NextLink
+            <List>
+              <ListItemButton onClick={deleteProject}>
+                <ListItemIcon><DeleteIcon /></ListItemIcon>
+                <ListItemText primary="Delete" />
+              </ListItemButton>
+
+              <NextLink
                 href={`/dashboard/projects/edit?id=${id}`}
                 passHref
               >
-              <Button variant="outlined" startIcon={<DeleteIcon />}>
-                Edit
-              </Button>
-            </NextLink>
+                <ListItemButton>
+                  <ListItemIcon><EditIcon/></ListItemIcon>
+                  <ListItemText primary="Edit" />
+                </ListItemButton>
+              </NextLink>
+            </List>
           </Paper>
         </Fade>
       )}

@@ -133,11 +133,11 @@ export const ProjectEditForm = (props) => {
                 Basic details
               </Typography>
               <Typography
-                color="textSecondary"
+                // color="textSecondary"
                 variant="body2"
                 sx={{ mt: 1 }}
               >
-                Current project title: <strong>{ project.title }</strong>
+                Current Title: <strong>{ project.title }</strong>
               </Typography>
             </Grid>
             <Grid
@@ -175,7 +175,7 @@ export const ProjectEditForm = (props) => {
                 Project Cover Image
               </Typography>
               <Typography 
-                color="textSecondary"
+                // color="textSecondary"
                 variant="body2"
                 sx={{ mt: 1 }}>
                 Current cover image
@@ -243,7 +243,7 @@ export const ProjectEditForm = (props) => {
                 Budget must be greater than or equal to $10000 and multiple of 10000.
               </Typography>
               <Typography
-                color="textSecondary"
+                // color="textSecondary"
                 variant="body2"
                 sx={{ mt: 1 }}
               >
