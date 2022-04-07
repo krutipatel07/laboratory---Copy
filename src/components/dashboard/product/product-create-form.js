@@ -279,7 +279,7 @@ export const ProductCreateForm = (props) => {
                 Images
               </Typography>
               <FileDropzone
-                accept="image/*"
+                accept="image/*,.pdf"
                 files={files}
                 onDrop={handleDrop}
                 onRemove={handleRemove}
