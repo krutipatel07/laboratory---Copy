@@ -215,7 +215,7 @@ const storeFiles = async (file, formData) => {
                         >
                           <ImageSrc style={{ backgroundImage: `url(https://cdn1.iconfinder.com/data/icons/adobe-acrobat-pdf/154/adobe-acrobat-pdf-figure-512.png)` }} />
                           <ImageBackdrop className="MuiImageBackdrop-root" />
-                          <a href={asset.documents} target="_blank">
+                          <a href={asset.documents} target="_blank" rel="noreferrer">
                             <Image>
                               <Typography
                                 component="span"
@@ -246,7 +246,7 @@ const storeFiles = async (file, formData) => {
                         >
                           <ImageSrc style={{ backgroundImage: `url(https://cdn1.iconfinder.com/data/icons/adobe-acrobat-pdf/154/adobe-acrobat-pdf-figure-512.png)` }} />
                           <ImageBackdrop className="MuiImageBackdrop-root" />
-                          <a href={asset[0].documents} target="_blank"><Image>
+                          <a href={asset[0].documents} target="_blank" rel="noreferrer"><Image>
                             <Typography
                               component="span"
                               variant="subtitle1"
