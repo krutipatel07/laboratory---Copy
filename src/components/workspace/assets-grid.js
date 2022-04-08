@@ -85,8 +85,12 @@ const useStyles = makeStyles((theme) => ({
   mainBox: {
     width: "650px",
     [theme.breakpoints.down("xs")]: {
-      width: '100%',
+      width: '300px',
     },
+    paddingTop: 10,
+    // [theme.breakpoints.down("sm")]: {
+    //   paddingTop: '10px',
+    // },
   },
 }));
 
@@ -164,9 +168,9 @@ const storeFiles = async (file, formData) => {
           flexGrow: 1
         }}
         className={classes.mainBox}
-        style={{paddingTop:'80px', 
+        // style={{paddingTop:'80px', 
         // width:650
-      }}
+      // }}
         
       > 
         <section>
@@ -182,7 +186,7 @@ const storeFiles = async (file, formData) => {
             </div>
         </section>
 
-        <Grid container spacing={3} style={{marginLeft:0, width: "100%", justifyContent:'center', marginTop: "10px", paddingLeft:10}}>
+        <Grid container spacing={3} style={{marginLeft:0, width: "100%", justifyContent:'center', marginTop: "10px", padding:10}}>
           {assetData ? assetData.length ?   
             assetData.map((asset, i) => {
               return (                
