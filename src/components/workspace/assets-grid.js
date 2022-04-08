@@ -103,7 +103,7 @@ export default function AssetsGrid({projectId, props}) {
             return url_list.push({images : url})
           }
           else{
-            return url_list.push({documents : url})
+            return url_list.push({documents : url, name : file.name})
           }
     });
     
@@ -228,7 +228,7 @@ const storeFiles = async (file, formData) => {
                                   pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
                                 }}
                               >
-                                PDF 
+                                {asset.name ? asset.name : "PDF"} 
                                 <ImageMarked className="MuiImageMarked-root" />
                               </Typography>
                             </Image>
@@ -258,7 +258,7 @@ const storeFiles = async (file, formData) => {
                                 pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
                               }}
                             >
-                              PDF 
+                              {asset[0].name ? asset[0].name : "PDF"}  
                               <ImageMarked className="MuiImageMarked-root" />
                             </Typography>
                           </Image></a>
