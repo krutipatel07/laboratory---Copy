@@ -196,7 +196,7 @@ const importDesign = async (secure_url, designName) => {
               variant="standard"
             />
             <FileDropzone
-                accept="image/*,.pdf"
+                accept="image/*"
                 files={files}
                 onDrop={handleDrop}
                 onRemove={handleRemove}
