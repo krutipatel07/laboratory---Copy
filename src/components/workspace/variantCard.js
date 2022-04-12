@@ -2,6 +2,7 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import NextLink from 'next/link';
 import { makeStyles } from '@material-ui/styles';
@@ -73,6 +74,7 @@ const VariantCard = (props) => {
         comments,
         link,
         image,
+        file_name,
         setUpdate,
         versions
     } = props;
@@ -128,12 +130,19 @@ const VariantCard = (props) => {
             href={link}
             passHref
           >
-          <CardMedia
-            component="img"
-            height="194"
-            image={image}
-            alt="Project cover image"
-          />
+            {image.slice(-3) === "pdf" ? 
+              <CardContent minHeight="194">
+                <Typography variant="body2" align="center">
+                  {file_name ? file_name : "PDF"}
+                </Typography>
+              </CardContent>:
+              <CardMedia
+                component="img"
+                height="194"
+                image={image}
+                alt="Design image"
+              />
+            }
         </NextLink>
         <CardActions 
           sx={{

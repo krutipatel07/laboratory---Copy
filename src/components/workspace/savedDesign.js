@@ -69,6 +69,7 @@ export default function SavedDesign({projectId, setNewDesign}) {
       formData.append('upload_preset', 'maket_design');
 
       const url = "https://api.cloudinary.com/v1_1/maket/image/upload";
+      const file_name = files[0].path
       fetch(url, {
         method: "POST",
         body: formData
@@ -78,13 +79,13 @@ export default function SavedDesign({projectId, setNewDesign}) {
           toast.error(res.error.message)
           return
         }
-        importDesign(res.secure_url, values.designName);
+        importDesign(res.secure_url, values.designName, file_name);
         handleRemoveAll()
         values.designName = ''
       }).catch(err => console.log(err))
     }})
 
-const importDesign = async (secure_url, designName) => {  
+const importDesign = async (secure_url, designName, file_name) => {  
   const limnu_boardCreate = await axios.post("https://api.apix.limnu.com/v1/boardCreate", {
     apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
     boardName: `Board-${designName}`,
@@ -102,6 +103,7 @@ const importDesign = async (secure_url, designName) => {
   const addDesign = await axios.post(`/api/projects/${projectId}/design`, {
     title : designName,
     url: secure_url,
+    file_name,
     limnu_boardUrl : limnu_boardCreate.data.boardUrl,
   });
 
@@ -146,6 +148,7 @@ const importDesign = async (secure_url, designName) => {
                       members = {design.collaborators.length}
                       comments = {design.comments.length}
                       image={design.url}
+                      file_name={design.file_name}
                       link={`/workspace/${projectData.id}?designId=${design.id}`}
                       setUpdate = {setUpdate}
                       versions = {design.versions.length}
@@ -196,7 +199,7 @@ const importDesign = async (secure_url, designName) => {
               variant="standard"
             />
             <FileDropzone
-                accept="image/*"
+                accept="image/*,.pdf"
                 files={files}
                 onDrop={handleDrop}
                 onRemove={handleRemove}

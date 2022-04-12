@@ -27,6 +27,9 @@ const DesignSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    file_name: {
+      type: String
+    },
     limnu_boardUrl : {
       type: String
     },
