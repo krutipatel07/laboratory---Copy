@@ -111,6 +111,13 @@ const Login = () => {
               {platform === 'JWT' && <JWTLogin />}
             </Box>
             <Divider sx={{ my: 3 }} />
+            
+            <Box
+              sx={{
+                display:'flex',
+                justifyContent: 'space-between',
+              }}
+            >
             <NextLink
               href={disableGuard
                 ? `/authentication/register?disableGuard=${disableGuard}`
@@ -124,6 +131,18 @@ const Login = () => {
                 Create new account
               </Link>
             </NextLink>
+            <NextLink
+              href={"/authentication/password-reset"}
+              passHref
+            >
+              <Link
+                color="textSecondary"
+                variant="body2"
+              >
+                Forgot your password?
+              </Link>
+            </NextLink>
+            </Box>
             {platform === 'Amplify' && (
               <NextLink
                 href={disableGuard
