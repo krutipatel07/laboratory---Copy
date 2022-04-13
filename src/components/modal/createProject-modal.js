@@ -25,7 +25,7 @@ export default function DashboardModal(props) {
 
   
   return (
-    <Dialog  open={open} style={{overflowY:'hidden'}}>
+    <Dialog  open={open} PaperProps={{ sx: { overflow:'hidden' } }}>
         <ProductCreateForm setOpen={setOpen}/>
     </Dialog>
     

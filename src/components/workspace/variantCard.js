@@ -131,11 +131,11 @@ const VariantCard = (props) => {
             passHref
           >
             {image.slice(-3) === "pdf" ? 
-              <CardContent minHeight="194">
-                <Typography variant="body2" align="center">
+              <CardMedia sx={{minHeight:"194px"}}>
+                <Typography variant="body2" align="center" sx={{pt:'80px'}}>
                   {file_name ? file_name : "PDF"}
                 </Typography>
-              </CardContent>:
+              </CardMedia>:
               <CardMedia
                 component="img"
                 height="194"

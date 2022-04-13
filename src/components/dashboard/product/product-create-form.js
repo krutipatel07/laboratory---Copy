@@ -144,7 +144,7 @@ export const ProductCreateForm = (props) => {
     <form sx={{p:1}}
       onSubmit={formik.handleSubmit}
       {...props}>
-      <Card sx={{boxShadow:'none', overflow:'auto', height:'60vh'}}>
+      <Card sx={{boxShadow:'none', overflow:'auto', height:'80vh'}}>
         <CardContent>
           <Box sx={{
             display: 'block',
