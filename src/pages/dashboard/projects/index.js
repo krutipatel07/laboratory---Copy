@@ -59,6 +59,7 @@ const applyPagination = (products, page, rowsPerPage) => products.slice(page * r
 const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(0);
+  const [open, setOpen] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [filters, setFilters] = useState({
     name: undefined,
@@ -115,6 +116,10 @@ const ProductList = () => {
     setModalShown(true);
     setOpen(true);
   };
+  
+  const createProject = (e) => {
+    setOpen(prev=>!prev);
+  }
 
   return (
     <>
@@ -146,15 +151,18 @@ const ProductList = () => {
                 </Typography>
               </Grid>
               <Grid item>
-                <NextLink href="/dashboard/projects/new" passHref>
+                
+                {/* <NextLink href="/dashboard/projects/new" passHref> */}
                   <Button
                     component="a"
                     startIcon={<PlusIcon 
                     fontSize="small" />}
+                    onClick={createProject}
                   >
                     CREATE NEW PROJECT
                   </Button>
-                </NextLink>
+                {/* </NextLink> */}
+                {open && <CreateProjectModal open={open} setOpen={setOpen} />}
               </Grid>
             </Grid>
           </Box>

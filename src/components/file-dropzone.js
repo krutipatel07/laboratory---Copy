@@ -63,7 +63,7 @@ export const FileDropzone = (props) => {
           flexWrap: 'wrap',
           justifyContent: 'center',
           outline: 'none',
-          p: 6,
+          p: 1,
           ...(isDragActive && {
             backgroundColor: 'action.active',
             opacity: 0.5
