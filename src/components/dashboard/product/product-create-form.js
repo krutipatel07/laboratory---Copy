@@ -18,8 +18,9 @@ import {
 import { Search as SearchIcon } from '../../../icons/search';
 import { FileDropzone } from '../../file-dropzone';
 import { QuillEditor } from '../../quill-editor';
-import MemberList from './product-createForm-memberList.js'
-import axios from 'axios'
+import MemberList from './product-createForm-memberList.js';
+import axios from 'axios';
+import {GenerateImportDialog} from '../../modal/generateImportModal'
 
 
 export const ProductCreateForm = (props) => {
@@ -27,6 +28,7 @@ export const ProductCreateForm = (props) => {
   const setOpen = props.setOpen
   const [files, setFiles] = useState([]);
   const [coverImage, setCoverImage] = useState([]);
+  const [modal, setModal] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -88,7 +90,9 @@ export const ProductCreateForm = (props) => {
             }])
 
             toast.success('Project created!');
-            router.push(`/workspace?id=${data.data._id}`);
+            // router.push(`/workspace?id=${data.data._id}`);
+            setOpen(prev=>!prev)
+            setModal(prev=>!prev)
         } catch (err) {
           console.error(err);
           toast.error('Something went wrong!');
@@ -292,6 +296,7 @@ export const ProductCreateForm = (props) => {
         >
           CREATE
         </Button>
+        {modal && <GenerateImportDialog/>}
       </Box>
     </form>
   );
