@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import toast from 'react-hot-toast';
@@ -23,8 +24,10 @@ import axios from 'axios'
 
 export const ProductCreateForm = (props) => {
   const router = useRouter();
+  const setOpen = props.setOpen
   const [files, setFiles] = useState([]);
   const [coverImage, setCoverImage] = useState([]);
+
   const formik = useFormik({
     initialValues: {
       barcode: '925487986526',
@@ -138,29 +141,39 @@ export const ProductCreateForm = (props) => {
   };
 
   return (
-    <form
+    <form sx={{p:1}}
       onSubmit={formik.handleSubmit}
       {...props}>
-      <Card>
+      <Card sx={{boxShadow:'none', overflow:'auto', height:'60vh'}}>
         <CardContent>
+          <Box sx={{
+            display: 'block',
+            textAlign: 'center',
+            mb:2
+          }}>
+            <Typography sx={{fontSize:18, fontWeight:600}}>Create a New Project</Typography>
+          </Box>
+        
           <Grid
             container
             spacing={3}
           >
             <Grid
               item
-              md={4}
+              md={12}
               xs={12}
+              style={{paddingTop:8}}
             >
-              <Typography variant="h6">
-                Basic details
+              <Typography
+                color="textSecondary"
+                sx={{
+                  mb: 1,
+                  mt: 1
+                }}
+                variant="subtitle2"
+              >
+                Project Title
               </Typography>
-            </Grid>
-            <Grid
-              item
-              md={8}
-              xs={12}
-            >
               <TextField
                 error={Boolean(formik.touched.name && formik.errors.name)}
                 fullWidth
@@ -171,64 +184,23 @@ export const ProductCreateForm = (props) => {
                 onChange={formik.handleChange}
                 value={formik.values.name}
               />
-              {/* <Typography
-                color="textSecondary"
-                sx={{
-                  mb: 2,
-                  mt: 3
-                }}
-                variant="subtitle2"
-              >
-                Description
-              </Typography>
-              <QuillEditor
-                onChange={(value) => {
-                  formik.setFieldValue('description', value);
-                }}
-                placeholder="..."
-                sx={{ height: 400 }}
-                value={formik.values.description}
-              />
-              {(formik.touched.description && formik.errors.description) && (
-                <Box sx={{ mt: 2 }}>
-                  <FormHelperText error>
-                    {formik.errors.description}
-                  </FormHelperText>
-                </Box>
-              )} */}
             </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
-      <Card sx={{ mt: 3 }}>
-        <CardContent>
-          <Grid
-            container
-            spacing={3}
-          >
+
             <Grid
               item
-              md={4}
+              md={12}
               xs={12}
-            >
-              <Typography variant="h6">
-                Project Cover Image
-              </Typography>
-            </Grid>
-            <Grid
-              item
-              md={8}
-              xs={12}
+              style={{paddingTop:8}}
             >
               <Typography
                 color="textSecondary"
                 sx={{
-                  mb: 2,
-                  mt: 3
+                  mb: 1,
+                  mt: 1
                 }}
                 variant="subtitle2"
               >
-                Image
+                Project Cover Photo
               </Typography>
               <FileDropzone
                 accept="image/*"
@@ -238,45 +210,22 @@ export const ProductCreateForm = (props) => {
                 onRemoveAll={handleRemoveAllCoverImage}
               />
             </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
-      <Card sx={{ mt: 3 }}>
-        <CardContent>
-          <Grid
-            container
-            spacing={3}
-          >
+
             <Grid
               item
-              md={4}
+              md={12}
               xs={12}
-            >
-              <Typography variant="h6">
-                Project Assets
-              </Typography>
-              <Typography
-                color="textSecondary"
-                variant="body2"
-                sx={{ mt: 1 }}
-              >
-                You will be able to view and edit these from the project workspace.
-              </Typography>
-            </Grid>
-            <Grid
-              item
-              md={8}
-              xs={12}
+              style={{paddingTop:8}}
             >
               <Typography
                 color="textSecondary"
                 sx={{
-                  mb: 2,
-                  mt: 3
+                  mb: 1,
+                  mt: 1
                 }}
                 variant="subtitle2"
               >
-                Images
+                Project Assets
               </Typography>
               <FileDropzone
                 accept="image/*,.pdf"
@@ -286,36 +235,20 @@ export const ProductCreateForm = (props) => {
                 onRemoveAll={handleRemoveAll}
               />
             </Grid>
-          </Grid>
-        </CardContent>
-      </Card>
-      <Card sx={{ mt: 3 }}>
-        <CardContent>
-          <Grid
-            container
-            spacing={3}
-          >
+
             <Grid
               item
-              md={4}
+              md={12}
               xs={12}
+              style={{paddingTop:8}}
             >
-              <Typography variant="h6">
-                Budget
-              </Typography>
               <Typography
                 color="textSecondary"
                 variant="body2"
                 sx={{ mt: 1 }}
               >
-                Budget must be greater than or equal to $10000 and multiple of 10000.
+                Budget
               </Typography>
-            </Grid>
-            <Grid
-              item
-              md={8}
-              xs={12}
-            >
               <TextField
                 error={Boolean(formik.touched.newPrice && formik.errors.newPrice)}
                 fullWidth
@@ -332,31 +265,32 @@ export const ProductCreateForm = (props) => {
           </Grid>
         </CardContent>
       </Card>
+    
       <Box
         sx={{
           display: 'flex',
           flexWrap: 'wrap',
           justifyContent: 'space-between',
-          mx: -1,
           mb: -1,
-          mt: 3
+          mt: 3,
+          background:'#212121',
+          color:'#F0C88E'
         }}
       >
         <Button
         onClick={() => {
-          router.push('/dashboard/projects');
+          setOpen(prev=>!prev)
+
         }}
-          sx={{ m: 1 }}
-          variant="outlined"
+          sx={{ m: 1, color:'#FFFFFF' }}
         >
-          Cancel
+          CANCEL
         </Button>
         <Button
-          sx={{ m: 1 }}
+          sx={{ m: 1, color:'#F0C88E' }}
           type="submit"
-          variant="contained"
         >
-          Create
+          CREATE
         </Button>
       </Box>
     </form>

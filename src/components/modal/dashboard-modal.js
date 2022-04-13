@@ -65,7 +65,7 @@ export default function DashboardModal(props) {
   },
 
   {
-    img: 'https://maket-laboratory-content.s3.ca-central-1.amazonaws.com/onboarding/import.png',
+    img: 'https://maket-laboratory-content.s3.ca-central-1.amazonaws.com/onboarding/Card.png',
     title: 'Edit and collaborate on your design',
     description: 'Now that you are in your saved designs page, you can edit and collaborate on the floorplans. Click on the floorplan that you want to edit.'
   },
