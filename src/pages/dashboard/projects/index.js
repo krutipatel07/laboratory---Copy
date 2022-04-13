@@ -13,6 +13,7 @@ import CreateProjectModal from '../../../components/modal/createProject-modal'
 import { useAuth } from '../../../hooks/use-auth';
 import AddIcon from '@mui/icons-material/Add';
 import {DashboardSidebar} from '../../../components/dashboard/dashboard-sidebar'
+import {GenerateImportDialog} from '../../../components/modal/generateImportModal'
 
 const applyFilters = (products, filters) => products.filter((product) => {
   if (filters.name) {
@@ -68,6 +69,7 @@ const ProductList = () => {
     inStock: undefined
   });
   const [userData, setUserData] = useState();
+  const [modal, setModal] = useState(false);  
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
@@ -162,7 +164,7 @@ const ProductList = () => {
                     CREATE NEW PROJECT
                   </Button>
                 {/* </NextLink> */}
-                {open && <CreateProjectModal open={open} setOpen={setOpen} />}
+                {open && <CreateProjectModal open={open} setOpen={setOpen} setModal={setModal} />}
               </Grid>
             </Grid>
           </Box>
@@ -175,6 +177,7 @@ const ProductList = () => {
         userData && userData.isFirstTime ? 
         <DashboardModal/> : ''
       }
+      {modal && <GenerateImportDialog modal={modal} setModal={setModal}/>}
     </>
   );
 };

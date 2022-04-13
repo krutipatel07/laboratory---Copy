@@ -21,12 +21,13 @@ DashboardModal.propTypes = {
 export default function DashboardModal(props) {
   const open = props.open;
   const setOpen = props.setOpen
+  const setModal = props.setModal
 
 
   
   return (
     <Dialog  open={open} PaperProps={{ sx: { overflow:'hidden' } }}>
-        <ProductCreateForm setOpen={setOpen}/>
+        <ProductCreateForm setOpen={setOpen} setModal={setModal}/>
     </Dialog>
     
   );

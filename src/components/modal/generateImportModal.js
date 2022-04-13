@@ -8,20 +8,21 @@ import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
-export default function GenerateImportDialog() {
-  const [open, setOpen] = React.useState(false);
+export const GenerateImportDialog = (props) =>{
+  const modal = props.modal;
+  const setModal = props.setModal;
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleClose = () => {
-    setOpen(false);
+    setModal(prev=>!prev);
   };
 
   return (
     <div>
       <Dialog
         fullScreen={fullScreen}
-        open={open}
+        open={modal}
         onClose={handleClose}
         aria-labelledby="responsive-dialog-title"
       >

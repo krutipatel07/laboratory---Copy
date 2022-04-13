@@ -20,15 +20,14 @@ import { FileDropzone } from '../../file-dropzone';
 import { QuillEditor } from '../../quill-editor';
 import MemberList from './product-createForm-memberList.js';
 import axios from 'axios';
-import {GenerateImportDialog} from '../../modal/generateImportModal'
 
 
 export const ProductCreateForm = (props) => {
   const router = useRouter();
   const setOpen = props.setOpen
+  const setModal = props.setModal;
   const [files, setFiles] = useState([]);
   const [coverImage, setCoverImage] = useState([]);
-  const [modal, setModal] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -145,6 +144,7 @@ export const ProductCreateForm = (props) => {
   };
 
   return (
+    <>
     <form sx={{p:1}}
       onSubmit={formik.handleSubmit}
       {...props}>
@@ -296,8 +296,8 @@ export const ProductCreateForm = (props) => {
         >
           CREATE
         </Button>
-        {modal && <GenerateImportDialog/>}
       </Box>
     </form>
+    </>
   );
 };
