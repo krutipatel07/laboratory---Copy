@@ -93,4 +93,4 @@ const PasswordReset = () => {
   );
 };
 
-export default withGuestGuard(PasswordReset);
+export default PasswordReset;
