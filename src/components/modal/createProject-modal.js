@@ -22,12 +22,13 @@ export default function DashboardModal(props) {
   const open = props.open;
   const setOpen = props.setOpen
   const setModal = props.setModal
+  const setProjectId = props.setProjectId
 
 
   
   return (
     <Dialog  open={open} PaperProps={{ sx: { overflow:'hidden' } }}>
-        <ProductCreateForm setOpen={setOpen} setModal={setModal}/>
+        <ProductCreateForm setOpen={setOpen} setModal={setModal} setProjectId={setProjectId}/>
     </Dialog>
     
   );

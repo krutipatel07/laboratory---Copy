@@ -70,6 +70,7 @@ const ProductList = () => {
   });
   const [userData, setUserData] = useState();
   const [modal, setModal] = useState(false);  
+  const [projectId, setProjectId] = useState()
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
@@ -164,7 +165,7 @@ const ProductList = () => {
                     CREATE NEW PROJECT
                   </Button>
                 {/* </NextLink> */}
-                {open && <CreateProjectModal open={open} setOpen={setOpen} setModal={setModal} />}
+                {open && <CreateProjectModal open={open} setOpen={setOpen} setModal={setModal} setProjectId={setProjectId}/>}
               </Grid>
             </Grid>
           </Box>
@@ -177,7 +178,7 @@ const ProductList = () => {
         userData && userData.isFirstTime ? 
         <DashboardModal/> : ''
       }
-      {modal && <GenerateImportDialog modal={modal} setModal={setModal}/>}
+      {modal && <GenerateImportDialog modal={modal} setModal={setModal} projectId={projectId}/>}
     </>
   );
 };

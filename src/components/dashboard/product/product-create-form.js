@@ -15,10 +15,7 @@ import {
   Typography,
   InputAdornment,
 } from '@mui/material';
-import { Search as SearchIcon } from '../../../icons/search';
 import { FileDropzone } from '../../file-dropzone';
-import { QuillEditor } from '../../quill-editor';
-import MemberList from './product-createForm-memberList.js';
 import axios from 'axios';
 
 
@@ -26,6 +23,7 @@ export const ProductCreateForm = (props) => {
   const router = useRouter();
   const setOpen = props.setOpen
   const setModal = props.setModal;
+  const setProjectId = props.setProjectId
   const [files, setFiles] = useState([]);
   const [coverImage, setCoverImage] = useState([]);
 
@@ -89,7 +87,7 @@ export const ProductCreateForm = (props) => {
             }])
 
             toast.success('Project created!');
-            // router.push(`/workspace?id=${data.data._id}`);
+            setProjectId(data.data._id)
             setOpen(prev=>!prev)
             setModal(prev=>!prev)
         } catch (err) {
