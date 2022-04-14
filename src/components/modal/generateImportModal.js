@@ -7,15 +7,27 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import { useRouter } from 'next/router';
 
 export const GenerateImportDialog = (props) =>{
+  const router = useRouter();
   const modal = props.modal;
   const setModal = props.setModal;
+  const projectId = props.projectId;
+
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleClose = () => {
     setModal(prev=>!prev);
+  };
+  
+  const importDesign = () => {
+  router.push(`/workspace?id=${projectId}&i=1`);
+  };
+
+  const generate = () => {
+    router.push(`/workspace?id=${projectId}&i=0`);
   };
 
   return (
@@ -32,10 +44,10 @@ export const GenerateImportDialog = (props) =>{
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus >
+          <Button autoFocus onClick={generate}>
             GENERATE
           </Button>
-          <Button autoFocus>
+          <Button autoFocus onClick={importDesign}>
             IMPORT
           </Button>
         </DialogActions>
