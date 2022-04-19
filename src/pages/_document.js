@@ -67,6 +67,23 @@ class CustomDocument extends Document {
             'https://connect.facebook.net/en_US/fbevents.js');
             fbq('init', '333679741957494');
             fbq('track', 'PageView');`}}></script>
+
+          <script dangerouslySetInnerHTML={{ __html:
+          `window.fbAsyncInit = function() {
+          FB.init({
+          xfbml : true,
+          version : 'v9.0'
+          });
+          };
+          (function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); [js.id](http://js.id/) = id;
+          js.src = '[https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js](https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js)';
+          fjs.parentNode.insertBefore(js, fjs);
+          }(document, 'script', 'facebook-jssdk'));`}}>
+
+          </script>
           
         </Head>
         <body>
