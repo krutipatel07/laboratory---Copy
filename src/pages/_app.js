@@ -61,6 +61,7 @@ const App = (props) => {
                     <RTL direction={settings.direction}>
                       <CssBaseline />
                       <Toaster position="top-center" />
+                      <div id="fb-root"></div>
                       <SettingsButton />
                       <AuthConsumer>
                         {(auth) => !auth.isInitialized

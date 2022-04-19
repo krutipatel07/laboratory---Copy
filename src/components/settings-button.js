@@ -16,10 +16,10 @@ export const SettingsButton = () => {
 
   return (
     <>
-      {/* <Tooltip title="Settings">
+      <Tooltip title="Settings">
         <Fab
           color="primary"
-          onClick={handleOpen}
+          // onClick={handleOpen}
           size="medium"
           sx={{
             bottom: 0,
@@ -29,9 +29,13 @@ export const SettingsButton = () => {
             zIndex: 1900
           }}
         >
-          <AdjustmentsIcon fontSize="small" />
+              <div class="fb-customerchat"
+                attribution='setup_tool'
+                page_id="108824634140889"
+                theme_color="#002E4F">
+              </div>
         </Fab>
-      </Tooltip> */}
+      </Tooltip>
       <SettingsDrawer
         onClose={handleClose}
         open={open}
