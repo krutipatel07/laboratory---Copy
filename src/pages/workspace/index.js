@@ -58,8 +58,8 @@ function a11yProps(index) {
 
 const ProjectWorkspace = withRouter((props) => {
   const router = useRouter();
-  const i = router.query.i;
-  const [value, setValue] = React.useState(1);
+  const index = parseInt(router.query.i);
+  const [value, setValue] = React.useState(index || 1);
   const [newDesign, setNewDesign] = React.useState(0);
 
   const handleChange = (event, newValue) => {
