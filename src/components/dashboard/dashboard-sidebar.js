@@ -22,6 +22,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import toast from 'react-hot-toast';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import Tooltip from '@mui/material/Tooltip';
+import RateReviewOutlinedIcon from '@mui/icons-material/RateReviewOutlined';
 
 const drawerWidthOpen = 280;
 const paddingIconButton = 10;
@@ -69,10 +70,16 @@ const getBottomSections = (t) => [
         icon: <UserCircleIcon fontSize="small" />
       },
       {
+        title: t('Feedback'),
+        path: 'https://maket.canny.io/feature-requests',
+        icon: <RateReviewOutlinedIcon fontSize="small" />
+      },
+      {
         title: t('Contact us'),
         path: '/contact',
         icon: <InfoOutlinedIcon fontSize="small" />
       },
+
     ],
   },
 
@@ -282,6 +289,13 @@ export const DashboardSidebar = (props) => {
                 </Tooltip>
                 
                 }
+                <Tooltip title='Feedback' placement="left-end">
+                <IconButton>
+                  <NextLink href="https://maket.canny.io/feature-requests">
+                    <RateReviewOutlinedIcon fontSize="small" style={{display:'block', marginTop: 10, marginTop: 10}}/>
+                  </NextLink>
+                </IconButton>
+                </Tooltip>
                 <Tooltip title='Info' placement="left-end">
                   <IconButton>
                     <NextLink href="/contact">
