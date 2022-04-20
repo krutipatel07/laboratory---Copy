@@ -29,7 +29,7 @@ export const SettingsButton = () => {
             zIndex: 1900
           }}
         >
-              <div class="fb-customerchat"
+              <div className="fb-customerchat"
                 attribution='setup_tool'
                 page_id="108824634140889"
                 theme_color="#002E4F">
