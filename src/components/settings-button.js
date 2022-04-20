@@ -16,7 +16,7 @@ export const SettingsButton = () => {
 
   return (
     <>
-      <Tooltip title="Settings">
+      {/* <Tooltip title="Settings">
         <Fab
           color="primary"
           // onClick={handleOpen}
@@ -35,7 +35,7 @@ export const SettingsButton = () => {
                 theme_color="#002E4F">
               </div>
         </Fab>
-      </Tooltip>
+      </Tooltip> */}
       <SettingsDrawer
         onClose={handleClose}
         open={open}
