@@ -3,19 +3,14 @@ mail.setApiKey(process.env.SENDGRID_API_KEY)
 
 export default async (req, res) => {
     const body = req.body;
-    const message = `
-    Hello ${body.email.split("@")[0]},\r\n
-
-    Join our collaborative workspace using the link below.\r\n\r\n
-
-    https://platform.maket.ai/workspace/collaborator?invite=true&projectId=${body.projectId}&designId=${body.designId}
-    `;
     const data = { 
         to: body.email,
         from: "info@maket.ca",
-        subject: "Join collaborative workspace",
-        text: message,
-        html: message.replace(/\r\n/g, '<br>')
+        templateId: "d-05c2663ead5545399d492cca87dbf9de",
+        dynamic_template_data: {
+            "name" : body.email.split("@")[0],
+            "url": `https://platform.maket.ai/workspace/collaborator?invite=true&projectId=${body.projectId}&designId=${body.designId}`
+          }
         }
     mail.send(data);
     // return await mail.send(data).then(() => {}, console.error);
