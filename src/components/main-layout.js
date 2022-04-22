@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import { Footer } from './footer';
 import { MainNavbar } from './main-navbar';
-import { MainSidebar } from './main-sidebar';
+// import { MainSidebar } from './main-sidebar';
 
 const MainLayoutRoot = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
@@ -17,10 +17,6 @@ export const MainLayout = ({ children }) => {
   return (
     <MainLayoutRoot>
       <MainNavbar onOpenSidebar={() => setIsSidebarOpen(true)} />
-      <MainSidebar
-        onClose={() => setIsSidebarOpen(false)}
-        open={isSidebarOpen}
-      />
       {children}
       <Footer />
     </MainLayoutRoot>

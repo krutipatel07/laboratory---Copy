@@ -1,11 +1,7 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { Box, Container, Divider, Tab, Tabs, Typography } from '@mui/material';
-import { AccountBillingSettings } from '../../components/dashboard/account/account-billing-settings';
 import { AccountGeneralSettings } from '../../components/dashboard/account/account-general-settings';
-import { AccountNotificationsSettings } from '../../components/dashboard/account/account-notifications-settings';
-import { AccountTeamSettings } from '../../components/dashboard/account/account-team-settings';
-import { AccountSecuritySettings } from '../../components/dashboard/account/account-security-settings';
 import { withAuthGuard } from '../../hocs/with-auth-guard';
 import { withDashboardLayout } from '../../hocs/with-dashboard-layout';
 import { gtm } from '../../lib/gtm';
@@ -69,10 +65,6 @@ const Account = () => {
           </Tabs>
           <Divider sx={{ mb: 3 }} />
           {currentTab === 'general' && <AccountGeneralSettings />}
-          {/* {currentTab === 'billing' && <AccountBillingSettings />}
-          {currentTab === 'team' && <AccountTeamSettings />}
-          {currentTab === 'notifications' && <AccountNotificationsSettings />}
-          {currentTab === 'security' && <AccountSecuritySettings />} */}
         </Container>
       </Box>
     </>

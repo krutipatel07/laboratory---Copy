@@ -8,7 +8,7 @@ import { withAuthGuard } from '../../../hocs/with-auth-guard';
 import { Plus as PlusIcon } from '../../../icons/plus';
 import { gtm } from '../../../lib/gtm';
 import ProjectGrid from '../../../components/dashboard/product/product-grid.js';
-import DashboardModal from '../../../components/modal/dashboard-modal';
+import DashboardModalTutorial from '../../../components/modal/dashboard-modal-tutorial';
 import CreateProjectModal from '../../../components/modal/createProject-modal'
 import { useAuth } from '../../../hooks/use-auth';
 import AddIcon from '@mui/icons-material/Add';
@@ -176,7 +176,7 @@ const ProductList = () => {
       </Box>
       {
         userData && userData.isFirstTime ? 
-        <DashboardModal/> : ''
+        <DashboardModalTutorial/> : ''
       }
       {modal && <GenerateImportDialog modal={modal} setModal={setModal} projectId={projectId}/>}
     </>

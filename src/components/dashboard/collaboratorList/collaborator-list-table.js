@@ -19,7 +19,7 @@ import { getInitials } from '../../../utils/get-initials';
 import { Scrollbar } from '../../scrollbar';
 import { SeverityPill } from '../../severity-pill';
 
-export const CustomerListTable = (props) => {
+export const CollaboratorListTable = (props) => {
   const {
     customers,
     customersCount,
@@ -186,7 +186,7 @@ export const CustomerListTable = (props) => {
   );
 };
 
-CustomerListTable.propTypes = {
+CollaboratorListTable.propTypes = {
   customers: PropTypes.array.isRequired,
   customersCount: PropTypes.number.isRequired,
   onPageChange: PropTypes.func,

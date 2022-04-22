@@ -13,7 +13,7 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import { CustomerListTable } from '../../../components/dashboard/customer/customer-list-table';
+import { CollaboratorListTable } from '../../../components/dashboard/collaboratorList/collaborator-list-table';
 import { withAuthGuard } from '../../../hocs/with-auth-guard';
 import { withDashboardLayout } from '../../../hocs/with-dashboard-layout';
 import { useMounted } from '../../../hooks/use-mounted';
@@ -289,7 +289,7 @@ const CustomerList = () => {
                 ))}
               </TextField>
             </Box>
-            <CustomerListTable
+            <CollaboratorListTable
               customers={paginatedCustomers}
               customersCount={filteredCustomers.length}
               onPageChange={handlePageChange}
