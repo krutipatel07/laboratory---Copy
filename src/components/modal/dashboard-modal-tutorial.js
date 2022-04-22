@@ -87,8 +87,8 @@ export default function DashboardModalTutorial(props) {
 
   const handleClose = () => {
     setOpen((prevState) => !prevState);
-    // setIsOpen((prevState) => !prevState)
-    // setModalShown((prevState) => !prevState);
+    setIsOpen((prevState) => !prevState)
+    setModalShown((prevState) => !prevState);
   };
   const handleNext = () => {
     setIndex((prev)=>prev+1)
