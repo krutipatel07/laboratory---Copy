@@ -12,7 +12,6 @@ import { Box,
 import { useMounted } from '../../../hooks/use-mounted';
 import { gtm } from '../../../lib/gtm';
 import Paper from '@mui/material/Paper';
-import BottomNav from "../../../components/workspace/variant/variant-bottomNav";
 import axios from 'axios';
 import { withRouter } from 'next/router';
 import { Logo } from '../../../components/logo';
