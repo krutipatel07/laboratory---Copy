@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { styled } from '@mui/material/styles';
-import { DocsNavbar } from './docs-navbar';
-import { DocsSidebar } from './docs-sidebar';
+
 
 const DocsLayoutRoot = styled('div')(({ theme }) => ({
   minHeight: 'calc(100vh - 64px)',
