@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const CommentSchema = require('./Comment');
 
 const DesignSchema = new mongoose.Schema(
   {
@@ -16,24 +15,25 @@ const DesignSchema = new mongoose.Schema(
     versionOf: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Design'
-  },
+    },
     versions: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Design'
       }
     ],
+    // design image url
     url: {
       type: String,
       required: true
     },
+    // file name to display especially for pdf and other documents
     file_name: {
       type: String
     },
     limnu_boardUrl : {
       type: String
     },
-    comments: [CommentSchema],
     collaborators: [
       {
         type: String

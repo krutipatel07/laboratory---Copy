@@ -16,7 +16,10 @@ import Chip from '@mui/material/Chip';
 import Popper from '@mui/material/Popper';
 import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
-import { Typography } from '@mui/material';
+import { Typography, 
+  ListItemButton,
+  ListItemIcon,
+  ListItemText, } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,17 +58,6 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const ColorButton = styled(Button)(({ theme }) => ({
-  color: '#10B981',
-  // color: theme.palette.getContrastText('#10B981'),
-  backgroundColor: 'rgba(16, 185, 129, 0.08)',
-  '&:hover': {
-    backgroundColor: 'rgba(16, 185, 129, 0.08)',
-  },
-  borderRadius: '16px',
-}));
-
-
 const VariantCard = (props) => {
     const {
         designId,
@@ -103,9 +95,10 @@ const VariantCard = (props) => {
         {({ TransitionProps }) => (
           <Fade {...TransitionProps} timeout={350}>
             <Paper>
-              <Button variant="outlined" startIcon={<DeleteIcon />} onClick={deleteDesign}>
-                Delete
-              </Button>
+              <ListItemButton onClick={deleteDesign}>
+                <ListItemIcon><DeleteIcon /></ListItemIcon>
+                <ListItemText primary="Delete" />
+              </ListItemButton>
             </Paper>
           </Fade>
         )}

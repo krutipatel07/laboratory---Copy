@@ -3,27 +3,13 @@ import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { Button, Box, Card, Container, Divider, Link, Typography } from '@mui/material';
-import { AmplifyLogin } from '../../components/authentication/amplify-login';
-import { Auth0Login } from '../../components/authentication/auth0-login';
 import { FirebaseLogin } from '../../components/authentication/firebase-login';
-import { JWTLogin } from '../../components/authentication/jwt-login';
 import { Logo } from '../../components/logo';
-import { withGuestGuard } from '../../hocs/with-guest-guard';
-import { useAuth } from '../../hooks/use-auth';
 import { gtm } from '../../lib/gtm';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
-import { makeStyles } from '@material-ui/core';
-
-const platformIcons = {
-  Amplify: '/static/icons/amplify.svg',
-  Auth0: '/static/icons/auth0.svg',
-  Firebase: '/static/icons/firebase.svg',
-  JWT: '/static/icons/jwt.svg'
-};
 
 const Login = () => {
   const router = useRouter();
-  const { platform } = useAuth();
   const { disableGuard } = router.query;
 
   useEffect(() => {
@@ -105,10 +91,8 @@ const Login = () => {
                 mt: 3
               }}
             >
-              {platform === 'Amplify' && <AmplifyLogin />}
-              {platform === 'Auth0' && <Auth0Login />}
-              {platform === 'Firebase' && <FirebaseLogin />}
-              {platform === 'JWT' && <JWTLogin />}
+              {/* we are using firebase to authenticates signup and login */}
+              <FirebaseLogin />
             </Box>
             <Divider sx={{ my: 3 }} />
             
@@ -118,6 +102,7 @@ const Login = () => {
                 justifyContent: 'space-between',
               }}
             >
+              {/* redirect to the sign up page */}
             <NextLink
               href={disableGuard
                 ? `/authentication/register?disableGuard=${disableGuard}`
@@ -131,6 +116,7 @@ const Login = () => {
                 Create new account
               </Link>
             </NextLink>
+            {/* redirects to the password reset page */}
             <NextLink
               href={"/authentication/password-reset"}
               passHref
@@ -143,22 +129,6 @@ const Login = () => {
               </Link>
             </NextLink>
             </Box>
-            {platform === 'Amplify' && (
-              <NextLink
-                href={disableGuard
-                  ? `/authentication/password-recovery?disableGuard=${disableGuard}`
-                  : '/authentication/password-recovery'}
-                passHref
-              >
-                <Link
-                  color="textSecondary"
-                  sx={{ mt: 1 }}
-                  variant="body2"
-                >
-                  Forgot password
-                </Link>
-              </NextLink>
-            )}
           </Card>
         </Container>
       </Box>

@@ -1,21 +1,17 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { Box,
   Button,TextField,Toolbar,Container,Popover ,Grid,Stack ,IconButton,MenuItem,ListItemText,Typography } from '@mui/material';
 import { useRouter } from 'next/router';
 import { withAuthGuard } from '../../hocs/with-auth-guard';
-import { withWorkspaceLayout } from '../../hocs/with-workspace-layout';
 import { gtm } from '../../lib/gtm';
 import Paper from '@mui/material/Paper';
 import axios from 'axios';
 import { withRouter } from 'next/router';
-import { withDashboardLayout } from '../../hocs/with-dashboard-layout';
 import Chip from '@mui/material/Chip';
 import AddIcon from '@mui/icons-material/Add';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
-import { useDropzone } from 'react-dropzone';
-import dateFormat from "../../utils/dateFormat"
 import toast from 'react-hot-toast';
 import { makeStyles } from '@material-ui/core';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
@@ -70,15 +66,7 @@ import {WorkspaceNavbar} from '../../components/workspace/workspace-navbar'
 
 const ProductList = withRouter((props) => {
   const router = useRouter();
-  const [products, setProducts] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [filters, setFilters] = useState({
-    name: undefined,
-    category: [],
-    status: [],
-    inStock: undefined
-  });
+  
   const [variantData, setVariantData] = useState([]);  
   const [versions, setVersions] = useState();
 
@@ -97,15 +85,17 @@ const ProductList = withRouter((props) => {
   }, []);
 
   useEffect(async () => {
+    // get design information
     await axios.get(`/api/projects/${projectId}/design/${designId}`)
     .then(res => {
       setVariantData(res.data.data)
       setVersions(res.data.data.versions)
     })
+    // if design is not available, set error message
     .catch(error => setError({
       status: true,
       message : "OOPS! This design is not available or deleted by owner of the project!"}));
-
+    // get parent design versions if design itself is a version
     isVersion && getParentDesignVersions()
 
   },[designId]);
@@ -127,6 +117,7 @@ const addVariantDesign = async () => {
   const versionLength = data.data.versionOf ? data.data.versionOf.versions.length : data.data.versions.length;
   const versionOf = data.data.versionOf ? data.data.versionOf.id : designId;
 
+  // create the limnu board and update its board image
   const limnu_boardCreate = await axios.post("https://api.apix.limnu.com/v1/boardCreate", {
     apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
     boardName: `Board-${data.data._id}`,
@@ -167,6 +158,7 @@ const getParentDesignVersions = () =>{
 const handleSubmit = async event => {
   event.preventDefault();
   const designId = router.query.designId;
+  // send email invite to the collaborator and update it in design database
   axios.post("/api/emails/invite", {
    email,
    projectId,
@@ -314,6 +306,7 @@ return (
                 <Grid container style={{width:'100%', marginLeft:0}}
                 spacing={3}
                 >
+                  {/* if there is any error occur while fetching design data, display the error message*/}
                   <Typography style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:100}}>
                     {error.message}
                   </Typography> 
@@ -331,6 +324,7 @@ return (
                     }
                   }}
                 >
+                  {/* display limnu board if available, else image only*/}
                   {variantData.limnu_boardUrl ? 
                     <iframe src={`${variantData.limnu_boardUrl}t=${limnu_token}&video=0`} title="description" 
                       style={{width: '100%', height: '100%'}}
@@ -358,7 +352,7 @@ return (
                   px: 2
                 }}
               >
-              
+              {/* display default/parent version */}
             { variantData && variantData.versionOf ?
               <NextLink
                 href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${variantData.versionOf._id}` :`/workspace/${projectId}?designId=${variantData.versionOf._id}`}
@@ -375,6 +369,7 @@ return (
                   sx={{borderWidth: '2px', m: 1}}
                 />
             }
+            {/* display all versions */}
             {
               versions && variantData && versions.map(version =>
                 version.title === variantData.title ? 

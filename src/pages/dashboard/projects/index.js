@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import * as React from 'react';
 import axios from 'axios';
 import Head from 'next/head';
-import NextLink from 'next/link';
 import { Box, Button, Card, Container, Grid, Typography } from '@mui/material';
 import { withAuthGuard } from '../../../hocs/with-auth-guard';
 import { Plus as PlusIcon } from '../../../icons/plus';
@@ -10,64 +9,11 @@ import { gtm } from '../../../lib/gtm';
 import ProjectGrid from '../../../components/dashboard/product/product-grid.js';
 import DashboardModal from '../../../components/modal/dashboard-modal';
 import CreateProjectModal from '../../../components/modal/createProject-modal'
-import { useAuth } from '../../../hooks/use-auth';
-import AddIcon from '@mui/icons-material/Add';
 import {DashboardSidebar} from '../../../components/dashboard/dashboard-sidebar'
 import {GenerateImportDialog} from '../../../components/modal/generateImportModal'
 
-const applyFilters = (products, filters) => products.filter((product) => {
-  if (filters.name) {
-    const nameMatched = product.name.toLowerCase().includes(filters.name.toLowerCase());
-
-    if (!nameMatched) {
-      return false;
-    }
-  }
-
-  // It is possible to select multiple category options
-  if (filters.category?.length > 0) {
-    const categoryMatched = filters.category.includes(product.category);
-
-    if (!categoryMatched) {
-      return false;
-    }
-  }
-
-  // It is possible to select multiple status options
-  if (filters.status?.length > 0) {
-    const statusMatched = filters.status.includes(product.status);
-
-    if (!statusMatched) {
-      return false;
-    }
-  }
-
-  // Present only if filter required
-  if (typeof filters.inStock !== 'undefined') {
-    const stockMatched = product.inStock === filters.inStock;
-
-    if (!stockMatched) {
-      return false;
-    }
-  }
-
-  return true;
-});
-
-const applyPagination = (products, page, rowsPerPage) => products.slice(page * rowsPerPage,
-  page * rowsPerPage + rowsPerPage);
-
 const ProductList = () => {
-  const [products, setProducts] = useState([]);
-  const [page, setPage] = useState(0);
   const [open, setOpen] = useState(false);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [filters, setFilters] = useState({
-    name: undefined,
-    category: [],
-    status: [],
-    inStock: undefined
-  });
   const [userData, setUserData] = useState();
   const [modal, setModal] = useState(false);  
   const [projectId, setProjectId] = useState()
@@ -96,29 +42,6 @@ const ProductList = () => {
       .catch(error => console.log(error));
     } 
   }, [userData]);
-
-
-  const handleFiltersChange = (filters) => {
-    setFilters(filters);
-  };
-
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleRowsPerPageChange = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-  };
-
-  // Usually query is done on backend with indexing solutions
-  const filteredProducts = applyFilters(products, filters);
-  const paginatedProducts = applyPagination(filteredProducts, page, rowsPerPage);
-
-  const handleClick = (e) =>{
-    e.preventDefault();
-    setModalShown(true);
-    setOpen(true);
-  };
   
   const createProject = (e) => {
     setOpen(prev=>!prev);
@@ -154,8 +77,6 @@ const ProductList = () => {
                 </Typography>
               </Grid>
               <Grid item>
-                
-                {/* <NextLink href="/dashboard/projects/new" passHref> */}
                   <Button
                     component="a"
                     startIcon={<PlusIcon 
@@ -164,7 +85,7 @@ const ProductList = () => {
                   >
                     CREATE NEW PROJECT
                   </Button>
-                {/* </NextLink> */}
+                  {/* display create new project modal */}
                 {open && <CreateProjectModal open={open} setOpen={setOpen} setModal={setModal} setProjectId={setProjectId}/>}
               </Grid>
             </Grid>
@@ -175,9 +96,11 @@ const ProductList = () => {
         </Container>
       </Box>
       {
+        // display tutorial modal if user is the new first time user
         userData && userData.isFirstTime ? 
         <DashboardModal/> : ''
       }
+      {/* display generate or import modal after creating project */}
       {modal && <GenerateImportDialog modal={modal} setModal={setModal} projectId={projectId}/>}
     </>
   );

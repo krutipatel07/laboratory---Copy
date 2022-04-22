@@ -3,27 +3,13 @@ import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { Button, Box, Card, Container, Divider, Link, Typography } from '@mui/material';
-import { AuthBanner } from '../../components/authentication/auth-banner';
-import { AmplifyRegister } from '../../components/authentication/amplify-register';
-import { Auth0Register } from '../../components/authentication/auth0-register';
 import { FirebaseRegister } from '../../components/authentication/firebase-register';
-import { JWTRegister } from '../../components/authentication/jwt-register';
 import { Logo } from '../../components/logo';
-import { withGuestGuard } from '../../hocs/with-guest-guard';
-import { useAuth } from '../../hooks/use-auth';
 import { gtm } from '../../lib/gtm';
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 
-const platformIcons = {
-  Amplify: '/static/icons/amplify.svg',
-  Auth0: '/static/icons/auth0.svg',
-  Firebase: '/static/icons/firebase.svg',
-  JWT: '/static/icons/jwt.svg'
-};
-
 const Register = () => {
   const router = useRouter();
-  const { platform } = useAuth();
   const { disableGuard } = router.query;
 
   useEffect(() => {
@@ -104,10 +90,8 @@ const Register = () => {
                 mt: 3
               }}
             >
-              {platform === 'Amplify' && <AmplifyRegister />}
-              {platform === 'Auth0' && <Auth0Register />}
-              {platform === 'Firebase' && <FirebaseRegister />}
-              {platform === 'JWT' && <JWTRegister />}
+            {/* we are using firebase to authenticates signup and login */}
+              <FirebaseRegister />
             </Box>
             <Divider sx={{ my: 3 }} />
             <NextLink

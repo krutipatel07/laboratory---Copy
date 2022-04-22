@@ -7,6 +7,7 @@ export default async (req, res) => {
     const { 
         query: {email},
         method } = req;
+        // find user details from email only
         const user = await User.findOne({ email })
                     .populate('projects');
         if (!user){

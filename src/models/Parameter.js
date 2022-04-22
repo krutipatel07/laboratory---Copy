@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 import Double from '@mongoosejs/double';
 
+// database model for all parameters to generate design from generate tab in workspace
+
 const ParameterSchema = new mongoose.Schema(
   {
     fileName: {

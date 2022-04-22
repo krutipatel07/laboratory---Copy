@@ -1,43 +1,21 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Head from 'next/head';
 import {
   Box,
-  Button,
   Card,
   Container,
-  Divider,
   Grid,
   InputAdornment,
-  Tab,
-  Tabs,
   TextField,
   Typography
 } from '@mui/material';
 import { CustomerListTable } from '../../../components/dashboard/customer/customer-list-table';
 import { withAuthGuard } from '../../../hocs/with-auth-guard';
-import { withDashboardLayout } from '../../../hocs/with-dashboard-layout';
 import { useMounted } from '../../../hooks/use-mounted';
-import { Plus as PlusIcon } from '../../../icons/plus';
 import { Search as SearchIcon } from '../../../icons/search';
 import { gtm } from '../../../lib/gtm';
 import axios from 'axios'
 import {DashboardSidebar} from '../../../components/dashboard/dashboard-sidebar'
-
-
-const tabs = [
-  {
-    label: 'All',
-    value: 'all'
-  },
-  {
-    label: 'Clients',
-    value: 'client'
-  },
-  {
-    label: 'Architects',
-    value: 'isProspect'
-  }
-];
 
 const sortOptions = [
   {

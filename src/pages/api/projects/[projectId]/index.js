@@ -26,7 +26,8 @@ export default async (req, res) => {
             break;
         case 'PUT':
             let project;
-            try {   
+            try {
+                // add collaborators id in the project   
                 if(req.body.collaborators){
                     await Project.findByIdAndUpdate(projectId, 
                     { $push : { collaborators : req.body.collaborators}}, 
@@ -36,6 +37,7 @@ export default async (req, res) => {
                     });
                 }
             
+                // update project assets
                 else if(req.body.assets){                    
                     await Project.findByIdAndUpdate(projectId, 
                         { $push : { assets : req.body.assets}}, 
@@ -71,6 +73,7 @@ export default async (req, res) => {
 
                 const deletedProject = await Project.deleteOne({ _id: projectId });
 
+                // delete all of the designs and versions associated with the project deleted before
                 project.designs.forEach(async design => {
                         await Design.deleteOne({ _id: design._id });                        
                         design.versions.forEach(async version => {

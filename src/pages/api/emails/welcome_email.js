@@ -3,6 +3,7 @@ mail.setApiKey(process.env.SENDGRID_API_KEY)
 
 export default async (req, res) => {
     const body = req.body;
+    // welcome email to the user after successfully sign up
     const data = { 
         to: body.email,
         from: "info@maket.ca",

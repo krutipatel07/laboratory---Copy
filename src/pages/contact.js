@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
 import Head from 'next/head';
-import { Avatar, Box, Button, Container, Typography } from '@mui/material';
+import { Box, Button, Container, Typography } from '@mui/material';
 import { ContactForm } from '../components/contact/contact-form';
 import { ArrowLeft as ArrowLeftIcon } from '../icons/arrow-left';
-import { Mail as MailIcon } from '../icons/mail';
 import { gtm } from '../lib/gtm';
 import NextLink from 'next/link';
 
@@ -45,6 +44,7 @@ const Contact = () => {
               }
             }}
           >
+            {/* back button to dashboard will display only if user is logged in, */}
             {user && 
               <NextLink
                 href="/dashboard/projects"

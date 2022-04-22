@@ -1,10 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import { Box, Container} from '@mui/material';
+import { Box, Container, Typography, Tabs, Tab } from '@mui/material/';
 import DesignSavedGrid from '../../components/workspace/savedDesign';
 import GenerateDesign from '../../components/workspace/generateDesign';
 import { withRouter, useRouter } from 'next/router';
@@ -58,6 +55,7 @@ function a11yProps(index) {
 
 const ProjectWorkspace = withRouter((props) => {
   const router = useRouter();
+  // get index from url and open tabpanel accordingly
   const index = router.query.i ? parseInt(router.query.i) : 1;
   const [value, setValue] = React.useState(index);
   const [newDesign, setNewDesign] = React.useState(0);

@@ -7,6 +7,7 @@ export default async (req, res) => {
     const { 
         query: {owner},
         method } = req;
+        // find all project details of the user logged in through the userId
         const project = await Project.find({ owner })
                         .populate('owner')
                         .populate('collaborators')

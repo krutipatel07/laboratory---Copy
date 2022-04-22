@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 
 const connection = {}
+// establish mongodb connection
 
 async function dbConnect() {
     if (connection.isConnected) {

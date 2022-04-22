@@ -73,14 +73,14 @@ const NotFound = () => {
             }}
           >
             <NextLink
-              href="/dashboard"
+              href="/"
               passHref
             >
               <Button
                 component="a"
                 variant="outlined"
               >
-                Back to Dashboard
+                Back to Home Page
               </Button>
             </NextLink>
           </Box>

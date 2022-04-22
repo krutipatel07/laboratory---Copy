@@ -2,6 +2,7 @@ import dbConnect from "../../../utils/dbConnect";
 import {Parameter} from "../../../models";
 
 dbConnect();
+// get all parameters information to generate design from generate tab in workspace
 
 export default async (req, res) => {
     const { 

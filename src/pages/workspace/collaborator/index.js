@@ -9,7 +9,6 @@ import { Box,
   Tabs,
   Chip,
   Typography } from '@mui/material';
-import { withWorkspaceLayout } from '../../../hocs/with-workspace-layout';
 import { useMounted } from '../../../hooks/use-mounted';
 import { gtm } from '../../../lib/gtm';
 import Paper from '@mui/material/Paper';
@@ -18,56 +17,8 @@ import axios from 'axios';
 import { withRouter } from 'next/router';
 import { Logo } from '../../../components/logo';
 import {InvitedUserModal} from "../../../components/workspace/invitedUserModal/invitedUserModal"
-import Legends from "../../../components/workspace/variant/variant-legends";
-import AssetsGrid from '../../../components/workspace/assets-grid';
 import {DashboardSidebar} from '../../../components/dashboard/dashboard-sidebar';
 import {WorkspaceNavbar} from '../../../components/workspace/workspace-navbar'
-import { withAuthGuard } from '../../../hocs/with-auth-guard';
-
-
-
-const applyFilters = (products, filters) => products.filter((product) => {
-  if (filters.name) {
-    const nameMatched = product.name.toLowerCase().includes(filters.name.toLowerCase());
-
-    if (!nameMatched) {
-      return false;
-    }
-  }
-
-  // It is possible to select multiple category options
-  if (filters.category?.length > 0) {
-    const categoryMatched = filters.category.includes(product.category);
-
-    if (!categoryMatched) {
-      return false;
-    }
-  }
-
-  // It is possible to select multiple status options
-  if (filters.status?.length > 0) {
-    const statusMatched = filters.status.includes(product.status);
-
-    if (!statusMatched) {
-      return false;
-    }
-  }
-
-  // Present only if filter required
-  if (typeof filters.inStock !== 'undefined') {
-    const stockMatched = product.inStock === filters.inStock;
-
-    if (!stockMatched) {
-      return false;
-    }
-  }
-
-  return true;
-});
-
-const applyPagination = (products, page, rowsPerPage) => products.slice(page * rowsPerPage,
-  page * rowsPerPage + rowsPerPage);
-
   function TabPanel(props) {
     const { children, value, index, ...other } = props;
   
@@ -103,16 +54,8 @@ const applyPagination = (products, page, rowsPerPage) => products.slice(page * r
 
 const InvitedUSerPage = withRouter((props) => {
   const isMounted = useMounted();
-  const [products, setProducts] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
   const {designId, projectId, invite, isVersion} = props.router.query;
-  const [filters, setFilters] = useState({
-    name: undefined,
-    category: [],
-    status: [],
-    inStock: undefined
-  });
+
   const [variantData, setVariantData] = useState();  
   const [error, setError] = useState({
     status: false,
@@ -121,25 +64,22 @@ const InvitedUSerPage = withRouter((props) => {
   const limnu_token = localStorage.getItem("limnu_token");
   const [versions, setVersions] = useState();
 
-  const [value, setValue] = React.useState(0);
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
   useEffect(() => {
     gtm.push({ event: 'page_view' });
   }, []);
 
   useEffect(async () => {
+    // get design information
     await axios.get(`/api/projects/${projectId}/design/${designId}`)
     .then(res => {
       setVariantData(res.data.data)
       setVersions(res.data.data.versions)
     })
+    // if design is not available, set error message
     .catch(error => setError({
       status: true,
       message : "OOPS! This design is not available or deleted by owner of the project!"}));
-
+    // get parent design versions if design itself is a version
     isVersion && getParentDesignVersions()
 
   },[designId]);
@@ -148,22 +88,6 @@ const InvitedUSerPage = withRouter((props) => {
   useEffect(() => {
     gtm.push({ event: 'page_view' });
   }, []);
-
-  const handleFiltersChange = (filters) => {
-    setFilters(filters);
-  };
-
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleRowsPerPageChange = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-  };
-
-  // Usually query is done on backend with indexing solutions
-  const filteredProducts = applyFilters(products, filters);
-  const paginatedProducts = applyPagination(filteredProducts, page, rowsPerPage);
 
   const getParentDesignVersions = () =>{
     axios.get(`/api/projects/${projectId}/design/${designId}`)
@@ -216,6 +140,7 @@ const InvitedUSerPage = withRouter((props) => {
                   <Grid container style={{width:'100%', marginLeft:0}}
                   spacing={3}
                   >
+                    {/* if there is any error occur while fetching design data, display the error message*/}
                     <Typography style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:100}}>
                       {error.message}
                     </Typography> 
@@ -233,6 +158,7 @@ const InvitedUSerPage = withRouter((props) => {
                       }
                     }}
                   >
+                  {/* display limnu board if available, else image only*/}
                     {variantData && variantData.limnu_boardUrl ? 
                       <iframe src={`${variantData.limnu_boardUrl}t=${limnu_token}&video=0`} title="description" 
                         style={{width: '100%', height: '100%'}}
@@ -252,6 +178,7 @@ const InvitedUSerPage = withRouter((props) => {
               style={{ display: 'inline-flex', bottom: 0, width: '100%', paddingLeft:12}} 
               elevation={3}>
               <Box >
+              {/* display default/parent version */}
               { variantData && variantData.versionOf ?
                 <NextLink
                   href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${variantData.versionOf._id}` :`/workspace/${projectId}?designId=${variantData.versionOf._id}`}
@@ -268,6 +195,7 @@ const InvitedUSerPage = withRouter((props) => {
                     sx={{borderWidth: '2px', m: 1}}
                   />
               }
+              {/* display all versions */}
               {
                 versions && variantData &&  versions.map(version =>
                   version.title === variantData.title ? 
@@ -292,7 +220,7 @@ const InvitedUSerPage = withRouter((props) => {
             </Box>
             </Paper>
           </Box>        
-        
+        {/* invited user modal to verify the collaborator */}
           <InvitedUserModal variantData={variantData}/>
         </Container>
       </Box>

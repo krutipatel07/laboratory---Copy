@@ -46,6 +46,7 @@ const UserSchema = new mongoose.Schema(
         ref: 'Project'
       }
     ],
+    // to display tutorial
     isFirstTime: {
       type: Boolean,
       default:true

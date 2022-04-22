@@ -1,17 +1,12 @@
 import { useEffect } from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
-import { useRouter } from 'next/router';
 import { Box, Card, Container, Divider, Link, Typography } from '@mui/material';
 import { FirebasePasswordReset } from '../../components/authentication/firebase-reset-password';
 import { Logo } from '../../components/logo';
-import { withGuestGuard } from '../../hocs/with-guest-guard';
-import { useAuth } from '../../hooks/use-auth';
 import { gtm } from '../../lib/gtm';
 
 const PasswordReset = () => {
-  const router = useRouter();
-
   useEffect(() => {
     gtm.push({ event: 'page_view' });
   }, []);
