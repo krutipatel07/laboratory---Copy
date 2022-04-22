@@ -7,7 +7,7 @@ import { withAuthGuard } from '../../../hocs/with-auth-guard';
 import { Plus as PlusIcon } from '../../../icons/plus';
 import { gtm } from '../../../lib/gtm';
 import ProjectGrid from '../../../components/dashboard/product/product-grid.js';
-import DashboardModal from '../../../components/modal/dashboard-modal';
+import DashboardModalTutorial from '../../../components/modal/dashboard-modal-tutorial';
 import CreateProjectModal from '../../../components/modal/createProject-modal'
 import {DashboardSidebar} from '../../../components/dashboard/dashboard-sidebar'
 import {GenerateImportDialog} from '../../../components/modal/generateImportModal'
@@ -98,7 +98,7 @@ const ProductList = () => {
       {
         // display tutorial modal if user is the new first time user
         userData && userData.isFirstTime ? 
-        <DashboardModal/> : ''
+        <DashboardModalTutorial/> : ''
       }
       {/* display generate or import modal after creating project */}
       {modal && <GenerateImportDialog modal={modal} setModal={setModal} projectId={projectId}/>}

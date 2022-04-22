@@ -12,7 +12,7 @@ import { Logo } from '../logo';
 import { Scrollbar } from '../scrollbar';
 import { DashboardSidebarSection } from './dashboard-sidebar-section';
 import DesignServicesIcon from '@mui/icons-material/DesignServices';
-import DashboardModal from '../../components/modal/dashboard-modal';
+import DashboardModalTutorial from '../modal/dashboard-modal-tutorial';
 import { useAuth } from '../../hooks/use-auth';
 import axios from 'axios'
 import { useTheme } from "@mui/material/styles";
@@ -261,7 +261,7 @@ export const DashboardSidebar = (props) => {
               </IconButton>
             </Box>
           </Box>}
-          {isModalShown && <DashboardModal open={isOpen} setIsOpen={setIsOpen} setModalShown={setModalShown}/>}
+          {isModalShown && <DashboardModalTutorial open={isOpen} setIsOpen={setIsOpen} setModalShown={setModalShown}/>}
           <Box>
             {open ?
             <Box sx={{ flexGrow: 1 }}>

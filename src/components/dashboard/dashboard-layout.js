@@ -1,10 +1,7 @@
-import { useState, useEffect } from 'react';
+
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
-import { DashboardNavbar } from './dashboard-navbar';
-import { DashboardSidebar } from './dashboard-sidebar';
 import { Box } from '@mui/material';
-import axios from 'axios'
 
 const DashboardLayoutRoot = styled('div')(({ theme }) => ({
   display: 'flex',

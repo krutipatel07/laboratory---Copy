@@ -16,7 +16,7 @@ import Image from '../../../public/static/mock-images/products/product_6.png'
 import { setIn } from 'formik';
 import { makeStyles } from '@material-ui/styles';
 
-DashboardModal.propTypes = {
+DashboardModalTutorial.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   selectedValue: PropTypes.string.isRequired,
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function DashboardModal(props) {
+export default function DashboardModalTutorial(props) {
   const [open, setOpen] = React.useState(true);
   const [index, setIndex] = useState(0);
 
@@ -87,8 +87,8 @@ export default function DashboardModal(props) {
 
   const handleClose = () => {
     setOpen((prevState) => !prevState);
-    setIsOpen((prevState) => !prevState)
-    setModalShown((prevState) => !prevState);
+    // setIsOpen((prevState) => !prevState)
+    // setModalShown((prevState) => !prevState);
   };
   const handleNext = () => {
     setIndex((prev)=>prev+1)

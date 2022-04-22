@@ -9,7 +9,7 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import { CustomerListTable } from '../../../components/dashboard/customer/customer-list-table';
+import { CollaboratorListTable } from '../../../components/dashboard/collaboratorList/collaborator-list-table';
 import { withAuthGuard } from '../../../hocs/with-auth-guard';
 import { useMounted } from '../../../hooks/use-mounted';
 import { Search as SearchIcon } from '../../../icons/search';
@@ -267,7 +267,7 @@ const CustomerList = () => {
                 ))}
               </TextField>
             </Box>
-            <CustomerListTable
+            <CollaboratorListTable
               customers={paginatedCustomers}
               customersCount={filteredCustomers.length}
               onPageChange={handlePageChange}
