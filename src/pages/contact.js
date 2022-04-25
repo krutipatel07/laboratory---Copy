@@ -11,7 +11,7 @@ const Contact = () => {
     gtm.push({ event: 'page_view' });
   }, []);
 
-  const user = localStorage.getItem("lab-user");
+  const userIsOwner = localStorage.getItem("is-owner");
   return (
     <>
       <Head>
@@ -44,8 +44,8 @@ const Contact = () => {
               }
             }}
           >
-            {/* back button to dashboard will display only if user is logged in, */}
-            {user && 
+            {/* back button to dashboard will display only if user is logged in and only for regular user */}
+            {userIsOwner && 
               <NextLink
                 href="/dashboard/projects"
                 passHref

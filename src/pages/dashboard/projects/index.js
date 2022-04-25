@@ -17,6 +17,8 @@ const ProductList = () => {
   const [userData, setUserData] = useState();
   const [modal, setModal] = useState(false);  
   const [projectId, setProjectId] = useState()
+  const [isOpen, setIsOpen] = useState(false);
+  const [isModalShown, setModalShown] = useState(false)
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
@@ -98,7 +100,7 @@ const ProductList = () => {
       {
         // display tutorial modal if user is the new first time user
         userData && userData.isFirstTime ? 
-        <DashboardModalTutorial/> : ''
+        <DashboardModalTutorial open={isOpen} setIsOpen={setIsOpen} setModalShown={setModalShown}/> : ''
       }
       {/* display generate or import modal after creating project */}
       {modal && <GenerateImportDialog modal={modal} setModal={setModal} projectId={projectId}/>}
