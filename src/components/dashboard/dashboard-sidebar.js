@@ -14,7 +14,6 @@ import { DashboardSidebarSection } from './dashboard-sidebar-section';
 import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import DashboardModalTutorial from '../modal/dashboard-modal-tutorial';
 import { useAuth } from '../../hooks/use-auth';
-import axios from 'axios'
 import { useTheme } from "@mui/material/styles";
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -123,15 +122,10 @@ export const DashboardSidebar = (props) => {
   };
 
   const isInvited = router.query.invite
-  const [user, setUser] = useState();
   const [open, setOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
     isInvited && setOpen(true);
-    const user = localStorage.getItem("lab-user");
-    axios.get(`/api/user/${user}`)
-    .then(res => setUser(res.data.data))
-    .catch(error => console.log(error));
   },[])
 
   const handleClick = (e) =>{

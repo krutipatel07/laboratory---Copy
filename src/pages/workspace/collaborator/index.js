@@ -188,11 +188,17 @@ const InvitedUSerPage = withRouter((props) => {
                     variant="outlined" 
                     sx={{borderWidth: '2px', m: 1}}
                   />
-                </NextLink> : <Chip 
+                </NextLink> : 
+                <NextLink
+                  href={ invite ? `/workspace/collaborator?invite=true&projectId=${projectId}&designId=${designId}` :`/workspace/${projectId}?designId=${designId}`}
+                  passHref
+                >
+                  <Chip 
                     label="Default" 
                     color="primary" 
                     sx={{borderWidth: '2px', m: 1}}
                   />
+                </NextLink>
               }
               {/* display all versions */}
               {

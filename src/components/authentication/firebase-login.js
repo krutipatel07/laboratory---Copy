@@ -49,6 +49,7 @@ export const FirebaseLogin = (props) => {
           .catch(error => console.log(error));
           
           localStorage.setItem("lab-user", data.data._id); 
+          localStorage.setItem("is-owner", "true"); 
           const project_list = data.data.projects.map(project => ({
             id: project._id,
             title : project.title,
@@ -108,49 +109,6 @@ export const FirebaseLogin = (props) => {
 
   return (
     <div {...props}>
-      {/* <Button
-        fullWidth
-        onClick={handleGoogleClick}
-        size="large"
-        sx={{
-          backgroundColor: 'common.white',
-          color: 'common.black',
-          '&:hover': {
-            backgroundColor: 'common.white',
-            color: 'common.black'
-          }
-        }}
-        variant="contained"
-      >
-        <Box
-          alt="Google"
-          component="img"
-          src="/static/icons/google.svg"
-          sx={{ mr: 1 }}
-        />
-        Google
-      </Button>
-      <Box
-        sx={{
-          alignItems: 'center',
-          display: 'flex',
-          mt: 2
-        }}
-      >
-        <Box sx={{ flexGrow: 1 }}>
-          <Divider orientation="horizontal" />
-        </Box>
-        <Typography
-          color="textSecondary"
-          sx={{ m: 2 }}
-          variant="body1"
-        >
-          OR
-        </Typography>
-        <Box sx={{ flexGrow: 1 }}>
-          <Divider orientation="horizontal" />
-        </Box>
-      </Box> */}
       <form
         noValidate
         onSubmit={formik.handleSubmit}
