@@ -91,24 +91,17 @@ const useStyles = makeStyles({
   
 
 const GenerateDesignTab = withRouter((props) => {
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     select: "",
     Xvalue: "",
     Yvalue: "",
   });
+  const [data, setData] = useState([])
   const classes = useStyles();
 
   const isMounted = useMounted();
   const [products, setProducts] = useState([]);
   const [generatedData, setGeneratedData] = useState([]);
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [filters, setFilters] = useState({
-    name: undefined,
-    category: [],
-    status: [],
-    inStock: undefined
-  });
   const [roomType, setRoomType] = React.useState("");
 
   const handleChangeSelect = (event) => {
@@ -142,20 +135,23 @@ const GenerateDesignTab = withRouter((props) => {
       garages: ""
     })
   };
-
-  let data = {
-    select: "",
-    Xvalue: "",
-    Yvalue: "",
-  }
   
   const handleClick = async (e) => {
-    data = {
+    setData(prev => [...prev, {
       select: state.select,
       Xvalue: state.Xvalue,
       Yvalue: state.Yvalue,
-    }
+    }]) 
+    setState({
+      select: "",
+      Xvalue: "",
+      Yvalue: "",
+    })
   };
+
+  const save = () =>{
+    console.log("data", data)
+  }
 
   return (
     <>
@@ -232,14 +228,9 @@ const GenerateDesignTab = withRouter((props) => {
               </TableHead>
               {/* List of data table entered by user */}
               <TableBody>
-                <TableRow>
-                    <TableCell component="th" scope="row">{data.select}</TableCell> 
-                    <TableCell align="right">{data.Xvalue}</TableCell>
-                    <TableCell align="right">{data.Yvalue}</TableCell>
-                </TableRow>
-                  {/* {rows.map((row) => (
+                  {data.map((row, i) => (
                   <TableRow
-                    key={row.name}
+                    key={i}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell padding="checkbox">
@@ -251,17 +242,17 @@ const GenerateDesignTab = withRouter((props) => {
                         }}
                       />
                     </TableCell>
-                    <TableCell component="th" scope="row">{row.type}</TableCell> 
-                    <TableCell align="right">{row.x}</TableCell>
-                    <TableCell align="right">{row.y}</TableCell>
+                    <TableCell component="th" scope="row">{row.select}</TableCell> 
+                    <TableCell align="right">{row.Xvalue}</TableCell>
+                    <TableCell align="right">{row.Yvalue}</TableCell>
                   </TableRow>
-                ))} */}
+                ))}
               </TableBody>
 
             </Table>
           </TableContainer>
       
-          <Button variant="text">save</Button>
+          <Button variant="text" onClick={save}>save</Button>
         </AccordionDetails>
       </Accordion>
 
@@ -271,7 +262,7 @@ const GenerateDesignTab = withRouter((props) => {
           aria-controls="panel2a-content"
           id="panel2a-header"
         >
-          <Typography>Land & Envelope</Typography>
+          <Typography>Land &amp; Envelope</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <iframe
@@ -283,7 +274,6 @@ const GenerateDesignTab = withRouter((props) => {
             src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCu3VUmZx4sLQINjDU4oMdN0cZqdnQewIo
     &q=Space+Needle,Seattle+WA"
           ></iframe>
-          <Button variant="text">save</Button>
         </AccordionDetails>
       </Accordion>
       <Button variant="contained">generate designs</Button>
@@ -309,4 +299,3 @@ const GenerateDesignTab = withRouter((props) => {
 })
 
 export default withAuthGuard(GenerateDesignTab);
-// export default withAuthGuard(withWorkspaceLayout(GenerateDesignTab));
