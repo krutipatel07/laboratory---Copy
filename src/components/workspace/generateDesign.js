@@ -16,40 +16,22 @@ import axios from 'axios'
 import toast from 'react-hot-toast';
 import { style } from '@mui/system';
 import BathtubIcon from '@mui/icons-material/Bathtub';
-import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+import { createTheme } from "@material-ui/core/styles";
 import { makeStyles } from '@material-ui/styles';
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import Checkbox from '@mui/material/Checkbox';
 
-
-const theme = createTheme({
-  overrides: {
-    MuiOutlinedInput: {
-      root: {
-        "& $notchedOutline": {
-          borderColor: "pink"
-        },
-        "& .MuiSelect-root ~ $notchedOutline": {
-          borderColor: "green"
-        },
-      }
-    },
-    'input': {
-      '&::placeholder': {
-        textOverflow: 'ellipsis !important',
-        color: '#EA0707DE'
-      }
-    },
-    MuiInputBase: {
-      styleOverrides: {
-        input: {
-          '&::placeholder': {
-            opacity: 1,
-            color: '#EA0707DE'
-          }
-        }
-      }
-    },
-  }
-});
 
 const useStyles = makeStyles({
   MuiInputBase: {
@@ -70,54 +52,49 @@ const useStyles = makeStyles({
   }
 });
 
-const applyFilters = (products, filters) => products.filter((product) => {
-  if (filters.name) {
-    const nameMatched = product.name.toLowerCase().includes(filters.name.toLowerCase());
 
-    if (!nameMatched) {
-      return false;
-    }
+  function BasicSelect() {
+    const [age, setAge] = React.useState("");
+  
+    const handleChange = (event) => {
+      setAge(event.target.value);
+    };
+  
+    return (
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label">Room type</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={age}
+          label="Age"
+          onChange={handleChange}
+        >
+          <MenuItem value={1}>bedroom</MenuItem>
+          <MenuItem value={2}>bathroom</MenuItem>
+          <MenuItem value={3}>garage</MenuItem>
+          <MenuItem value={4}>kitchen</MenuItem>
+          <MenuItem value={5}>living room</MenuItem>
+        </Select>
+      </FormControl>
+    );
   }
-
-  // It is possible to select multiple category options
-  if (filters.category?.length > 0) {
-    const categoryMatched = filters.category.includes(product.category);
-
-    if (!categoryMatched) {
-      return false;
-    }
+  
+  function createData(type, x, y) {
+    return { type, x, y };
   }
+  
+  const rows = [
+    createData("Bedroom", 15, 15),
+    createData("Kitchen", 12, 10),
+  ];
+  
 
-  // It is possible to select multiple status options
-  if (filters.status?.length > 0) {
-    const statusMatched = filters.status.includes(product.status);
-
-    if (!statusMatched) {
-      return false;
-    }
-  }
-
-  // Present only if filter required
-  if (typeof filters.inStock !== 'undefined') {
-    const stockMatched = product.inStock === filters.inStock;
-
-    if (!stockMatched) {
-      return false;
-    }
-  }
-
-  return true;
-});
-
-const applyPagination = (products, page, rowsPerPage) => products.slice(page * rowsPerPage,
-  page * rowsPerPage + rowsPerPage);
-
-const ProductList = withRouter((props) => {
+const GenerateDesignTab = withRouter((props) => {
   const [state, setState] = React.useState({
-    squarefeet: "",
-    bed: "",
-    bath: "",
-    garages: ""
+    select: "",
+    Xvalue: "",
+    Yvalue: "",
   });
   const classes = useStyles();
 
@@ -132,10 +109,13 @@ const ProductList = withRouter((props) => {
     status: [],
     inStock: undefined
   });
+  const [roomType, setRoomType] = React.useState("");
 
-  useEffect(() => {
-    gtm.push({ event: 'page_view' });
-  }, []);
+  const handleChangeSelect = (event) => {
+    setRoomType(event.target.value);
+    localStorage.setItem('value', JSON.stringify(event.target.value)) //save input to localstorage
+  };
+
 
   const handleChange = (event) => {
     const value = event.target.value;
@@ -163,9 +143,19 @@ const ProductList = withRouter((props) => {
     })
   };
 
-  // Usually query is done on backend with indexing solutions
-  const filteredProducts = applyFilters(products, filters);
-  const paginatedProducts = applyPagination(filteredProducts, page, rowsPerPage);
+  let data = {
+    select: "",
+    Xvalue: "",
+    Yvalue: "",
+  }
+  
+  const handleClick = async (e) => {
+    data = {
+      select: state.select,
+      Xvalue: state.Xvalue,
+      Yvalue: state.Yvalue,
+    }
+  };
 
   return (
     <>
@@ -181,126 +171,124 @@ const ProductList = withRouter((props) => {
         }}
         // style={{marginTop:'-64px'}}
       >
-      <ThemeProvider  theme={theme}>
 
-        <Box
-          component="form"
-          sx={{
-            flexGrow: 1,
-            m:1.2
-            // m: 1.5,
-          }}
-          style={{width: 55}}
+    <div align="right" style={{width:'100%'}}>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
         >
-          <TextField
-            defaultValue="$500,000"
-            // placeholder="Square feet"
-            label="Square feet"
-            type="number"
-            name="squarefeet"
-            value={state.squarefeet}
-            onChange={handleChange}
-            style={{color: '#EA0707DE'}}
-            inputProps={{ className: classes.input }}
-            // InputProps={{ classes: {input: props.classes['input']} }} 
-          />
-        </Box>
-
-        <Box
-          component="form"
-          sx={{
-            flexGrow: 1,
-            m: 1.5
-          }}
-        >
-          <FormControl fullWidth>
-            <InputLabel id="bed_select_label" style={{color: '#2CA02C'}}>Bed</InputLabel>
-            <Select
-              labelId="bed_select_label"
-              id="bed_select"
-              name='bed'
-              value={state.bed}
-              label="Bed"
-              onChange={handleChange}
+          <Typography>Rooms</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Stack spacing={2} direction="row">
+            {/* <BasicSelect /> */}
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Room type</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="select"
+                name="select"
+                value={state.select}
+                label="room"
+                onChange={handleChange}
+              >
+                <MenuItem value={1}>bedroom</MenuItem>
+                <MenuItem value={2}>bathroom</MenuItem>
+                <MenuItem value={3}>garage</MenuItem>
+                <MenuItem value={4}>kitchen</MenuItem>
+                <MenuItem value={5}>living room</MenuItem>
+              </Select>
+            </FormControl>
+            <TextField id="Xvalue" name="Xvalue" value={state.Xvalue}  label="X" variant="outlined" onChange={handleChange}/>
+            <TextField id="Yvalue" name="Yvalue"  value={state.Yvalue} label="Y" variant="outlined" onChange={handleChange}/>
+            <Button 
+            variant="text"
+            onClick={handleClick}
             >
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-              <MenuItem value={4}>4</MenuItem>
-              <MenuItem value={5}>5</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
+              Add
+            </Button>
+          </Stack>
+          {/* <UserInputTable /> */}
 
-        <Box
-          component="form"
-          sx={{
-            flexGrow: 1,
-            m: 1.5
-          }}
-        >
-          <FormControl fullWidth>
-            <InputLabel id="bath_select_label" style={{color: '#1F77B4', width: '300px'}}>            
-            {/* <BathtubIcon/> */}
-            Bath</InputLabel>
-            <Select
-              labelId="bath_select_label"
-              id="bath_select"
-              name='bath'
-              value={state.bath}
-              label="Bath"
-              onChange={handleChange}
-            >
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={1.5}>1.5</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={2.5}>2.5</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-              <MenuItem value={3.5}>3.5</MenuItem>
-              <MenuItem value={4}>4</MenuItem>
-              <MenuItem value={4.5}>4.5</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+              <TableHead>
+                <TableRow>
+                  <TableCell padding="checkbox">
+                    <Checkbox
+                      color="primary"
+                      // checked={isItemSelected}
+                      inputProps={{
+                        // 'aria-labelledby': labelId,
+                      }}
+                    />
+                  </TableCell>
+                  <TableCell>Type</TableCell>
+                  <TableCell align="right">X&nbsp;(feet)</TableCell>
+                  <TableCell align="right">Y&nbsp;(feet)</TableCell>
+                </TableRow>
+              </TableHead>
+              {/* List of data table entered by user */}
+              <TableBody>
+                <TableRow>
+                    <TableCell component="th" scope="row">{data.select}</TableCell> 
+                    <TableCell align="right">{data.Xvalue}</TableCell>
+                    <TableCell align="right">{data.Yvalue}</TableCell>
+                </TableRow>
+                  {/* {rows.map((row) => (
+                  <TableRow
+                    key={row.name}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell padding="checkbox">
+                      <Checkbox
+                        color="primary"
+                        // checked={isItemSelected}
+                        inputProps={{
+                          // 'aria-labelledby': labelId,
+                        }}
+                      />
+                    </TableCell>
+                    <TableCell component="th" scope="row">{row.type}</TableCell> 
+                    <TableCell align="right">{row.x}</TableCell>
+                    <TableCell align="right">{row.y}</TableCell>
+                  </TableRow>
+                ))} */}
+              </TableBody>
 
-        <Box
-          component="form"
-          sx={{
-            flexGrow: 1,
-            m: 1.5
-          }}
+            </Table>
+          </TableContainer>
+      
+          <Button variant="text">save</Button>
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2a-content"
+          id="panel2a-header"
         >
-          <FormControl fullWidth>
-            <InputLabel id="garages_select_label" style={{color: '#8C564B'}}>Garages</InputLabel>
-            <Select
-              labelId="garages_select_label"
-              id="garages_select"
-              name='garages'
-              value={state.garages}
-              label="Garages"
-              onChange={handleChange}
-            >
-              <MenuItem value={0}>0</MenuItem>
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
-        <Box
-        >
-          <Button
-            component="a"
-            variant="contained"
-            onClick={handleSubmit}
-            type="submit"
-            className={classes.generatebutton}
-          >
-            GENERATE
-          </Button>
-        </Box>
-        
-      </ThemeProvider >
+          <Typography>Land & Envelope</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <iframe
+            width="600"
+            height="450"
+            loading="lazy"
+            allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCu3VUmZx4sLQINjDU4oMdN0cZqdnQewIo
+    &q=Space+Needle,Seattle+WA"
+          ></iframe>
+          <Button variant="text">save</Button>
+        </AccordionDetails>
+      </Accordion>
+      <Button variant="contained">generate designs</Button>
+    </div>
+
       </Box>
       <Box
         component="main"
@@ -309,7 +297,7 @@ const ProductList = withRouter((props) => {
           mb: 8, mt:4
         }}
       >
-        <Container maxWidth="xl">
+        <Container maxWidth="xl">  
             {generatedData.length ? 
             <DesignGrid data={generatedData} setNewDesign={props.setNewDesign}/> 
             : 
@@ -320,5 +308,5 @@ const ProductList = withRouter((props) => {
   );
 })
 
-export default withAuthGuard(ProductList);
-// export default withAuthGuard(withWorkspaceLayout(ProductList));
+export default withAuthGuard(GenerateDesignTab);
+// export default withAuthGuard(withWorkspaceLayout(GenerateDesignTab));
