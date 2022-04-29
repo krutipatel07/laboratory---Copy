@@ -1,22 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import NextLink from 'next/link';
 import { Box, Button, TextField, Container, Typography, IconButton } from '@mui/material';
 import { withAuthGuard } from '../../hocs/with-auth-guard';
-import { withWorkspaceLayout } from '../../hocs/with-workspace-layout';
 import { useMounted } from '../../hooks/use-mounted';
-import { gtm } from '../../lib/gtm';
 import DesignGrid from './design-grid';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { withRouter, useRouter } from 'next/router'
-import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import axios from 'axios'
 import toast from 'react-hot-toast';
-import { style } from '@mui/system';
-import BathtubIcon from '@mui/icons-material/Bathtub';
-import { createTheme } from "@material-ui/core/styles";
 import { makeStyles } from '@material-ui/styles';
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -31,6 +24,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Checkbox from '@mui/material/Checkbox';
+import Chip from '@mui/material/Chip';
 
 
 const useStyles = makeStyles({
@@ -52,44 +46,6 @@ const useStyles = makeStyles({
   }
 });
 
-
-  function BasicSelect() {
-    const [age, setAge] = React.useState("");
-  
-    const handleChange = (event) => {
-      setAge(event.target.value);
-    };
-  
-    return (
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Room type</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={age}
-          label="Age"
-          onChange={handleChange}
-        >
-          <MenuItem value={1}>bedroom</MenuItem>
-          <MenuItem value={2}>bathroom</MenuItem>
-          <MenuItem value={3}>garage</MenuItem>
-          <MenuItem value={4}>kitchen</MenuItem>
-          <MenuItem value={5}>living room</MenuItem>
-        </Select>
-      </FormControl>
-    );
-  }
-  
-  function createData(type, x, y) {
-    return { type, x, y };
-  }
-  
-  const rows = [
-    createData("Bedroom", 15, 15),
-    createData("Kitchen", 12, 10),
-  ];
-  
-
 const GenerateDesignTab = withRouter((props) => {
   const [state, setState] = useState({
     select: "",
@@ -98,10 +54,13 @@ const GenerateDesignTab = withRouter((props) => {
   });
   const [data, setData] = useState([])
   const classes = useStyles();
+  const router = useRouter();
 
   const isMounted = useMounted();
-  const [products, setProducts] = useState([]);
   const [generatedData, setGeneratedData] = useState([]);
+  const projectId = router.query.id || router.query.projectId;
+  const [update, setUpdate] = useState(true);
+  const [changed, setChanged] = useState(false);
 
   const handleChange = (event) => {
     const value = event.target.value;
@@ -140,11 +99,38 @@ const GenerateDesignTab = withRouter((props) => {
       Xvalue: "",
       Yvalue: "",
     })
+    setChanged(prev=>!prev)
   };
 
-  const save = () =>{
-    console.log("data", data)
+  const save = async () =>{
+    // update project database with new search parameter using project id
+    const search_parameters_added = await axios.put(`/api/projects/${projectId}`, {
+      search_parameters: data
+    })
+    .catch(error => console.log(error));
+    
+    setData([])
+    
+    search_parameters_added ? toast.success('Parameters saved successfully') : toast.error('Something went wrong!');
+    search_parameters_added && setUpdate((prev) => !prev) 
+    setChanged(prev=>!prev)
   }
+  
+  useEffect(() => {
+    axios.get(`/api/projects/${projectId}`)
+    .then(res =>   {
+      const search_parameters = res.data.data.search_parameters;
+      // fetch existing parameters form a project
+      search_parameters.forEach((item) => 
+        setData(prev => [...prev, {
+          select: item.select,
+          Xvalue: item.Xvalue,
+          Yvalue: item.Yvalue,
+        }]))
+      }
+     )
+    .catch(error => console.log(error));
+  },[projectId, update]);
 
   return (
     <>
@@ -168,11 +154,11 @@ const GenerateDesignTab = withRouter((props) => {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography>Rooms</Typography>
+        <Typography sx={{  marginRight : 1}}>Rooms</Typography>
+        {changed && <Chip label="Unsaved" /> }
         </AccordionSummary>
         <AccordionDetails>
           <Stack spacing={2} direction="row">
-            {/* <BasicSelect /> */}
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label">Room type</InputLabel>
               <Select
@@ -249,7 +235,7 @@ const GenerateDesignTab = withRouter((props) => {
             </Table>
           </TableContainer>
       
-          <Button variant="text" onClick={save}>save</Button>
+          {changed && <Button variant="text" onClick={save}>Save</Button>}
         </AccordionDetails>
       </Accordion>
 
