@@ -102,13 +102,6 @@ const GenerateDesignTab = withRouter((props) => {
   const isMounted = useMounted();
   const [products, setProducts] = useState([]);
   const [generatedData, setGeneratedData] = useState([]);
-  const [roomType, setRoomType] = React.useState("");
-
-  const handleChangeSelect = (event) => {
-    setRoomType(event.target.value);
-    localStorage.setItem('value', JSON.stringify(event.target.value)) //save input to localstorage
-  };
-
 
   const handleChange = (event) => {
     const value = event.target.value;
@@ -190,11 +183,11 @@ const GenerateDesignTab = withRouter((props) => {
                 label="room"
                 onChange={handleChange}
               >
-                <MenuItem value={1}>bedroom</MenuItem>
-                <MenuItem value={2}>bathroom</MenuItem>
-                <MenuItem value={3}>garage</MenuItem>
-                <MenuItem value={4}>kitchen</MenuItem>
-                <MenuItem value={5}>living room</MenuItem>
+                <MenuItem value="Bedroom">Bedroom</MenuItem>
+                <MenuItem value="Bathroom">Bathroom</MenuItem>
+                <MenuItem value="Garage">Garage</MenuItem>
+                <MenuItem value="Kitchen">Kitchen</MenuItem>
+                <MenuItem value="Living Room">Living Room</MenuItem>
               </Select>
             </FormControl>
             <TextField id="Xvalue" name="Xvalue" value={state.Xvalue}  label="X" variant="outlined" onChange={handleChange}/>
@@ -231,18 +224,22 @@ const GenerateDesignTab = withRouter((props) => {
                   {data.map((row, i) => (
                   <TableRow
                     key={i}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 },
+                    backgroundColor:`{data.select === 'Bathroom' && 'green'}`,
+                    }}
+                    // style={{backgroundColor:'red'}}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
                         color="primary"
                         // checked={isItemSelected}
                         inputProps={{
-                          // 'aria-labelledby': labelId,
+                           // 'aria-labelledby': labelId,
                         }}
                       />
                     </TableCell>
-                    <TableCell component="th" scope="row">{row.select}</TableCell> 
+                    
+                    <TableCell component="th" scope="row"><Typography style={{color:(row.select) === 'Bathroom' && 'green',}}>{row.select}</Typography></TableCell> 
                     <TableCell align="right">{row.Xvalue}</TableCell>
                     <TableCell align="right">{row.Yvalue}</TableCell>
                   </TableRow>
