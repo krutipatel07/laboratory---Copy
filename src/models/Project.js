@@ -40,6 +40,7 @@ const ProjectSchema = new mongoose.Schema(
             ref: 'Design'
           }
         ],
+        search_parameters: [Object],
         dateCreated: {
           type: Date,
           default: Date.now,
