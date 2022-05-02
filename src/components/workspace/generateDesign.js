@@ -99,7 +99,7 @@ const GenerateDesignTab = withRouter((props) => {
       Xvalue: "",
       Yvalue: "",
     })
-    setChanged(prev=>!prev)
+    setChanged(true)
   };
 
   const save = async () =>{
@@ -113,7 +113,7 @@ const GenerateDesignTab = withRouter((props) => {
     
     search_parameters_added ? toast.success('Parameters saved successfully') : toast.error('Something went wrong!');
     search_parameters_added && setUpdate((prev) => !prev) 
-    setChanged(prev=>!prev)
+    setChanged(false)
   }
   
   useEffect(() => {
