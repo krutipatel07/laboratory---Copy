@@ -25,6 +25,8 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Checkbox from '@mui/material/Checkbox';
 import Chip from '@mui/material/Chip';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+
 
 
 const useStyles = makeStyles({
@@ -52,6 +54,7 @@ const GenerateDesignTab = withRouter((props) => {
     Xvalue: "",
     Yvalue: "",
   });
+  const a = {Bedroom: 'red', Bathroom : 'green'}
   const [data, setData] = useState([])
   const classes = useStyles();
   const router = useRouter();
@@ -61,6 +64,7 @@ const GenerateDesignTab = withRouter((props) => {
   const projectId = router.query.id || router.query.projectId;
   const [update, setUpdate] = useState(true);
   const [changed, setChanged] = useState(false);
+  const [selectedrows, setSelectedRows] = useState([]);
 
   const handleChange = (event) => {
     const value = event.target.value;
@@ -68,6 +72,7 @@ const GenerateDesignTab = withRouter((props) => {
       ...state,
       [event.target.name]: value
     });
+
   };
 
   const handleSubmit = async (event) => {
@@ -88,6 +93,19 @@ const GenerateDesignTab = withRouter((props) => {
     })
   };
   
+  const bulkSelection = (event) => {
+    const ischecked = event.target.checked
+    // const UpdatedData = state.data.filter(data=>selectedrows.includes(data))
+    // setData(UpdatedData)
+    // console.log("selected")
+
+    let _data = [...data];
+    rowData.forEach(rd => {
+      _data = _data.filter(t => t.tableData.id !== rd.tableData.id);
+    });
+    setData(_data);
+  }
+
   const handleClick = async (e) => {
     setData(prev => [...prev, {
       select: state.select,
@@ -99,7 +117,7 @@ const GenerateDesignTab = withRouter((props) => {
       Xvalue: "",
       Yvalue: "",
     })
-    setChanged(prev=>!prev)
+    setChanged(true)
   };
 
   const save = async () =>{
@@ -113,7 +131,7 @@ const GenerateDesignTab = withRouter((props) => {
     
     search_parameters_added ? toast.success('Parameters saved successfully') : toast.error('Something went wrong!');
     search_parameters_added && setUpdate((prev) => !prev) 
-    setChanged(prev=>!prev)
+    setChanged(false)
   }
   
   useEffect(() => {
@@ -155,7 +173,9 @@ const GenerateDesignTab = withRouter((props) => {
           id="panel1a-header"
         >
         <Typography sx={{  marginRight : 1}}>Rooms</Typography>
-        {changed && <Chip label="Unsaved" /> }
+
+        {changed && <><IconButton sx={{pt:'2px'}}><InfoOutlinedIcon fontSize="small" /></IconButton>  <Typography color='#E57373'>Unsaved Changes</Typography></>   }
+
         </AccordionSummary>
         <AccordionDetails>
           <Stack spacing={2} direction="row">
@@ -181,8 +201,9 @@ const GenerateDesignTab = withRouter((props) => {
             <Button 
             variant="text"
             onClick={handleClick}
+            sx={{color:'#1976D2'}}
             >
-              Add
+              ADD
             </Button>
           </Stack>
           {/* <UserInputTable /> */}
@@ -213,19 +234,60 @@ const GenerateDesignTab = withRouter((props) => {
                     sx={{ "&:last-child td, &:last-child th": { border: 0 },
                     backgroundColor:`{data.select === 'Bathroom' && 'green'}`,
                     }}
+                    options= {{selection:true}}
+                    onSelectionChange={(data)=>setSelectedRows(data)}
                     // style={{backgroundColor:'red'}}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
                         color="primary"
                         // checked={isItemSelected}
+                        onChange={handleChange}
                         inputProps={{
                            // 'aria-labelledby': labelId,
                         }}
                       />
                     </TableCell>
                     
-                    <TableCell component="th" scope="row"><Typography style={{color:(row.select) === 'Bathroom' && 'green',}}>{row.select}</Typography></TableCell> 
+                    <TableCell component="th" scope="row">
+                      {row.select === 'Bedroom' && 
+                        <Typography 
+                        style={{
+                          color: '#2E7D32'
+                          // color:(row.select) === 'Bedroom' && 'green' 
+                        }}>{row.select}</Typography>}
+
+                      {row.select === 'Bathroom' && 
+                        <Typography 
+                        style={{
+                          color: '#0288D1'
+                        }}>{row.select}</Typography>}
+
+                      {row.select === 'Kitchen' && 
+                        <Typography 
+                        style={{
+                          color: '#AB47BC'
+                        }}>{row.select}</Typography>}
+
+                      {row.select === 'Living Room' && 
+                        <Typography 
+                        style={{
+                          color: '#F57C00'
+                        }}>{row.select}</Typography>}
+
+                      {row.select === 'Dining Room' && 
+                        <Typography 
+                        style={{
+                          color: '#D32F2F'
+                        }}>{row.select}</Typography>}
+
+                      {row.select === 'Garage' && 
+                        <Typography 
+                        style={{
+                          color: '#000000DE'
+                          // color:(row.select) === 'Bathroom' && 'green' 
+                        }}>{row.select}</Typography>}
+                    </TableCell> 
                     <TableCell align="right">{row.Xvalue}</TableCell>
                     <TableCell align="right">{row.Yvalue}</TableCell>
                   </TableRow>
@@ -234,8 +296,14 @@ const GenerateDesignTab = withRouter((props) => {
 
             </Table>
           </TableContainer>
-      
-          {changed && <Button variant="text" onClick={save}>Save</Button>}
+
+          <Box sx={{display:'flex', justifyContent:'space-between'}}>
+            <Button variant="text" sx={{color:'#C62828'}} 
+            onClick={bulkSelection} 
+            >DELETE SELECTED ROOMS</Button>
+            {changed && <Button variant="text" onClick={save}>SAVE</Button>}
+          </Box>
+          
         </AccordionDetails>
       </Accordion>
 
@@ -259,7 +327,7 @@ const GenerateDesignTab = withRouter((props) => {
           ></iframe>
         </AccordionDetails>
       </Accordion>
-      <Button variant="contained">generate designs</Button>
+      <Button variant="contained" sx={{mt:3}}>GENERATE DESIGNS</Button>
     </div>
 
       </Box>
