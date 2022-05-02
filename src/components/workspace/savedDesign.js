@@ -146,7 +146,6 @@ const importDesign = async (secure_url, designName, file_name) => {
                       designId = {design.id}                     
                       title={design.title}
                       members = {design.collaborators.length}
-                      comments = {design.comments.length}
                       image={design.url}
                       file_name={design.file_name}
                       link={`/workspace/${projectData.id}?designId=${design.id}`}

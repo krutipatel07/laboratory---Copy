@@ -63,7 +63,6 @@ const VariantCard = (props) => {
         designId,
         title,
         members,
-        comments,
         link,
         image,
         file_name,

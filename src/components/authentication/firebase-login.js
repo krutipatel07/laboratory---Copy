@@ -72,7 +72,7 @@ export const FirebaseLogin = (props) => {
           }else{
             localStorage.setItem("limnu_token", data.data.limnu_token)
           }
-          localStorage.setItem("sidebar_open", false)
+          
           const returnUrl = router.query.returnUrl || '/dashboard/projects';
           router.push(returnUrl);
         }
