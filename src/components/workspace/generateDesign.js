@@ -58,6 +58,7 @@ const GenerateDesignTab = withRouter((props) => {
   const [data, setData] = useState([])
   const classes = useStyles();
   const router = useRouter();
+  const [selected, setSelected] = React.useState([]);
 
   const isMounted = useMounted();
   const [generatedData, setGeneratedData] = useState([]);
@@ -92,18 +93,45 @@ const GenerateDesignTab = withRouter((props) => {
       garages: ""
     })
   };
-  
-  const bulkSelection = (event) => {
-    const ischecked = event.target.checked
-    // const UpdatedData = state.data.filter(data=>selectedrows.includes(data))
-    // setData(UpdatedData)
-    // console.log("selected")
+  const handleSelectAllClick = (event) => {
+    if (event.target.checked) {
+      const newSelecteds = rows.map((n) => n.name);
+      setSelected(newSelecteds);
+      return;
+    }
+    setSelected([]);
+  };
 
-    let _data = [...data];
-    rowData.forEach(rd => {
-      _data = _data.filter(t => t.tableData.id !== rd.tableData.id);
-    });
-    setData(_data);
+  const handleDeleteCheckbox = (event, id) => {
+    if (event.target.checked) {
+      const ifIncluded = selectedrows.includes(id)
+      if (!ifIncluded) {
+        setSelectedRows(prev=> [...prev, id])
+      }
+    }
+    else{
+      const ifIncluded = selectedrows.includes(id)
+      if (ifIncluded) {
+        const filteredRows = selectedrows.filter(row => row !== id)
+        setSelectedRows(filteredRows)
+      }
+    }
+  };
+
+  const deleteBulkSelection = async () => {
+    let newFilterRows = data;
+    selectedrows.forEach(row => {
+      newFilterRows = newFilterRows.filter(row1 => row1.id !== row)
+    })
+
+    // update project database with new search parameter using project id
+    const search_parameters_updated = await axios.put(`/api/projects/${projectId}`, {
+      search_parameters: newFilterRows
+    })
+    .catch(error => console.log(error));
+    setData([])
+    search_parameters_updated ? toast.success('Parameters deleted successfully') : toast.error('Something went wrong!');
+    search_parameters_updated && setUpdate((prev) => !prev) 
   }
 
   const handleClick = async (e) => {
@@ -111,6 +139,7 @@ const GenerateDesignTab = withRouter((props) => {
       select: state.select,
       Xvalue: state.Xvalue,
       Yvalue: state.Yvalue,
+      id: Date.now(),
     }]) 
     setState({
       select: "",
@@ -128,6 +157,7 @@ const GenerateDesignTab = withRouter((props) => {
     .catch(error => console.log(error));
     
     setData([])
+    setSelectedRows([])
     
     search_parameters_added ? toast.success('Parameters saved successfully') : toast.error('Something went wrong!');
     search_parameters_added && setUpdate((prev) => !prev) 
@@ -144,6 +174,7 @@ const GenerateDesignTab = withRouter((props) => {
           select: item.select,
           Xvalue: item.Xvalue,
           Yvalue: item.Yvalue,
+          id: item.id
         }]))
       }
      )
@@ -213,13 +244,13 @@ const GenerateDesignTab = withRouter((props) => {
               <TableHead>
                 <TableRow>
                   <TableCell padding="checkbox">
-                    <Checkbox
+                    {!changed && <Checkbox
                       color="primary"
                       // checked={isItemSelected}
                       inputProps={{
                         // 'aria-labelledby': labelId,
                       }}
-                    />
+                    />}
                   </TableCell>
                   <TableCell>Type</TableCell>
                   <TableCell align="right">X&nbsp;(feet)</TableCell>
@@ -228,23 +259,27 @@ const GenerateDesignTab = withRouter((props) => {
               </TableHead>
               {/* List of data table entered by user */}
               <TableBody>
-                  {data.map((row, i) => (
+                {data.map((row) => (
+                  
                   <TableRow
-                    key={i}
+                    hover
+                    onClick={(event) => handleDeleteCheckbox(event, row.id)}
+                    role="checkbox"
+                    tabIndex={-1}
+                    key={row.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 },
                     backgroundColor:`{data.select === 'Bathroom' && 'green'}`,
                     }}
                     options= {{selection:true}}
-                    onSelectionChange={(data)=>setSelectedRows(data)}
+                    // onSelectionChange={(data)=>setSelectedRows(data)}
                     // style={{backgroundColor:'red'}}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
                         color="primary"
                         // checked={isItemSelected}
-                        onChange={handleChange}
                         inputProps={{
-                           // 'aria-labelledby': labelId,
+                           'aria-labelledby': row.id,
                         }}
                       />
                     </TableCell>
@@ -298,9 +333,9 @@ const GenerateDesignTab = withRouter((props) => {
           </TableContainer>
 
           <Box sx={{display:'flex', justifyContent:'space-between'}}>
-            <Button variant="text" sx={{color:'#C62828'}} 
-            onClick={bulkSelection} 
-            >DELETE SELECTED ROOMS</Button>
+            {!changed ? <Button variant="text" sx={{color:'#C62828'}} 
+            onClick={deleteBulkSelection} 
+            >DELETE SELECTED ROOMS</Button> :<Typography></Typography> }
             {changed && <Button variant="text" onClick={save}>SAVE</Button>}
           </Box>
           
