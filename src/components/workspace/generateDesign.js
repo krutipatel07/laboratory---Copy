@@ -106,18 +106,18 @@ const GenerateDesignTab = withRouter((props) => {
   };
 
   const handleDeleteCheckbox = (event, id) => {
+    // filter rooms to delete from database according to checkbox state
     if (event.target.checked) {
       const ifIncluded = selectedrows.includes(id)
       if (!ifIncluded) {
         setSelectedRows(prev=> [...prev, id])
       }
+      return;
     }
-    else{
-      const ifIncluded = selectedrows.includes(id)
-      if (ifIncluded) {
-        const filteredRows = selectedrows.filter(row => row !== id)
-        setSelectedRows(filteredRows)
-      }
+    const ifIncluded = selectedrows.includes(id)
+    if (ifIncluded) {
+      const filteredRows = selectedrows.filter(row => row !== id)
+      setSelectedRows(filteredRows)
     }
     setSaved(true)
   };
@@ -125,7 +125,7 @@ const GenerateDesignTab = withRouter((props) => {
   const deleteBulkSelection = async () => {
     let newFilterRows = data;
     selectedrows.forEach(row => {
-      newFilterRows = newFilterRows.filter(row1 => row1.id !== row)
+      newFilterRows = newFilterRows.filter(item => item.id !== row)
     })
 
     // update project database with new search parameter using project id
@@ -211,6 +211,7 @@ const GenerateDesignTab = withRouter((props) => {
         >
         <Typography sx={{  marginRight : 1}}>Rooms</Typography>
 
+        {/* display warning of unsaved changes*/}
         {changed && <><IconButton sx={{pt:'2px'}}><InfoOutlinedIcon fontSize="small" /></IconButton>  <Typography color='#E57373'>Unsaved Changes</Typography></>   }
 
         </AccordionSummary>
@@ -252,7 +253,6 @@ const GenerateDesignTab = withRouter((props) => {
               </Button> 
             {/* </form> */}
           </Stack>
-          {/* <UserInputTable /> */}
 
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
@@ -385,14 +385,10 @@ const GenerateDesignTab = withRouter((props) => {
           </TableContainer>
 
           <Box sx={{display:'flex', justifyContent:'space-between'}}>
-            {/* {!changed ? <Button variant="text" sx={{color:'#C62828'}} 
-            onClick={deleteBulkSelection} 
-            >DELETE SELECTED ROOMS</Button> :<Typography></Typography> } */}
 
             {saved ? <Button variant="text" sx={{color:'#C62828'}} 
             onClick={deleteBulkSelection} 
             >DELETE SELECTED ROOMS</Button> :<Typography></Typography> }
-
 
             {changed && <Button variant="text" onClick={save}>SAVE</Button>}
           </Box>
