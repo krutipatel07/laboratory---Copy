@@ -68,7 +68,7 @@ const GenerateDesignTab = withRouter((props) => {
   const [update, setUpdate] = useState(true);
   const [changed, setChanged] = useState(false);
   const [selectedrows, setSelectedRows] = useState([]);
-  const [saved, setSaved] = useState(false);
+  const [checkboxClicked, setCheckboxClicked] = useState(false);
 
   const handleChange = (event) => {
     const value = event.target.value;
@@ -112,6 +112,7 @@ const GenerateDesignTab = withRouter((props) => {
       if (!ifIncluded) {
         setSelectedRows(prev=> [...prev, id])
       }
+      setCheckboxClicked(true)
       return;
     }
     const ifIncluded = selectedrows.includes(id)
@@ -119,7 +120,9 @@ const GenerateDesignTab = withRouter((props) => {
       const filteredRows = selectedrows.filter(row => row !== id)
       setSelectedRows(filteredRows)
     }
-    setSaved(true)
+    if (event.target.checked.count < 0){
+      setCheckboxClicked(false)
+    }
   };
 
   const deleteBulkSelection = async () => {
@@ -196,7 +199,7 @@ const GenerateDesignTab = withRouter((props) => {
           display: 'flex',
           flexWrap: 'wrap',
           // p: 3,
-          px:2,
+          // px:2,
           mt: '-30px'
         }}
         // style={{marginTop:'-64px'}}
@@ -205,6 +208,7 @@ const GenerateDesignTab = withRouter((props) => {
     <div align="right" style={{width:'100%'}}>
       <Accordion>
         <AccordionSummary
+          sx={{p:0}}
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
@@ -215,9 +219,9 @@ const GenerateDesignTab = withRouter((props) => {
         {changed && <><IconButton sx={{pt:'2px'}}><InfoOutlinedIcon fontSize="small" /></IconButton>  <Typography color='#E57373'>Unsaved Changes</Typography></>   }
 
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails sx={{p:0}}>
           
-          <Stack spacing={2} direction="row">
+          <Stack spacing={2} direction="row" sx={{mb:1.5}}>
             {/* <form 
             onSubmit={handleClick}
             > */}
@@ -258,15 +262,7 @@ const GenerateDesignTab = withRouter((props) => {
             <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
               <TableHead>
                 <TableRow>
-                  <TableCell padding="checkbox">
-                    {!changed && <Checkbox
-                      color="primary"
-                      // checked={isItemSelected}
-                      inputProps={{
-                        // 'aria-labelledby': labelId,
-                      }}
-                    />}
-                  </TableCell>
+                  <TableCell ></TableCell>
                   <TableCell>Type</TableCell>
                   <TableCell align="right">X&nbsp;(feet)</TableCell>
                   <TableCell align="right">Y&nbsp;(feet)</TableCell>
@@ -386,9 +382,13 @@ const GenerateDesignTab = withRouter((props) => {
 
           <Box sx={{display:'flex', justifyContent:'space-between'}}>
 
-            {saved ? <Button variant="text" sx={{color:'#C62828'}} 
+            {/* {saved ? <Button variant="text" sx={{color:'#C62828'}} 
             onClick={deleteBulkSelection} 
-            >DELETE SELECTED ROOMS</Button> :<Typography></Typography> }
+            >DELETE SELECTED ROOMS</Button> :<Typography></Typography> } */}
+
+            {checkboxClicked ? <Button variant="text" sx={{color:'#C62828'}} 
+            onClick={deleteBulkSelection} 
+            >DELETE SELECTED ROOMS</Button>: null }
 
             {changed && <Button variant="text" onClick={save}>SAVE</Button>}
           </Box>
@@ -398,6 +398,7 @@ const GenerateDesignTab = withRouter((props) => {
 
       <Accordion>
         <AccordionSummary
+          sx={{p:0}}
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel2a-content"
           id="panel2a-header"
