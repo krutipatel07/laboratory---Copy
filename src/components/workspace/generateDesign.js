@@ -26,7 +26,7 @@ import Stack from "@mui/material/Stack";
 import Checkbox from '@mui/material/Checkbox';
 import Chip from '@mui/material/Chip';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-
+import dynamic from "next/dynamic";
 
 
 const useStyles = makeStyles({
@@ -49,6 +49,11 @@ const useStyles = makeStyles({
 });
 
 const GenerateDesignTab = withRouter((props) => {
+
+  const MapWithNoSSR = dynamic(() => import("../mapcomp"), {
+    ssr: false
+  });
+
   const [state, setState] = useState({
     select: "",
     Xvalue: "",
@@ -353,7 +358,9 @@ const GenerateDesignTab = withRouter((props) => {
           <Typography>Land &amp; Envelope</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <iframe
+          
+        <MapWithNoSSR />
+          {/* <iframe
             width="600"
             height="450"
             loading="lazy"
@@ -361,7 +368,7 @@ const GenerateDesignTab = withRouter((props) => {
             referrerpolicy="no-referrer-when-downgrade"
             src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCu3VUmZx4sLQINjDU4oMdN0cZqdnQewIo
     &q=Space+Needle,Seattle+WA"
-          ></iframe>
+          ></iframe> */}
         </AccordionDetails>
       </Accordion>
       <Button variant="contained" sx={{mt:3}}>GENERATE DESIGNS</Button>
