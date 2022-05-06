@@ -71,28 +71,15 @@ export default function ProjectGrid() {
                     backgroundColor: 'background.hover',
                     } }}
                   variant="elevation">  
-                  <NextLink
-                    href="/dashboard/projects/new"
-                    passHref
-                    >
                     <CardContent>
-                      <Typography gutterBottom 
-                      variant="subtitle1" 
-                      component="div" 
-                      textAlign = "center"
-                      color="text.secondary"><PlusIcon 
-                                  fontSize="large" 
-                                  cursor = "pointer"/>
-                      </Typography>
                       <Typography 
                       variant="body2" 
                       color="text.secondary" 
-                      fontSize="small"                   
+                      fontSize="large"                   
                       textAlign = "center">
-                          create new project
+                          No projects available. <br/> Create a new project from button above.
                       </Typography>
                     </CardContent>
-                  </NextLink>
                 </Card>}
             </Grid>
            : <Box sx={{ 

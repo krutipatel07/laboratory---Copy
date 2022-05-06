@@ -79,6 +79,9 @@ export const AuthProvider = (props) => {
   const logout = async () => {
     await firebase.auth().signOut();
     localStorage.removeItem("lab-user");
+    localStorage.removeItem("is-owner");
+    localStorage.removeItem("limnu_token");
+    localStorage.removeItem("project_list");
   };
 
   return (
