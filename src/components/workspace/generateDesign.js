@@ -409,7 +409,7 @@ const GenerateDesignTab = withRouter((props) => {
           aria-controls="panel2a-content"
           id="panel2a-header"
         >
-          <Typography>Land &amp; Envelope</Typography>
+          <Typography>Land</Typography>
         </AccordionSummary>
         <AccordionDetails>
           
@@ -424,6 +424,18 @@ const GenerateDesignTab = withRouter((props) => {
     &q=Space+Needle,Seattle+WA"
           ></iframe> */}
         </AccordionDetails>
+      </Accordion>
+
+      <Accordion>
+        <AccordionSummary
+          sx={{p:0}}
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2a-content"
+          id="panel2a-header"
+        >
+          <Typography>Envelope</Typography>
+        </AccordionSummary>
+        <AccordionDetails></AccordionDetails>
       </Accordion>
       <Button variant="contained" sx={{mt:3}}>GENERATE DESIGNS</Button>
     </div>
