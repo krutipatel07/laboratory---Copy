@@ -18,12 +18,18 @@ const Map = (props) => {
   const mapRef = useRef()
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem('layers'))
-      let polygon=[];
-      data.lat_lngs.forEach((lat_lngs) => 
-        polygon = [...polygon, [lat_lngs.lat, lat_lngs.lng]]
-      );
-      setMapLayers(layers => [...layers, [polygon]])
-      setCenter({lat : polygon[0][0], lng : polygon[0][1]});
+      if (data){
+        let polygon=[];
+        data.lat_lngs.forEach((lat_lngs) => 
+          polygon = [...polygon, [lat_lngs.lat, lat_lngs.lng]]
+        );
+        setMapLayers(layers => [...layers, [polygon]])
+        setCenter({lat : polygon[0][0], lng : polygon[0][1]});
+      }
+      else {
+        setMapLayers([])
+        setCenter({lat: 45.53, lng:  -73.62})
+      }
   },[mapUpdate])
   
   const purpleOptions = { color: 'purple' }
