@@ -131,9 +131,7 @@ const GenerateDesignTab = withRouter((props) => {
       const filteredRows = selectedrows.filter(row => row !== id)
       setSelectedRows(filteredRows)
     }
-    if (event.target.checked.count < 0){
-      setCheckboxClicked(false)
-    }
+    // setCheckboxClicked(false)
   };
 
   const deleteBulkSelection = async () => {
@@ -148,6 +146,7 @@ const GenerateDesignTab = withRouter((props) => {
     })
     .catch(error => console.log(error));
     setData([])
+    setSelectedRows([])
     search_parameters_updated ? toast.success('Parameters deleted successfully') : toast.error('Something went wrong!');
     search_parameters_updated && setUpdate((prev) => !prev) 
   }
@@ -263,6 +262,7 @@ const GenerateDesignTab = withRouter((props) => {
               onClick={handleClick}
               sx={{color:'#1976D2'}}
               // type='submit'
+              disabled={checkboxClicked && selectedrows.length}
               >
                 ADD
               </Button> 
@@ -282,10 +282,8 @@ const GenerateDesignTab = withRouter((props) => {
               {/* List of data table entered by user */}
               <TableBody>
                 {data.map((row) => (
-                  
                   <TableRow
                     hover
-                    onClick={(event) => handleDeleteCheckbox(event, row.id)}
                     role="checkbox"
                     tabIndex={-1}
                     key={row.id}
@@ -293,13 +291,11 @@ const GenerateDesignTab = withRouter((props) => {
                     backgroundColor:`{data.select === 'Bathroom' && 'green'}`,
                     }}
                     options= {{selection:true}}
-                    // onSelectionChange={(data)=>setSelectedRows(data)}
-                    // style={{backgroundColor:'red'}}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
+                        onClick={(event) => handleDeleteCheckbox(event, row.id)}
                         color="primary"
-                        // checked={isItemSelected}
                         inputProps={{
                            'aria-labelledby': row.id,
                         }}
@@ -397,9 +393,9 @@ const GenerateDesignTab = withRouter((props) => {
             onClick={deleteBulkSelection} 
             >DELETE SELECTED ROOMS</Button> :<Typography></Typography> } */}
 
-            {checkboxClicked ? <Button variant="text" sx={{color:'#C62828'}} 
-            onClick={deleteBulkSelection} 
-            >DELETE SELECTED ROOMS</Button>: null }
+            {checkboxClicked && selectedrows.length && !changed ? <Button variant="text" sx={{color:'#C62828'}} 
+              onClick={deleteBulkSelection} 
+              >DELETE SELECTED ROOMS</Button>: <Typography></Typography> }
 
             {changed && <Button variant="text" onClick={save}>SAVE</Button>}
           </Box>

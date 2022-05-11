@@ -62,7 +62,6 @@ const Map = (props) => {
         })
     }
     
-console.log(mapLayers[mapLayers.length - 1]);
     const save = () => {
       localStorage.setItem('layersEnvelope', JSON.stringify(mapLayers[mapLayers.length - 1]))
       toast.success("Saved!")
