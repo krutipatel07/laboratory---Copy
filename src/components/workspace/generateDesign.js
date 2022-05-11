@@ -53,7 +53,11 @@ const useStyles = makeStyles({
 
 const GenerateDesignTab = withRouter((props) => {
 
-  const MapWithNoSSR = dynamic(() => import("../mapcomp"), {
+  const MapLandWithNoSSR = dynamic(() => import("../mapLand"), {
+    ssr: false
+  });
+
+  const MapEnvelopeWithNoSSR = dynamic(() => import("../mapEnvelope"), {
     ssr: false
   });
 
@@ -72,6 +76,7 @@ const GenerateDesignTab = withRouter((props) => {
   const [generatedData, setGeneratedData] = useState([]);
   const projectId = router.query.id || router.query.projectId;
   const [update, setUpdate] = useState(true);
+  const [mapUpdate, setMapUpdate] = useState(true)
   const [changed, setChanged] = useState(false);
   const [selectedrows, setSelectedRows] = useState([]);
   const [checkboxClicked, setCheckboxClicked] = useState(false);
@@ -412,9 +417,7 @@ const GenerateDesignTab = withRouter((props) => {
           <Typography>Land</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          
-          <MapWithNoSSR />
-
+          <MapLandWithNoSSR setMapUpdate={setMapUpdate}/>
         </AccordionDetails>
       </Accordion>
 
@@ -428,15 +431,7 @@ const GenerateDesignTab = withRouter((props) => {
           <Typography>Envelope</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <iframe
-            width="100%"
-            height="450"
-            loading="lazy"
-            // allowfullscreen
-            referrerpolicy="no-referrer-when-downgrade"
-            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCu3VUmZx4sLQINjDU4oMdN0cZqdnQewIo
-            &q=Space+Needle,Seattle+WA">
-          </iframe>
+          <MapEnvelopeWithNoSSR mapUpdate={mapUpdate}/>
         </AccordionDetails>
       </Accordion>
       <Button variant="contained" sx={{mt:3}}>GENERATE DESIGNS</Button>

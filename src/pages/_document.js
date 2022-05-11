@@ -83,9 +83,7 @@ class CustomDocument extends Document {
           js.src = '[https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js](https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js)';
           fjs.parentNode.insertBefore(js, fjs);
           }(document, 'script', 'facebook-jssdk'));`}}>
-
           </script>
-          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBGAd20hTUBoPM1mPZYV7D-HnyFOA6GBH8"></script>
           <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
           
         </Head>

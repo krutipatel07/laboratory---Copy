@@ -3,37 +3,26 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-draw/dist/leaflet.draw.css";
+import {Button} from '@mui/material';
+import toast from "react-hot-toast";
 
 import { useRef, useState } from "react";
 
 import {EditControl} from "react-leaflet-draw"
-const Map = () => {
-  const [center, setCenter] = useState({lat: 24.4539, lng: 54.3773})
+const Map = (props) => {
+  const setMapUpdate = props.setMapUpdate;
+  const [center, setCenter] = useState({lat: 45.53, lng:  -73.62})
   const [mapLayers, setMapLayers] = useState([])
+  const [saved, setSaved] = useState(true)
 
   const mapRef = useRef()
-
-  const multiPolygon = [
-    [[51.505, -0.09],
-      [-2123, -616],
-      [ -2157, -550],
-      [-2119, -501],
-      [-2084, -538 ],
-      [  -2069, -609]
-    ],
-  ]
-  
-  const fillBlueOptions = { fillColor: 'blue' }
-  const blackOptions = { color: 'black' }
-  const limeOptions = { color: 'lime' }
-  const purpleOptions = { color: 'purple' }
-  const redOptions = { color: 'red' }
 
     const _onCreated = (e) =>{
         const {layerType, layer} = e;
         if (layerType === "polygon") {
           const {_leaflet_id} = layer;
           setMapLayers(layers => [...layers, {id: _leaflet_id, lat_lngs: layer.getLatLngs()[0]}]);
+          setSaved(false)
         }
     }
 
@@ -55,10 +44,20 @@ const Map = () => {
           )
         })
     }
+    const save = () => {
+      localStorage.setItem('layers', JSON.stringify(mapLayers[mapLayers.length - 1]))
+      setMapUpdate((prev) => !prev)
+      toast.success("Saved!")
+      setSaved(true)
+    }
 
-    console.log(mapLayers)
   return (
+<<<<<<< HEAD:src/components/mapcomp.js
     <MapContainer center={center} zoom={13} scrollWheelZoom={false} ref={mapRef} style={{ height: "80vh", width: "100%" }}>
+=======
+    <>
+    <MapContainer center={center} zoom={11} scrollWheelZoom={false} ref={mapRef} style={{ height: "100vh", width: "60vw" }}>
+>>>>>>> 374da48e09f6a34f28b9248ba998d0f0366a8535:src/components/mapLand.js
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -78,8 +77,9 @@ const Map = () => {
           }}>
           </EditControl>
       </FeatureGroup>
-      <Polygon pathOptions={purpleOptions} positions={multiPolygon} />
     </MapContainer>
+    <Button variant="text" onClick={save} disabled={saved}>SAVE</Button>
+    </>
     );
   };
 
