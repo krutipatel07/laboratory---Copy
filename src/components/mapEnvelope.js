@@ -3,37 +3,37 @@ import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-draw/dist/leaflet.draw.css";
+import { Button } from '@mui/material';
+import toast from 'react-hot-toast';
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 import {EditControl} from "react-leaflet-draw"
-const Map = () => {
-  const [center, setCenter] = useState({lat: 24.4539, lng: 54.3773})
+const Map = (props) => {
+  const mapUpdate = props.mapUpdate;
+  const [center, setCenter] = useState()
   const [mapLayers, setMapLayers] = useState([])
+  const [saved, setSaved] = useState(true)
 
   const mapRef = useRef()
-
-  const multiPolygon = [
-    [[51.505, -0.09],
-      [-2123, -616],
-      [ -2157, -550],
-      [-2119, -501],
-      [-2084, -538 ],
-      [  -2069, -609]
-    ],
-  ]
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem('layers'))
+      let polygon=[];
+      data.lat_lngs.forEach((lat_lngs) => 
+        polygon = [...polygon, [lat_lngs.lat, lat_lngs.lng]]
+      );
+      setMapLayers(layers => [...layers, [polygon]])
+      setCenter({lat : polygon[0][0], lng : polygon[0][1]});
+  },[mapUpdate])
   
-  const fillBlueOptions = { fillColor: 'blue' }
-  const blackOptions = { color: 'black' }
-  const limeOptions = { color: 'lime' }
   const purpleOptions = { color: 'purple' }
-  const redOptions = { color: 'red' }
 
     const _onCreated = (e) =>{
         const {layerType, layer} = e;
         if (layerType === "polygon") {
           const {_leaflet_id} = layer;
           setMapLayers(layers => [...layers, {id: _leaflet_id, lat_lngs: layer.getLatLngs()[0]}]);
+          setSaved(false)
         }
     }
 
@@ -55,10 +55,17 @@ const Map = () => {
           )
         })
     }
+    
+console.log(mapLayers[mapLayers.length - 1]);
+    const save = () => {
+      localStorage.setItem('layersEnvelope', JSON.stringify(mapLayers[mapLayers.length - 1]))
+      toast.success("Saved!")
+      setSaved(true)
+    }
 
-    console.log(mapLayers)
   return (
-    <MapContainer center={center} zoom={13} scrollWheelZoom={false} ref={mapRef} style={{ height: "100vh", width: "60vw" }}>
+    <>
+    {center && <MapContainer center={center} zoom={11} scrollWheelZoom={false} ref={mapRef} style={{ height: "100vh", width: "60vw" }}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -78,8 +85,10 @@ const Map = () => {
           }}>
           </EditControl>
       </FeatureGroup>
-      <Polygon pathOptions={purpleOptions} positions={multiPolygon} />
-    </MapContainer>
+      <Polygon pathOptions={purpleOptions} positions={mapLayers} />
+    </MapContainer>}
+    <Button variant="text" onClick={save}  disabled={saved}>SAVE</Button>
+    </>
     );
   };
 
