@@ -413,16 +413,8 @@ const GenerateDesignTab = withRouter((props) => {
         </AccordionSummary>
         <AccordionDetails>
           
-        <MapWithNoSSR />
-          {/* <iframe
-            width="600"
-            height="450"
-            loading="lazy"
-            // allowfullscreen
-            referrerpolicy="no-referrer-when-downgrade"
-            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCu3VUmZx4sLQINjDU4oMdN0cZqdnQewIo
-    &q=Space+Needle,Seattle+WA"
-          ></iframe> */}
+          <MapWithNoSSR />
+
         </AccordionDetails>
       </Accordion>
 
@@ -435,7 +427,17 @@ const GenerateDesignTab = withRouter((props) => {
         >
           <Typography>Envelope</Typography>
         </AccordionSummary>
-        <AccordionDetails></AccordionDetails>
+        <AccordionDetails>
+          <iframe
+            width="100%"
+            height="450"
+            loading="lazy"
+            // allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyCu3VUmZx4sLQINjDU4oMdN0cZqdnQewIo
+            &q=Space+Needle,Seattle+WA">
+          </iframe>
+        </AccordionDetails>
       </Accordion>
       <Button variant="contained" sx={{mt:3}}>GENERATE DESIGNS</Button>
     </div>
