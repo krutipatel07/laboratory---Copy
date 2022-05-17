@@ -11,14 +11,19 @@ import { useRef, useState, useEffect } from "react";
 import {EditControl} from "react-leaflet-draw"
 const Map = (props) => {
   const mapUpdate = props.mapUpdate;
+  const setMapUpdate = props.setMapUpdate;
   const [center, setCenter] = useState()
   const [mapLayers, setMapLayers] = useState([])
+  const [mapLayersEnvelope, setMapLayersEnvelope] = useState([])
   const [saved, setSaved] = useState(true)
+  const [zoom, setZoom] = useState(11)
 
   const mapRef = useRef()
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem('layers'))
+    const envelope = JSON.parse(localStorage.getItem('layersEnvelope'))
       if (data){
+        data.zoom && setZoom(data.zoom)
         let polygon=[];
         data.lat_lngs.forEach((lat_lngs) => 
           polygon = [...polygon, [lat_lngs.lat, lat_lngs.lng]]
@@ -29,16 +34,30 @@ const Map = (props) => {
       else {
         setMapLayers([])
         setCenter({lat: 45.53, lng:  -73.62})
+      } 
+      
+      if (envelope){
+        envelope.zoom && setZoom(envelope.zoom)
+        let polygon=[];
+        envelope.lat_lngs.forEach((lat_lngs) => 
+          polygon = [...polygon, [lat_lngs.lat, lat_lngs.lng]]
+        );
+        setMapLayersEnvelope(layers => [...layers, [polygon]])
+        setCenter({lat : polygon[0][0], lng : polygon[0][1]});
       }
+      else {
+        setMapLayersEnvelope([])
+      } 
   },[mapUpdate])
   
+  const blueOptions = { color: 'blue' }
   const purpleOptions = { color: 'purple' }
 
     const _onCreated = (e) =>{
         const {layerType, layer} = e;
         if (layerType === "polygon") {
           const {_leaflet_id} = layer;
-          setMapLayers(layers => [...layers, {id: _leaflet_id, lat_lngs: layer.getLatLngs()[0]}]);
+          setMapLayers(layers => [...layers, {id: _leaflet_id, lat_lngs: layer.getLatLngs()[0] , zoom: layer._mapToAdd._animateToZoom}]);
           setSaved(false)
         }
     }
@@ -65,12 +84,17 @@ const Map = (props) => {
     const save = () => {
       localStorage.setItem('layersEnvelope', JSON.stringify(mapLayers[mapLayers.length - 1]))
       toast.success("Saved!")
+      setMapUpdate((prev) => !prev)
       setSaved(true)
     }
 
   return (
     <>
+<<<<<<< HEAD
     {center && <MapContainer center={center} zoom={11} scrollWheelZoom={false} ref={mapRef} style={{ height: "80vh", width: "100%" }}>
+=======
+    {center && <MapContainer center={center} zoom={zoom} scrollWheelZoom={false} ref={mapRef} style={{ height: "100vh", width: "60vw" }}>
+>>>>>>> 6086e3bede958f639eb43553695cfa760580fc2b
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -90,7 +114,8 @@ const Map = (props) => {
           }}>
           </EditControl>
       </FeatureGroup>
-      <Polygon pathOptions={purpleOptions} positions={mapLayers} />
+      <Polygon pathOptions={blueOptions} positions={mapLayers} />
+      <Polygon pathOptions={purpleOptions} positions={mapLayersEnvelope} />
     </MapContainer>}
     <Button variant="text" onClick={save}  disabled={saved}>SAVE</Button>
     </>

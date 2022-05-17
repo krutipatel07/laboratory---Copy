@@ -6,19 +6,39 @@ import "leaflet-defaulticon-compatibility";
 import "leaflet-draw/dist/leaflet.draw.css";
 import {Button} from '@mui/material';
 import toast from "react-hot-toast";
-import { geosearch } from 'esri-leaflet-geocoder';
-import 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css';
-import { useRef, useState } from "react";
+
+import { useRef, useState, useEffect } from "react";
+
 import {EditControl} from "react-leaflet-draw"
 import { GeoSearchControl, MapBoxProvider } from 'leaflet-geosearch';
 import { useMap } from 'react-leaflet';
 
 
 const Map = (props) => {
+  const mapUpdate = props.mapUpdate;
   const setMapUpdate = props.setMapUpdate;
-  const [center, setCenter] = useState({lat: 45.53, lng:  -73.62})
+  const [center, setCenter] = useState()
   const [mapLayers, setMapLayers] = useState([])
   const [saved, setSaved] = useState(true)
+  const blueOptions = { color: 'blue' }
+  const [zoom, setZoom] = useState(11)
+  
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem('layers'))
+      if (data){
+        data.zoom && setZoom(data.zoom)
+        let polygon=[];
+        data.lat_lngs.forEach((lat_lngs) => 
+          polygon = [...polygon, [lat_lngs.lat, lat_lngs.lng]]
+        );
+        setMapLayers(layers => [...layers, [polygon]])
+        setCenter({lat : polygon[0][0], lng : polygon[0][1]});
+      }
+      else {
+        setMapLayers([])
+        setCenter({lat: 45.53, lng:  -73.62})
+      }
+  },[mapUpdate])
 
   const mapRef = useRef()
 
@@ -50,7 +70,7 @@ const Map = (props) => {
         const {layerType, layer} = e;
         if (layerType === "polygon") {
           const {_leaflet_id} = layer;
-          setMapLayers(layers => [...layers, {id: _leaflet_id, lat_lngs: layer.getLatLngs()[0]}]);
+          setMapLayers(layers => [...layers, {id: _leaflet_id, lat_lngs: layer.getLatLngs()[0], zoom: layer._mapToAdd._animateToZoom}]);
           setSaved(false)
         }
     }
@@ -124,7 +144,7 @@ const Map = (props) => {
 
   return (
     <>
-    <MapContainer center={center} zoom={11} scrollWheelZoom={false} ref={mapRef} style={{ height: "80vh", width: "100%" }}>
+    {center && <MapContainer center={center} zoom={zoom} scrollWheelZoom={false} ref={mapRef} style={{  height: "80vh", width: "100%" }}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -147,7 +167,8 @@ const Map = (props) => {
           }}>
           </EditControl>
       </FeatureGroup>
-    </MapContainer>
+      <Polygon pathOptions={blueOptions} positions={mapLayers} />
+    </MapContainer>}
     <Button variant="text" onClick={save} disabled={saved}>SAVE</Button>
     </>
     );

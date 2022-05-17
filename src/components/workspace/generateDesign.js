@@ -80,6 +80,7 @@ const GenerateDesignTab = withRouter((props) => {
   const [changed, setChanged] = useState(false);
   const [selectedrows, setSelectedRows] = useState([]);
   const [checkboxClicked, setCheckboxClicked] = useState(false);
+  const [parameter, setParameter] = useState({})
 
   const handleChange = (event) => {
     const value = event.target.value;
@@ -92,20 +93,59 @@ const GenerateDesignTab = withRouter((props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const { squarefeet, bed, bath, garages } = state
-    const {data} = await axios.get(`/api/parameters?baths=${bath}&beds=${bed}&garages=${garages}&sqft=${squarefeet}`)
-    .catch(error => console.log(error));
-    if(!data.data.length) {
-      toast.error("Designs not found! Try using different values.")
-      return
-    }
-    setGeneratedData(data.data);
-    setState({
-      squarefeet: "",
-      bed: "",
-      bath: "",
-      garages: ""
+    const layers = JSON.parse(localStorage.getItem('layers'))
+    const layersEnvelope = JSON.parse(localStorage.getItem('layersEnvelope'))
+
+    let lat_lngs_array_land = []
+    layers.lat_lngs.forEach(coordinate => {
+      lat_lngs_array_land.push([coordinate.lat, coordinate.lng])
     })
+
+    let lat_lngs_array_envelope = []
+    layersEnvelope.lat_lngs.forEach(coordinate => {
+      lat_lngs_array_envelope.push([coordinate.lat, coordinate.lng])
+    })
+
+    let rooms = {}
+    data.forEach((room, i) => {
+      rooms[`room${i+1}`] = {
+          "type": room.select,
+          "x_feet": room.Xvalue,
+          "y_feet": room.Yvalue,
+          "coordinates": null
+        }
+    })
+
+    let adjacencies =[];
+    const boundaries = {
+      "land" : {
+        "coordinates" : lat_lngs_array_land
+      },
+      "envelope" : {
+        "coordinates" : lat_lngs_array_envelope
+      }
+    };
+    
+    setParameter({      
+        "rooms":rooms,
+        "adjacencies" : adjacencies,
+        "boundaries" : boundaries
+  })
+    // console.log(layers, layersEnvelope, data );
+    // const { squarefeet, bed, bath, garages } = state
+    // const {data} = await axios.get(`/api/parameters?baths=${bath}&beds=${bed}&garages=${garages}&sqft=${squarefeet}`)
+    // .catch(error => console.log(error));
+    // if(!data.data.length) {
+    //   toast.error("Designs not found! Try using different values.")
+    //   return
+    // }
+    // setGeneratedData(data.data);
+    // setState({
+    //   squarefeet: "",
+    //   bed: "",
+    //   bath: "",
+    //   garages: ""
+    // })
   };
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -413,7 +453,7 @@ const GenerateDesignTab = withRouter((props) => {
           <Typography>Land</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <MapLandWithNoSSR setMapUpdate={setMapUpdate}/>
+          <MapLandWithNoSSR mapUpdate={mapUpdate} setMapUpdate={setMapUpdate}/>
         </AccordionDetails>
       </Accordion>
 
@@ -427,10 +467,10 @@ const GenerateDesignTab = withRouter((props) => {
           <Typography>Envelope</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <MapEnvelopeWithNoSSR mapUpdate={mapUpdate}/>
+          <MapEnvelopeWithNoSSR mapUpdate={mapUpdate} setMapUpdate={setMapUpdate}/>
         </AccordionDetails>
       </Accordion>
-      <Button variant="contained" sx={{mt:3}}>GENERATE DESIGNS</Button>
+      <Button variant="contained" sx={{mt:3}} onClick={handleSubmit}>GENERATE DESIGNS</Button>
     </div>
 
       </Box>
