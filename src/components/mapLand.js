@@ -22,23 +22,23 @@ const Map = (props) => {
 
   const mapRef = useRef()
 
-    useEffect(() => {
-      const { current = {} } = mapRef;
-      const { leafletElement: map } = current;
-      // const map = current;
+    // useEffect(() => {
+    //   const { current = {} } = mapRef;
+    //   const { leafletElement: map } = current;
+    //   // const map = current;
 
-      if ( !map ) return;
+    //   if ( !map ) return;
 
-      const control = geosearch();
+    //   const control = geosearch();
 
-      control.addTo(map);
+    //   control.addTo(map);
 
-      control.on('results', handleOnSearchResuts);
+    //   control.on('results', handleOnSearchResuts);
 
-      return () => {
-        control.off('results', handleOnSearchResuts);
-      }
-    }, []);
+    //   return () => {
+    //     control.off('results', handleOnSearchResuts);
+    //   }
+    // }, []);
     
 
 
