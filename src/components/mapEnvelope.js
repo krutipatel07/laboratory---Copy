@@ -70,7 +70,7 @@ const Map = (props) => {
 
   return (
     <>
-    {center && <MapContainer center={center} zoom={11} scrollWheelZoom={false} ref={mapRef} style={{ height: "100vh", width: "60vw" }}>
+    {center && <MapContainer center={center} zoom={11} scrollWheelZoom={false} ref={mapRef} style={{ height: "80vh", width: "100%" }}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

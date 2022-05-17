@@ -1,14 +1,19 @@
 import { MapContainer, TileLayer, FeatureGroup, Polygon } from "react-leaflet";
+import { useEffect } from 'react';
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-draw/dist/leaflet.draw.css";
 import {Button} from '@mui/material';
 import toast from "react-hot-toast";
-
+import { geosearch } from 'esri-leaflet-geocoder';
+import 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css';
 import { useRef, useState } from "react";
-
 import {EditControl} from "react-leaflet-draw"
+import { GeoSearchControl, MapBoxProvider } from 'leaflet-geosearch';
+import { useMap } from 'react-leaflet';
+
+
 const Map = (props) => {
   const setMapUpdate = props.setMapUpdate;
   const [center, setCenter] = useState({lat: 45.53, lng:  -73.62})
@@ -16,6 +21,30 @@ const Map = (props) => {
   const [saved, setSaved] = useState(true)
 
   const mapRef = useRef()
+
+    useEffect(() => {
+      const { current = {} } = mapRef;
+      const { leafletElement: map } = current;
+      // const map = current;
+
+      if ( !map ) return;
+
+      const control = geosearch();
+
+      control.addTo(map);
+
+      control.on('results', handleOnSearchResuts);
+
+      return () => {
+        control.off('results', handleOnSearchResuts);
+      }
+    }, []);
+    
+
+
+  function handleOnSearchResuts(data) {
+    console.log('Search results', data);
+  }
 
     const _onCreated = (e) =>{
         const {layerType, layer} = e;
@@ -44,6 +73,48 @@ const Map = (props) => {
           )
         })
     }
+
+    // const _onSearch = (e) => {
+
+    //   var searchLayer = L.layerGroup().addTo(map);
+    //   //... adding data in searchLayer ...
+    //   map.addControl( new L.Control.Search({layer: searchLayer}) );
+    //   //searchLayer is a L.LayerGroup contains searched markers
+    // //   var searchControl = new L.Control.Search({
+    // //     layer: poiLayers,
+    // //     initial: false,
+    // //     propertyName: 'name', // Specify which property is searched into.
+    // //     moveToLocation: function(latlng, title, map) {
+    // //       var zoom;
+    // //       if (latlng.layer.feature.geometry.type == 'Polygon') {
+    // //         zoom = map.getBoundsZoom(latlng.layer.getBounds());
+    // //         lastStateLayerFound = latlng.layer;
+    // //         }
+    // //       else {
+    // //         lastStateLayerFound = null;
+    // //         zoom = 15;
+    // //       }
+    // //       map.setView(latlng, zoom);
+    // //   }
+    // //   });
+    // //   searchControl.on('search:locationfound', function(e) {
+    // //     if (e.layer.feature.geometry.type == 'Polygon')
+    // //       e.layer.setStyle({fillColor: '#3f0', color: '#0f0'});       
+    // //     if(e.layer._popup)
+    // //         e.layer.openPopup();
+    
+    // // }).on('search:collapsed', function(e) {
+    // //     if (lastStateLayerFound) {
+    // //       us_statesLayer.resetStyle(lastStateLayerFound);
+    // //     }
+    // // });
+    
+    // // map.addControl(searchControl); 
+
+    // }
+
+
+
     const save = () => {
       localStorage.setItem('layers', JSON.stringify(mapLayers[mapLayers.length - 1]))
       setMapUpdate((prev) => !prev)
@@ -52,28 +123,27 @@ const Map = (props) => {
     }
 
   return (
-<<<<<<< HEAD:src/components/mapcomp.js
-    <MapContainer center={center} zoom={13} scrollWheelZoom={false} ref={mapRef} style={{ height: "80vh", width: "100%" }}>
-=======
     <>
-    <MapContainer center={center} zoom={11} scrollWheelZoom={false} ref={mapRef} style={{ height: "100vh", width: "60vw" }}>
->>>>>>> 374da48e09f6a34f28b9248ba998d0f0366a8535:src/components/mapLand.js
+    <MapContainer center={center} zoom={11} scrollWheelZoom={false} ref={mapRef} style={{ height: "80vh", width: "100%" }}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+     
       <FeatureGroup>
         <EditControl
           position="topleft"
           onCreated={_onCreated}
           onEdited={_onEdited}
           onDeleted={_onDeleted}
+          // onSearch={_onSearch}
           draw={{ 
               rectangle: false,
               polyline: false,
               circle: false,
               circlemarker: false, 
-              marker: false 
+              marker: false ,
+              layer: null
           }}>
           </EditControl>
       </FeatureGroup>
