@@ -1,15 +1,15 @@
 import { MapContainer, TileLayer, FeatureGroup, Polygon } from "react-leaflet";
-import { useEffect } from 'react';
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-draw/dist/leaflet.draw.css";
 import {Button} from '@mui/material';
 import toast from "react-hot-toast";
-
+import { geosearch } from 'esri-leaflet-geocoder';
 import { useRef, useState, useEffect } from "react";
 
 import {EditControl} from "react-leaflet-draw"
+import 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css';
 import { GeoSearchControl, MapBoxProvider } from 'leaflet-geosearch';
 import { useMap } from 'react-leaflet';
 
@@ -43,9 +43,12 @@ const Map = (props) => {
   const mapRef = useRef()
 
     // useEffect(() => {
+
     //   const { current = {} } = mapRef;
-    //   const { leafletElement: map } = current;
-    //   // const map = current;
+    //   const { _layers: map } = current;
+    //   console.log(mapRef)
+
+    //   const map = current;
 
     //   if ( !map ) return;
 
@@ -58,7 +61,7 @@ const Map = (props) => {
     //   return () => {
     //     control.off('results', handleOnSearchResuts);
     //   }
-    // }, []);
+    // }, [mapRef]);
     
 
 
@@ -94,47 +97,6 @@ const Map = (props) => {
         })
     }
 
-    // const _onSearch = (e) => {
-
-    //   var searchLayer = L.layerGroup().addTo(map);
-    //   //... adding data in searchLayer ...
-    //   map.addControl( new L.Control.Search({layer: searchLayer}) );
-    //   //searchLayer is a L.LayerGroup contains searched markers
-    // //   var searchControl = new L.Control.Search({
-    // //     layer: poiLayers,
-    // //     initial: false,
-    // //     propertyName: 'name', // Specify which property is searched into.
-    // //     moveToLocation: function(latlng, title, map) {
-    // //       var zoom;
-    // //       if (latlng.layer.feature.geometry.type == 'Polygon') {
-    // //         zoom = map.getBoundsZoom(latlng.layer.getBounds());
-    // //         lastStateLayerFound = latlng.layer;
-    // //         }
-    // //       else {
-    // //         lastStateLayerFound = null;
-    // //         zoom = 15;
-    // //       }
-    // //       map.setView(latlng, zoom);
-    // //   }
-    // //   });
-    // //   searchControl.on('search:locationfound', function(e) {
-    // //     if (e.layer.feature.geometry.type == 'Polygon')
-    // //       e.layer.setStyle({fillColor: '#3f0', color: '#0f0'});       
-    // //     if(e.layer._popup)
-    // //         e.layer.openPopup();
-    
-    // // }).on('search:collapsed', function(e) {
-    // //     if (lastStateLayerFound) {
-    // //       us_statesLayer.resetStyle(lastStateLayerFound);
-    // //     }
-    // // });
-    
-    // // map.addControl(searchControl); 
-
-    // }
-
-
-
     const save = () => {
       localStorage.setItem('layers', JSON.stringify(mapLayers[mapLayers.length - 1]))
       setMapUpdate((prev) => !prev)
@@ -144,7 +106,10 @@ const Map = (props) => {
 
   return (
     <>
-    {center && <MapContainer center={center} zoom={zoom} scrollWheelZoom={false} ref={mapRef} style={{  height: "80vh", width: "100%" }}>
+    {center && <MapContainer 
+                  center={[39.50, -9835]} 
+                  // center={center} 
+                  zoom={zoom} scrollWheelZoom={false} ref={mapRef} style={{  height: "80vh", width: "100%" }}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
