@@ -69,6 +69,7 @@
     "leaflet-defaulticon-compatibility": "^0.1.1",
     "leaflet-draw": "^1.0.4",
     "leaflet-geosearch": "^3.6.0",
+    "leaflet.measurecontrol": "^1.1.0",
     "lodash.debounce": "^4.0.8",
     "mapbox-gl": "^2.8.2",
     "mongodb": "^4.1.4",
