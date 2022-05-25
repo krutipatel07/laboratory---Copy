@@ -1,4 +1,5 @@
 import { MapContainer, TileLayer, FeatureGroup, Polygon } from "react-leaflet";
+import { useEffect } from 'react';
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
@@ -14,6 +15,10 @@ import dynamic from "next/dynamic";
 import { useRef, useState, useEffect } from "react";
 
 import {EditControl} from "react-leaflet-draw"
+import { GeoSearchControl, MapBoxProvider } from 'leaflet-geosearch';
+import { useMap } from 'react-leaflet';
+
+
 const Map = (props) => {
   const [saved, setSaved] = useState(true)
 
@@ -63,6 +68,30 @@ useEffect(() => {
   // },[mapUpdate])
 
   const mapRef = useRef()
+
+    // useEffect(() => {
+    //   const { current = {} } = mapRef;
+    //   const { leafletElement: map } = current;
+    //   // const map = current;
+
+    //   if ( !map ) return;
+
+    //   const control = geosearch();
+
+    //   control.addTo(map);
+
+    //   control.on('results', handleOnSearchResuts);
+
+    //   return () => {
+    //     control.off('results', handleOnSearchResuts);
+    //   }
+    // }, []);
+    
+
+
+  function handleOnSearchResuts(data) {
+    console.log('Search results', data);
+  }
 
     const _onCreated = (e) =>{
         const {layerType, layer} = e;
@@ -116,6 +145,7 @@ Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+     
       <FeatureGroup>
         <EditControl
           position="topleft"
@@ -128,7 +158,8 @@ Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
               polyline: false,
               circle: false,
               circlemarker: false, 
-              marker: false 
+              marker: false ,
+              layer: null
           }}>
           </EditControl>
       </FeatureGroup>
