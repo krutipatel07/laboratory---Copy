@@ -90,7 +90,11 @@ const Map = (props) => {
 
   return (
     <>
+<<<<<<< HEAD
     {center && <MapContainer center={center} zoom={zoom} scrollWheelZoom={false} ref={mapRef} style={{ height: "80vh", width: "100%" }}>
+=======
+    {center && <MapContainer center={center} zoom={zoom} scrollWheelZoom={false} ref={mapRef} style={{ height: "100vh", width: "60vw" }}>
+>>>>>>> 48aa86270fd6744710bca3574688e31fb505d0a0
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

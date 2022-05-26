@@ -5,7 +5,16 @@ import "leaflet-defaulticon-compatibility";
 import "leaflet-draw/dist/leaflet.draw.css";
 import {Button} from '@mui/material';
 import toast from "react-hot-toast";
+<<<<<<< HEAD
 import { geosearch } from 'esri-leaflet-geocoder';
+=======
+import 'mapbox-gl/dist/mapbox-gl.css';
+import mapboxgl from '!mapbox-gl';
+import dynamic from "next/dynamic";
+
+// import Map from 'react-map-gl';
+
+>>>>>>> 48aa86270fd6744710bca3574688e31fb505d0a0
 import { useRef, useState, useEffect } from "react";
 
 import {EditControl} from "react-leaflet-draw"
@@ -15,30 +24,52 @@ import { useMap } from 'react-leaflet';
 
 
 const Map = (props) => {
-  const mapUpdate = props.mapUpdate;
-  const setMapUpdate = props.setMapUpdate;
-  const [center, setCenter] = useState()
-  const [mapLayers, setMapLayers] = useState([])
   const [saved, setSaved] = useState(true)
-  const blueOptions = { color: 'blue' }
-  const [zoom, setZoom] = useState(11)
+
+  const mapContainer = useRef(null);
+  const map = useRef(null);
+  const [lng, setLng] = useState(-70.9);
+  const [lat, setLat] = useState(42.35);
+  const [zoom, setZoom] = useState(9);
+
+mapboxgl.accessToken =  "pk.eyJ1IjoibWFrZXQiLCJhIjoiY2wycTZ5bmVtMDNlbzNubnM2YW5rM3J0aSJ9.BJyV0xNP08sXipMK5SX-HQ"
   
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem('layers'))
-      if (data){
-        data.zoom && setZoom(data.zoom)
-        let polygon=[];
-        data.lat_lngs.forEach((lat_lngs) => 
-          polygon = [...polygon, [lat_lngs.lat, lat_lngs.lng]]
-        );
-        setMapLayers(layers => [...layers, [polygon]])
-        setCenter({lat : polygon[0][0], lng : polygon[0][1]});
-      }
-      else {
-        setMapLayers([])
-        setCenter({lat: 45.53, lng:  -73.62})
-      }
-  },[mapUpdate])
+    if (map.current) return; // initialize map only once
+    map.current = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [lng, lat],
+      zoom: zoom
+    });
+  });
+
+  
+useEffect(() => {
+  if (!map.current) return; // wait for map to initialize
+  map.current.on('move', () => {
+  setLng(map.current.getCenter().lng.toFixed(4));
+  setLat(map.current.getCenter().lat.toFixed(4));
+  setZoom(map.current.getZoom().toFixed(2));
+  });
+  });
+
+  // useEffect(() => {
+  //   const data = JSON.parse(localStorage.getItem('layers'))
+  //     if (data){
+  //       data.zoom && setZoom(data.zoom)
+  //       let polygon=[];
+  //       data.lat_lngs.forEach((lat_lngs) => 
+  //         polygon = [...polygon, [lat_lngs.lat, lat_lngs.lng]]
+  //       );
+  //       setMapLayers(layers => [...layers, [polygon]])
+  //       setCenter({lat : polygon[0][0], lng : polygon[0][1]});
+  //     }
+  //     else {
+  //       setMapLayers([])
+  //       setCenter({lat: 45.53, lng:  -73.62})
+  //     }
+  // },[mapUpdate])
 
   const mapRef = useRef()
 
@@ -97,6 +128,14 @@ const Map = (props) => {
         })
     }
 
+<<<<<<< HEAD
+=======
+    const _onDrawVertex  = (e) =>{
+      const {layers: {_layers}} = e;
+      console.log(_layers);
+    }
+
+>>>>>>> 48aa86270fd6744710bca3574688e31fb505d0a0
     const save = () => {
       localStorage.setItem('layers', JSON.stringify(mapLayers[mapLayers.length - 1]))
       setMapUpdate((prev) => !prev)
@@ -106,10 +145,19 @@ const Map = (props) => {
 
   return (
     <>
+<<<<<<< HEAD
     {center && <MapContainer 
                   center={[39.50, -9835]} 
                   // center={center} 
                   zoom={zoom} scrollWheelZoom={false} ref={mapRef} style={{  height: "80vh", width: "100%" }}>
+=======
+    
+<div className="sidebar">
+Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
+</div>
+    <div ref={mapContainer} className="map-container" style={{"height" : "400px"}} />
+    {/* {center && <MapContainer center={center} zoom={zoom} scrollWheelZoom={false} ref={mapRef} style={{ height: "100vh", width: "60vw" }}>
+>>>>>>> 48aa86270fd6744710bca3574688e31fb505d0a0
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -121,7 +169,7 @@ const Map = (props) => {
           onCreated={_onCreated}
           onEdited={_onEdited}
           onDeleted={_onDeleted}
-          // onSearch={_onSearch}
+          onDrawVertex={_onDrawVertex}
           draw={{ 
               rectangle: false,
               polyline: false,
@@ -133,7 +181,7 @@ const Map = (props) => {
           </EditControl>
       </FeatureGroup>
       <Polygon pathOptions={blueOptions} positions={mapLayers} />
-    </MapContainer>}
+    </MapContainer>} */} 
     <Button variant="text" onClick={save} disabled={saved}>SAVE</Button>
     </>
     );
