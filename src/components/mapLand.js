@@ -5,16 +5,12 @@ import "leaflet-defaulticon-compatibility";
 import "leaflet-draw/dist/leaflet.draw.css";
 import {Button} from '@mui/material';
 import toast from "react-hot-toast";
-<<<<<<< HEAD
-import { geosearch } from 'esri-leaflet-geocoder';
-=======
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from '!mapbox-gl';
 import dynamic from "next/dynamic";
 
 // import Map from 'react-map-gl';
 
->>>>>>> 48aa86270fd6744710bca3574688e31fb505d0a0
 import { useRef, useState, useEffect } from "react";
 
 import {EditControl} from "react-leaflet-draw"
@@ -128,14 +124,11 @@ useEffect(() => {
         })
     }
 
-<<<<<<< HEAD
-=======
     const _onDrawVertex  = (e) =>{
       const {layers: {_layers}} = e;
       console.log(_layers);
     }
 
->>>>>>> 48aa86270fd6744710bca3574688e31fb505d0a0
     const save = () => {
       localStorage.setItem('layers', JSON.stringify(mapLayers[mapLayers.length - 1]))
       setMapUpdate((prev) => !prev)
@@ -145,19 +138,12 @@ useEffect(() => {
 
   return (
     <>
-<<<<<<< HEAD
-    {center && <MapContainer 
-                  center={[39.50, -9835]} 
-                  // center={center} 
-                  zoom={zoom} scrollWheelZoom={false} ref={mapRef} style={{  height: "80vh", width: "100%" }}>
-=======
     
 <div className="sidebar">
 Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
 </div>
     <div ref={mapContainer} className="map-container" style={{"height" : "400px"}} />
     {/* {center && <MapContainer center={center} zoom={zoom} scrollWheelZoom={false} ref={mapRef} style={{ height: "100vh", width: "60vw" }}>
->>>>>>> 48aa86270fd6744710bca3574688e31fb505d0a0
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

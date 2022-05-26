@@ -73,10 +73,6 @@
     "leaflet.measurecontrol": "^1.1.0",
     "lodash.debounce": "^4.0.8",
     "leaflet-search": "^3.0.2",
-<<<<<<< HEAD
-    "lodash.debounce": "^4.0.8",
-=======
->>>>>>> 48aa86270fd6744710bca3574688e31fb505d0a0
     "mapbox-gl": "^2.8.2",
     "mongodb": "^4.1.4",
     "mongoose": "^6.0.13",
