@@ -9,14 +9,6 @@ import toast from "react-hot-toast";
 import { useRef, useState, useEffect } from "react";
 
 import {EditControl} from "react-leaflet-draw"
-<<<<<<< HEAD
-import 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css';
-import { GeoSearchControl, MapBoxProvider } from 'leaflet-geosearch';
-import { useMap } from 'react-leaflet';
-
-
-=======
->>>>>>> c8ba37b3c80eed9a4e350b37de163216aeaa93e5
 const Map = (props) => {
   const mapUpdate = props.mapUpdate;
   const setMapUpdate = props.setMapUpdate;
@@ -46,36 +38,6 @@ const Map = (props) => {
   
   const mapRef = useRef()
 
-<<<<<<< HEAD
-    // useEffect(() => {
-
-    //   const { current = {} } = mapRef;
-    //   const { _layers: map } = current;
-    //   console.log(mapRef)
-
-    //   const map = current;
-
-    //   if ( !map ) return;
-
-    //   const control = geosearch();
-
-    //   control.addTo(map);
-
-    //   control.on('results', handleOnSearchResuts);
-
-    //   return () => {
-    //     control.off('results', handleOnSearchResuts);
-    //   }
-    // }, [mapRef]);
-    
-
-
-  function handleOnSearchResuts(data) {
-    console.log('Search results', data);
-  }
-
-=======
->>>>>>> c8ba37b3c80eed9a4e350b37de163216aeaa93e5
     const _onCreated = (e) =>{
         const {layerType, layer} = e;
         if (layerType === "polygon") {
