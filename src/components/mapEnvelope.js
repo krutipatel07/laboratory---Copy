@@ -14,6 +14,7 @@ const Map = (props) => {
   const setMapUpdate = props.setMapUpdate;
   const [center, setCenter] = useState()
   const [mapLayers, setMapLayers] = useState([])
+  const [polygon, setPolygon] = useState([])
   const [mapLayersEnvelope, setMapLayersEnvelope] = useState([])
   const [saved, setSaved] = useState(true)
   const [zoom, setZoom] = useState(11)
@@ -57,7 +58,7 @@ const Map = (props) => {
         const {layerType, layer} = e;
         if (layerType === "polygon") {
           const {_leaflet_id} = layer;
-          setMapLayers(layers => [...layers, {id: _leaflet_id, lat_lngs: layer.getLatLngs()[0] , zoom: layer._mapToAdd._animateToZoom}]);
+          setPolygon(layers => [...layers, {id: _leaflet_id, lat_lngs: layer.getLatLngs()[0], zoom: layer._mapToAdd._animateToZoom}]);
           setSaved(false)
         }
     }
@@ -82,7 +83,7 @@ const Map = (props) => {
     }
     
     const save = () => {
-      localStorage.setItem('layersEnvelope', JSON.stringify(mapLayers[mapLayers.length - 1]))
+      localStorage.setItem('layersEnvelope', JSON.stringify(polygon[polygon.length - 1]))
       toast.success("Saved!")
       setMapUpdate((prev) => !prev)
       setSaved(true)
@@ -90,7 +91,7 @@ const Map = (props) => {
 
   return (
     <>
-    {center && <MapContainer center={center} zoom={zoom} scrollWheelZoom={false} ref={mapRef} style={{ height: "100vh", width: "60vw" }}>
+    {center && <MapContainer center={center} zoom={zoom} scrollWheelZoom={false} ref={mapRef} style={{ height: "80vh", width: "100%"  }}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

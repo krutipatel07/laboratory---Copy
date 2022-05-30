@@ -1,103 +1,48 @@
 import { MapContainer, TileLayer, FeatureGroup, Polygon } from "react-leaflet";
-import { useEffect } from 'react';
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
 import "leaflet-draw/dist/leaflet.draw.css";
 import {Button} from '@mui/material';
 import toast from "react-hot-toast";
-import 'mapbox-gl/dist/mapbox-gl.css';
-import mapboxgl from '!mapbox-gl';
-import dynamic from "next/dynamic";
-
-// import Map from 'react-map-gl';
 
 import { useRef, useState, useEffect } from "react";
 
 import {EditControl} from "react-leaflet-draw"
-import { GeoSearchControl, MapBoxProvider } from 'leaflet-geosearch';
-import { useMap } from 'react-leaflet';
-
-
 const Map = (props) => {
+  const mapUpdate = props.mapUpdate;
+  const setMapUpdate = props.setMapUpdate;
+  const [center, setCenter] = useState()
+  const [mapLayers, setMapLayers] = useState([])
+  const [polygon, setPolygon] = useState([])
   const [saved, setSaved] = useState(true)
-
-  const mapContainer = useRef(null);
-  const map = useRef(null);
-  const [lng, setLng] = useState(-70.9);
-  const [lat, setLat] = useState(42.35);
-  const [zoom, setZoom] = useState(9);
-
-mapboxgl.accessToken =  "pk.eyJ1IjoibWFrZXQiLCJhIjoiY2wycTZ5bmVtMDNlbzNubnM2YW5rM3J0aSJ9.BJyV0xNP08sXipMK5SX-HQ"
+  const blueOptions = { color: 'blue' }
+  const [zoom, setZoom] = useState(11)
   
   useEffect(() => {
-    if (map.current) return; // initialize map only once
-    map.current = new mapboxgl.Map({
-      container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [lng, lat],
-      zoom: zoom
-    });
-  });
-
+    const data = JSON.parse(localStorage.getItem('layers'))
+      if (data){
+        data.zoom && setZoom(data.zoom)
+        let polygon=[];
+        data.lat_lngs.forEach((lat_lngs) => 
+          polygon = [...polygon, [lat_lngs.lat, lat_lngs.lng]]
+        );
+        setMapLayers(layers => [...layers, [polygon]])
+        setCenter({lat : polygon[0][0], lng : polygon[0][1]});
+      }
+      else {
+        setMapLayers([])
+        setCenter({lat: 45.53, lng:  -73.62})
+      }
+  },[mapUpdate])
   
-useEffect(() => {
-  if (!map.current) return; // wait for map to initialize
-  map.current.on('move', () => {
-  setLng(map.current.getCenter().lng.toFixed(4));
-  setLat(map.current.getCenter().lat.toFixed(4));
-  setZoom(map.current.getZoom().toFixed(2));
-  });
-  });
-
-  // useEffect(() => {
-  //   const data = JSON.parse(localStorage.getItem('layers'))
-  //     if (data){
-  //       data.zoom && setZoom(data.zoom)
-  //       let polygon=[];
-  //       data.lat_lngs.forEach((lat_lngs) => 
-  //         polygon = [...polygon, [lat_lngs.lat, lat_lngs.lng]]
-  //       );
-  //       setMapLayers(layers => [...layers, [polygon]])
-  //       setCenter({lat : polygon[0][0], lng : polygon[0][1]});
-  //     }
-  //     else {
-  //       setMapLayers([])
-  //       setCenter({lat: 45.53, lng:  -73.62})
-  //     }
-  // },[mapUpdate])
-
   const mapRef = useRef()
-
-    // useEffect(() => {
-    //   const { current = {} } = mapRef;
-    //   const { leafletElement: map } = current;
-    //   // const map = current;
-
-    //   if ( !map ) return;
-
-    //   const control = geosearch();
-
-    //   control.addTo(map);
-
-    //   control.on('results', handleOnSearchResuts);
-
-    //   return () => {
-    //     control.off('results', handleOnSearchResuts);
-    //   }
-    // }, []);
-    
-
-
-  function handleOnSearchResuts(data) {
-    console.log('Search results', data);
-  }
 
     const _onCreated = (e) =>{
         const {layerType, layer} = e;
         if (layerType === "polygon") {
           const {_leaflet_id} = layer;
-          setMapLayers(layers => [...layers, {id: _leaflet_id, lat_lngs: layer.getLatLngs()[0], zoom: layer._mapToAdd._animateToZoom}]);
+          setPolygon(layers => [...layers, {id: _leaflet_id, lat_lngs: layer.getLatLngs()[0], zoom: layer._mapToAdd._animateToZoom}]);
           setSaved(false)
         }
     }
@@ -127,7 +72,7 @@ useEffect(() => {
     }
 
     const save = () => {
-      localStorage.setItem('layers', JSON.stringify(mapLayers[mapLayers.length - 1]))
+      localStorage.setItem('layers', JSON.stringify(polygon[polygon.length - 1]))
       setMapUpdate((prev) => !prev)
       toast.success("Saved!")
       setSaved(true)
@@ -135,17 +80,11 @@ useEffect(() => {
 
   return (
     <>
-    
-<div className="sidebar">
-Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
-</div>
-    <div ref={mapContainer} className="map-container" style={{"height" : "400px"}} />
-    {/* {center && <MapContainer center={center} zoom={zoom} scrollWheelZoom={false} ref={mapRef} style={{ height: "100vh", width: "60vw" }}>
+    {center && <MapContainer center={center} zoom={zoom} scrollWheelZoom={false} ref={mapRef} style={{ height: "80vh", width: "100%"  }}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-     
       <FeatureGroup>
         <EditControl
           position="topleft"
@@ -164,7 +103,7 @@ Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
           </EditControl>
       </FeatureGroup>
       <Polygon pathOptions={blueOptions} positions={mapLayers} />
-    </MapContainer>} */} 
+    </MapContainer>}
     <Button variant="text" onClick={save} disabled={saved}>SAVE</Button>
     </>
     );
