@@ -5,10 +5,14 @@ import "leaflet-defaulticon-compatibility";
 import "leaflet-draw/dist/leaflet.draw.css";
 import {Button} from '@mui/material';
 import toast from "react-hot-toast";
-
 import { useRef, useState, useEffect } from "react";
-
+import IconButton from "@mui/material/IconButton";
+import SearchIcon from "@mui/icons-material/Search";
+import TextField from "@mui/material/TextField";
+import { Box } from '@mui/material';
 import {EditControl} from "react-leaflet-draw"
+
+
 const Map = (props) => {
   const mapUpdate = props.mapUpdate;
   const setMapUpdate = props.setMapUpdate;
@@ -18,6 +22,7 @@ const Map = (props) => {
   const [saved, setSaved] = useState(true)
   const blueOptions = { color: 'blue' }
   const [zoom, setZoom] = useState(11)
+  const [searchQuery, setSearchQuery] = useState("");
   
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem('layers'))
@@ -78,9 +83,42 @@ const Map = (props) => {
       setSaved(true)
     }
 
+    const getCoordinates = (address) => {
+      fetch("https://maps.googleapis.com/maps/api/geocode/json?address="+address+'&key='+API_KEY)
+        .then(response => response.json())
+        .then(data => {
+          const latitude = data.results.geometry.location.lat;
+          const longitude = data.results.geometry.location.lng;
+          console.log({latitude, longitude})
+        })
+    }
+    console.log(mapRef)
+
   return (
     <>
-    {center && <MapContainer center={center} zoom={zoom} scrollWheelZoom={false} ref={mapRef} style={{ height: "80vh", width: "100%"  }}>
+    <Box sx={{mb:2}}>
+      <form 
+        onChange={() => console.log("onChange")}
+        onRequestSearch={() => console.log("onRequestSearch")}
+      >
+        <TextField
+          id="search-bar"
+          className="text"
+          onInput={(e) => {
+            setSearchQuery(e.target.value);
+          }}
+          label="Enter a city name"
+          variant="outlined"
+          placeholder="Search..."
+          size="small"
+        />
+        <IconButton type="submit" aria-label="search" onClick={getCoordinates}>
+          <SearchIcon style={{ fill: "blue" }} />
+        </IconButton>
+      </form>
+    </Box>
+
+    {center && <MapContainer center={center} zoom={zoom} scrollWheelZoom={false} ref={mapRef} style={{ height: "70vh", width: "100%"  }}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
