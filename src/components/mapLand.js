@@ -34,21 +34,36 @@ const Map = (props) => {
     const data = JSON.parse(localStorage.getItem('layers'))
     const center = JSON.parse(localStorage.getItem('center'))
       if (data){
-        data.zoom && setZoom(data.zoom)
+        data.zoom ? setZoom(data.zoom) : setZoom(16)
         let polygon=[];
         data.lat_lngs.forEach((lat_lngs) => 
           polygon = [...polygon, [lat_lngs.lat, lat_lngs.lng]]
         );
         setMapLayers(layers => [...layers, [polygon]])
-       center ? setCenter(center) : setCenter({lat : polygon[0][0], lng : polygon[0][1]});
+        center && setZoom(18)
+        center ? setCenter(center) : setCenter({lat : polygon[0][0], lng : polygon[0][1]});
       }
       else {
         setMapLayers([])
+        center && setZoom(18)
         center ? setCenter(center) : setCenter({lat: 45.53, lng:  -73.62})
       }
   },[mapUpdate])
   
   const mapRef = useRef()
+
+    const handleChange = (e) =>{
+      setSearchQuery([])
+      fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${e.target.value}.json?access_token=pk.eyJ1IjoibWFrZXQiLCJhIjoiY2wycTZ5bmVtMDNlbzNubnM2YW5rM3J0aSJ9.BJyV0xNP08sXipMK5SX-HQ`)
+      .then(response => response.json())
+      .then(data => {
+        data.features.forEach(data => setSearchQuery(search => [...search, {
+          place_name : data.place_name,
+          center : data.center
+        }])
+        );
+      })
+    }
 
     const _onCreated = (e) =>{
         const {layerType, layer} = e;
@@ -92,11 +107,12 @@ const Map = (props) => {
 
     const getCoordinates = (e) => {
       e.preventDefault();
-        fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${searchQuery}.json?access_token=pk.eyJ1IjoibWFrZXQiLCJhIjoiY2wycTZ5bmVtMDNlbzNubnM2YW5rM3J0aSJ9.BJyV0xNP08sXipMK5SX-HQ`)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data);
-        })
+      if(searchQuery.length){
+        localStorage.setItem('center', JSON.stringify({lat : searchQuery[0].center[1], lng : searchQuery[0].center[0]}))
+        setMapUpdate((prev) => !prev)
+        return
+      }
+      toast.error("No address found")
     }
 
   return (
@@ -107,19 +123,7 @@ const Map = (props) => {
         <TextField
           id="search-bar"
           className="text"
-          onChange={(e) => {
-            setSearchQuery([])
-            fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${e.target.value}.json?access_token=pk.eyJ1IjoibWFrZXQiLCJhIjoiY2wycTZ5bmVtMDNlbzNubnM2YW5rM3J0aSJ9.BJyV0xNP08sXipMK5SX-HQ`)
-            .then(response => response.json())
-            .then(data => {
-              console.log(data);
-              data.features.forEach(data => setSearchQuery(search => [...search, {
-                place_name : data.place_name,
-                center : data.center
-              }])
-              );
-            })
-          }}
+          onChange={handleChange}
           label="Enter a city name"
           variant="outlined"
           placeholder="Search..."
