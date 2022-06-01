@@ -2,9 +2,6 @@
 // The config you add here will be used whenever a page is visited.
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
-import * as Sentry from '@sentry/nextjs';
-
-
 const Sentry = require("@sentry/node");
 // or use es6 import statements
 // import * as Sentry from '@sentry/node';
@@ -13,14 +10,26 @@ const Tracing = require("@sentry/tracing");
 // or use es6 import statements
 // import * as Tracing from '@sentry/tracing';
 
-const SENTRY_DSN = process.env.SENTRY_DSN || process.env.NEXT_PUBLIC_SENTRY_DSN;
-
 Sentry.init({
-  dsn: SENTRY_DSN || 'https://3b6568417bcf47efa68760a1c6fc7c07@o1269562.ingest.sentry.io/6459696',
-  // Adjust this value in production, or use tracesSampler for greater control
+  dsn: "https://0fdd4ddca2734aa4b71d896ec2253d7d@o1269562.ingest.sentry.io/6459694",
+
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
   tracesSampleRate: 1.0,
-  // ...
-  // Note: if you want to override the automatic release value, do not set a
-  // `release` value here - use the environment variable `SENTRY_RELEASE`, so
-  // that it will also get attached to your source maps
 });
+
+const transaction = Sentry.startTransaction({
+  op: "test",
+  name: "My First Test Transaction",
+});
+
+setTimeout(() => {
+  try {
+    foo();
+  } catch (e) {
+    Sentry.captureException(e);
+  } finally {
+    transaction.finish();
+  }
+}, 99);
