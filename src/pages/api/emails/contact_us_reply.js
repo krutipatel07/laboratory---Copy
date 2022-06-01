@@ -1,7 +1,9 @@
+import { withSentry } from '@sentry/nextjs';
+
 const mail = require('@sendgrid/mail');
 mail.setApiKey(process.env.SENDGRID_API_KEY)
 
-export default async (req, res) => {
+const ContactUsReply = async (req, res) => {
     const body = req.body;
     // email reply to the user once they have submitted the contact us form
     const data = { 
@@ -16,3 +18,5 @@ export default async (req, res) => {
         }
     mail.send(data);
 }
+
+export default withSentry(ContactUsReply);
