@@ -1,10 +1,12 @@
 import dbConnect from "../../../utils/dbConnect";
 import {Parameter} from "../../../models";
+import { withSentry } from '@sentry/nextjs';
+
 
 dbConnect();
 // get all parameters information to generate design from generate tab in workspace
 
-export default async (req, res) => {
+const Index = async (req, res) => {
     const { 
         query: {baths, beds, garages, sqft}
         , method } = req;
@@ -34,3 +36,5 @@ export default async (req, res) => {
             break;
     }
 }
+
+export default withSentry(Index);

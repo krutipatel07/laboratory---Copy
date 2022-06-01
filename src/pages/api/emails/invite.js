@@ -1,7 +1,9 @@
+import { withSentry } from '@sentry/nextjs';
+
 const mail = require('@sendgrid/mail');
 mail.setApiKey(process.env.SENDGRID_API_KEY)
 
-export default async (req, res) => {
+const Invite = async (req, res) => {
     const body = req.body;
     // email to the collaborator when our user invite collaborator to join a design
     const data = { 
@@ -16,3 +18,4 @@ export default async (req, res) => {
     mail.send(data);
     // return await mail.send(data).then(() => {}, console.error);
 }
+export default withSentry(Invite);

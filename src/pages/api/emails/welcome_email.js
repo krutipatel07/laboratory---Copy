@@ -1,7 +1,9 @@
+import { withSentry } from '@sentry/nextjs';
+
 const mail = require('@sendgrid/mail');
 mail.setApiKey(process.env.SENDGRID_API_KEY)
 
-export default async (req, res) => {
+const WelcomeEmail = async (req, res) => {
     const body = req.body;
     // welcome email to the user after successfully sign up
     const data = { 
@@ -15,3 +17,4 @@ export default async (req, res) => {
         }
     mail.send(data);
 }
+export default withSentry(WelcomeEmail);

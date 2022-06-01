@@ -1,9 +1,10 @@
 import dbConnect from "../../../utils/dbConnect";
 import { User } from "../../../models"
+import { withSentry } from '@sentry/nextjs';
 
 dbConnect();
 
-export default async (req, res) => {
+const Email = async (req, res) => {
     const { 
         query: {email},
         method } = req;
@@ -15,3 +16,4 @@ export default async (req, res) => {
         }
         res.status(200).json({ success: true, data: user});
 }
+export default withSentry(Email);
