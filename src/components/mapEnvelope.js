@@ -44,7 +44,7 @@ const Map = (props) => {
           polygon = [...polygon, [lat_lngs.lat, lat_lngs.lng]]
         );
         setMapLayersEnvelope(layers => [...layers, [polygon]])
-        setCenter({lat : polygon[0][0], lng : polygon[0][1]});
+        // setCenter({lat : polygon[0][0], lng : polygon[0][1]});
       }
       else {
         setMapLayersEnvelope([])

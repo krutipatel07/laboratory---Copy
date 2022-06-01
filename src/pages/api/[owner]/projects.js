@@ -1,9 +1,10 @@
 import dbConnect from "../../../utils/dbConnect";
 import { Project } from "../../../models"
+import { withSentry } from '@sentry/nextjs';
 
 dbConnect();
 
-export default async (req, res) => {
+const Projects =  async (req, res) => {
     const { 
         query: {owner},
         method } = req;
@@ -17,3 +18,5 @@ export default async (req, res) => {
         }
         res.status(200).json({ success: true, data: project.reverse() });
 }
+
+export default withSentry(Projects);
