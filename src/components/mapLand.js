@@ -50,8 +50,8 @@ const Map = (props) => {
           polygon = [...polygon, [lat_lngs.lat, lat_lngs.lng]]
         );
         setMapLayers(layers => [...layers, [polygon]])
-        location.display && setZoom(18)
-        location.display ? setCenter(location.center) : setCenter({lat : polygon[0][0], lng : polygon[0][1]});
+        location && location.display && setZoom(18)
+        location && location.display ? setCenter(location.center) : setCenter({lat : polygon[0][0], lng : polygon[0][1]});
       }
       // set default values if land polygon layer is not available
       else {
@@ -117,8 +117,10 @@ const Map = (props) => {
       localStorage.setItem('layers', JSON.stringify(polygon[polygon.length - 1]))
       // update location display condition to false
       const location = JSON.parse(localStorage.getItem('location'))
-      location.display = false
-      localStorage.setItem('location', JSON.stringify(location))
+      if (location){
+        location.display = false
+        localStorage.setItem('location', JSON.stringify(location))
+      }
       setMapUpdate((prev) => !prev)
       toast.success("Saved!")
       setSaved(true)
