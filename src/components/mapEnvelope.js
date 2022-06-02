@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, FeatureGroup, Polygon } from "react-leaflet";
+import { MapContainer, TileLayer, FeatureGroup, Polygon, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import "leaflet-defaulticon-compatibility";
@@ -26,12 +26,21 @@ const Map = (props) => {
   const [saved, setSaved] = useState(true)
   const [zoom, setZoom] = useState(11)
   const [searchQuery, setSearchQuery] = useState([]);
+  const [placeName, setPlaceName] = useState("")
+  const [markerLocations, setMarkerLocations] = useState([])
 
   const mapRef = useRef()
   useEffect(() => {
+    // get layers, envelope layers amd last searched location
     const data = JSON.parse(localStorage.getItem('layers'))
     const envelope = JSON.parse(localStorage.getItem('layersEnvelope'))
-    const center = JSON.parse(localStorage.getItem('center'))
+    const location = JSON.parse(localStorage.getItem('location'))
+
+    // set placename and center if location is available
+    location && setPlaceName(location.place_name)
+    location && setMarkerLocations(location.center)
+    
+    // if layer is available, set coordinates, center and zoom level to display polygon
       if (data){
         data.zoom ? setZoom(data.zoom) : setZoom(16)
         let polygon=[];
@@ -39,15 +48,17 @@ const Map = (props) => {
           polygon = [...polygon, [lat_lngs.lat, lat_lngs.lng]]
         );
         setMapLayers(layers => [...layers, [polygon]])
-        center && setZoom(18)
-        center ? setCenter(center) : setCenter({lat : polygon[0][0], lng : polygon[0][1]});
+        location.display && setZoom(18)
+        location.display ? setCenter(location.center) : setCenter({lat : polygon[0][0], lng : polygon[0][1]});
       }
+      // set default values if land polygon layer is not available
       else {
         setMapLayers([])
-        center && setZoom(18)
-        center ? setCenter(center) : setCenter({lat: 45.53, lng:  -73.62})
+        location && setZoom(18)
+        location ? setCenter(location.center) : setCenter({lat: 45.53, lng:  -73.62})
       } 
       
+      // if envelope polygon layer is available, set coordinates and zoom level accordingly
       if (envelope){
         envelope.zoom && setZoom(envelope.zoom)
         let polygon=[];
@@ -65,7 +76,9 @@ const Map = (props) => {
   const purpleOptions = { color: 'purple' }
 
   const handleChange = (e) =>{
+    // empty search query before updating
     setSearchQuery([])
+    // get possible addresses using mapbox and userinput
     fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${e.target.value}.json?access_token=pk.eyJ1IjoibWFrZXQiLCJhIjoiY2wycTZ5bmVtMDNlbzNubnM2YW5rM3J0aSJ9.BJyV0xNP08sXipMK5SX-HQ`)
     .then(response => response.json())
     .then(data => {
@@ -77,6 +90,7 @@ const Map = (props) => {
     })
   }
 
+  // create and update polygon coordinates on create, delete and edit
     const _onCreated = (e) =>{
         const {layerType, layer} = e;
         if (layerType === "polygon") {
@@ -106,7 +120,12 @@ const Map = (props) => {
     }
     
     const save = () => {
+      // store last polygon drawn only
       localStorage.setItem('layersEnvelope', JSON.stringify(polygon[polygon.length - 1]))
+      // update location display condition to false
+      const location = JSON.parse(localStorage.getItem('location'))
+      location.display = false
+      localStorage.setItem('location', JSON.stringify(location))
       toast.success("Saved!")
       setMapUpdate((prev) => !prev)
       setSaved(true)
@@ -115,7 +134,12 @@ const Map = (props) => {
     const getCoordinates = (e) => {
       e.preventDefault();
       if(searchQuery.length){
-        localStorage.setItem('center', JSON.stringify({lat : searchQuery[0].center[1], lng : searchQuery[0].center[0]}))
+        // save searched location and rerender component with display condition true
+        localStorage.setItem('location', JSON.stringify({
+          place_name: searchQuery[0].place_name,
+          display: true,
+          center: {lat : searchQuery[0].center[1], lng : searchQuery[0].center[0]}
+        }))
         setMapUpdate((prev) => !prev)
         return
       }
@@ -125,6 +149,7 @@ const Map = (props) => {
   return (
     <>
     <Box sx={{mb:2}}>
+      {/* get address form user */}
       <form 
       >
         <TextField
@@ -142,15 +167,20 @@ const Map = (props) => {
       </form>
     </Box>
 
+    {/* display possible addresses */}
     {searchQuery.length ? 
       <List>
-        { searchQuery.map((search,i) => (
+        { searchQuery.map(search => (
             <ListItem
               onClick={ () =>{ 
-                localStorage.setItem('center', JSON.stringify({lat : search.center[1], lng : search.center[0]}))
+                // save searched location and rerender component with display condition true
+                localStorage.setItem('location', JSON.stringify({
+                  place_name: search.place_name,
+                  display: true,
+                  center: {lat : search.center[1], lng : search.center[0]}}))
                 setMapUpdate((prev) => !prev)}
               }
-              key={i}
+              key={search.place_name}
               sx={{
                 cursor: "pointer",
                 '& + &': {
@@ -172,11 +202,14 @@ const Map = (props) => {
         ))}
       </List>: null
     }
+
+    {/* render map with desirable center and zoom level */}
     {center && <MapContainer center={center} zoom={zoom} scrollWheelZoom={false} ref={mapRef} style={{ height: "80vh", width: "100%"  }}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
+      {/* control polygon editor */}
       <FeatureGroup>
         <EditControl
           position="topleft"
@@ -192,8 +225,15 @@ const Map = (props) => {
           }}>
           </EditControl>
       </FeatureGroup>
+      {/* display land and envelope polygons saved */}
       <Polygon pathOptions={blueOptions} positions={mapLayers} />
       <Polygon pathOptions={purpleOptions} positions={mapLayersEnvelope} />
+      {/* display marker for searched location only */}
+      {markerLocations && <Marker position={markerLocations}>
+        {placeName && <Popup>
+          {placeName}
+        </Popup>}
+      </Marker>}
     </MapContainer>}
     <Button variant="text" onClick={save}  disabled={saved}>SAVE</Button>
     </>
