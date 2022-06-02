@@ -31,7 +31,7 @@ const Map = (props) => {
   const [zoom, setZoom] = useState(11)
   const [searchQuery, setSearchQuery] = useState([]);
   const [placeName, setPlaceName] = useState("")
-  const [markerLocations, setMarkerLocations] = useState([])
+  const [markerLocations, setMarkerLocations] = useState()
   
   useEffect(() => {
     // get layers, envelope layers amd last searched location
