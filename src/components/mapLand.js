@@ -18,11 +18,11 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material';
+import axios from "axios"
 
 
 const Map = (props) => {
-  const mapUpdate = props.mapUpdate;
-  const setMapUpdate = props.setMapUpdate;
+  const {mapUpdate, setMapUpdate, projectId} = props;
   const [center, setCenter] = useState()
   const [mapLayers, setMapLayers] = useState([])
   const [polygon, setPolygon] = useState([])
@@ -33,9 +33,11 @@ const Map = (props) => {
   const [placeName, setPlaceName] = useState("")
   const [markerLocations, setMarkerLocations] = useState()
   
-  useEffect(() => {
-    // get layers, envelope layers amd last searched location
-    const data = JSON.parse(localStorage.getItem('layers'))
+  useEffect(async () => {
+    // get layers and last searched location
+    const project_details = await axios.get(`/api/projects/${projectId}`)
+    .catch(error => console.log(error));
+    const data = project_details.data.data.land_parameters[0]
     const location = JSON.parse(localStorage.getItem('location'))
 
     // set placename and center if location is available
@@ -112,17 +114,21 @@ const Map = (props) => {
       console.log(_layers);
     }
 
-    const save = () => {
+    const save = async () => {   
       // store last polygon drawn only
-      localStorage.setItem('layers', JSON.stringify(polygon[polygon.length - 1]))
+      const land_parameters_added = await axios.put(`/api/projects/${projectId}`, {
+        land_parameters: polygon[polygon.length - 1]
+      })
+      .catch(error => console.log(error));
+
       // update location display condition to false
       const location = JSON.parse(localStorage.getItem('location'))
       if (location){
         location.display = false
         localStorage.setItem('location', JSON.stringify(location))
       }
-      setMapUpdate((prev) => !prev)
-      toast.success("Saved!")
+      land_parameters_added && setMapUpdate((prev) => !prev)
+      land_parameters_added ? toast.success("Saved!") : toast.error('Something went wrong!')
       setSaved(true)
     }
 

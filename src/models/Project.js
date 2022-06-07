@@ -41,6 +41,8 @@ const ProjectSchema = new mongoose.Schema(
           }
         ],
         search_parameters: [Object],
+        land_parameters: [Object],
+        envelope_parameters: [Object],
         dateCreated: {
           type: Date,
           default: Date.now,
