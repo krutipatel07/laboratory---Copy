@@ -376,12 +376,10 @@ const GenerateDesignTab = withRouter((props) => {
                       <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:'#2E7D32', backgroundColor:'#bff2c2'}}></Chip></TableCell>
                       <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:'#2E7D32', backgroundColor:'#bff2c2'}}></Chip></TableCell>
                       <TableCell align="right"><Typography>{row.selectFloor}</Typography></TableCell>
-                      <TableCell><Typography>Edit</Typography>
-                        <Stack direction="row" spacing={1}>
+                      <TableCell align="right">
                           <Chip label="edit/set" 
                           // onClick={handleClick} 
                           />
-                        </Stack>          
                       </TableCell>
                     </>
                     }
@@ -397,6 +395,11 @@ const GenerateDesignTab = withRouter((props) => {
                       <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:'#0288D1', backgroundColor:'#abe0fd'}}></Chip></TableCell>
                       <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:'#0288D1', backgroundColor:'#abe0fd'}}></Chip></TableCell>
                       <TableCell align="right"><Typography>{row.selectFloor}</Typography></TableCell>
+                      <TableCell align="right">
+                          <Chip label="edit/set" 
+                          // onClick={handleClick} 
+                          />
+                      </TableCell>
                     </>
                     }       
 
@@ -411,6 +414,11 @@ const GenerateDesignTab = withRouter((props) => {
                       <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:'#AB47BC', backgroundColor:'#e7bbef'}}></Chip></TableCell>
                       <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:'#AB47BC', backgroundColor:'#e7bbef'}}></Chip></TableCell>
                       <TableCell align="right"><Typography>{row.selectFloor}</Typography></TableCell>
+                      <TableCell align="right">
+                          <Chip label="edit/set" 
+                          // onClick={handleClick} 
+                          />
+                      </TableCell>
                     </>
                     }     
 
@@ -425,6 +433,11 @@ const GenerateDesignTab = withRouter((props) => {
                       <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:'#F57C00', backgroundColor:'#ffddba'}}></Chip></TableCell>
                       <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:'#F57C00', backgroundColor:'#ffddba'}}></Chip></TableCell>
                       <TableCell align="right"><Typography>{row.selectFloor}</Typography></TableCell>
+                      <TableCell align="right">
+                          <Chip label="edit/set" 
+                          // onClick={handleClick} 
+                          />
+                      </TableCell>
                     </>
                     }      
 
@@ -439,6 +452,11 @@ const GenerateDesignTab = withRouter((props) => {
                       <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:'#D32F2F', backgroundColor:'#ffb5b5'}}></Chip></TableCell>
                       <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:'#D32F2F', backgroundColor:'#ffb5b5'}}></Chip></TableCell>
                       <TableCell align="right"><Typography>{row.selectFloor}</Typography></TableCell>
+                      <TableCell align="right">
+                          <Chip label="edit/set" 
+                          // onClick={handleClick} 
+                          />
+                      </TableCell>
                     </>
                     }      
 
@@ -453,6 +471,11 @@ const GenerateDesignTab = withRouter((props) => {
                       <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:'#000000DE', backgroundColor:'rgb(157 154 154 / 87%)'}}></Chip></TableCell>
                       <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:'#000000DE', backgroundColor:'rgb(157 154 154 / 87%)'}}></Chip></TableCell>
                       <TableCell align="right"><Typography>{row.selectFloor}</Typography></TableCell>
+                      <TableCell align="right">
+                          <Chip label="edit/set" 
+                          // onClick={handleClick} 
+                          />
+                      </TableCell>
                     </>
                     }  
                   </TableRow>
