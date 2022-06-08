@@ -299,7 +299,7 @@ const GenerateDesignTab = withRouter((props) => {
                   <MenuItem value="Dining Room">Dining Room</MenuItem>
                 </Select>
               </FormControl>
-              <FormControl fullWidth>
+              <FormControl sx={{width:'30%'}}>
                 <InputLabel id="demo-simple-select-label">Floor</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
