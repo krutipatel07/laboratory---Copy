@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import GenerateDesignCard from './generateDesignCard';
 
-export default function DesignGrid({data, setNewDesign}) {
+export default function DesignGrid({data, setNewDesign, setUpdate}) {
   return (
     <Box
         sx={{
@@ -21,6 +21,7 @@ export default function DesignGrid({data, setNewDesign}) {
           xs>
               <GenerateDesignCard
               image={design.url}
+              setUpdate={setUpdate}
               setNewDesign={setNewDesign}
               />
           </Grid> )})}

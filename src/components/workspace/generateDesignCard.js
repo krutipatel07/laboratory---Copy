@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     }
   }
 }));
-const GenerateDesignCard = ({image, setNewDesign}) => {
+const GenerateDesignCard = ({image, setNewDesign, setUpdate}) => {
   const [clicked, setClicked] = useState(false)
   const classes = useStyles();
   const router = useRouter();
@@ -136,7 +136,7 @@ const GenerateDesignCard = ({image, setNewDesign}) => {
       limnu_boardUrl : limnu_boardCreate.data.boardUrl,
     })
     .catch(error => console.log(error));
-
+    setUpdate((prev) => !prev)
     toast.success(`Design added!`)
     }
 

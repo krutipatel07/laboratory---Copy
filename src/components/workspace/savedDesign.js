@@ -11,11 +11,25 @@ import { FormHelperText, TextField, Modal } from '@mui/material';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { FileDropzone } from '../file-dropzone';
+import DesignGrid from './design-grid';
+import { Divider } from '@mui/material';
+import StarIcon from '@mui/icons-material/Star';
+import { IconButton } from '@mui/material';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export default function SavedDesign({projectId, setNewDesign}) {
   const [projectData, setProjectData] = useState([]);  
   const [files, setFiles] = useState([]);
+  const [parameter, setParameter] = useState([]);
   const [update, setUpdate] = useState(true);
+
+  useEffect(() => {
+    {/* get generated design if available in localStorage */}
+    const parameter = JSON.parse(localStorage.getItem('parameter'))
+    if(parameter){
+      setParameter(parameter)
+    }
+  }, [])  
 
   useEffect(() => {
     setNewDesign(0)
@@ -129,7 +143,41 @@ const importDesign = async (secure_url, designName, file_name) => {
           </Button>
       </div>
 
-      <Grid container style={{width:'100%', marginLeft:0, marginTop:20}}
+      <Box sx={{ flexGrow: 1, }}>
+        <IconButton style={{width: '100%', justifyContent: 'flex-start'}}>
+          <Typography variant="h6" style={{color:'#111111'}}>New</Typography>
+          <StarIcon fontSize="small" style={{marginLeft: 7}} ></StarIcon>
+        </IconButton>
+      </Box>
+
+        <Divider
+          sx={{
+            marginBottom: 3,
+            borderColor: "#111111"
+          }}
+        />
+      
+      {/* display generated design if available in localStorage */}
+      {parameter.length ?
+      <DesignGrid data={parameter} setNewDesign={setNewDesign} setUpdate={setUpdate}/> : <Typography> No Design</Typography>
+     }
+
+
+      <Box sx={{ flexGrow: 1, marginTop: 3}}>
+        <IconButton style={{width: '100%', justifyContent: 'flex-start'}}>
+          <Typography variant="h6" style={{color:'#111111'}}>Saved</Typography>
+          <FavoriteIcon fontSize="small" style={{marginLeft: 7}} ></FavoriteIcon>
+        </IconButton>
+      </Box>
+
+        <Divider
+          sx={{
+            marginBottom: 3,
+            borderColor: "#111111"
+          }}
+        />
+
+      <Grid container style={{width:'100%', marginLeft:0, marginTop:40}}
       spacing={3}>        
         {projectData.designs ? 
           <Grid container style={{width:'100%', marginLeft:0}}

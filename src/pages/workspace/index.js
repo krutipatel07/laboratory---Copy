@@ -102,7 +102,7 @@ const ProjectWorkspace = withRouter((props) => {
             </Tabs>
           </Box>
           <TabPanel value={value} index={0} classes={{ root: classes.tab }}>
-            <GenerateDesign projectId= {props.router.query.id} setNewDesign={setNewDesign} style={{p:0}}/>
+            <GenerateDesign projectId= {props.router.query.id} setNewDesign={setNewDesign} setValue={setValue} style={{p:0}}/>
           </TabPanel>
           <TabPanel value={value} index={1}>
             <DesignSavedGrid projectId= {props.router.query.id} setNewDesign={setNewDesign}/>
