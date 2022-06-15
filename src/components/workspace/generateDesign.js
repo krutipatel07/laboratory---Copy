@@ -95,6 +95,7 @@ const GenerateDesignTab = withRouter((props) => {
   const [parameter, setParameter] = useState({});
   const [open, setOpen] = React.useState(false);
   const [open1, setOpen1] = React.useState(false);
+  const setValue= props.setValue
 
   const handleClose = () => {
     setOpen(false);
@@ -114,18 +115,18 @@ const GenerateDesignTab = withRouter((props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    const layers = JSON.parse(localStorage.getItem('layers'))
-    const layersEnvelope = JSON.parse(localStorage.getItem('layersEnvelope'))
+  //   const layers = JSON.parse(localStorage.getItem('layers'))
+  //   const layersEnvelope = JSON.parse(localStorage.getItem('layersEnvelope'))
 
-    let lat_lngs_array_land = []
-    layers.lat_lngs.forEach(coordinate => {
-      lat_lngs_array_land.push([coordinate.lat, coordinate.lng])
-    })
+  //   let lat_lngs_array_land = []
+  //   layers.lat_lngs.forEach(coordinate => {
+  //     lat_lngs_array_land.push([coordinate.lat, coordinate.lng])
+  //   })
 
-    let lat_lngs_array_envelope = []
-    layersEnvelope.lat_lngs.forEach(coordinate => {
-      lat_lngs_array_envelope.push([coordinate.lat, coordinate.lng])
-    })
+  //   let lat_lngs_array_envelope = []
+  //   layersEnvelope.lat_lngs.forEach(coordinate => {
+  //     lat_lngs_array_envelope.push([coordinate.lat, coordinate.lng])
+  //   })
 
     let rooms = {}
     data.forEach((room, i) => {
@@ -138,21 +139,25 @@ const GenerateDesignTab = withRouter((props) => {
         }
     })
 
-    let adjacencies =[];
-    const boundaries = {
-      "land" : {
-        "coordinates" : lat_lngs_array_land
-      },
-      "envelope" : {
-        "coordinates" : lat_lngs_array_envelope
-      }
-    };
+  //   let adjacencies =[];
+  //   const boundaries = {
+  //     "land" : {
+  //       "coordinates" : lat_lngs_array_land
+  //     },
+  //     "envelope" : {
+  //       "coordinates" : lat_lngs_array_envelope
+  //     }
+  //   };
     
-    setParameter({      
-        "rooms":rooms,
-        "adjacencies" : adjacencies,
-        "boundaries" : boundaries
-  })
+  //   setParameter({      
+  //       "rooms":rooms,
+  //       "adjacencies" : adjacencies,
+  //       "boundaries" : boundaries
+  // })
+    const {data} = await axios.get(`/api/parameters?baths=2&beds=3&garages=1&sqft=3345`)
+      .catch(error => console.log(error));
+    localStorage.setItem("parameter", JSON.stringify(data.data))
+    setValue(1)
     // console.log(layers, layersEnvelope, data );
     // const { squarefeet, bed, bath, garages } = state
     // const {data} = await axios.get(`/api/parameters?baths=${bath}&beds=${bed}&garages=${garages}&sqft=${squarefeet}`)
@@ -250,6 +255,10 @@ const GenerateDesignTab = withRouter((props) => {
   const handleEdit = async () => {
     setOpen(true)
   }
+  useEffect(() => {
+    // remove parameters from localStorage
+    localStorage.removeItem('parameter');
+  })
   
   useEffect(() => {
     axios.get(`/api/projects/${projectId}`)
