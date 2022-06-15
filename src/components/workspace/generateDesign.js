@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Box, Button, TextField, Container, Typography, IconButton, form } from '@mui/material';
+import { Box, Button, TextField, Container, Typography, IconButton, DialogTitle, Modal } from '@mui/material';
 import { withAuthGuard } from '../../hocs/with-auth-guard';
 import { useMounted } from '../../hooks/use-mounted';
 import DesignGrid from './design-grid';
@@ -29,8 +29,8 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import dynamic from "next/dynamic";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-
-
+import AdjacencyModal from '../modal/roomAdjacency-modal'
+import CheckIcon from '@mui/icons-material/Check';
 
 const useStyles = makeStyles({
   MuiInputBase: {
@@ -48,8 +48,19 @@ const useStyles = makeStyles({
       backgroundColor: '#D8AC6E',
       color: 'white',
     },
-  }
+  },
 });
+const style = {
+  position: 'absolute' ,
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 570,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 3,
+  };
 
 const GenerateDesignTab = withRouter((props) => {
 
@@ -81,8 +92,17 @@ const GenerateDesignTab = withRouter((props) => {
   const [changed, setChanged] = useState(false);
   const [selectedrows, setSelectedRows] = useState([]);
   const [checkboxClicked, setCheckboxClicked] = useState(false);
-  const [parameter, setParameter] = useState({})
+  const [parameter, setParameter] = useState({});
+  const [open, setOpen] = React.useState(false);
+  const [open1, setOpen1] = React.useState(false);
 
+  const handleClose = () => {
+    setOpen(false);
+  } 
+
+  const handleClose1 = () => {
+    setOpen1(false);
+  } 
   const handleChange = (event) => {
     const value = event.target.value;
     setState({ 
@@ -225,6 +245,10 @@ const GenerateDesignTab = withRouter((props) => {
     search_parameters_added && setUpdate((prev) => !prev) 
     setChanged(false)
     
+  }
+
+  const handleEdit = async () => {
+    setOpen(true)
   }
   
   useEffect(() => {
@@ -378,8 +402,20 @@ const GenerateDesignTab = withRouter((props) => {
                       <TableCell align="right"><Typography>{row.selectFloor}</Typography></TableCell>
                       <TableCell align="right">
                           <Chip label="edit/set" 
-                          // onClick={handleClick} 
+                          onClick={handleEdit} 
                           />
+                          <CheckIcon fontSize="small" sx={{pt:'2px', ml:"7px"}}/>
+                            <Modal
+                              open={open}
+                              onClose={handleClose}
+                              aria-labelledby="modal-modal-title"
+                              aria-describedby="modal-modal-description"
+                            >
+                              <Box sx={style}>
+                              <Typography>Bedroom</Typography>
+                              <AdjacencyModal setOpen={setOpen}/>
+                              </Box>
+                            </Modal>
                       </TableCell>
                     </>
                     }
@@ -397,8 +433,20 @@ const GenerateDesignTab = withRouter((props) => {
                       <TableCell align="right"><Typography>{row.selectFloor}</Typography></TableCell>
                       <TableCell align="right">
                           <Chip label="edit/set" 
-                          // onClick={handleClick} 
+                          onClick={handleEdit} 
                           />
+                          <CheckIcon fontSize="small" sx={{pt:'2px', ml:"7px"}}/>
+                            <Modal
+                              open={open1}
+                              onClose={handleClose1}
+                              aria-labelledby="modal-modal-title"
+                              aria-describedby="modal-modal-description"
+                            >
+                              <Box sx={style}>
+                              <Typography>Bathroom</Typography>
+                              <AdjacencyModal/>
+                              </Box>
+                            </Modal>
                       </TableCell>
                     </>
                     }       
