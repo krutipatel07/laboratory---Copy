@@ -82,6 +82,26 @@ const GenerateDesignTab = withRouter((props) => {
   const [checkboxClicked, setCheckboxClicked] = useState(false);
   const [parameter, setParameter] = useState({})
   const setValue= props.setValue
+  const row_color_scheme ={
+    Bedroom: {
+      color: '#2E7D32',
+      backgroundColor: '#bff2c2'},
+    Bathroom : {
+      color: '#0288D1',
+      backgroundColor: '#abe0fd'},
+    Kitchen: {
+      color: '#AB47BC',
+      backgroundColor: '#e7bbef'},
+    Garage: {
+      color: '#000000DE',
+      backgroundColor: 'rgb(157 154 154 / 87%)'},
+    Living_Room: {
+      color: '#F57C00',
+      backgroundColor: '#ffddba'},
+    Dining_Room :{
+      color: '#D32F2F',
+      backgroundColor: '#ffb5b5'}
+  }
 
   const handleChange = (event) => {
     const value = event.target.value;
@@ -300,8 +320,8 @@ const GenerateDesignTab = withRouter((props) => {
                   <MenuItem value="Bathroom">Bathroom</MenuItem>
                   <MenuItem value="Garage">Garage</MenuItem>
                   <MenuItem value="Kitchen">Kitchen</MenuItem>
-                  <MenuItem value="Living Room">Living Room</MenuItem>
-                  <MenuItem value="Dining Room">Dining Room</MenuItem>
+                  <MenuItem value="Living_Room">Living Room</MenuItem>
+                  <MenuItem value="Dining_Room">Dining Room</MenuItem>
                 </Select>
               </FormControl>
               <TextField id="Xvalue" name="Xvalue" value={state.Xvalue}  label="X" variant="outlined" onChange={handleChange}/>
@@ -352,84 +372,14 @@ const GenerateDesignTab = withRouter((props) => {
                       />
                     </TableCell>
 
-                    {row.select === 'Bedroom' && 
-                    <>
-                      <TableCell component="th" scope="row">
-                          <Typography 
-                          style={{
-                            color: '#2E7D32'
-                            // color:(row.select) === 'Bedroom' && 'green' 
-                          }}>{row.select}</Typography> 
-                      </TableCell> 
-                      <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:'#2E7D32', backgroundColor:'#bff2c2'}}></Chip></TableCell>
-                      <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:'#2E7D32', backgroundColor:'#bff2c2'}}></Chip></TableCell>
-                    </>
-                    }
-
-                    {row.select === 'Bathroom' && 
-                    <>
-                      <TableCell component="th" scope="row">
-                          <Typography 
-                          style={{
-                            color: '#0288D1'
-                          }}>{row.select}</Typography> 
-                      </TableCell> 
-                      <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:'#0288D1', backgroundColor:'#abe0fd'}}></Chip></TableCell>
-                      <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:'#0288D1', backgroundColor:'#abe0fd'}}></Chip></TableCell>
-                    </>
-                    }       
-
-                    {row.select === 'Kitchen' && 
-                    <>
-                      <TableCell component="th" scope="row">
-                          <Typography 
-                          style={{
-                            color: '#AB47BC'
-                          }}>{row.select}</Typography> 
-                      </TableCell> 
-                      <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:'#AB47BC', backgroundColor:'#e7bbef'}}></Chip></TableCell>
-                      <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:'#AB47BC', backgroundColor:'#e7bbef'}}></Chip></TableCell>
-                    </>
-                    }     
-
-                    {row.select === 'Living Room' && 
-                    <>
-                      <TableCell component="th" scope="row">
-                          <Typography 
-                          style={{
-                            color: '#F57C00'
-                          }}>{row.select}</Typography> 
-                      </TableCell> 
-                      <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:'#F57C00', backgroundColor:'#ffddba'}}></Chip></TableCell>
-                      <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:'#F57C00', backgroundColor:'#ffddba'}}></Chip></TableCell>
-                    </>
-                    }      
-
-                    {row.select === 'Dining Room' && 
-                    <>
-                      <TableCell component="th" scope="row">
-                          <Typography 
-                          style={{
-                            color: '#D32F2F'
-                          }}>{row.select}</Typography> 
-                      </TableCell> 
-                      <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:'#D32F2F', backgroundColor:'#ffb5b5'}}></Chip></TableCell>
-                      <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:'#D32F2F', backgroundColor:'#ffb5b5'}}></Chip></TableCell>
-                    </>
-                    }      
-
-                    {row.select === 'Garage' && 
-                    <>
-                      <TableCell component="th" scope="row">
-                          <Typography 
-                          style={{
-                            color: '#000000DE'
-                          }}>{row.select}</Typography> 
-                      </TableCell> 
-                      <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:'#000000DE', backgroundColor:'rgb(157 154 154 / 87%)'}}></Chip></TableCell>
-                      <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:'#000000DE', backgroundColor:'rgb(157 154 154 / 87%)'}}></Chip></TableCell>
-                    </>
-                    }  
+                    <TableCell component="th" scope="row">
+                        <Typography 
+                        style={{
+                          color: row_color_scheme[row.select].color
+                        }}>{row.select.replace("_", " ")}</Typography> 
+                    </TableCell> 
+                    <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:row_color_scheme[row.select].color, backgroundColor:row_color_scheme[row.select].backgroundColor}}></Chip></TableCell>
+                    <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:row_color_scheme[row.select].color, backgroundColor:row_color_scheme[row.select].backgroundColor}}></Chip></TableCell>
                   </TableRow>
                 ))}
               </TableBody>

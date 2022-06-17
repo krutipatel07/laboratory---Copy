@@ -62,7 +62,7 @@ const ProjectWorkspace = withRouter((props) => {
   const router = useRouter();
   // get index from url and open tabpanel accordingly
   const index = router.query.i ? parseInt(router.query.i) : 1;
-  const [value, setValue] = React.useState(index);
+  const [value, setValue] = React.useState(0);
   const [newDesign, setNewDesign] = React.useState(0);
 
   const handleChange = (event, newValue) => {
