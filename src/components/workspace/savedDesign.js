@@ -159,7 +159,11 @@ const importDesign = async (secure_url, designName, file_name) => {
       
       {/* display generated design if available in localStorage */}
       {parameter.length ?
-      <DesignGrid data={parameter} setNewDesign={setNewDesign} setUpdate={setUpdate}/> : <Typography> No Design</Typography>
+      <DesignGrid data={parameter} setNewDesign={setNewDesign} setUpdate={setUpdate}/> : 
+        <Typography style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:50}}>
+          You have not generated any new designs <br/>
+          Go to the generate tab to set your constraints and generate new floorplans
+        </Typography>
      }
 
 
