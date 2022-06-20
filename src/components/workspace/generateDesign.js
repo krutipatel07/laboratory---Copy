@@ -372,6 +372,7 @@ const GenerateDesignTab = withRouter((props) => {
                       />
                     </TableCell>
 
+                    {/* color scheme according to type of room*/}
                     <TableCell component="th" scope="row">
                         <Typography 
                         style={{
