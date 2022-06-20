@@ -417,7 +417,6 @@ const GenerateDesignTab = withRouter((props) => {
                       />
                     </TableCell>
 
-<<<<<<< HEAD
                     {row.select === 'Bedroom' && 
                     <>
                       <TableCell component="th" scope="row">
@@ -556,7 +555,9 @@ const GenerateDesignTab = withRouter((props) => {
                       </TableCell>
                     </>
                     }  
-=======
+
+                    {/* color scheme according to type of room*/}
+
                     <TableCell component="th" scope="row">
                         <Typography 
                         style={{
@@ -565,7 +566,6 @@ const GenerateDesignTab = withRouter((props) => {
                     </TableCell> 
                     <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:row_color_scheme[row.select].color, backgroundColor:row_color_scheme[row.select].backgroundColor}}></Chip></TableCell>
                     <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:row_color_scheme[row.select].color, backgroundColor:row_color_scheme[row.select].backgroundColor}}></Chip></TableCell>
->>>>>>> ce7a0464d15b89f8ba228fe9d8f7adddfa08c52c
                   </TableRow>
                 ))}
               </TableBody>
