@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Box, Button, TextField, Container, Typography, IconButton, form } from '@mui/material';
+import { Box, Button, TextField, Container, Typography, IconButton, Modal } from '@mui/material';
 import { withAuthGuard } from '../../hocs/with-auth-guard';
 import { useMounted } from '../../hooks/use-mounted';
 import DesignGrid from './design-grid';
@@ -29,7 +29,8 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import dynamic from "next/dynamic";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-
+import AdjacencyModal from '../modal/roomAdjacency-modal'
+import CheckIcon from '@mui/icons-material/Check';
 
 
 const useStyles = makeStyles({
@@ -50,6 +51,17 @@ const useStyles = makeStyles({
     },
   }
 });
+const style = {
+  position: 'absolute' ,
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 570,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 3,
+  };
 
 const GenerateDesignTab = withRouter((props) => {
 
@@ -63,6 +75,7 @@ const GenerateDesignTab = withRouter((props) => {
 
   const [state, setState] = useState({
     select: "",
+    selectFloor: "",
     Xvalue: "",
     Yvalue: "",
   });
@@ -81,7 +94,9 @@ const GenerateDesignTab = withRouter((props) => {
   const [selectedrows, setSelectedRows] = useState([]);
   const [checkboxClicked, setCheckboxClicked] = useState(false);
   const [parameter, setParameter] = useState({})
+  const [open, setOpen] = React.useState(false);
   const setValue= props.setValue
+  
   const row_color_scheme ={
     Bedroom: {
       color: '#2E7D32',
@@ -100,8 +115,18 @@ const GenerateDesignTab = withRouter((props) => {
       backgroundColor: '#ffddba'},
     Dining_Room :{
       color: '#D32F2F',
-      backgroundColor: '#ffb5b5'}
+      backgroundColor: '#ffb5b5'},
+    "Living Room": {
+      color: '#F57C00',
+      backgroundColor: '#FFDDBA'},
+    "Dining Room" :{
+      color: '#D32F2F',
+      backgroundColor: '#FFB5B5'}
   }
+
+  const handleClose = () => {
+    setOpen(false);
+  } 
 
   const handleChange = (event) => {
     const value = event.target.value;
@@ -131,6 +156,7 @@ const GenerateDesignTab = withRouter((props) => {
   //   data.forEach((room, i) => {
   //     rooms[`room${i+1}`] = {
   //         "type": room.select,
+  //         "type_floor": room.selectFloor,
   //         "x_feet": room.Xvalue,
   //         "y_feet": room.Yvalue,
   //         "coordinates": null
@@ -220,12 +246,14 @@ const GenerateDesignTab = withRouter((props) => {
 
     setData(prev => [...prev, {
       select: state.select,
+      selectFloor: state.selectFloor,
       Xvalue: state.Xvalue,
       Yvalue: state.Yvalue,
       id: Date.now(),
     }]) 
     setState({
       select: "",
+      selectFloor: "",
       Xvalue: "",
       Yvalue: "",
     })
@@ -248,6 +276,10 @@ const GenerateDesignTab = withRouter((props) => {
     
   }
 
+  const handleEdit = async () => {
+    setOpen(true)
+  }
+
   useEffect(() => {
     // remove parameters from localStorage
     localStorage.removeItem('parameter');
@@ -261,6 +293,7 @@ const GenerateDesignTab = withRouter((props) => {
       search_parameters.forEach((item) => 
         setData(prev => [...prev, {
           select: item.select,
+          selectFloor: item.selectFloor,
           Xvalue: item.Xvalue,
           Yvalue: item.Yvalue,
           id: item.id
@@ -324,6 +357,21 @@ const GenerateDesignTab = withRouter((props) => {
                   <MenuItem value="Dining_Room">Dining Room</MenuItem>
                 </Select>
               </FormControl>
+              <FormControl sx={{width:'30%'}}>
+                <InputLabel id="demo-simple-select-label">Floor</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="select"
+                  name="selectFloor"
+                  value={state.selectFloor}
+                  label="floor"
+                  onChange={handleChange}
+                >
+                  <MenuItem value={0}>0</MenuItem>
+                  <MenuItem value={1}>1</MenuItem>
+                  <MenuItem value={2}>2</MenuItem>
+                </Select>
+              </FormControl>
               <TextField id="Xvalue" name="Xvalue" value={state.Xvalue}  label="X" variant="outlined" onChange={handleChange}/>
               <TextField id="Yvalue" name="Yvalue"  value={state.Yvalue} label="Y" variant="outlined" onChange={handleChange}/>
               
@@ -347,6 +395,8 @@ const GenerateDesignTab = withRouter((props) => {
                   <TableCell>Type</TableCell>
                   <TableCell align="right">X&nbsp;(feet)</TableCell>
                   <TableCell align="right">Y&nbsp;(feet)</TableCell>
+                  <TableCell align="right">Floor</TableCell>
+                  <TableCell align="right">Adjacencies</TableCell>
                 </TableRow>
               </TableHead>
               {/* List of data table entered by user */}
@@ -372,7 +422,6 @@ const GenerateDesignTab = withRouter((props) => {
                       />
                     </TableCell>
 
-                    {/* color scheme according to type of room*/}
                     <TableCell component="th" scope="row">
                         <Typography 
                         style={{
@@ -381,6 +430,25 @@ const GenerateDesignTab = withRouter((props) => {
                     </TableCell> 
                     <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:row_color_scheme[row.select].color, backgroundColor:row_color_scheme[row.select].backgroundColor}}></Chip></TableCell>
                     <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:row_color_scheme[row.select].color, backgroundColor:row_color_scheme[row.select].backgroundColor}}></Chip></TableCell>
+                    <TableCell align="right"><Typography>{row.selectFloor}</Typography></TableCell>
+                    <TableCell align="right">
+                          <Chip label="edit/set" 
+                          onClick={handleEdit} 
+                          />
+                          <CheckIcon fontSize="small" sx={{pt:'2px', ml:"7px"}}/>
+                            <Modal
+                              open={open}
+                              onClose={handleClose}
+                              aria-labelledby="modal-modal-title"
+                              aria-describedby="modal-modal-description"
+                            >
+                              <Box sx={style}>
+                                {/* <Typography>{row.select.replace("_", " ")}</Typography> */}
+                                <AdjacencyModal setOpen={setOpen} name = {row.select.replace("_", " ")}/>
+                              </Box>
+
+                            </Modal>
+                      </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
