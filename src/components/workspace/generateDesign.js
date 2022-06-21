@@ -117,11 +117,11 @@ const GenerateDesignTab = withRouter((props) => {
       color: '#D32F2F',
       backgroundColor: '#ffb5b5'},
     "Living Room": {
-      color: '#F57C00',
-      backgroundColor: '#FFDDBA'},
+          color: '#F57C00',
+          backgroundColor: '#ffddba'},
     "Dining Room" :{
-      color: '#D32F2F',
-      backgroundColor: '#FFB5B5'}
+        color: '#D32F2F',
+        backgroundColor: '#ffb5b5'}
   }
 
   const handleClose = () => {
