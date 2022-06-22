@@ -1,9 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-<<<<<<< HEAD
-import { Box, Button, TextField, Container, Typography, IconButton, DialogTitle, Modal } from '@mui/material';
-=======
 import { Box, Button, TextField, Container, Typography, IconButton, Modal } from '@mui/material';
->>>>>>> 0b9dd72a282d27f0e25752b12d077c3442268db8
 import { withAuthGuard } from '../../hocs/with-auth-guard';
 import { useMounted } from '../../hooks/use-mounted';
 import DesignGrid from './design-grid';
@@ -35,10 +31,6 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import AdjacencyModal from '../modal/roomAdjacency-modal'
 import CheckIcon from '@mui/icons-material/Check';
-<<<<<<< HEAD
-=======
-
->>>>>>> 0b9dd72a282d27f0e25752b12d077c3442268db8
 
 const useStyles = makeStyles({
   MuiInputBase: {
