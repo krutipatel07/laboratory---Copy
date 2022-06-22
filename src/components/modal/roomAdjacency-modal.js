@@ -18,10 +18,6 @@ function not(a, b) {
     return a.filter((value) => b.indexOf(value) !== -1);
   }
 
-export default function RoomAdjacencyModal(props) {
-
-  const setOpen = props.setOpen
-
   const style = {
     position: 'absolute' ,
     top: '50%',
@@ -33,6 +29,11 @@ export default function RoomAdjacencyModal(props) {
     boxShadow: 24,
     p: 3,
     };
+export default function RoomAdjacencyModal(props) {
+
+  const setOpen = props.setOpen
+  const name = props.name
+
   const [checked, setChecked] = React.useState([]);
   const [left, setLeft] = React.useState([0, 1, 2, 3]);
   const [right, setRight] = React.useState([4, 5, 6, 7]);
@@ -112,7 +113,7 @@ export default function RoomAdjacencyModal(props) {
     <Box 
     // sx={style}
     >
-        {/* <Typography sx={{mb:1.5}}>Bedroom</Typography> */}
+        <Typography>{name}</Typography>
 
         <Grid container spacing={2} justifyContent="center" alignItems="center">
             <Grid item>

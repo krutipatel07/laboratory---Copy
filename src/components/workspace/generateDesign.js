@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
+<<<<<<< HEAD
 import { Box, Button, TextField, Container, Typography, IconButton, DialogTitle, Modal } from '@mui/material';
+=======
+import { Box, Button, TextField, Container, Typography, IconButton, Modal } from '@mui/material';
+>>>>>>> 0b9dd72a282d27f0e25752b12d077c3442268db8
 import { withAuthGuard } from '../../hocs/with-auth-guard';
 import { useMounted } from '../../hooks/use-mounted';
 import DesignGrid from './design-grid';
@@ -31,6 +35,10 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import AdjacencyModal from '../modal/roomAdjacency-modal'
 import CheckIcon from '@mui/icons-material/Check';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0b9dd72a282d27f0e25752b12d077c3442268db8
 
 const useStyles = makeStyles({
   MuiInputBase: {
@@ -92,10 +100,10 @@ const GenerateDesignTab = withRouter((props) => {
   const [changed, setChanged] = useState(false);
   const [selectedrows, setSelectedRows] = useState([]);
   const [checkboxClicked, setCheckboxClicked] = useState(false);
-  const [parameter, setParameter] = useState({});
+  const [parameter, setParameter] = useState({})
   const [open, setOpen] = React.useState(false);
-  const [open1, setOpen1] = React.useState(false);
   const setValue= props.setValue
+  
   const row_color_scheme ={
     Bedroom: {
       color: '#2E7D32',
@@ -114,16 +122,19 @@ const GenerateDesignTab = withRouter((props) => {
       backgroundColor: '#ffddba'},
     Dining_Room :{
       color: '#D32F2F',
-      backgroundColor: '#ffb5b5'}
+      backgroundColor: '#ffb5b5'},
+    "Living Room": {
+          color: '#F57C00',
+          backgroundColor: '#ffddba'},
+    "Dining Room" :{
+        color: '#D32F2F',
+        backgroundColor: '#ffb5b5'}
   }
 
   const handleClose = () => {
     setOpen(false);
   } 
 
-  const handleClose1 = () => {
-    setOpen1(false);
-  } 
   const handleChange = (event) => {
     const value = event.target.value;
     setState({ 
@@ -148,16 +159,16 @@ const GenerateDesignTab = withRouter((props) => {
   //     lat_lngs_array_envelope.push([coordinate.lat, coordinate.lng])
   //   })
 
-    let rooms = {}
-    data.forEach((room, i) => {
-      rooms[`room${i+1}`] = {
-          "type": room.select,
-          "type_floor": room.selectFloor,
-          "x_feet": room.Xvalue,
-          "y_feet": room.Yvalue,
-          "coordinates": null
-        }
-    })
+  //   let rooms = {}
+  //   data.forEach((room, i) => {
+  //     rooms[`room${i+1}`] = {
+  //         "type": room.select,
+  //         "type_floor": room.selectFloor,
+  //         "x_feet": room.Xvalue,
+  //         "y_feet": room.Yvalue,
+  //         "coordinates": null
+  //       }
+  //   })
 
   //   let adjacencies =[];
   //   const boundaries = {
@@ -389,7 +400,7 @@ const GenerateDesignTab = withRouter((props) => {
                   <TableCell ></TableCell>
                   <TableCell>Type</TableCell>
                   <TableCell align="right">X&nbsp;(feet)</TableCell>
-                  <TableCell align="right">Y&nbsp;(feet)</TableCell>      
+                  <TableCell align="right">Y&nbsp;(feet)</TableCell>
                   <TableCell align="right">Floor</TableCell>
                   <TableCell align="right">Adjacencies</TableCell>
                 </TableRow>
@@ -417,19 +428,16 @@ const GenerateDesignTab = withRouter((props) => {
                       />
                     </TableCell>
 
-                    {row.select === 'Bedroom' && 
-                    <>
-                      <TableCell component="th" scope="row">
-                          <Typography 
-                          style={{
-                            color: '#2E7D32'
-                            // color:(row.select) === 'Bedroom' && 'green' 
-                          }}>{row.select}</Typography> 
-                      </TableCell> 
-                      <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:'#2E7D32', backgroundColor:'#bff2c2'}}></Chip></TableCell>
-                      <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:'#2E7D32', backgroundColor:'#bff2c2'}}></Chip></TableCell>
-                      <TableCell align="right"><Typography>{row.selectFloor}</Typography></TableCell>
-                      <TableCell align="right">
+                    <TableCell component="th" scope="row">
+                        <Typography 
+                        style={{
+                          color: row_color_scheme[row.select].color
+                        }}>{row.select.replace("_", " ")}</Typography> 
+                    </TableCell> 
+                    <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:row_color_scheme[row.select].color, backgroundColor:row_color_scheme[row.select].backgroundColor}}></Chip></TableCell>
+                    <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:row_color_scheme[row.select].color, backgroundColor:row_color_scheme[row.select].backgroundColor}}></Chip></TableCell>
+                    <TableCell align="right"><Typography>{row.selectFloor}</Typography></TableCell>
+                    <TableCell align="right">
                           <Chip label="edit/set" 
                           onClick={handleEdit} 
                           />
@@ -441,131 +449,12 @@ const GenerateDesignTab = withRouter((props) => {
                               aria-describedby="modal-modal-description"
                             >
                               <Box sx={style}>
-                              <Typography>Bedroom</Typography>
-                              <AdjacencyModal setOpen={setOpen}/>
+                                {/* <Typography>{row.select.replace("_", " ")}</Typography> */}
+                                <AdjacencyModal setOpen={setOpen} name = {row.select.replace("_", " ")}/>
                               </Box>
+
                             </Modal>
                       </TableCell>
-                    </>
-                    }
-
-                    {row.select === 'Bathroom' && 
-                    <>
-                      <TableCell component="th" scope="row">
-                          <Typography 
-                          style={{
-                            color: '#0288D1'
-                          }}>{row.select}</Typography> 
-                      </TableCell> 
-                      <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:'#0288D1', backgroundColor:'#abe0fd'}}></Chip></TableCell>
-                      <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:'#0288D1', backgroundColor:'#abe0fd'}}></Chip></TableCell>
-                      <TableCell align="right"><Typography>{row.selectFloor}</Typography></TableCell>
-                      <TableCell align="right">
-                          <Chip label="edit/set" 
-                          onClick={handleEdit} 
-                          />
-                          <CheckIcon fontSize="small" sx={{pt:'2px', ml:"7px"}}/>
-                            <Modal
-                              open={open1}
-                              onClose={handleClose1}
-                              aria-labelledby="modal-modal-title"
-                              aria-describedby="modal-modal-description"
-                            >
-                              <Box sx={style}>
-                              <Typography>Bathroom</Typography>
-                              <AdjacencyModal/>
-                              </Box>
-                            </Modal>
-                      </TableCell>
-                    </>
-                    }       
-
-                    {row.select === 'Kitchen' && 
-                    <>
-                      <TableCell component="th" scope="row">
-                          <Typography 
-                          style={{
-                            color: '#AB47BC'
-                          }}>{row.select}</Typography> 
-                      </TableCell> 
-                      <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:'#AB47BC', backgroundColor:'#e7bbef'}}></Chip></TableCell>
-                      <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:'#AB47BC', backgroundColor:'#e7bbef'}}></Chip></TableCell>
-                      <TableCell align="right"><Typography>{row.selectFloor}</Typography></TableCell>
-                      <TableCell align="right">
-                          <Chip label="edit/set" 
-                          // onClick={handleClick} 
-                          />
-                      </TableCell>
-                    </>
-                    }     
-
-                    {row.select === 'Living Room' && 
-                    <>
-                      <TableCell component="th" scope="row">
-                          <Typography 
-                          style={{
-                            color: '#F57C00'
-                          }}>{row.select}</Typography> 
-                      </TableCell> 
-                      <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:'#F57C00', backgroundColor:'#ffddba'}}></Chip></TableCell>
-                      <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:'#F57C00', backgroundColor:'#ffddba'}}></Chip></TableCell>
-                      <TableCell align="right"><Typography>{row.selectFloor}</Typography></TableCell>
-                      <TableCell align="right">
-                          <Chip label="edit/set" 
-                          // onClick={handleClick} 
-                          />
-                      </TableCell>
-                    </>
-                    }      
-
-                    {row.select === 'Dining Room' && 
-                    <>
-                      <TableCell component="th" scope="row">
-                          <Typography 
-                          style={{
-                            color: '#D32F2F'
-                          }}>{row.select}</Typography> 
-                      </TableCell> 
-                      <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:'#D32F2F', backgroundColor:'#ffb5b5'}}></Chip></TableCell>
-                      <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:'#D32F2F', backgroundColor:'#ffb5b5'}}></Chip></TableCell>
-                      <TableCell align="right"><Typography>{row.selectFloor}</Typography></TableCell>
-                      <TableCell align="right">
-                          <Chip label="edit/set" 
-                          // onClick={handleClick} 
-                          />
-                      </TableCell>
-                    </>
-                    }      
-
-                    {row.select === 'Garage' && 
-                    <>
-                      <TableCell component="th" scope="row">
-                          <Typography 
-                          style={{
-                            color: '#000000DE'
-                          }}>{row.select}</Typography> 
-                      </TableCell> 
-                      <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:'#000000DE', backgroundColor:'rgb(157 154 154 / 87%)'}}></Chip></TableCell>
-                      <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:'#000000DE', backgroundColor:'rgb(157 154 154 / 87%)'}}></Chip></TableCell>
-                      <TableCell align="right"><Typography>{row.selectFloor}</Typography></TableCell>
-                      <TableCell align="right">
-                          <Chip label="edit/set" 
-                          // onClick={handleClick} 
-                          />
-                      </TableCell>
-                    </>
-                    }  
-
-                    {/* color scheme according to type of room*/}
-
-                    <TableCell component="th" scope="row">
-                        <Typography 
-                        style={{
-                          color: row_color_scheme[row.select].color
-                        }}>{row.select.replace("_", " ")}</Typography> 
-                    </TableCell> 
-                    <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:row_color_scheme[row.select].color, backgroundColor:row_color_scheme[row.select].backgroundColor}}></Chip></TableCell>
-                    <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:row_color_scheme[row.select].color, backgroundColor:row_color_scheme[row.select].backgroundColor}}></Chip></TableCell>
                   </TableRow>
                 ))}
               </TableBody>
