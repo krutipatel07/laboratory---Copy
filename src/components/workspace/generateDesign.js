@@ -78,6 +78,7 @@ const GenerateDesignTab = withRouter((props) => {
     selectFloor: "",
     Xvalue: "",
     Yvalue: "",
+    adjacencies:[]
   });
   const a = {Bedroom: 'red', Bathroom : 'green'}
   const [data, setData] = useState([])
@@ -93,7 +94,7 @@ const GenerateDesignTab = withRouter((props) => {
   const [changed, setChanged] = useState(false);
   const [selectedrows, setSelectedRows] = useState([]);
   const [checkboxClicked, setCheckboxClicked] = useState(false);
-  const [parameter, setParameter] = useState({})
+  const [roomName, setRoomName] = useState()
   const [open, setOpen] = React.useState(false);
   const setValue= props.setValue
   
@@ -249,6 +250,7 @@ const GenerateDesignTab = withRouter((props) => {
       selectFloor: state.selectFloor,
       Xvalue: state.Xvalue,
       Yvalue: state.Yvalue,
+      adjacencies: [],
       id: Date.now(),
     }]) 
     setState({
@@ -283,7 +285,7 @@ const GenerateDesignTab = withRouter((props) => {
   useEffect(() => {
     // remove parameters from localStorage
     localStorage.removeItem('parameter');
-  })
+  },[])
   
   useEffect(() => {
     axios.get(`/api/projects/${projectId}`)
@@ -432,29 +434,29 @@ const GenerateDesignTab = withRouter((props) => {
                     <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:row_color_scheme[row.select].color, backgroundColor:row_color_scheme[row.select].backgroundColor}}></Chip></TableCell>
                     <TableCell align="right"><Typography>{row.selectFloor}</Typography></TableCell>
                     <TableCell align="right">
-                          <Chip label="edit/set" 
-                          onClick={handleEdit} 
-                          />
-                          <CheckIcon fontSize="small" sx={{pt:'2px', ml:"7px"}}/>
-                            <Modal
-                              open={open}
-                              onClose={handleClose}
-                              aria-labelledby="modal-modal-title"
-                              aria-describedby="modal-modal-description"
-                            >
-                              <Box sx={style}>
-                                {/* <Typography>{row.select.replace("_", " ")}</Typography> */}
-                                <AdjacencyModal setOpen={setOpen} name = {row.select.replace("_", " ")}/>
-                              </Box>
-
-                            </Modal>
-                      </TableCell>
+                      <Chip label="edit/set" 
+                      onClick={() => {
+                        setRoomName(row.select)
+                        setOpen(true);
+                      }} />
+                      <CheckIcon fontSize="small" sx={{pt:'2px', ml:"7px"}}/>
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
 
             </Table>
           </TableContainer>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <AdjacencyModal setOpen={setOpen} roomName={roomName} data={data}/>
+            </Box>
+          </Modal>
 
           <Box sx={{display:'flex', justifyContent:'space-between'}}>
 
