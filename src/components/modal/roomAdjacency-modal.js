@@ -32,11 +32,19 @@ function not(a, b) {
 export default function RoomAdjacencyModal(props) {
 
   const setOpen = props.setOpen
-  const name = props.name
+  const roomName = props.roomName
+  const data =props.data
 
-  const [checked, setChecked] = React.useState([]);
-  const [left, setLeft] = React.useState([0, 1, 2, 3]);
-  const [right, setRight] = React.useState([4, 5, 6, 7]);
+  const filterItem = data.filter(room => room.select !== roomName)  
+  const roomDetails = data.filter(room => room.select === roomName)
+  const otherRooms =[]  
+  filterItem.forEach((item) => otherRooms.push(item.select))
+
+  const adjacentRoomsList = roomDetails[roomDetails.length -1].adjacencies ? roomDetails[roomDetails.length -1].adjacencies : []
+  
+  const [checked, setChecked] = React.useState([]);  
+  const [left, setLeft] = React.useState(otherRooms);
+  const [right, setRight] = React.useState(adjacentRoomsList);
 
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
@@ -78,6 +86,10 @@ export default function RoomAdjacencyModal(props) {
 
   const handleClose = () => setOpen(false);
 
+  const save = () => {
+    console.log(right);
+  }
+
   const customList = (items) => (
     <Paper sx={{ width: 200, height: 230, overflow: 'auto', border: '1px solid #ddd', borderRadius: '4px' }}>
       <List dense component="div" role="list">
@@ -101,7 +113,7 @@ export default function RoomAdjacencyModal(props) {
                   }}
                 />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={`List item ${value + 1}`} />
+              <ListItemText id={labelId} primary={value} />
             </ListItem>
           );
         })}
@@ -113,8 +125,7 @@ export default function RoomAdjacencyModal(props) {
     <Box 
     // sx={style}
     >
-        <Typography>{name}</Typography>
-
+        <Typography>{roomName}</Typography>
         <Grid container spacing={2} justifyContent="center" alignItems="center">
             <Grid item>
                 <Typography sx={{mb:'12px'}}>Non-Adjacent rooms</Typography>
@@ -175,7 +186,7 @@ export default function RoomAdjacencyModal(props) {
             mt:'5px'
         }}>
             <Button sx={{color: 'rgba(0, 0, 0, 0.6)'}} onClose={handleClose}>CANCEL</Button>
-            <Button>SAVE</Button>
+            <Button onClick={save}>SAVE</Button>
         </Box>
     </Box>
     
