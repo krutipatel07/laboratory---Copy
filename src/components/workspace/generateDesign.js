@@ -246,6 +246,7 @@ const GenerateDesignTab = withRouter((props) => {
 
     setData(prev => [...prev, {
       select: state.select,
+      Rname: state.Rname,
       selectFloor: state.selectFloor,
       Xvalue: state.Xvalue,
       Yvalue: state.Yvalue,
@@ -254,6 +255,7 @@ const GenerateDesignTab = withRouter((props) => {
     }]) 
     setState({
       select: "",
+      Rname: "",
       selectFloor: "",
       Xvalue: "",
       Yvalue: "",
@@ -293,6 +295,7 @@ const GenerateDesignTab = withRouter((props) => {
       search_parameters.forEach((item) => 
         setData(prev => [...prev, {
           select: item.select,
+          Rname: state.Rname,
           selectFloor: item.selectFloor,
           Xvalue: item.Xvalue,
           Yvalue: item.Yvalue,
@@ -338,7 +341,9 @@ const GenerateDesignTab = withRouter((props) => {
             {/* <form 
             onSubmit={handleClick}
             > */}
-              <FormControl fullWidth>
+              <FormControl 
+              fullWidth
+              sx={{width:'50% '}}>
                 <InputLabel id="demo-simple-select-label">Room type</InputLabel>
                 <Select
                   // required
@@ -357,6 +362,23 @@ const GenerateDesignTab = withRouter((props) => {
                   <MenuItem value="Dining_Room">Dining Room</MenuItem>
                 </Select>
               </FormControl>
+              <Box component="form"
+                sx={{
+                  // '& > :not(style)': { m: 1, width: '25ch' },
+                }}
+                noValidate
+                autoComplete="off">
+                <TextField 
+                  id="Rname" 
+                  name="Rname" 
+                  value={state.Rname} 
+                  label="Name" 
+                  variant="outlined" 
+                  onChange={handleChange}
+                  helperText="Room name must be unique"
+                  sx={{fontSize:"12px"}}
+                />
+              </Box>
               <FormControl sx={{width:'30%'}}>
                 <InputLabel id="demo-simple-select-label">Floor</InputLabel>
                 <Select
@@ -389,10 +411,10 @@ const GenerateDesignTab = withRouter((props) => {
 
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-              <TableHead>
+              <TableHead>=
                 <TableRow>
                   <TableCell ></TableCell>
-                  <TableCell>Type</TableCell>
+                  <TableCell>Name</TableCell>
                   <TableCell align="right">X&nbsp;(feet)</TableCell>
                   <TableCell align="right">Y&nbsp;(feet)</TableCell>
                   <TableCell align="right">Floor</TableCell>
@@ -426,7 +448,10 @@ const GenerateDesignTab = withRouter((props) => {
                         <Typography 
                         style={{
                           color: row_color_scheme[row.select].color
-                        }}>{row.select.replace("_", " ")}</Typography> 
+                        }}>
+                          {/* {row.Rname.replace("_", " ")} */}
+                          {row.Rname}
+                          </Typography> 
                     </TableCell> 
                     <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:row_color_scheme[row.select].color, backgroundColor:row_color_scheme[row.select].backgroundColor}}></Chip></TableCell>
                     <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:row_color_scheme[row.select].color, backgroundColor:row_color_scheme[row.select].backgroundColor}}></Chip></TableCell>
