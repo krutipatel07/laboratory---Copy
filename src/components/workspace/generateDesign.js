@@ -244,6 +244,15 @@ const GenerateDesignTab = withRouter((props) => {
   }
 
   const handleClick = async (e) => {
+
+    //check repetative room name
+    const repeatName = data.filter(rooms=>rooms.Rname === state.Rname)
+    if(repeatName.length){
+      toast.error("Room name must be unique")
+      return
+    }
+    console.log(data)
+
     // add new room details
     setData(prev => [...prev, {
       select: state.select,
@@ -378,8 +387,6 @@ const GenerateDesignTab = withRouter((props) => {
                   label="Name" 
                   variant="outlined" 
                   onChange={handleChange}
-                  helperText="Room name must be unique"
-                  sx={{fontSize:"12px"}}
                 />
               </Box>
               <FormControl sx={{width:'30%'}}>
@@ -474,7 +481,7 @@ const GenerateDesignTab = withRouter((props) => {
           </TableContainer>
           <Modal
             open={open}
-            onClose={handleClose}
+            // onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
