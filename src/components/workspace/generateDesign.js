@@ -74,6 +74,7 @@ const GenerateDesignTab = withRouter((props) => {
 
   const [state, setState] = useState({
     select: "",
+    Rname: "",
     selectFloor: "",
     Xvalue: "",
     Yvalue: "",
@@ -93,7 +94,7 @@ const GenerateDesignTab = withRouter((props) => {
   const [changed, setChanged] = useState(false);
   const [selectedrows, setSelectedRows] = useState([]);
   const [checkboxClicked, setCheckboxClicked] = useState(false);
-  const [roomName, setRoomName] = useState()
+  const [roomId, setRoomId] = useState()
   const [open, setOpen] = React.useState(false);
   const setValue= props.setValue
   
@@ -243,7 +244,7 @@ const GenerateDesignTab = withRouter((props) => {
   }
 
   const handleClick = async (e) => {
-
+    // add new room details
     setData(prev => [...prev, {
       select: state.select,
       Rname: state.Rname,
@@ -253,6 +254,7 @@ const GenerateDesignTab = withRouter((props) => {
       adjacencies: [],
       id: Date.now(),
     }]) 
+    // reset input textfields
     setState({
       select: "",
       Rname: "",
@@ -295,10 +297,11 @@ const GenerateDesignTab = withRouter((props) => {
       search_parameters.forEach((item) => 
         setData(prev => [...prev, {
           select: item.select,
-          Rname: state.Rname,
+          Rname: item.Rname,
           selectFloor: item.selectFloor,
           Xvalue: item.Xvalue,
           Yvalue: item.Yvalue,
+          adjacencies: item.adjacencies,
           id: item.id
         }]))
       }
@@ -411,7 +414,7 @@ const GenerateDesignTab = withRouter((props) => {
 
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-              <TableHead>=
+              <TableHead>
                 <TableRow>
                   <TableCell ></TableCell>
                   <TableCell>Name</TableCell>
@@ -449,7 +452,6 @@ const GenerateDesignTab = withRouter((props) => {
                         style={{
                           color: row_color_scheme[row.select].color
                         }}>
-                          {/* {row.Rname.replace("_", " ")} */}
                           {row.Rname}
                           </Typography> 
                     </TableCell> 
@@ -459,10 +461,10 @@ const GenerateDesignTab = withRouter((props) => {
                     <TableCell align="right">
                       <Chip label="edit/set" 
                       onClick={() => {
-                        setRoomName(row.select)
+                        setRoomId(row.id)
                         setOpen(true);
                       }} />
-                      <CheckIcon fontSize="small" sx={{pt:'2px', ml:"7px"}}/>
+                      {/* <CheckIcon fontSize="small" sx={{pt:'2px', ml:"7px"}}/> */}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -477,7 +479,7 @@ const GenerateDesignTab = withRouter((props) => {
             aria-describedby="modal-modal-description"
           >
             <Box sx={style}>
-              <AdjacencyModal setOpen={setOpen} roomName={roomName} data={data}/>
+              <AdjacencyModal setOpen={setOpen} roomId={roomId} data={data} setData={setData} setChanged={setChanged}/>
             </Box>
           </Modal>
 

@@ -9,6 +9,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
+import toast from "react-hot-toast";
 
 function not(a, b) {
     return a.filter((value) => b.indexOf(value) === -1);
@@ -30,18 +31,25 @@ function not(a, b) {
     p: 3,
     };
 export default function RoomAdjacencyModal(props) {
+  const {setOpen,roomId, data, setData, setChanged} = props
 
-  const setOpen = props.setOpen
-  const roomName = props.roomName
-  const data =props.data
+  // get rooms details which was clicked
+  const roomDetails = data.filter(room => room.id === roomId)
 
-  const filterItem = data.filter(room => room.select !== roomName)  
-  const roomDetails = data.filter(room => room.select === roomName)
+  // get other rooms list excluding existing adjacencies (left side non adjacent rooms list)
+  let filterItem = data.filter(room => room.id !== roomId)
+  if(roomDetails[0].adjacencies && roomDetails[0].adjacencies.length){
+    filterItem = filterItem.filter((room, i) =>    
+      !(roomDetails[0].adjacencies.includes(room.Rname))    
+    )
+  }
   const otherRooms =[]  
-  filterItem.forEach((item) => otherRooms.push(item.select))
+  filterItem.forEach((item) => otherRooms.push(item.Rname))
 
+  // if room clicked has adjacencies, then fetch it or else make it empty list (right side adjacent rooms list)
   const adjacentRoomsList = roomDetails[roomDetails.length -1].adjacencies ? roomDetails[roomDetails.length -1].adjacencies : []
   
+  const [disable, setDisable] = React.useState(true)
   const [checked, setChecked] = React.useState([]);  
   const [left, setLeft] = React.useState(otherRooms);
   const [right, setRight] = React.useState(adjacentRoomsList);
@@ -63,23 +71,27 @@ export default function RoomAdjacencyModal(props) {
   };
 
   const handleAllRight = () => {
+    setDisable(false)
     setRight(right.concat(left));
     setLeft([]);
   };
 
   const handleCheckedRight = () => {
+    setDisable(false)
     setRight(right.concat(leftChecked));
     setLeft(not(left, leftChecked));
     setChecked(not(checked, leftChecked));
   };
 
   const handleCheckedLeft = () => {
+    setDisable(false)
     setLeft(left.concat(rightChecked));
     setRight(not(right, rightChecked));
     setChecked(not(checked, rightChecked));
   };
 
   const handleAllLeft = () => {
+    setDisable(false)
     setLeft(left.concat(right));
     setRight([]);
   };
@@ -87,7 +99,16 @@ export default function RoomAdjacencyModal(props) {
   const handleClose = () => setOpen(false);
 
   const save = () => {
-    console.log(right);
+    // update adjacencies list of the room clicked
+    data.forEach(room => {
+      if (room.id === roomId){
+        room.adjacencies = right
+      }
+    })
+    setData(data);
+    setOpen(false)
+    setChanged(true)
+    toast.success("Saved")
   }
 
   const customList = (items) => (
@@ -125,7 +146,7 @@ export default function RoomAdjacencyModal(props) {
     <Box 
     // sx={style}
     >
-        <Typography>{roomName}</Typography>
+        <Typography>{roomDetails[0].Rname}</Typography>
         <Grid container spacing={2} justifyContent="center" alignItems="center">
             <Grid item>
                 <Typography sx={{mb:'12px'}}>Non-Adjacent rooms</Typography>
@@ -185,10 +206,9 @@ export default function RoomAdjacencyModal(props) {
             justifyContent: 'end',
             mt:'5px'
         }}>
-            <Button sx={{color: 'rgba(0, 0, 0, 0.6)'}} onClose={handleClose}>CANCEL</Button>
-            <Button onClick={save}>SAVE</Button>
+            <Button sx={{color: 'rgba(0, 0, 0, 0.6)'}} onClick={handleClose}>CANCEL</Button>
+            <Button onClick={save} disabled={disable}>SAVE</Button>
         </Box>
-    </Box>
-    
+    </Box>    
   );
 }
