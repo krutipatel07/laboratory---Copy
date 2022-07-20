@@ -96,7 +96,11 @@ const GenerateDesignTab = withRouter((props) => {
   const [checkboxClicked, setCheckboxClicked] = useState(false);
   const [roomId, setRoomId] = useState()
   const [open, setOpen] = React.useState(false);
+  const [buttonText, setButtonText] = useState(true)
+  const userId = localStorage.getItem("lab-user")
   const setValue= props.setValue
+  const [envelope_parameters, set_envelope_parameters] = useState()
+  const [land_parameters, set_land_parameters] = useState()
   
   const row_color_scheme ={
     Bedroom: {
@@ -140,64 +144,73 @@ const GenerateDesignTab = withRouter((props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-  //   const layers = JSON.parse(localStorage.getItem('layers'))
-  //   const layersEnvelope = JSON.parse(localStorage.getItem('layersEnvelope'))
+    setButtonText(false)
+    // getting land and envelope parameters in desired format
+    let lat_lngs_array_land = []    
+    land_parameters.forEach(coordinate => {
+      lat_lngs_array_land.push([coordinate.lat, coordinate.lng])
+    })
+    let lat_lngs_array_envelope = []
+    envelope_parameters.forEach(coordinate => {
+      lat_lngs_array_envelope.push([coordinate.lat, coordinate.lng])
+    })
 
-  //   let lat_lngs_array_land = []
-  //   layers.lat_lngs.forEach(coordinate => {
-  //     lat_lngs_array_land.push([coordinate.lat, coordinate.lng])
-  //   })
+    // getting room parameters in desired format
+    let constraints_floor_1 = {}
+    let constraints_floor_2 = {}
+    let adjacencyList_floor_1 = []
+    let adjacencyList_floor_2 = []
+    let adjacencyListWithId_floor_1 = []
+    let adjacencyListWithId_floor_2 = []
+    let roomIdList ={}
+    data.forEach((room, counter) => {
+      room.selectFloor === 1 ? 
+      room.adjacencies.forEach(adjacency => adjacencyList_floor_1.push(adjacency)) 
+      : room.adjacencies.forEach(adjacency => adjacencyList_floor_2.push(adjacency))
 
-  //   let lat_lngs_array_envelope = []
-  //   layersEnvelope.lat_lngs.forEach(coordinate => {
-  //     lat_lngs_array_envelope.push([coordinate.lat, coordinate.lng])
-  //   })
+      roomIdList[room.Rname] =counter+1
+      const room_constraints = {
+        "min_width": parseInt(room.Xvalue)-3,  
+        "max_width": parseInt(room.Xvalue)+3,
+        "min_area": (parseInt(room.Xvalue)-3)*parseInt(room.Yvalue),
+        "max_area": (parseInt(room.Xvalue)+3)*parseInt(room.Yvalue),
+        "adj_ref":counter+1,
+        "type": room.select,
+        "label": room.Rname
+      }
+        room.selectFloor === 1 ? constraints_floor_1[`${counter+1}`] = room_constraints : constraints_floor_2[`${counter+1}`] = room_constraints
+    })
 
-  //   let rooms = {}
-  //   data.forEach((room, i) => {
-  //     rooms[`room${i+1}`] = {
-  //         "type": room.select,
-  //         "type_floor": room.selectFloor,
-  //         "x_feet": room.Xvalue,
-  //         "y_feet": room.Yvalue,
-  //         "coordinates": null
-  //       }
-  //   })
+    // getting adjacency parameters in desired format
+    adjacencyList_floor_1.forEach(adjacency =>
+      adjacencyListWithId_floor_1.push([roomIdList[adjacency[0]],roomIdList[adjacency[1]]]))
+      constraints_floor_1["adjs"] = adjacencyListWithId_floor_1
+      
+      
+    // getting land and envelope parameters in desired format
+    constraints_floor_1["land"] = lat_lngs_array_land
+    constraints_floor_1["envelope"] = lat_lngs_array_envelope
 
-  //   let adjacencies =[];
-  //   const boundaries = {
-  //     "land" : {
-  //       "coordinates" : lat_lngs_array_land
-  //     },
-  //     "envelope" : {
-  //       "coordinates" : lat_lngs_array_envelope
-  //     }
-  //   };
-    
-  //   setParameter({      
-  //       "rooms":rooms,
-  //       "adjacencies" : adjacencies,
-  //       "boundaries" : boundaries
-  // })
-    const {data} = await axios.get(`/api/parameters?baths=2&beds=3&garages=1&sqft=3345`)
-      .catch(error => console.log(error));
-    localStorage.setItem("parameter", JSON.stringify(data.data))
+    const designs = await axios.post(`/api/generate-design`, 
+                    {
+                      "userData": {
+                          "userID": userId,
+                          "constraints": {
+                              "1": constraints_floor_1,
+                              "2":{}
+                            }
+                          }
+                      }
+                  )
+                  .catch(error => console.log(error));
+    if(!designs.data.data.designs || !designs.data.data.designs.length) {
+      toast.error("Designs not found! Try using different values.")
+      setButtonText(true)
+      return
+    }
+    localStorage.setItem("parameter", JSON.stringify(designs.data.data.designs))
+    setButtonText(true)
     setValue(1)
-    // console.log(layers, layersEnvelope, data );
-    // const { squarefeet, bed, bath, garages } = state
-    // const {data} = await axios.get(`/api/parameters?baths=${bath}&beds=${bed}&garages=${garages}&sqft=${squarefeet}`)
-    // .catch(error => console.log(error));
-    // if(!data.data.length) {
-    //   toast.error("Designs not found! Try using different values.")
-    //   return
-    // }
-    // setGeneratedData(data.data);
-    // setState({
-    //   squarefeet: "",
-    //   bed: "",
-    //   bath: "",
-    //   garages: ""
-    // })
   };
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -244,14 +257,12 @@ const GenerateDesignTab = withRouter((props) => {
   }
 
   const handleClick = async (e) => {
-
     //check repetative room name
     const repeatName = data.filter(rooms=>rooms.Rname === state.Rname)
     if(repeatName.length){
       toast.error("Room name must be unique")
       return
     }
-    console.log(data)
 
     // add new room details
     setData(prev => [...prev, {
@@ -301,8 +312,10 @@ const GenerateDesignTab = withRouter((props) => {
   useEffect(() => {
     axios.get(`/api/projects/${projectId}`)
     .then(res =>   {
-      const search_parameters = res.data.data.search_parameters;
       // fetch existing parameters form a project
+      const search_parameters = res.data.data.search_parameters;
+      set_envelope_parameters(res.data.data.envelope_parameters[0].lat_lngs)
+      set_land_parameters(res.data.data.land_parameters[0].lat_lngs)
       search_parameters.forEach((item) => 
         setData(prev => [...prev, {
           select: item.select,
@@ -399,7 +412,6 @@ const GenerateDesignTab = withRouter((props) => {
                   label="floor"
                   onChange={handleChange}
                 >
-                  <MenuItem value={0}>0</MenuItem>
                   <MenuItem value={1}>1</MenuItem>
                   <MenuItem value={2}>2</MenuItem>
                 </Select>
@@ -412,7 +424,7 @@ const GenerateDesignTab = withRouter((props) => {
               onClick={handleClick}
               sx={{color:'#1976D2'}}
               // type='submit'
-              disabled={checkboxClicked && selectedrows.length}
+              disabled={(checkboxClicked && selectedrows.length) || !state.select || !state.Rname || !state.selectFloor || !state.Xvalue || !state.Yvalue }
               >
                 ADD
               </Button> 
@@ -481,7 +493,7 @@ const GenerateDesignTab = withRouter((props) => {
           </TableContainer>
           <Modal
             open={open}
-            // onClose={handleClose}
+            onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
@@ -533,7 +545,7 @@ const GenerateDesignTab = withRouter((props) => {
           <MapEnvelopeWithNoSSR mapUpdate={mapUpdate} setMapUpdate={setMapUpdate} projectId={projectId}/>
         </AccordionDetails>
       </Accordion>
-      <Button variant="contained" sx={{mt:3}} onClick={handleSubmit}>GENERATE DESIGNS</Button>
+      <Button variant="contained" sx={{mt:3}} onClick={handleSubmit}>{buttonText ? "GENERATE DESIGNS" : "Generating..."}</Button>
     </div>
 
       </Box>

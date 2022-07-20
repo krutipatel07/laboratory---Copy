@@ -109,7 +109,7 @@ export default function RoomAdjacencyModal(props) {
         // check for right adjacency list, if any of adjacency is not present in room adjacency list then add it
         if(right.includes(room.Rname)){
           filterAdjacency = room.adjacencies.filter(adjacency => adjacency[1]=== roomDetails[0].Rname)
-          !filterAdjacency.length && room.adjacencies.push([room.name, roomDetails[0].Rname])
+          !filterAdjacency.length && room.adjacencies.push([room.Rname, roomDetails[0].Rname])
       }
     }
   )

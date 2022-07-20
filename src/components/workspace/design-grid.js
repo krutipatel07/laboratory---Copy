@@ -16,11 +16,11 @@ export default function DesignGrid({data, setNewDesign, setUpdate}) {
       {data.map(design => {
         return (                
           <Grid item 
-          key = {design._id}
+          key = {design}
           style = {{paddingLeft: 0}}
           xs>
               <GenerateDesignCard
-              image={design.url}
+              image={design}
               setUpdate={setUpdate}
               setNewDesign={setNewDesign}
               />
