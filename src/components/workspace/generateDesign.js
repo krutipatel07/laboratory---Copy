@@ -419,7 +419,9 @@ const GenerateDesignTab = withRouter((props) => {
               <TextField id="Xvalue" name="Xvalue" value={state.Xvalue}  label="X" variant="outlined" onChange={handleChange}/>
               <TextField id="Yvalue" name="Yvalue"  value={state.Yvalue} label="Y" variant="outlined" onChange={handleChange}/>
               
+              
               <Button 
+              type="button"
               variant="text"
               onClick={handleClick}
               sx={{color:'#1976D2'}}

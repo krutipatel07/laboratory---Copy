@@ -210,6 +210,7 @@ const Map = (props) => {
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        primaryAreaUnit = "sqmeters"
       />
       {/* control polygon editor */}
       <FeatureGroup>
@@ -225,8 +226,9 @@ const Map = (props) => {
               circle: false,
               circlemarker: false, 
               marker: false ,
-              layer: null
+              layer: null,
           }}>
+            
           </EditControl>
       </FeatureGroup>
       {/* display land polygon saved */}
