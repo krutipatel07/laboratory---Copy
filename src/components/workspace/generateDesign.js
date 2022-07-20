@@ -80,7 +80,6 @@ const GenerateDesignTab = withRouter((props) => {
     Yvalue: "",
     adjacencies:[]
   });
-  const a = {Bedroom: 'red', Bathroom : 'green'}
   const [data, setData] = useState([])
   const classes = useStyles();
   const router = useRouter();
