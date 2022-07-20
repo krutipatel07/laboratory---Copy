@@ -245,27 +245,6 @@ const GenerateDesignTab = withRouter((props) => {
 
   const handleClick = async (e) => {
 
-    // const emptyRoom = [state.select, state.Rname, state.selectFloor, state.Xvalue, state.Yvalue]
-    // console.log(emptyRoom)
-
-    // restrict the empty room inputs on click of add button
-    if(state.select === ""){
-      toast.error("Please fill all input values")
-      return
-    }else if(state.Rname === ""){
-      toast.error("Please fill input values")
-      return
-    }else if(state.selectFloor === ""){
-      toast.error("Please fill input values")
-      return
-    }else if(state.Xvalue === ""){
-      toast.error("Please fill input values")
-      return
-    }else if(state.Yvalue === ""){
-      toast.error("Please fill input values")
-      return
-    }
-
     //check repetative room name
     const repeatName = data.filter(rooms=>rooms.Rname === state.Rname)
     if(repeatName.length){
@@ -434,9 +413,6 @@ const GenerateDesignTab = withRouter((props) => {
               variant="text"
               onClick={handleClick}
               sx={{color:'#1976D2'}}
-              // type='submit'
-              // disabled={checkboxClicked && selectedrows.length}
-              // disabled={!state.select}
               >
                 ADD
               </Button> 
