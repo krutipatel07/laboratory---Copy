@@ -120,6 +120,12 @@ const GenerateDesignTab = withRouter((props) => {
     Dining_Room :{
       color: '#D32F2F',
       backgroundColor: '#ffb5b5'},
+    Living: {
+      color: '#F57C00',
+      backgroundColor: '#ffddba'},
+    Dining :{
+      color: '#D32F2F',
+      backgroundColor: '#ffb5b5'},
     "Living Room": {
           color: '#F57C00',
           backgroundColor: '#ffddba'},
@@ -382,8 +388,8 @@ const GenerateDesignTab = withRouter((props) => {
                   <MenuItem value="Bathroom">Bathroom</MenuItem>
                   <MenuItem value="Garage">Garage</MenuItem>
                   <MenuItem value="Kitchen">Kitchen</MenuItem>
-                  <MenuItem value="Living_Room">Living Room</MenuItem>
-                  <MenuItem value="Dining_Room">Dining Room</MenuItem>
+                  <MenuItem value="Living">Living Room</MenuItem>
+                  <MenuItem value="Dining">Dining Room</MenuItem>
                 </Select>
               </FormControl>
               <Box component="form"
