@@ -128,6 +128,7 @@ const GenerateDesignTab = withRouter((props) => {
       [event.target.name]: value
     });
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault()
   //   const layers = JSON.parse(localStorage.getItem('layers'))
@@ -225,7 +226,6 @@ const GenerateDesignTab = withRouter((props) => {
     search_parameters_updated ? toast.success('Parameters deleted successfully') : toast.error('Something went wrong!');
     search_parameters_updated && setUpdate((prev) => !prev) 
   }
-
   const handleClick = async (e) => {
 
     //check repetative room name
@@ -256,6 +256,7 @@ const GenerateDesignTab = withRouter((props) => {
     })
     setChanged(true)
   };
+
   const save = async () =>{
     // update project database with new search parameter using project id
     const search_parameters_added = await axios.put(`/api/projects/${projectId}`, {
@@ -271,9 +272,11 @@ const GenerateDesignTab = withRouter((props) => {
     setChanged(false)
     
   }
+
   const handleEdit = async () => {
     setOpen(true)
   }
+
   useEffect(() => {
     // remove parameters from localStorage
     localStorage.removeItem('parameter');
@@ -298,6 +301,7 @@ const GenerateDesignTab = withRouter((props) => {
      )
     .catch(error => console.log(error));
   },[projectId, update]);
+
   return (
     <>
       <Box component="form"
@@ -312,7 +316,8 @@ const GenerateDesignTab = withRouter((props) => {
         }}
         // style={{marginTop:'-64px'}}
       >
-    <div align="right" style={{width:'100%'}}>
+
+<div align="right" style={{width:'100%'}}>
       <Accordion>
         <AccordionSummary
           sx={{p:0}}
@@ -364,11 +369,10 @@ const GenerateDesignTab = withRouter((props) => {
                   label="Name" 
                   variant="outlined" 
                   onChange={handleChange}
-                  helperText="Room name must be unique"
-                  sx={{fontSize:"12px"}}
-                />
-              </Box>
-              <FormControl sx={{width:'30%'}}>
+                  />
+                  </Box>
+
+                  <FormControl sx={{width:'30%'}}>
                 <InputLabel id="demo-simple-select-label">Floor</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
@@ -385,7 +389,7 @@ const GenerateDesignTab = withRouter((props) => {
               </FormControl>
               <TextField id="Xvalue" name="Xvalue" value={state.Xvalue}  label="X" variant="outlined" onChange={handleChange}/>
               <TextField id="Yvalue" name="Yvalue"  value={state.Yvalue} label="Y" variant="outlined" onChange={handleChange}/>
-              
+
               <Button 
               variant="text"
               onClick={handleClick}
@@ -457,7 +461,6 @@ const GenerateDesignTab = withRouter((props) => {
           </TableContainer>
           <Modal
             open={open}
-            onClose={handleClose}
             // onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
@@ -478,7 +481,8 @@ const GenerateDesignTab = withRouter((props) => {
           
         </AccordionDetails>
       </Accordion>
-      {/* <Accordion>
+
+      <Accordion>
         <AccordionSummary
           sx={{p:0}}
           expandIcon={<ExpandMoreIcon />}
@@ -490,8 +494,8 @@ const GenerateDesignTab = withRouter((props) => {
         <AccordionDetails>
           <MapLandWithNoSSR mapUpdate={mapUpdate} setMapUpdate={setMapUpdate} projectId={projectId}/>
         </AccordionDetails>
-      </Accordion> */}
-      {/* <Accordion>
+      </Accordion>
+      <Accordion>
         <AccordionSummary
           sx={{p:0}}
           expandIcon={<ExpandMoreIcon />}
@@ -503,10 +507,10 @@ const GenerateDesignTab = withRouter((props) => {
         <AccordionDetails>
           <MapEnvelopeWithNoSSR mapUpdate={mapUpdate} setMapUpdate={setMapUpdate} projectId={projectId}/>
         </AccordionDetails>
-      </Accordion> */}
+      </Accordion>
       <Button variant="contained" sx={{mt:3}} onClick={handleSubmit}>GENERATE DESIGNS</Button>
     </div>
-      </Box>
+    </Box>
       <Box
         component="main"
         sx={{
