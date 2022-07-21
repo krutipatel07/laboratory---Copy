@@ -31,7 +31,6 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import AdjacencyModal from '../modal/roomAdjacency-modal'
 import CheckIcon from '@mui/icons-material/Check';
-
 const useStyles = makeStyles({
   MuiInputBase: {
     styleOverrides: {
@@ -61,17 +60,13 @@ const style = {
   boxShadow: 24,
   p: 3,
   };
-
 const GenerateDesignTab = withRouter((props) => {
-
   const MapLandWithNoSSR = dynamic(() => import("../mapLand"), {
     ssr: false
   });
-
   const MapEnvelopeWithNoSSR = dynamic(() => import("../mapEnvelope"), {
     ssr: false
   });
-
   const [state, setState] = useState({
     select: "",
     Rname: "",
@@ -85,7 +80,6 @@ const GenerateDesignTab = withRouter((props) => {
   const classes = useStyles();
   const router = useRouter();
   const [selected, setSelected] = React.useState([]);
-
   const isMounted = useMounted();
   const [generatedData, setGeneratedData] = useState([]);
   const projectId = router.query.id || router.query.projectId;
@@ -124,35 +118,28 @@ const GenerateDesignTab = withRouter((props) => {
         color: '#D32F2F',
         backgroundColor: '#ffb5b5'}
   }
-
   const handleClose = () => {
     setOpen(false);
   } 
-
   const handleChange = (event) => {
     const value = event.target.value;
     setState({ 
       ...state,
       [event.target.name]: value
     });
-
   };
-
   const handleSubmit = async (event) => {
     event.preventDefault()
   //   const layers = JSON.parse(localStorage.getItem('layers'))
   //   const layersEnvelope = JSON.parse(localStorage.getItem('layersEnvelope'))
-
   //   let lat_lngs_array_land = []
   //   layers.lat_lngs.forEach(coordinate => {
   //     lat_lngs_array_land.push([coordinate.lat, coordinate.lng])
   //   })
-
   //   let lat_lngs_array_envelope = []
   //   layersEnvelope.lat_lngs.forEach(coordinate => {
   //     lat_lngs_array_envelope.push([coordinate.lat, coordinate.lng])
   //   })
-
   //   let rooms = {}
   //   data.forEach((room, i) => {
   //     rooms[`room${i+1}`] = {
@@ -163,7 +150,6 @@ const GenerateDesignTab = withRouter((props) => {
   //         "coordinates": null
   //       }
   //   })
-
   //   let adjacencies =[];
   //   const boundaries = {
   //     "land" : {
@@ -207,7 +193,6 @@ const GenerateDesignTab = withRouter((props) => {
     }
     setSelected([]);
   };
-
   const handleDeleteCheckbox = (event, id) => {
     // filter rooms to delete from database according to checkbox state
     if (event.target.checked) {
@@ -225,13 +210,11 @@ const GenerateDesignTab = withRouter((props) => {
     }
     // setCheckboxClicked(false)
   };
-
   const deleteBulkSelection = async () => {
     let newFilterRows = data;
     selectedrows.forEach(row => {
       newFilterRows = newFilterRows.filter(item => item.id !== row)
     })
-
     // update project database with new search parameter using project id
     const search_parameters_updated = await axios.put(`/api/projects/${projectId}`, {
       search_parameters: newFilterRows
@@ -273,7 +256,6 @@ const GenerateDesignTab = withRouter((props) => {
     })
     setChanged(true)
   };
-
   const save = async () =>{
     // update project database with new search parameter using project id
     const search_parameters_added = await axios.put(`/api/projects/${projectId}`, {
@@ -289,7 +271,6 @@ const GenerateDesignTab = withRouter((props) => {
     setChanged(false)
     
   }
-
   const handleEdit = async () => {
     setOpen(true)
   }
@@ -317,7 +298,6 @@ const GenerateDesignTab = withRouter((props) => {
      )
     .catch(error => console.log(error));
   },[projectId, update]);
-
   return (
     <>
       <Box component="form"
@@ -332,7 +312,6 @@ const GenerateDesignTab = withRouter((props) => {
         }}
         // style={{marginTop:'-64px'}}
       >
-
     <div align="right" style={{width:'100%'}}>
       <Accordion>
         <AccordionSummary
@@ -342,10 +321,8 @@ const GenerateDesignTab = withRouter((props) => {
           id="panel1a-header"
         >
         <Typography sx={{  marginRight : 1}}>Rooms</Typography>
-
         {/* display warning of unsaved changes*/}
         {changed && <><IconButton sx={{pt:'2px'}}><InfoOutlinedIcon fontSize="small" /></IconButton>  <Typography color='#E57373'>Unsaved Changes</Typography></>   }
-
         </AccordionSummary>
         <AccordionDetails sx={{p:0}}>
           
@@ -387,6 +364,8 @@ const GenerateDesignTab = withRouter((props) => {
                   label="Name" 
                   variant="outlined" 
                   onChange={handleChange}
+                  helperText="Room name must be unique"
+                  sx={{fontSize:"12px"}}
                 />
               </Box>
               <FormControl sx={{width:'30%'}}>
@@ -418,7 +397,6 @@ const GenerateDesignTab = withRouter((props) => {
               </Button> 
             {/* </form> */}
           </Stack>
-
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
               <TableHead>
@@ -453,7 +431,6 @@ const GenerateDesignTab = withRouter((props) => {
                         }}
                       />
                     </TableCell>
-
                     <TableCell component="th" scope="row">
                         <Typography 
                         style={{
@@ -476,11 +453,11 @@ const GenerateDesignTab = withRouter((props) => {
                   </TableRow>
                 ))}
               </TableBody>
-
             </Table>
           </TableContainer>
           <Modal
             open={open}
+            onClose={handleClose}
             // onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
@@ -489,23 +466,18 @@ const GenerateDesignTab = withRouter((props) => {
               <AdjacencyModal setOpen={setOpen} roomId={roomId} data={data} setData={setData} setChanged={setChanged}/>
             </Box>
           </Modal>
-
           <Box sx={{display:'flex', justifyContent:'space-between'}}>
-
             {/* {saved ? <Button variant="text" sx={{color:'#C62828'}} 
             onClick={deleteBulkSelection} 
             >DELETE SELECTED ROOMS</Button> :<Typography></Typography> } */}
-
             {checkboxClicked && selectedrows.length && !changed ? <Button variant="text" sx={{color:'#C62828'}} 
               onClick={deleteBulkSelection} 
               >DELETE SELECTED ROOMS</Button>: <Typography></Typography> }
-
             {changed && <Button variant="text" onClick={save}>SAVE</Button>}
           </Box>
           
         </AccordionDetails>
       </Accordion>
-
       <Accordion>
         <AccordionSummary
           sx={{p:0}}
@@ -519,7 +491,6 @@ const GenerateDesignTab = withRouter((props) => {
           <MapLandWithNoSSR mapUpdate={mapUpdate} setMapUpdate={setMapUpdate} projectId={projectId}/>
         </AccordionDetails>
       </Accordion>
-
       <Accordion>
         <AccordionSummary
           sx={{p:0}}
@@ -535,7 +506,6 @@ const GenerateDesignTab = withRouter((props) => {
       </Accordion>
       <Button variant="contained" sx={{mt:3}} onClick={handleSubmit}>GENERATE DESIGNS</Button>
     </div>
-
       </Box>
       <Box
         component="main"
@@ -554,5 +524,4 @@ const GenerateDesignTab = withRouter((props) => {
     </>
   );
 })
-
 export default withAuthGuard(GenerateDesignTab);
