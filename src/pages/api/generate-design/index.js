@@ -4,7 +4,7 @@ export default async function handler(req, res) {
     try{
         // api call to generat4e designs
         console.log(req.body.userData.constraints["1"]);
-       const data = await axios.post('https://qq0e9ltr8k.execute-api.ca-central-1.amazonaws.com/Prod/generate' , 
+       const data = await axios.post('https://12tw3cl5sh.execute-api.ca-central-1.amazonaws.com/Prod/generate' , 
        req.body, 
         {
             headers: {

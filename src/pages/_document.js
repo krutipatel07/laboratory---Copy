@@ -85,20 +85,6 @@ class CustomDocument extends Document {
           }(document, 'script', 'facebook-jssdk'));`}}>
           </script>
           <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
-
-          {/* <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-search/3.0.2/leaflet-search.src.css" />
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-search/3.0.2/leaflet-search.src.css"></script>
-
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-search/3.0.2/leaflet-search.min.css"></script> */}
-{/* 
-          <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" crossOrigin="" />
-          <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" crossOrigin=""></script>
-
-          <script src="https://unpkg.com/esri-leaflet@^3.0.8/dist/esri-leaflet.js"></script>
-          <script src="https://unpkg.com/esri-leaflet-vector@^3.0.0/dist/esri-leaflet-vector.js"></script>
-
-          <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@^3.0.0/dist/esri-leaflet-geocoder.css"/>
-          <script src="https://unpkg.com/esri-leaflet-geocoder@^3.0.0/dist/esri-leaflet-geocoder.js"></script> */}
           
         </Head>
         <body>
