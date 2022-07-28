@@ -1,9 +1,9 @@
-import { withSentry } from '@sentry/nextjs';
+
 
 const mail = require('@sendgrid/mail');
 mail.setApiKey(process.env.SENDGRID_API_KEY)
 
-const ContactUs = async (req, res) => {
+export default async (req, res) => {
     const {full_name, company_name, email, phone, company_size, team, message} = req.body;
     const final_message = `
     Full Name: ${full_name}\r\n
@@ -24,4 +24,4 @@ const ContactUs = async (req, res) => {
         }
     mail.send(data);
 }
-export default withSentry(ContactUs);
+

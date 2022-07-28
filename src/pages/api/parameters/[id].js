@@ -1,11 +1,10 @@
 import dbConnect from "../../../utils/dbConnect";
 import { Parameter } from "../../../models"
-import { withSentry } from '@sentry/nextjs';
 
 dbConnect();
 // get by id, update and delete parameters information to generate design from generate tab in workspace
 
-const Id = async (req, res) => {
+export default async (req, res) => {
     const { 
         query: {id},
         method } = req;
@@ -57,4 +56,3 @@ const Id = async (req, res) => {
     }
 }
 
-export default withSentry(Id);
