@@ -506,7 +506,7 @@ const GenerateDesignTab = withRouter((props) => {
         </AccordionDetails>
       </Accordion>
 
-      <Accordion>
+      {/* <Accordion>
         <AccordionSummary
           sx={{p:0}}
           expandIcon={<ExpandMoreIcon />}
@@ -518,9 +518,9 @@ const GenerateDesignTab = withRouter((props) => {
         <AccordionDetails>
           <MapLandWithNoSSR mapUpdate={mapUpdate} setMapUpdate={setMapUpdate} projectId={projectId}/>
         </AccordionDetails>
-      </Accordion>
+      </Accordion> */}
 
-      <Accordion>
+      {/* <Accordion>
         <AccordionSummary
           sx={{p:0}}
           expandIcon={<ExpandMoreIcon />}
@@ -532,7 +532,7 @@ const GenerateDesignTab = withRouter((props) => {
         <AccordionDetails>
           <MapEnvelopeWithNoSSR mapUpdate={mapUpdate} setMapUpdate={setMapUpdate} projectId={projectId}/>
         </AccordionDetails>
-      </Accordion>
+      </Accordion> */}
       <Button variant="contained" sx={{mt:3}} onClick={handleSubmit}>GENERATE DESIGNS</Button>
     </div>
 
