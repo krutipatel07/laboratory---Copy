@@ -1,6 +1,6 @@
 import dbConnect from "../../../utils/dbConnect";
 import {User} from "../../../models";
-import { withSentry } from '@sentry/nextjs';
+// import { withSentry } from '@sentry/nextjs';
 
 dbConnect();
 
@@ -32,4 +32,4 @@ const Id = async (req, res) => {
             break;
     }
 }
-export default withSentry(Id);
+export default Id;
