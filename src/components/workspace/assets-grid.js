@@ -186,7 +186,8 @@ const storeFiles = async (file, formData) => {
             </div>
         </section>
 
-        <Grid container spacing={3} style={{marginLeft:0, width: "100%", justifyContent:'center', marginTop: "10px", padding:10}}>
+        <Grid container 
+        spacing={3} style={{marginLeft:0, width: "100%", justifyContent:'center', marginTop: "10px", padding:10}}>
           {assetData ? assetData.length ?   
             assetData.map((asset, i) => {
               return (                
@@ -219,7 +220,8 @@ const storeFiles = async (file, formData) => {
                         >
                           <ImageSrc style={{ backgroundImage: `url(https://cdn1.iconfinder.com/data/icons/adobe-acrobat-pdf/154/adobe-acrobat-pdf-figure-512.png)` }} />
                           <ImageBackdrop className="MuiImageBackdrop-root" />
-                          <a href={asset.documents} target="_blank" rel="noreferrer">
+                          <a href={asset.documents} 
+                          target="_blank" rel="noreferrer">
                             <Image>
                               <Typography
                                 component="span"
@@ -250,7 +252,8 @@ const storeFiles = async (file, formData) => {
                         >
                           <ImageSrc style={{ backgroundImage: `url(https://cdn1.iconfinder.com/data/icons/adobe-acrobat-pdf/154/adobe-acrobat-pdf-figure-512.png)` }} />
                           <ImageBackdrop className="MuiImageBackdrop-root" />
-                          <a href={asset[0].documents} target="_blank" rel="noreferrer"><Image>
+                          <a href={asset[0].documents} 
+                          target="_blank" rel="noreferrer"><Image>
                             <Typography
                               component="span"
                               variant="subtitle1"

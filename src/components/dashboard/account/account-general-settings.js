@@ -120,7 +120,8 @@ export const AccountGeneralSettings = (props) => {
                     mr: 3
                   }}
                 />}
-                <Button disabled={!name} onClick={updateName}>
+                <Button disabled={!name} 
+                onClick={updateName}>
                   Save
                 </Button>
               </Box>

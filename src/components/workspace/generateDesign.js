@@ -352,7 +352,8 @@ const GenerateDesignTab = withRouter((props) => {
         // style={{marginTop:'-64px'}}
       >
 
-    <div align="right" style={{width:'100%'}}>
+    <div align="right" 
+    style={{width:'100%'}}>
       <Accordion>
         <AccordionSummary
           sx={{p:0}}
@@ -360,15 +361,20 @@ const GenerateDesignTab = withRouter((props) => {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-        <Typography sx={{  marginRight : 1}}>Rooms</Typography>
+        <Typography 
+        sx={{  marginRight : 1}}>Rooms</Typography>
 
         {/* display warning of unsaved changes*/}
-        {changed && <><IconButton sx={{pt:'2px'}}><InfoOutlinedIcon fontSize="small" /></IconButton>  <Typography color='#E57373'>Unsaved Changes</Typography></>   }
+        {changed && <><IconButton 
+        sx={{pt:'2px'}}><InfoOutlinedIcon fontSize="small" /></IconButton>  <Typography color='#E57373'>Unsaved Changes</Typography></>   }
 
         </AccordionSummary>
-        <AccordionDetails sx={{p:0}}>
+        <AccordionDetails 
+        sx={{p:0}}>
           
-          <Stack spacing={2} direction="row" sx={{mb:1.5}}>
+          <Stack spacing={2} 
+          direction="row" 
+          sx={{mb:1.5}}>
             {/* <form 
             onSubmit={handleClick}
             > */}
@@ -408,7 +414,8 @@ const GenerateDesignTab = withRouter((props) => {
                   onChange={handleChange}
                 />
               </Box>
-              <FormControl sx={{width:'30%'}}>
+              <FormControl 
+              sx={{width:'30%'}}>
                 <InputLabel id="demo-simple-select-label">Floor</InputLabel>
                 <Select
                   labelId="demo-simple-select-label"
@@ -422,8 +429,10 @@ const GenerateDesignTab = withRouter((props) => {
                   <MenuItem value={2}>2</MenuItem>
                 </Select>
               </FormControl>
-              <TextField id="Xvalue" name="Xvalue" value={state.Xvalue}  label="X" variant="outlined" onChange={handleChange}/>
-              <TextField id="Yvalue" name="Yvalue"  value={state.Yvalue} label="Y" variant="outlined" onChange={handleChange}/>
+              <TextField id="Xvalue" 
+              name="Xvalue" value={state.Xvalue}  label="X" variant="outlined" onChange={handleChange}/>
+              <TextField id="Yvalue" 
+              name="Yvalue"  value={state.Yvalue} label="Y" variant="outlined" onChange={handleChange}/>
               
               
               <Button 
@@ -440,7 +449,9 @@ const GenerateDesignTab = withRouter((props) => {
           </Stack>
 
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+            <Table 
+            sx={{ minWidth: 650 }} 
+            size="small" aria-label="a dense table">
               <TableHead>
                 <TableRow>
                   <TableCell ></TableCell>
@@ -474,7 +485,8 @@ const GenerateDesignTab = withRouter((props) => {
                       />
                     </TableCell>
 
-                    <TableCell component="th" scope="row">
+                    <TableCell component="th" 
+                    scope="row">
                         <Typography 
                         style={{
                           color: row_color_scheme[row.select].color
@@ -482,8 +494,12 @@ const GenerateDesignTab = withRouter((props) => {
                           {row.Rname}
                           </Typography> 
                     </TableCell> 
-                    <TableCell align="right"><Chip label={row.Xvalue} size="small" variant="filled" style={{color:row_color_scheme[row.select].color, backgroundColor:row_color_scheme[row.select].backgroundColor}}></Chip></TableCell>
-                    <TableCell align="right"><Chip label={row.Yvalue} size="small" variant="filled" style={{color:row_color_scheme[row.select].color, backgroundColor:row_color_scheme[row.select].backgroundColor}}></Chip></TableCell>
+                    <TableCell align="right"><Chip label={row.Xvalue} 
+                    size="small" variant="filled" 
+                    style={{color:row_color_scheme[row.select].color, backgroundColor:row_color_scheme[row.select].backgroundColor}}></Chip></TableCell>
+                    <TableCell align="right"><Chip label={row.Yvalue} 
+                    size="small" variant="filled" 
+                    style={{color:row_color_scheme[row.select].color, backgroundColor:row_color_scheme[row.select].backgroundColor}}></Chip></TableCell>
                     <TableCell align="right"><Typography>{row.selectFloor}</Typography></TableCell>
                     <TableCell align="right">
                       <Chip label="edit/set" 
@@ -505,22 +521,27 @@ const GenerateDesignTab = withRouter((props) => {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
-            <Box sx={style}>
-              <AdjacencyModal setOpen={setOpen} roomId={roomId} data={data} setData={setData} setChanged={setChanged}/>
+            <Box 
+            sx={style}>
+              <AdjacencyModal setOpen={setOpen} 
+              roomId={roomId} data={data} setData={setData} setChanged={setChanged}/>
             </Box>
           </Modal>
 
-          <Box sx={{display:'flex', justifyContent:'space-between'}}>
+          <Box 
+          sx={{display:'flex', justifyContent:'space-between'}}>
 
             {/* {saved ? <Button variant="text" sx={{color:'#C62828'}} 
             onClick={deleteBulkSelection} 
             >DELETE SELECTED ROOMS</Button> :<Typography></Typography> } */}
 
-            {checkboxClicked && selectedrows.length && !changed ? <Button variant="text" sx={{color:'#C62828'}} 
+            {checkboxClicked && selectedrows.length && !changed ? <Button variant="text" 
+            sx={{color:'#C62828'}} 
               onClick={deleteBulkSelection} 
               >DELETE SELECTED ROOMS</Button>: <Typography></Typography> }
 
-            {changed && <Button variant="text" onClick={save}>SAVE</Button>}
+            {changed && <Button variant="text" 
+            onClick={save}>SAVE</Button>}
           </Box>
           
         </AccordionDetails>
@@ -536,7 +557,8 @@ const GenerateDesignTab = withRouter((props) => {
           <Typography>Land</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <MapLandWithNoSSR mapUpdate={mapUpdate} setMapUpdate={setMapUpdate} projectId={projectId}/>
+          <MapLandWithNoSSR mapUpdate={mapUpdate} 
+          setMapUpdate={setMapUpdate} projectId={projectId}/>
         </AccordionDetails>
       </Accordion>
 
@@ -550,10 +572,13 @@ const GenerateDesignTab = withRouter((props) => {
           <Typography>Envelope</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <MapEnvelopeWithNoSSR mapUpdate={mapUpdate} setMapUpdate={setMapUpdate} projectId={projectId}/>
+          <MapEnvelopeWithNoSSR mapUpdate={mapUpdate} 
+          setMapUpdate={setMapUpdate} projectId={projectId}/>
         </AccordionDetails>
       </Accordion>
-      <Button variant="contained" sx={{mt:3}} onClick={handleSubmit}>{buttonText ? "GENERATE DESIGNS" : "Generating..."}</Button>
+      <Button variant="contained" 
+      sx={{mt:3}} 
+      onClick={handleSubmit}>{buttonText ? "GENERATE DESIGNS" : "Generating..."}</Button>
     </div>
 
       </Box>
@@ -566,9 +591,11 @@ const GenerateDesignTab = withRouter((props) => {
       >
         <Container maxWidth="xl">  
             {generatedData.length ? 
-            <DesignGrid data={generatedData} setNewDesign={props.setNewDesign}/> 
+            <DesignGrid data={generatedData} 
+            setNewDesign={props.setNewDesign}/> 
             : 
-            <Typography sx={{textAlign:'center', fontSize:'20px', paddingTop:'100px'}}>Set your design constraints to begin</Typography> }
+            <Typography 
+            sx={{textAlign:'center', fontSize:'20px', paddingTop:'100px'}}>Set your design constraints to begin</Typography> }
         </Container>
       </Box>
     </>

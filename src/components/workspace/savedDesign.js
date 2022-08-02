@@ -132,7 +132,8 @@ const importDesign = async (secure_url, designName, file_name) => {
           backgroundColor: '#fffff'
         }}
       >
-      <div style={{display:'block', marginLeft: 'auto', width: '112px'}}>
+      <div 
+      style={{display:'block', marginLeft: 'auto', width: '112px'}}>
           <Button
             component="a"
             type="submit"
@@ -144,9 +145,12 @@ const importDesign = async (secure_url, designName, file_name) => {
       </div>
 
       <Box sx={{ flexGrow: 1, }}>
-        <IconButton style={{width: '100%', justifyContent: 'flex-start'}}>
-          <Typography variant="h6" style={{color:'#111111'}}>New</Typography>
-          <StarIcon fontSize="small" style={{marginLeft: 7}} ></StarIcon>
+        <IconButton 
+        style={{width: '100%', justifyContent: 'flex-start'}}>
+          <Typography variant="h6" 
+          style={{color:'#111111'}}>New</Typography>
+          <StarIcon fontSize="small" 
+          style={{marginLeft: 7}} ></StarIcon>
         </IconButton>
       </Box>
 
@@ -159,8 +163,12 @@ const importDesign = async (secure_url, designName, file_name) => {
       
       {/* display generated design if available in localStorage */}
       {parameter.length ?
-      <DesignGrid data={parameter} setNewDesign={setNewDesign} setUpdate={setUpdate}/> : 
-        <Typography style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:50}}>
+      <DesignGrid 
+      data={parameter} 
+      setNewDesign={setNewDesign} 
+      setUpdate={setUpdate}/> : 
+        <Typography 
+        style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:50}}>
           You have not generated any new designs <br/>
           Go to the generate tab to set your constraints and generate new floorplans
         </Typography>
@@ -168,9 +176,12 @@ const importDesign = async (secure_url, designName, file_name) => {
 
 
       <Box sx={{ flexGrow: 1, marginTop: 3}}>
-        <IconButton style={{width: '100%', justifyContent: 'flex-start'}}>
-          <Typography variant="h6" style={{color:'#111111'}}>Saved</Typography>
-          <FavoriteIcon fontSize="small" style={{marginLeft: 7}} ></FavoriteIcon>
+        <IconButton 
+        style={{width: '100%', justifyContent: 'flex-start'}}>
+          <Typography variant="h6" 
+          style={{color:'#111111'}}>Saved</Typography>
+          <FavoriteIcon fontSize="small" 
+          style={{marginLeft: 7}} ></FavoriteIcon>
         </IconButton>
       </Box>
 
@@ -181,16 +192,19 @@ const importDesign = async (secure_url, designName, file_name) => {
           }}
         />
 
-      <Grid container style={{width:'100%', marginLeft:0, marginTop:40}}
+      <Grid container 
+      style={{width:'100%', marginLeft:0, marginTop:40}}
       spacing={3}>        
         {projectData.designs ? 
-          <Grid container style={{width:'100%', marginLeft:0}}
+          <Grid container 
+          style={{width:'100%', marginLeft:0}}
           spacing={3}
           >
           {projectData.designs.length ?
               projectData.designs.map((design, i) => {
                 return (                
-                  !design.versionOf && <Grid item xs={12} sm={6} md={3}
+                  !design.versionOf && <Grid item 
+                  xs={12} sm={6} md={3}
                   key = {design.id}
                   style = {{padding: 10, minHeight: 294 }}
                   >
@@ -206,7 +220,8 @@ const importDesign = async (secure_url, designName, file_name) => {
                       />
                   </Grid> )})
                  : 
-                 <Typography style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:100}}>
+                 <Typography 
+                 style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:100}}>
                     You do not have any designs for this project <br/>
                     To begin, return to the generate page and set your design constraints <br/>
                     or<br/>
@@ -231,7 +246,8 @@ const importDesign = async (secure_url, designName, file_name) => {
         aria-describedby="modal-modal-description"
         sx={{overflow: "scroll"}}
       >
-        <Box sx={style}>  
+        <Box 
+        sx={style}>  
           <Typography variant="h6">Import Design</Typography>
           <form
             noValidate

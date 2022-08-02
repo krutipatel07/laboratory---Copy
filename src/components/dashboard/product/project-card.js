@@ -64,9 +64,12 @@ const ProductCard = (props) => {
 
   return (
     <>
-    <Popper open={open} anchorEl={anchorEl} placement={placement} transition>
+    <Popper open={open} 
+    anchorEl={anchorEl} 
+    placement={placement} transition>
       {({ TransitionProps }) => (
-        <Fade {...TransitionProps} timeout={350}>
+        <Fade {...TransitionProps} 
+        timeout={350}>
           <Paper>
             <List>
               <ListItemButton onClick={deleteProject}>
@@ -116,9 +119,12 @@ const ProductCard = (props) => {
         display: 'flex', 
         justifyContent:'space-between'
       }}>
-        <Chip label={`${designsLength} Designs`} variant="outlined" sx={{borderWidth: '2px'}}/>
-        <Chip label={`0 Comments`} variant="outlined" sx={{borderWidth: '2px'}}/>
-        <Chip label={`${members} Collaborators`} variant="outlined" sx={{borderWidth: '2px'}} />
+        <Chip label={`${designsLength} Designs`} 
+        variant="outlined" sx={{borderWidth: '2px'}}/>
+        <Chip label={`0 Comments`} 
+        variant="outlined" sx={{borderWidth: '2px'}}/>
+        <Chip label={`${members} Collaborators`} 
+        variant="outlined" sx={{borderWidth: '2px'}} />
       </CardActions>
     </Card>
     </>

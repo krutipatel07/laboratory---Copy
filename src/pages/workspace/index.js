@@ -97,15 +97,26 @@ const ProjectWorkspace = withRouter((props) => {
             // borderBottom: 1, borderColor: 'divider', 
             marginBottom: '10px' }}>
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-              <Tab label="Generate" {...a11yProps(0)} className={classes.font} />
-              <Tab label={`Design ${newDesign !== 0 ? `(${newDesign})` : ""}`} {...a11yProps(1)} className={classes.font}/>
+              <Tab label="Generate" 
+              {...a11yProps(0)} 
+              className={classes.font} />
+              <Tab label={`Design ${newDesign !== 0 ? `(${newDesign})` : ""}`} 
+              {...a11yProps(1)} 
+              className={classes.font}/>
             </Tabs>
           </Box>
-          <TabPanel value={value} index={0} classes={{ root: classes.tab }}>
-            <GenerateDesign projectId= {props.router.query.id} setNewDesign={setNewDesign} setValue={setValue} style={{p:0}}/>
+          <TabPanel value={value} 
+          index={0} classes={{ root: classes.tab }}>
+            <GenerateDesign projectId= {props.router.query.id} 
+            setNewDesign={setNewDesign} 
+            setValue={setValue} 
+            style={{p:0}}/>
           </TabPanel>
-          <TabPanel value={value} index={1}>
-            <DesignSavedGrid projectId= {props.router.query.id} setNewDesign={setNewDesign}/>
+          <TabPanel value={value} 
+          index={1}>
+            <DesignSavedGrid 
+            projectId= {props.router.query.id} 
+            setNewDesign={setNewDesign}/>
           </TabPanel>
         </Box>
       </Container>

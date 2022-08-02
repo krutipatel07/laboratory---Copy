@@ -101,16 +101,19 @@ export const WorkspaceNavbar = withRouter((props) => {
             // mx:1
           }}
         >
-          <Box sx={{ flexGrow: 1, pl: 1 }} className={classes.projectName}>
+          <Box sx={{ flexGrow: 1, pl: 1 }} 
+          className={classes.projectName}>
               <NextLink
                 href="/dashboard/projects"
                 passHref
               >
-                <Typography variant="h6"  style={{fontSize:12, color:'rgba(0, 0, 0, 0.6)', cursor: 'pointer'}}>
+                <Typography variant="h6"  
+                style={{fontSize:12, color:'rgba(0, 0, 0, 0.6)', cursor: 'pointer'}}>
                   <span>Project/</span>
                 </Typography>
               </NextLink>   
-              <Typography variant="h4" className={classes.title}>
+              <Typography variant="h4" 
+              className={classes.title}>
                 <span>{projectTitle && projectTitle}</span>
               </Typography>
           </Box>
