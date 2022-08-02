@@ -486,7 +486,7 @@ const GenerateDesignTab = withRouter((props) => {
             aria-describedby="modal-modal-description"
           >
             <Box sx={style}>
-              {/* <AdjacencyModal setOpen={setOpen} roomId={roomId} data={data} setData={setData} setChanged={setChanged}/> */}
+              <AdjacencyModal setOpen={setOpen} roomId={roomId} data={data} setData={setData} setChanged={setChanged}/>
             </Box>
           </Modal>
 
