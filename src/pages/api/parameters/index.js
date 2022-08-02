@@ -1,6 +1,6 @@
 import dbConnect from "../../../utils/dbConnect";
 import {Parameter} from "../../../models";
-import { withSentry } from '@sentry/nextjs';
+// import { withSentry } from '@sentry/nextjs';
 
 
 dbConnect();
@@ -37,4 +37,4 @@ const Index = async (req, res) => {
     }
 }
 
-export default withSentry(Index);
+export default Index;
