@@ -208,6 +208,7 @@ const GenerateDesignTab = withRouter((props) => {
                       }
                   )
                   .catch(error => console.log(error));
+                  
     if(!designs.data.data.designs || !designs.data.data.designs.length) {
       toast.error("Designs not found! Try using different values.")
       setButtonText(true)

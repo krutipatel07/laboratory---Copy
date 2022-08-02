@@ -112,11 +112,11 @@ const Register = () => {
               </Typography>
             </NextLink>
           </Card>
-          <button type="button" onClick={() => {
+          {/* <button type="button" onClick={() => {
               throw new Error("Sentry Frontend Error");
           }}>
               Throw error
-          </button>
+          </button> */}
         </Container>
       </Box>
     </>

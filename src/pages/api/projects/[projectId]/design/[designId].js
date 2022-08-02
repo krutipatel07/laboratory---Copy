@@ -1,6 +1,6 @@
 import dbConnect from "../../../../../utils/dbConnect";
 import { Design } from "../../../../../models"
-import { withSentry } from '@sentry/nextjs';
+// import { withSentry } from '@sentry/nextjs';
 
 dbConnect();
 
@@ -85,4 +85,4 @@ const DesignId = async (req, res) => {
     }
 }
 
-export default withSentry(DesignId);
+export default DesignId;
