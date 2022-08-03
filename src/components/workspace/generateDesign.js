@@ -96,6 +96,7 @@ const GenerateDesignTab = withRouter((props) => {
   const [checkboxClicked, setCheckboxClicked] = useState(false);
   const [roomId, setRoomId] = useState()
   const [open, setOpen] = React.useState(false);
+  const [buttonText, setButtonText] = useState(false)
   const setValue= props.setValue
   
   const row_color_scheme ={

@@ -11,6 +11,7 @@ import DashboardModalTutorial from '../../../components/modal/dashboard-modal-tu
 import CreateProjectModal from '../../../components/modal/createProject-modal'
 import {DashboardSidebar} from '../../../components/dashboard/dashboard-sidebar'
 import {GenerateImportDialog} from '../../../components/modal/generateImportModal'
+import {PricingPlan} from '../../../components/modal/pricingPlanModal'
 
 const ProductList = () => {
   const [open, setOpen] = useState(false);
@@ -117,6 +118,7 @@ const ProductList = () => {
       modal={modal} 
       setModal={setModal} 
       projectId={projectId}/>}
+      <PricingPlan/>
     </>
   );
 };

@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 
-=======
 // import { withSentry } from '@sentry/nextjs';
->>>>>>> b394225fbbc915b0a529f4a0357be118841a4838
 
 const mail = require('@sendgrid/mail');
 mail.setApiKey(process.env.SENDGRID_API_KEY)
@@ -22,8 +19,3 @@ export default async (req, res) => {
         }
     mail.send(data);
 }
-<<<<<<< HEAD
-=======
-
-export default ContactUsReply;
->>>>>>> b394225fbbc915b0a529f4a0357be118841a4838

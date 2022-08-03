@@ -1,9 +1,5 @@
 import dbConnect from "../../../utils/dbConnect";
 import {Project, User} from "../../../models";
-<<<<<<< HEAD
-=======
-// import { withSentry } from '@sentry/nextjs';
->>>>>>> b394225fbbc915b0a529f4a0357be118841a4838
 
 
 dbConnect();
@@ -44,7 +40,3 @@ export default async (req, res) => {
             break;
     }
 }
-<<<<<<< HEAD
-=======
-export default Index;
->>>>>>> b394225fbbc915b0a529f4a0357be118841a4838
