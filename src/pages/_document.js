@@ -84,13 +84,6 @@ class CustomDocument extends Document {
           fjs.parentNode.insertBefore(js, fjs);
           }(document, 'script', 'facebook-jssdk'));`}}>
           </script>
-          <link 
-          href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' 
-          rel='stylesheet' />
-          <link 
-          rel="stylesheet" 
-          href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-search/3.0.2/leaflet-search.src.css" />
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-search/3.0.2/leaflet-search.min.css"></script>
           
         </Head>
         <body>

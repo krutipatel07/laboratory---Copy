@@ -111,7 +111,6 @@ const Map = (props) => {
 
     const _onDrawVertex  = (e) =>{
       const {layers: {_layers}} = e;
-      console.log(_layers);
     }
 
     const save = async () => {   

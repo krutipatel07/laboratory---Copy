@@ -52,7 +52,6 @@ export const ContactForm = () => {
         location.reload();
       }
       catch(error){
-        console.log(error)
         toast.error('Something went wrong!')
         location.reload();
       }
