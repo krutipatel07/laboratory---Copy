@@ -126,9 +126,12 @@ const VariantCard = (props) => {
             passHref
           >
             {image.slice(-3) === "pdf" ? 
-              <CardMedia sx={{minHeight:"194px"}}>
-                <Typography variant="body2" 
-                align="center" sx={{pt:'80px'}}>
+              <CardMedia 
+              sx={{minHeight:"194px"}}>
+                <Typography 
+                variant="body2" 
+                align="center" 
+                sx={{pt:'80px'}}>
                   {file_name ? file_name : "PDF"}
                 </Typography>
               </CardMedia>:
@@ -146,10 +149,14 @@ const VariantCard = (props) => {
             display: 'flex', 
             justifyContent:'center'
           }}>
-          <Chip label={`${versions} Versions`} 
-          variant="outlined" sx={{borderWidth: '2px'}}/>
-          <Chip label={`0 Comments`} 
-          variant="outlined" sx={{borderWidth: '2px'}}/>
+          <Chip 
+          label={`${versions} Versions`} 
+          variant="outlined" 
+          sx={{borderWidth: '2px'}}/>
+          <Chip 
+          label={`0 Comments`} 
+          variant="outlined" 
+          sx={{borderWidth: '2px'}}/>
         </CardActions>
       </Card>
     </>
