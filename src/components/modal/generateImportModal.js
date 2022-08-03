@@ -45,10 +45,12 @@ export const GenerateImportDialog = (props) =>{
           </DialogContentText>
         </DialogContent>
         <DialogActions sx={{justifyContent:'space-evenly',p:3}}>
-          <Button autoFocus onClick={generate} style={{background:'#000000DE', color:'#F0C88E'}}>
+          <Button autoFocus 
+          onClick={generate} style={{background:'#000000DE', color:'#F0C88E'}}>
             GENERATE
           </Button>
-          <Button autoFocus onClick={importDesign} style={{background:'#000000DE', color:'#F0C88E'}}>
+          <Button autoFocus 
+          onClick={importDesign} style={{background:'#000000DE', color:'#F0C88E'}}>
             IMPORT
           </Button>
         </DialogActions>

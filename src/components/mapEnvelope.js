@@ -169,7 +169,9 @@ const Map = (props) => {
           placeholder="Search..."
           size="small"
         />
-        <IconButton type="submit" aria-label="search"  onClick={getCoordinates}>
+        <IconButton type="submit" 
+        aria-label="search"  
+        onClick={getCoordinates}>
           <SearchIcon style={{ fill: "blue" }} />
         </IconButton>
       </form>
@@ -212,7 +214,9 @@ const Map = (props) => {
     }
 
     {/* render map with desirable center and zoom level */}
-    {center && <MapContainer center={center} zoom={zoom} scrollWheelZoom={false} ref={mapRef} style={{ height: "80vh", width: "100%"  }}>
+    {center && <MapContainer center={center} 
+    zoom={zoom} scrollWheelZoom={false} ref={mapRef} 
+    style={{ height: "80vh", width: "100%"  }}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -234,8 +238,10 @@ const Map = (props) => {
           </EditControl>
       </FeatureGroup>
       {/* display land and envelope polygons saved */}
-      <Polygon pathOptions={blueOptions} positions={mapLayers} />
-      <Polygon pathOptions={purpleOptions} positions={mapLayersEnvelope} />
+      <Polygon pathOptions={blueOptions} 
+      positions={mapLayers} />
+      <Polygon pathOptions={purpleOptions} 
+      positions={mapLayersEnvelope} />
       {/* display marker for searched location only */}
       {markerLocations && <Marker position={markerLocations}>
         {placeName && <Popup>
@@ -243,7 +249,8 @@ const Map = (props) => {
         </Popup>}
       </Marker>}
     </MapContainer>}
-    <Button variant="text" onClick={save}  disabled={saved}>SAVE</Button>
+    <Button variant="text" 
+    onClick={save}  disabled={saved}>SAVE</Button>
     </>
     );
   };

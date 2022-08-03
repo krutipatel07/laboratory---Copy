@@ -151,10 +151,12 @@ export const InvitedUserModal = (props) => {
     <div {...props}>
       <Dialog open={open}>
         { error.status ? 
-          <Grid container style={{width:'100%', marginLeft:0}}
+          <Grid container 
+          style={{width:'100%', marginLeft:0}}
           spacing={3}
           >
-            <Typography style={{fontSize:20, textAlign:"center", width:'100%', padding:50}}>
+            <Typography 
+            style={{fontSize:20, textAlign:"center", width:'100%', padding:50}}>
               {error.message}
             </Typography> 
           </Grid>: 

@@ -113,7 +113,8 @@ export default function RoomAdjacencyModal(props) {
 
   const customList = (items) => (
     <Paper sx={{ width: 200, height: 230, overflow: 'auto', border: '1px solid #ddd', borderRadius: '4px' }}>
-      <List dense component="div" role="list">
+      <List dense 
+      component="div" role="list">
         {items.map((value) => {
           const labelId = `transfer-list-item-${value}-label`;
 
@@ -134,7 +135,8 @@ export default function RoomAdjacencyModal(props) {
                   }}
                 />
               </ListItemIcon>
-              <ListItemText id={labelId} primary={value} />
+              <ListItemText id={labelId} 
+              primary={value} />
             </ListItem>
           );
         })}
@@ -147,13 +149,15 @@ export default function RoomAdjacencyModal(props) {
     // sx={style}
     >
         <Typography>{roomDetails[0].Rname}</Typography>
-        <Grid container spacing={2} justifyContent="center" alignItems="center">
+        <Grid container 
+        spacing={2} justifyContent="center" alignItems="center">
             <Grid item>
                 <Typography sx={{mb:'12px'}}>Non-Adjacent rooms</Typography>
                 {customList(left)}
             </Grid>
             <Grid item>
-                <Grid container direction="column" alignItems="center">
+                <Grid container 
+                direction="column" alignItems="center">
                     <Button
                         sx={{ my: 0.5 }}
                         variant="outlined"
@@ -207,7 +211,8 @@ export default function RoomAdjacencyModal(props) {
             mt:'5px'
         }}>
             <Button sx={{color: 'rgba(0, 0, 0, 0.6)'}} onClick={handleClose}>CANCEL</Button>
-            <Button onClick={save} disabled={disable}>SAVE</Button>
+            <Button onClick={save} 
+            disabled={disable}>SAVE</Button>
         </Box>
     </Box>    
   );

@@ -66,15 +66,18 @@ const ProductList = () => {
         }}
       >
         <DashboardSidebar/>
-        <Container maxWidth="xl" sx={{backgroundColor: "white" }}>
-          <Box sx={{ mb: 4 , backgroundColor: "white"}}>
+        <Container maxWidth="xl" 
+        sx={{backgroundColor: "white" }}>
+          <Box 
+          sx={{ mb: 4 , backgroundColor: "white"}}>
             <Grid
               container
               justifyContent="space-between"
               spacing={3}
             >
               <Grid item>
-                <Typography variant="h4" style={{fontSize: '24px'}}>
+                <Typography variant="h4" 
+                style={{fontSize: '24px'}}>
                   Projects
                 </Typography>
               </Grid>
@@ -88,7 +91,11 @@ const ProductList = () => {
                     CREATE NEW PROJECT
                   </Button>
                   {/* display create new project modal */}
-                {open && <CreateProjectModal open={open} setOpen={setOpen} setModal={setModal} setProjectId={setProjectId}/>}
+                {open && <CreateProjectModal 
+                open={open} 
+                setOpen={setOpen} 
+                setModal={setModal} 
+                setProjectId={setProjectId}/>}
               </Grid>
             </Grid>
           </Box>
@@ -100,10 +107,16 @@ const ProductList = () => {
       {
         // display tutorial modal if user is the new first time user
         userData && userData.isFirstTime ? 
-        <DashboardModalTutorial open={isOpen} setIsOpen={setIsOpen} setModalShown={setModalShown}/> : ''
+        <DashboardModalTutorial 
+        open={isOpen} 
+        setIsOpen={setIsOpen} 
+        setModalShown={setModalShown}/> : ''
       }
       {/* display generate or import modal after creating project */}
-      {modal && <GenerateImportDialog modal={modal} setModal={setModal} projectId={projectId}/>}
+      {modal && <GenerateImportDialog 
+      modal={modal} 
+      setModal={setModal} 
+      projectId={projectId}/>}
     </>
   );
 };

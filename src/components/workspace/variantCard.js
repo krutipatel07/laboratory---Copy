@@ -90,9 +90,12 @@ const VariantCard = (props) => {
     
   return (
     <>
-      <Popper open={open} anchorEl={anchorEl} placement={placement} transition>
+      <Popper open={open} 
+      anchorEl={anchorEl} 
+      placement={placement} transition>
         {({ TransitionProps }) => (
-          <Fade {...TransitionProps} timeout={350}>
+          <Fade {...TransitionProps} 
+          timeout={350}>
             <Paper>
               <ListItemButton onClick={deleteDesign}>
                 <ListItemIcon><DeleteIcon /></ListItemIcon>
@@ -124,7 +127,8 @@ const VariantCard = (props) => {
           >
             {image.slice(-3) === "pdf" ? 
               <CardMedia sx={{minHeight:"194px"}}>
-                <Typography variant="body2" align="center" sx={{pt:'80px'}}>
+                <Typography variant="body2" 
+                align="center" sx={{pt:'80px'}}>
                   {file_name ? file_name : "PDF"}
                 </Typography>
               </CardMedia>:
@@ -142,8 +146,10 @@ const VariantCard = (props) => {
             display: 'flex', 
             justifyContent:'center'
           }}>
-          <Chip label={`${versions} Versions`} variant="outlined" sx={{borderWidth: '2px'}}/>
-          <Chip label={`0 Comments`} variant="outlined" sx={{borderWidth: '2px'}}/>
+          <Chip label={`${versions} Versions`} 
+          variant="outlined" sx={{borderWidth: '2px'}}/>
+          <Chip label={`0 Comments`} 
+          variant="outlined" sx={{borderWidth: '2px'}}/>
         </CardActions>
       </Card>
     </>

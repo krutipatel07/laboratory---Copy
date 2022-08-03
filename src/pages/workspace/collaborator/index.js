@@ -115,12 +115,14 @@ const InvitedUSerPage = withRouter((props) => {
         }}
       >
         <DashboardSidebar/>
-        <Container maxWidth="xl" style={{width:'100%'}}>
+        <Container maxWidth="xl" 
+        style={{width:'100%'}}>
           <WorkspaceNavbar/>
           
           <Box sx={{px:2, pt: 1}}> 
             <Tabs> 
-              <Tab label={variantData && variantData.title} disabled />
+              <Tab label={variantData && variantData.title} 
+              disabled />
             </Tabs> 
           </Box>
 
@@ -136,11 +138,13 @@ const InvitedUSerPage = withRouter((props) => {
                   height: '550px'
                 }}>
                   { error.status ? 
-                  <Grid container style={{width:'100%', marginLeft:0}}
+                  <Grid container 
+                  style={{width:'100%', marginLeft:0}}
                   spacing={3}
                   >
                     {/* if there is any error occur while fetching design data, display the error message*/}
-                    <Typography style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:100}}>
+                    <Typography 
+                    style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:100}}>
                       {error.message}
                     </Typography> 
                   </Grid> :
@@ -159,7 +163,8 @@ const InvitedUSerPage = withRouter((props) => {
                   >
                   {/* display limnu board if available, else image only*/}
                     {variantData && variantData.limnu_boardUrl ? 
-                      <iframe src={`${variantData.limnu_boardUrl}t=${limnu_token}&video=0`} title="description" 
+                      <iframe src={`${variantData.limnu_boardUrl}t=${limnu_token}&video=0`} 
+                      title="description" 
                         style={{width: '100%', height: '100%'}}
                       ></iframe>
                       :  

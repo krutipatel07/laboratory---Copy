@@ -163,7 +163,8 @@ export const DashboardSidebar = (props) => {
         >
           <div>
 
-            <Box sx={open ? { p: 1, mt: 4 } : {p: 3}} style={{textAlign: 'center'}}>
+            <Box sx={open ? { p: 1, mt: 4 } : {p: 3}} 
+            style={{textAlign: 'center'}}>
               <NextLink
                 href={isInvited ? "#" : "/dashboard/projects"}
                 passHref
@@ -209,11 +210,13 @@ export const DashboardSidebar = (props) => {
           </div>
           {!isInvited ? (open ? 
           <Box sx={{ flexGrow: 1 }}>
-           <IconButton style={{display: 'grid', width: '100%'}}>            
+           <IconButton 
+           style={{display: 'grid', width: '100%'}}>            
              <Tooltip title="collaborators">
                <IconButton>
                 <NextLink href="/dashboard/customers">
-                  <UsersIcon fontSize="small" />
+                  <UsersIcon 
+                  fontSize="small" />
                 </NextLink>
                </IconButton>
              </Tooltip>
@@ -221,7 +224,9 @@ export const DashboardSidebar = (props) => {
              <Tooltip title="Projects">
                <IconButton>
                 <NextLink href="/dashboard/projects">
-                  <DesignServicesIcon fontSize="small" style={{display:'block', marginTop: 10}}/>
+                  <DesignServicesIcon 
+                  fontSize="small" 
+                  style={{display:'block', marginTop: 10}}/>
                 </NextLink>
                </IconButton>
              </Tooltip>
@@ -245,32 +250,41 @@ export const DashboardSidebar = (props) => {
           
           {!open && !isInvited && <Box>
             <Box sx={{ flexGrow: 1, }}>
-              <IconButton style={{width: '100%', justifyContent: 'flex-start'}}>
+              <IconButton 
+              style={{width: '100%', justifyContent: 'flex-start'}}>
                 <Tooltip title="Tutorial">
                   <IconButton onClick={handleClick}>
-                    <><StarBorderIcon fontSize="small" style={{marginLeft:'18px'}} ></StarBorderIcon>
-                    <Typography variant="h6" style={{color:'#D1D5DB', fontSize:14,letterSpacing:1,marginLeft:6}}>Tutorial</Typography></>
+                    <><StarBorderIcon 
+                    fontSize="small" 
+                    style={{marginLeft:'18px'}} ></StarBorderIcon>
+                    <Typography variant="h6" 
+                    style={{color:'#D1D5DB', fontSize:14,letterSpacing:1,marginLeft:6}}>Tutorial</Typography></>
                   </IconButton>
                 </Tooltip>
               </IconButton>
             </Box>
           </Box>}
-          {isModalShown && <DashboardModalTutorial open={isOpen} setIsOpen={setIsOpen} setModalShown={setModalShown}/>}
+          {isModalShown && <DashboardModalTutorial open={isOpen} 
+          setIsOpen={setIsOpen} 
+          setModalShown={setModalShown}/>}
           <Box>
             {open ?
             <Box sx={{ flexGrow: 1 }}>
-              <IconButton style={{display: 'grid', width: '100%'}}>
+              <IconButton 
+              style={{display: 'grid', width: '100%'}}>
                 {!isInvited ? 
                 <>
                 <Tooltip title="Tutorial">
                   <IconButton onClick={handleClick}>
-                    <StarBorderIcon fontSize="small"></StarBorderIcon>
+                    <StarBorderIcon 
+                    fontSize="small"></StarBorderIcon>
                   </IconButton>
                 </Tooltip>
                 <Tooltip title="Account">
                   <IconButton>
                     <NextLink href="/dashboard/account">
-                      <UserCircleIcon fontSize="small" />
+                      <UserCircleIcon 
+                      fontSize="small" />
                     </NextLink>
                   </IconButton>
                 </Tooltip>
@@ -278,22 +292,30 @@ export const DashboardSidebar = (props) => {
 
                 <Tooltip title='Logout'>
                   <IconButton>
-                    <LogoutIcon onClick={handleLogout} fontSize="small" style={{display:'block', marginTop: 30}}/>
+                    <LogoutIcon onClick={handleLogout} 
+                    fontSize="small" 
+                    style={{display:'block', marginTop: 30}}/>
                   </IconButton>
                 </Tooltip>
                 
                 }
-                <Tooltip title='Feedback' placement="left-end">
+                <Tooltip title='Feedback' 
+                placement="left-end">
                 <IconButton>
                   <NextLink href="https://maket.canny.io/feature-requests">
-                    <RateReviewOutlinedIcon fontSize="small" style={{display:'block', marginTop: 10, marginTop: 10}}/>
+                    <RateReviewOutlinedIcon 
+                    fontSize="small" 
+                    style={{display:'block', marginTop: 10, marginTop: 10}}/>
                   </NextLink>
                 </IconButton>
                 </Tooltip>
-                <Tooltip title='Info' placement="left-end">
+                <Tooltip title='Info' 
+                placement="left-end">
                   <IconButton>
                     <NextLink href="/contact">
-                      <InfoOutlinedIcon fontSize="small" style={{display:'block', marginTop: 10, marginBottom: 10}}/>
+                      <InfoOutlinedIcon 
+                      fontSize="small" 
+                      style={{display:'block', marginTop: 10, marginBottom: 10}}/>
                     </NextLink>
                   </IconButton>
                 </Tooltip>

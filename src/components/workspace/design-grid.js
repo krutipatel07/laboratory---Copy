@@ -11,7 +11,8 @@ export default function DesignGrid({data, setNewDesign, setUpdate}) {
           
         }}
       >
-      <Grid container style={{width:'100%', marginLeft:0}}
+      <Grid container 
+      style={{width:'100%', marginLeft:0}}
       spacing={3}>   
       {data.map(design => {
         return (                

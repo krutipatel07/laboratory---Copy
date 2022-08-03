@@ -18,8 +18,10 @@ export default function CreateProjectModal(props) {
 
   
   return (
-    <Dialog  open={open} PaperProps={{ sx: { overflow:'hidden' } }}>
-        <ProductCreateForm setOpen={setOpen} setModal={setModal} setProjectId={setProjectId}/>
+    <Dialog  open={open} 
+    PaperProps={{ sx: { overflow:'hidden' } }}>
+        <ProductCreateForm setOpen={setOpen} 
+        setModal={setModal} setProjectId={setProjectId}/>
     </Dialog>
     
   );

@@ -209,25 +209,32 @@ return (
         }}
       >
         <DashboardSidebar/>
-        <Container maxWidth="xl" style={{width:'100%'}}>
+        <Container maxWidth="xl" 
+        style={{width:'100%'}}>
           <WorkspaceNavbar/>
-          <Box sx={{display: 'flex'}} className={classes.name}>
+          <Box sx={{display: 'flex'}} 
+          className={classes.name}>
             <Box sx={{px:2, display: 'flex', pt: '12px'}}>  
                 <NextLink
                   href={`/workspace?id=${projectId}`}
                   passHref
                 >
-                  <Typography style={{color:'rgba(0, 0, 0, 0.6)', cursor:'pointer'}}>Designs</Typography>
+                  <Typography 
+                  style={{color:'rgba(0, 0, 0, 0.6)', cursor:'pointer'}}>Designs</Typography>
                 </NextLink>
 
-                <IconButton className={classes.icon}>
-                  <ArrowForwardIosOutlinedIcon style={{ paddingTop:'12px'}}/>
+                <IconButton 
+                className={classes.icon}>
+                  <ArrowForwardIosOutlinedIcon 
+                  style={{ paddingTop:'12px'}}/>
                 </IconButton>
                 
-                <Typography disabled style={{color:'rgba(0, 0, 0, 0.87)'}}>{variantData && variantData.title}</Typography>
+                <Typography disabled 
+                style={{color:'rgba(0, 0, 0, 0.87)'}}>{variantData && variantData.title}</Typography>
             </Box>
         
-            <Box style={{display: 'block', marginLeft: 'auto'}}>
+            <Box 
+            style={{display: 'block', marginLeft: 'auto'}}>
               <Button onClick={handleClick}>
                 <IconButton><PersonAddAltIcon/></IconButton>
                 COLLABORATORS 
@@ -254,7 +261,8 @@ return (
                   style={{display:"inline-flex", justifyContent:'space-between', width:'100%'}}>
                       <TextField label="Collaborator email" 
                       type="email" 
-                      required value={email} onInput={ e=>setEmail(e.target.value)}/>
+                      required 
+                      value={email} onInput={ e=>setEmail(e.target.value)}/>
                       <Stack spacing={2} 
                       direction="row">
                           <Button 
@@ -287,7 +295,9 @@ return (
                       />
                     </MenuItem> 
                     // <Divider />
-                    ): <Typography style={{paddingLeft: '20px'}}>Add collaborator</Typography>  : <Typography style={{paddingLeft: '20px'}}>loading...</Typography>}
+                    ): <Typography 
+                    style={{paddingLeft: '20px'}}>Add collaborator</Typography>  : <Typography 
+                    style={{paddingLeft: '20px'}}>loading...</Typography>}
                 </Box>
               </Popover>
             </Box>
@@ -303,11 +313,13 @@ return (
               }}
               >
                 { error.status ? 
-                <Grid container style={{width:'100%', marginLeft:0}}
+                <Grid container 
+                style={{width:'100%', marginLeft:0}}
                 spacing={3}
                 >
                   {/* if there is any error occur while fetching design data, display the error message*/}
-                  <Typography style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:100}}>
+                  <Typography 
+                  style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:100}}>
                     {error.message}
                   </Typography> 
                 </Grid> :
@@ -326,7 +338,8 @@ return (
                 >
                   {/* display limnu board if available, else image only*/}
                   {variantData.limnu_boardUrl ? 
-                    <iframe src={`${variantData.limnu_boardUrl}t=${limnu_token}&video=0`} title="description" 
+                    <iframe src={`${variantData.limnu_boardUrl}t=${limnu_token}&video=0`} 
+                    title="description" 
                       style={{width: '100%', height: '100%'}}
                     ></iframe>
                     :  

@@ -108,10 +108,12 @@ export default function DashboardModalTutorial(props) {
   return (
     <Dialog  open={open}>
       <DialogTitle id="alert-dialog-title">
-        <DialogContentText id="alert-dialog-description" style={{color:'#000000DE', fontSize:20, textAlign:'center'}}>
+        <DialogContentText id="alert-dialog-description" 
+        style={{color:'#000000DE', fontSize:20, textAlign:'center'}}>
           {welcomeGuide[index].title}
         </DialogContentText>
-        <DialogContentText id="alert-dialog-description" style={{color:'#000000DE', fontSize:16, marginTop:10}}>
+        <DialogContentText id="alert-dialog-description" 
+        style={{color:'#000000DE', fontSize:16, marginTop:10}}>
           {welcomeGuide[index].description}
         </DialogContentText>
       </DialogTitle>
@@ -135,13 +137,19 @@ export default function DashboardModalTutorial(props) {
         </Card>
       </DialogContent>
 
-        <DialogActions style={{backgroundColor: '#000000DE'}}>
-          {index !== welcomeGuide.length-1 && <Button onClick={handleSkip} autoFocus className={classes.skipBtn}>SKIP</Button>}
+        <DialogActions 
+        style={{backgroundColor: '#000000DE'}}>
+          {index !== welcomeGuide.length-1 && <Button onClick={handleSkip} 
+          autoFocus 
+          className={classes.skipBtn}>SKIP</Button>}
           
-          {index !== 0 && <Button onClick={handlePrevious} className={classes.basicColor} >PREVIOUS</Button>}
-          {index !== welcomeGuide.length-1 && <> <Button onClick={handleNext} className={classes.basicColor}>NEXT</Button>
+          {index !== 0 && <Button onClick={handlePrevious} 
+          className={classes.basicColor} >PREVIOUS</Button>}
+          {index !== welcomeGuide.length-1 && <> <Button onClick={handleNext} 
+          className={classes.basicColor}>NEXT</Button>
           </>}
-          {index === welcomeGuide.length-1 && <Button onClick={handleClose} className={classes.basicColor}>CLOSE</Button>}
+          {index === welcomeGuide.length-1 && <Button onClick={handleClose} 
+          className={classes.basicColor}>CLOSE</Button>}
         </DialogActions>
     </Dialog>
     
