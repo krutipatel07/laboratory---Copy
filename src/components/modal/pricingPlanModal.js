@@ -10,12 +10,50 @@ import { useRouter } from 'next/router';
 import { Box, Button, ListItem, List, Typography, IconButton, ListItemIcon, CardContent, CardActions, ListItemText } from '@mui/material';
 import Card from '@mui/material/Card';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import { makeStyles } from '@material-ui/styles';
+
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+      },
+    cardName: {
+        fontSize: "24px"
+    },
+    Info: {
+        fontSize: "14px"
+    },
+    price: {
+        fontSize: "34px"
+    },
+    startbtn: {
+        borderRadius: 16,
+        width:"100%", 
+        background:"#FFB800", 
+        color:"#ffffff", 
+        padding:"10px"
+    }
+}));
+
+const styles = theme => ({
+    listItemText:{
+      fontSize:'0.7em',//Insert your required size
+    }
+  });
 
 export const PricingPlan = (props) =>{
 
     const [open, setOpen] = React.useState(false);
     const [fullWidth, setFullWidth] = React.useState(true);
     const [maxWidth, setMaxWidth] = React.useState('lg');
+
+    const classes = useStyles();
+    const styles = theme => ({
+        listItemText:{
+          fontSize:'0.7em',//Insert your required size
+        }
+      });
+
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -56,87 +94,87 @@ export const PricingPlan = (props) =>{
 
         <DialogContent sx={{display:"flex", justifyContent: "space-evenly", padding: "70px 90px"}}>
             <Card 
-            sx={{ minWidth: '250px', padding:"10px", 
+            sx={{ maxWidth: 300, minWidth: 350, padding:"10px", 
                 boxShadow: "0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12)",
                 borderRadius:"4px"}}>
                 <CardContent sx={{display: 'flex', justifyContent:"space-between", padding:0}}>
                     <Box >
-                        <Typography level="h5" fontSize="md" sx={{ alignSelf: 'flex-start' }}> Professional </Typography>
-                        <Typography level="body2">PERFECT FOR SMALL <br></br> FIRMS (1-5 EMPLOYEES)</Typography>
+                        <Typography sx={{ alignSelf: 'flex-start' }} className={classes.cardName}> Professional </Typography>
+                        <Typography level="body2" className={classes.Info}>PERFECT FOR SMALL <br></br> FIRMS (1-5 EMPLOYEES)</Typography>
                     </Box>
                     <Box >
-                        <Typography level="h4">$30USD</Typography>
-                        <Typography level="body2">per user per month</Typography>
+                        <Typography level="h4" className={classes.price}>$30USD</Typography>
+                        <Typography level="body2" className={classes.Info}>per user per month</Typography>
                     </Box>
                 </CardContent>
                 <Box>
                     <List>
                         <ListItem disablePadding>
                             <ListItemIcon><CheckCircleRoundedIcon /></ListItemIcon>
-                            <ListItemText primary="14-day free trial"></ListItemText>
+                            <ListItemText primary={<Typography sx={{fontSize: "13px"}}>14-day free trial</Typography>}></ListItemText>
                         </ListItem>
                         <ListItem disablePadding>
                             <ListItemIcon><CheckCircleRoundedIcon /></ListItemIcon>
-                            <ListItemText primary="Unlimited access to 2D generation"></ListItemText>
+                            <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Unlimited access to 2D generation</Typography>}></ListItemText>
                         </ListItem>
                         <ListItem disablePadding>
                             <ListItemIcon><CheckCircleRoundedIcon /></ListItemIcon>
-                            <ListItemText primary="Access to 3D renderings (14-21 Day delay)"></ListItemText>
+                            <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Access to 3D renderings (14-21 Day delay)</Typography>}></ListItemText>
                         </ListItem>
                         <ListItem disablePadding>
                             <ListItemIcon><CheckCircleRoundedIcon /></ListItemIcon>
-                            <ListItemText primary="Download any design content"></ListItemText>
+                            <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Download any design content</Typography>} ></ListItemText>
                         </ListItem>
                         <ListItem disablePadding>
                             <ListItemIcon><CheckCircleRoundedIcon /></ListItemIcon>
-                            <ListItemText primary="PDF & PNG Export "></ListItemText>
+                            <ListItemText primary={<Typography sx={{fontSize: "13px"}}>PDF & PNG Export</Typography>}></ListItemText>
                         </ListItem>
                         <ListItem disablePadding>
                             <ListItemIcon><CheckCircleRoundedIcon /></ListItemIcon>
-                            <ListItemText primary="Real-Time Collaboration"></ListItemText>
+                            <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Real-Time Collaboration</Typography>}></ListItemText>
                         </ListItem>
                     </List>
                 </Box>
-                <CardActions>
-                    <Button sx={{width:"100%", background:"#FFB800", color:"#ffffff", padding:"10px"}}>START NOW</Button>
+                <CardActions sx={{padding: "16px 5px"}}>
+                    <Button className={classes.startbtn}>START NOW</Button>
                 </CardActions>
             </Card>
             <Card 
-            sx={{ minWidth: '250px', padding:"10px",
+            sx={{ maxWidth: 300, minWidth: 350, padding:"10px",
                 boxShadow: "0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12)",
                 borderRadius:"4px"}}>
                 <CardContent sx={{display: 'flex', justifyContent:"space-between", padding:0}}>
                     <Box >
-                        <Typography level="h2" fontSize="md" sx={{ alignSelf: 'flex-start' }}> Premium </Typography>
-                        <Typography level="body2">RIGHT FOR MEDIUM-LARGE <br></br> FIRMS (5+ EMPLOYEES)</Typography>
+                        <Typography sx={{ alignSelf: 'flex-start' }} className={classes.cardName}> Premium </Typography>
+                        <Typography level="body2" className={classes.Info}>RIGHT FOR MEDIUM-LARGE <br></br> FIRMS (5+ EMPLOYEES)</Typography>
                     </Box>
                     <Box >
-                        <Typography level="body2">$75USD</Typography>
-                        <Typography level="body2">per user per month</Typography>
+                        <Typography level="body2" className={classes.price}>$75USD</Typography>
+                        <Typography level="body2" className={classes.Info}>per user per month</Typography>
                     </Box>
                 </CardContent>
                 <Box>
                     <List>
                         <ListItem disablePadding>
                             <ListItemIcon><CheckCircleRoundedIcon /></ListItemIcon>
-                            <ListItemText primary="All Professional features + "></ListItemText>
+                            <ListItemText primary={<Typography sx={{fontSize: "13px"}}>All Professional features +</Typography>}></ListItemText>
                         </ListItem>
                         <ListItem disablePadding>
                             <ListItemIcon><CheckCircleRoundedIcon /></ListItemIcon>
-                            <ListItemText primary="Premium access to 3D renderings (5 Days or Less)"></ListItemText>
+                            <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Premium access to 3D renderings (5 Days or Less)</Typography>}></ListItemText>
                         </ListItem>
                         <ListItem disablePadding>
                             <ListItemIcon><CheckCircleRoundedIcon /></ListItemIcon>
-                            <ListItemText primary="Text-to-plan generation "></ListItemText>
+                            <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Text-to-plan generation </Typography>}></ListItemText>
                         </ListItem>
                         <ListItem disablePadding>
                             <ListItemIcon><CheckCircleRoundedIcon /></ListItemIcon>
-                            <ListItemText primary="Voice-to-plan generation"></ListItemText>
+                            <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Voice-to-plan generation</Typography>}></ListItemText>
                         </ListItem>
                     </List>
                 </Box>
-                <CardActions>
-                    <Button sx={{width:"100%", background:"#FFB800", color:"#ffffff", padding:"10px"}}>START NOW</Button>
+                <CardActions sx={{padding: "16px 5px"}}>
+                    <Button className={classes.startbtn}>START NOW</Button>
                 </CardActions>
             </Card>
         </DialogContent>
