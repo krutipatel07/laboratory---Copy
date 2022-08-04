@@ -66,7 +66,8 @@ const ProductCard = (props) => {
     <>
     <Popper open={open} 
     anchorEl={anchorEl} 
-    placement={placement} transition>
+    placement={placement} 
+    transition>
       {({ TransitionProps }) => (
         <Fade {...TransitionProps} 
         timeout={350}>
@@ -114,17 +115,21 @@ const ProductCard = (props) => {
           alt="Project cover image"
         />
       </NextLink>
-      <CardActions sx={{
+      <CardActions 
+      sx={{
         px:"0",
         display: 'flex', 
         justifyContent:'space-between'
       }}>
         <Chip label={`${designsLength} Designs`} 
-        variant="outlined" sx={{borderWidth: '2px'}}/>
+        variant="outlined" 
+        sx={{borderWidth: '2px'}}/>
         <Chip label={`0 Comments`} 
-        variant="outlined" sx={{borderWidth: '2px'}}/>
+        variant="outlined" 
+        sx={{borderWidth: '2px'}}/>
         <Chip label={`${members} Collaborators`} 
-        variant="outlined" sx={{borderWidth: '2px'}} />
+        variant="outlined" 
+        sx={{borderWidth: '2px'}} />
       </CardActions>
     </Card>
     </>

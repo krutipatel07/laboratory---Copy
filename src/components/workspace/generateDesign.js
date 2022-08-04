@@ -415,9 +415,17 @@ const GenerateDesignTab = withRouter((props) => {
                 </Select>
               </FormControl>
               <TextField id="Xvalue" 
-              name="Xvalue" value={state.Xvalue}  label="X" variant="outlined" onChange={handleChange}/>
+              name="Xvalue" 
+              value={state.Xvalue}  
+              label="X" 
+              variant="outlined" 
+              onChange={handleChange}/>
               <TextField id="Yvalue" 
-              name="Yvalue"  value={state.Yvalue} label="Y" variant="outlined" onChange={handleChange}/>
+              name="Yvalue"  
+              value={state.Yvalue} 
+              label="Y" 
+              variant="outlined" 
+              onChange={handleChange}/>
               
               <Button 
               variant="text"
@@ -540,8 +548,10 @@ const GenerateDesignTab = withRouter((props) => {
           <Typography>Land</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <MapLandWithNoSSR mapUpdate={mapUpdate} 
-          setMapUpdate={setMapUpdate} projectId={projectId}/>
+          <MapLandWithNoSSR 
+          mapUpdate={mapUpdate} 
+          setMapUpdate={setMapUpdate} 
+          projectId={projectId}/>
         </AccordionDetails>
       </Accordion>
 
@@ -555,8 +565,10 @@ const GenerateDesignTab = withRouter((props) => {
           <Typography>Envelope</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <MapEnvelopeWithNoSSR mapUpdate={mapUpdate} 
-          setMapUpdate={setMapUpdate} projectId={projectId}/>
+          <MapEnvelopeWithNoSSR 
+          mapUpdate={mapUpdate} 
+          setMapUpdate={setMapUpdate} 
+          projectId={projectId}/>
         </AccordionDetails>
       </Accordion>
       <Button variant="contained" 
@@ -574,7 +586,8 @@ const GenerateDesignTab = withRouter((props) => {
       >
         <Container maxWidth="xl">  
             {generatedData.length ? 
-            <DesignGrid data={generatedData} 
+            <DesignGrid 
+            data={generatedData} 
             setNewDesign={props.setNewDesign}/> 
             : 
             <Typography 

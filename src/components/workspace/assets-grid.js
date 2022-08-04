@@ -218,7 +218,8 @@ const storeFiles = async (file, formData) => {
                             width: 400,
                           }}
                         >
-                          <ImageSrc style={{ backgroundImage: `url(https://cdn1.iconfinder.com/data/icons/adobe-acrobat-pdf/154/adobe-acrobat-pdf-figure-512.png)` }} />
+                          <ImageSrc 
+                          style={{ backgroundImage: `url(https://cdn1.iconfinder.com/data/icons/adobe-acrobat-pdf/154/adobe-acrobat-pdf-figure-512.png)` }} />
                           <ImageBackdrop className="MuiImageBackdrop-root" />
                           <a href={asset.documents} 
                           target="_blank" rel="noreferrer">
@@ -250,7 +251,8 @@ const storeFiles = async (file, formData) => {
                             width: 400,
                           }}
                         >
-                          <ImageSrc style={{ backgroundImage: `url(https://cdn1.iconfinder.com/data/icons/adobe-acrobat-pdf/154/adobe-acrobat-pdf-figure-512.png)` }} />
+                          <ImageSrc 
+                          style={{ backgroundImage: `url(https://cdn1.iconfinder.com/data/icons/adobe-acrobat-pdf/154/adobe-acrobat-pdf-figure-512.png)` }} />
                           <ImageBackdrop className="MuiImageBackdrop-root" />
                           <a href={asset[0].documents} 
                           target="_blank" rel="noreferrer"><Image>
@@ -274,7 +276,8 @@ const storeFiles = async (file, formData) => {
                     }
                   </Box>
                 </Grid> )}) 
-              : <h3 style={{marginTop:50, fontSize:24, color:"#F0C88E"}}>No Assets</h3> 
+              : <h3 
+              style={{marginTop:50, fontSize:24, color:"#F0C88E"}}>No Assets</h3> 
           : <Box sx={{ 
                 width: "100%",
                 display: 'flex',

@@ -262,7 +262,8 @@ return (
                       <TextField label="Collaborator email" 
                       type="email" 
                       required 
-                      value={email} onInput={ e=>setEmail(e.target.value)}/>
+                      value={email} 
+                      onInput={ e=>setEmail(e.target.value)}/>
                       <Stack spacing={2} 
                       direction="row">
                           <Button 

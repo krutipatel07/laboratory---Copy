@@ -204,7 +204,9 @@ const importDesign = async (secure_url, designName, file_name) => {
               projectData.designs.map((design, i) => {
                 return (                
                   !design.versionOf && <Grid item 
-                  xs={12} sm={6} md={3}
+                  xs={12} 
+                  sm={6} 
+                  md={3}
                   key = {design.id}
                   style = {{padding: 10, minHeight: 294 }}
                   >

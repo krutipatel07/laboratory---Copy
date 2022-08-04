@@ -96,7 +96,9 @@ const ProjectWorkspace = withRouter((props) => {
           sx={{ pl:1.1,
             // borderBottom: 1, borderColor: 'divider', 
             marginBottom: '10px' }}>
-            <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+            <Tabs value={value} 
+            onChange={handleChange} 
+            aria-label="basic tabs example">
               <Tab label="Generate" 
               {...a11yProps(0)} 
               className={classes.font} />
@@ -106,7 +108,8 @@ const ProjectWorkspace = withRouter((props) => {
             </Tabs>
           </Box>
           <TabPanel value={value} 
-          index={0} classes={{ root: classes.tab }}>
+          index={0} 
+          classes={{ root: classes.tab }}>
             <GenerateDesign projectId= {props.router.query.id} 
             setNewDesign={setNewDesign} 
             setValue={setValue} 
