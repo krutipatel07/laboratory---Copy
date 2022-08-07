@@ -21,7 +21,8 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "24px"
     },
     Info: {
-        fontSize: "14px"
+        fontSize: "14px",
+        color: "rgba(0, 0, 0, 0.6)"
     },
     price: {
         fontSize: "34px"
@@ -110,27 +111,27 @@ export const PricingPlan = (props) =>{
                 <Box>
                     <List>
                         <ListItem disablePadding>
-                            <ListItemIcon><CheckCircleRoundedIcon /></ListItemIcon>
+                            <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
                             <ListItemText primary={<Typography sx={{fontSize: "13px"}}>14-day free trial</Typography>}></ListItemText>
                         </ListItem>
                         <ListItem disablePadding>
-                            <ListItemIcon><CheckCircleRoundedIcon /></ListItemIcon>
+                            <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
                             <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Unlimited access to 2D generation</Typography>}></ListItemText>
                         </ListItem>
                         <ListItem disablePadding>
-                            <ListItemIcon><CheckCircleRoundedIcon /></ListItemIcon>
+                            <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
                             <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Access to 3D renderings (14-21 Day delay)</Typography>}></ListItemText>
                         </ListItem>
                         <ListItem disablePadding>
-                            <ListItemIcon><CheckCircleRoundedIcon /></ListItemIcon>
+                            <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
                             <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Download any design content</Typography>} ></ListItemText>
                         </ListItem>
                         <ListItem disablePadding>
-                            <ListItemIcon><CheckCircleRoundedIcon /></ListItemIcon>
+                            <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
                             <ListItemText primary={<Typography sx={{fontSize: "13px"}}>PDF & PNG Export</Typography>}></ListItemText>
                         </ListItem>
                         <ListItem disablePadding>
-                            <ListItemIcon><CheckCircleRoundedIcon /></ListItemIcon>
+                            <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
                             <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Real-Time Collaboration</Typography>}></ListItemText>
                         </ListItem>
                     </List>
@@ -156,19 +157,19 @@ export const PricingPlan = (props) =>{
                 <Box>
                     <List>
                         <ListItem disablePadding>
-                            <ListItemIcon><CheckCircleRoundedIcon /></ListItemIcon>
+                            <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
                             <ListItemText primary={<Typography sx={{fontSize: "13px"}}>All Professional features +</Typography>}></ListItemText>
                         </ListItem>
                         <ListItem disablePadding>
-                            <ListItemIcon><CheckCircleRoundedIcon /></ListItemIcon>
+                            <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
                             <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Premium access to 3D renderings (5 Days or Less)</Typography>}></ListItemText>
                         </ListItem>
                         <ListItem disablePadding>
-                            <ListItemIcon><CheckCircleRoundedIcon /></ListItemIcon>
+                            <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
                             <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Text-to-plan generation </Typography>}></ListItemText>
                         </ListItem>
                         <ListItem disablePadding>
-                            <ListItemIcon><CheckCircleRoundedIcon /></ListItemIcon>
+                            <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
                             <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Voice-to-plan generation</Typography>}></ListItemText>
                         </ListItem>
                     </List>
