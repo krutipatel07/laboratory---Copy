@@ -46,6 +46,7 @@
     "@mui/lab": "^5.0.0-alpha.53",
     "@mui/material": "^5.4.4",
     "@mui/system": "^5.0.4",
+    "@mui/x-date-pickers": "^5.0.0-beta.4",
     "@react-leaflet/core": "^2.0.0",
     "@react-pdf/renderer": "^1.6.13",
     "@reduxjs/toolkit": "^1.5.0",
