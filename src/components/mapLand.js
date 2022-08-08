@@ -230,9 +230,8 @@ const Map = (props) => {
               circle: false,
               circlemarker: false, 
               marker: false ,
-              layer: null,
+              layer: null
           }}>
-            
           </EditControl>
       </FeatureGroup>
       {/* display land polygon saved */}

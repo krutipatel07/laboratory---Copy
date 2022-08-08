@@ -39,19 +39,15 @@ export default function RoomAdjacencyModal(props) {
   // get other rooms list excluding existing adjacencies (left side non adjacent rooms list)
   let filterItem = data.filter(room => room.id !== roomId)
   if(roomDetails[0].adjacencies && roomDetails[0].adjacencies.length){
-    roomDetails[0].adjacencies.forEach (adjacency =>
-      filterItem = filterItem.filter((room, i) =>    
-        !(adjacency.includes(room.Rname))
-      )
+    filterItem = filterItem.filter((room, i) =>    
+      !(roomDetails[0].adjacencies.includes(room.Rname))    
     )
   }
   const otherRooms =[]  
   filterItem.forEach((item) => otherRooms.push(item.Rname))
 
   // if room clicked has adjacencies, then fetch it or else make it empty list (right side adjacent rooms list)
-  const adjacentRooms = roomDetails[roomDetails.length -1].adjacencies ? roomDetails[roomDetails.length -1].adjacencies : []
-  let adjacentRoomsList= []
-  adjacentRooms.forEach((item) => adjacentRoomsList.push(item[1]))
+  const adjacentRoomsList = roomDetails[roomDetails.length -1].adjacencies ? roomDetails[roomDetails.length -1].adjacencies : []
   
   const [disable, setDisable] = React.useState(true)
   const [checked, setChecked] = React.useState([]);  
@@ -103,24 +99,10 @@ export default function RoomAdjacencyModal(props) {
   const handleClose = () => setOpen(false);
 
   const save = () => {
-    let filterAdjacency =[]
-    data.forEach(room =>
-      {
-        // check for right adjacency list, if any of adjacency is not present in room adjacency list then add it
-        if(right.includes(room.Rname)){
-          filterAdjacency = room.adjacencies.filter(adjacency => adjacency[1]=== roomDetails[0].Rname)
-          !filterAdjacency.length && room.adjacencies.push([room.Rname, roomDetails[0].Rname])
-      }
-    }
-  )
-  // get adjacency list in proper format
-    let adjacencyList =[]
-    right.forEach(item => adjacencyList.push([roomDetails[0].Rname,item]));
-
     // update adjacencies list of the room clicked
     data.forEach(room => {
       if (room.id === roomId){
-        room.adjacencies = adjacencyList
+        room.adjacencies = right
       }
     })
     setData(data);

@@ -4,7 +4,7 @@ import { User } from "../../../models"
 
 dbConnect();
 
-const Id = async (req, res) => {
+export default async (req, res) => {
     const { 
         query: {id},
         method } = req;
@@ -58,4 +58,3 @@ const Id = async (req, res) => {
     }
 }
 
-export default Id;
