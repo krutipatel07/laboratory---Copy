@@ -15,7 +15,9 @@ async function CreateStripeSession(req, res) {
         name: item.name,
       },
       unit_amount: item.price * 100,
-    }
+    },
+    description: item.description,
+    quantity: item.quantity,
   };
 
   const session = await stripe.checkout.sessions.create({

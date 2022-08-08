@@ -11,6 +11,8 @@ import { Box, Button, ListItem, List, Typography, IconButton, ListItemIcon, Card
 import Card from '@mui/material/Card';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import { makeStyles } from '@material-ui/styles';
+import { loadStripe } from '@stripe/stripe-js';
+import axios from 'axios'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -44,9 +46,11 @@ const styles = theme => ({
 
 export const PricingPlan = (props) =>{
 
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
     const [fullWidth, setFullWidth] = React.useState(true);
     const [maxWidth, setMaxWidth] = React.useState('lg');
+    const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+    const stripePromise = loadStripe(publishableKey);
 
     const classes = useStyles();
     const styles = theme => ({
@@ -55,6 +59,19 @@ export const PricingPlan = (props) =>{
         }
       });
 
+      const createCheckOutSession = async (plan_details) => {
+        console.log("Saved");
+        const stripe = await stripePromise;
+        const checkoutSession = await axios.post('/api/stripe', {
+          item: plan_details,
+        });
+        const result = await stripe.redirectToCheckout({
+          sessionId: checkoutSession.data.id,
+        });
+        if (result.error) {
+          alert(result.error.message);
+        }
+      };
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -136,7 +153,14 @@ export const PricingPlan = (props) =>{
                         </ListItem>
                     </List>
                 </Box>
-                <CardActions sx={{padding: "16px 5px"}}>
+                <CardActions sx={{padding: "16px 5px"}} onClick={()=> createCheckOutSession(
+                    {
+                        name : "Professional",
+                        price : 30,
+                        decription : "PERFECT FOR SMALL FIRMS (1-5 EMPLOYEES) ",
+                        quantity : "1",
+                    }
+                )}>
                     <Button className={classes.startbtn}>START NOW</Button>
                 </CardActions>
             </Card>
@@ -174,7 +198,14 @@ export const PricingPlan = (props) =>{
                         </ListItem>
                     </List>
                 </Box>
-                <CardActions sx={{padding: "16px 5px"}}>
+                <CardActions sx={{padding: "16px 5px"}} onClick={()=>createCheckOutSession(
+                    {
+                        name : "Premium",
+                        price : 75,
+                        decription : "RIGHT FOR MEDIUM-LARGE FIRMS (5+ EMPLOYEES)",
+                        quantity : "1",
+                    }
+                )}>
                     <Button className={classes.startbtn}>START NOW</Button>
                 </CardActions>
             </Card>
