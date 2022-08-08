@@ -432,7 +432,7 @@ const GenerateDesignTab = withRouter((props) => {
               onClick={handleClick}
               sx={{color:'#1976D2'}}
               // type='submit'
-              disabled={checkboxClicked && selectedrows.length}
+              disabled={(checkboxClicked && selectedrows.length) || !state.select || !state.Rname || !state.selectFloor || !state.Xvalue || !state.Yvalue }
               >
                 ADD
               </Button> 
