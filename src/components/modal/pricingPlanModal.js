@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useEffect} from 'react'
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -11,7 +12,8 @@ import { Box, Button, ListItem, List, Typography, IconButton, ListItemIcon, Card
 import Card from '@mui/material/Card';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import { makeStyles } from '@material-ui/styles';
-
+import { loadStripe } from '@stripe/stripe-js';
+import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -44,9 +46,12 @@ const styles = theme => ({
 
 export const PricingPlan = (props) =>{
 
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
     const [fullWidth, setFullWidth] = React.useState(true);
     const [maxWidth, setMaxWidth] = React.useState('lg');
+    const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+    const stripePromise = loadStripe(publishableKey);
+    const router = useRouter();
 
     const classes = useStyles();
     const styles = theme => ({
@@ -55,6 +60,28 @@ export const PricingPlan = (props) =>{
         }
       });
 
+      useEffect(() => {
+        const owner = localStorage.getItem("lab-user");          
+        router.query.status === "true" && setOpen(false)
+        axios.get(`/api/user/${owner}`)
+        .then(res =>  
+          res.data.data && res.data.data.isSubscribed && setOpen(false)
+        )
+        .catch(error => console.log(error));
+      },[]);
+
+      const createCheckOutSession = async (plan_details) => {
+        const stripe = await stripePromise;
+        const checkoutSession = await axios.post('/api/stripe_checkout_session', {
+          item: plan_details,
+        });
+        const result = await stripe.redirectToCheckout({
+          sessionId: checkoutSession.data.id,
+        });
+        if (result.error) {
+          alert(result.error.message);
+        }
+      };
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -78,7 +105,7 @@ export const PricingPlan = (props) =>{
         fullWidth={fullWidth}
         maxWidth={maxWidth}
         open={open}
-        onClose={handleClose}
+        // onClose={handleClose}
         aria-labelledby="responsive-dialog-title"
         // sx={{ borderRadius:0, minWidth:"800px", height:"100%"}}
       >
@@ -128,7 +155,14 @@ export const PricingPlan = (props) =>{
                         </ListItem>
                     </List>
                 </Box>
-                <CardActions sx={{padding: "16px 5px"}}>
+                <CardActions sx={{padding: "16px 5px"}} onClick={()=> createCheckOutSession(
+                    {
+                        name : "Professional",
+                        price : 30,
+                        decription : "PERFECT FOR SMALL FIRMS (1-5 EMPLOYEES) ",
+                        quantity : "1",
+                    }
+                )}>
                     <Button className={classes.startbtn}>Start 14 day free trial</Button>
                 </CardActions>
             </Card>
@@ -158,7 +192,14 @@ export const PricingPlan = (props) =>{
                         </ListItem>
                     </List>
                 </Box>
-                <CardActions sx={{padding: "16px 5px"}}>
+                <CardActions sx={{padding: "16px 5px"}} onClick={()=>createCheckOutSession(
+                    {
+                        name : "Premium",
+                        price : 75,
+                        decription : "RIGHT FOR MEDIUM-LARGE FIRMS (5+ EMPLOYEES)",
+                        quantity : "1",
+                    }
+                )}>
                     <Button className={classes.startbtn}>Start 14 day free trial</Button>
                 </CardActions>
             </Card>

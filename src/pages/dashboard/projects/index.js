@@ -12,6 +12,7 @@ import CreateProjectModal from '../../../components/modal/createProject-modal'
 import {DashboardSidebar} from '../../../components/dashboard/dashboard-sidebar'
 import {GenerateImportDialog} from '../../../components/modal/generateImportModal'
 import {PricingPlan} from '../../../components/modal/pricingPlanModal'
+import { useRouter } from 'next/router';
 
 const ProductList = () => {
   const [open, setOpen] = useState(false);
@@ -19,7 +20,8 @@ const ProductList = () => {
   const [modal, setModal] = useState(false);  
   const [projectId, setProjectId] = useState()
   const [isOpen, setIsOpen] = useState(false);
-  const [isModalShown, setModalShown] = useState(false)
+  const [isModalShown, setModalShown] = useState(false)  
+  const router = useRouter();
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
@@ -28,11 +30,20 @@ const ProductList = () => {
   // Added a new column in the User Model 
   // Called the User Model 
   // useEffect should update when true to be false only once > PUT 
-  useEffect(() => {
+  useEffect(async () => {
     const owner = localStorage.getItem("lab-user");
     axios.get(`/api/user/${owner}`)
-    .then(res => setUserData(res.data.data))
+    .then(res => {
+      setUserData(res.data.data)  
+      router.query.status === "true" && axios.put(`/api/user/${res.data.data._id}`, {
+        isSubscribed : true,
+        subscriptionTime : Date.now()
+      })
+      .catch(error => console.log(error));
+      res.data.data && !res.data.data.isSubscribed && console.log(res.data.data);
+    })
     .catch(error => console.log(error));
+
   },[]);
 
   useEffect(() => {

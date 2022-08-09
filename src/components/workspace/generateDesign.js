@@ -80,7 +80,6 @@ const GenerateDesignTab = withRouter((props) => {
     Yvalue: "",
     adjacencies:[]
   });
-  const a = {Bedroom: 'red', Bathroom : 'green'}
   const [data, setData] = useState([])
   const classes = useStyles();
   const router = useRouter();
@@ -96,8 +95,11 @@ const GenerateDesignTab = withRouter((props) => {
   const [checkboxClicked, setCheckboxClicked] = useState(false);
   const [roomId, setRoomId] = useState()
   const [open, setOpen] = React.useState(false);
-  const [buttonText, setButtonText] = useState(false)
+  const [buttonText, setButtonText] = useState(true)
+  const userId = localStorage.getItem("lab-user")
   const setValue= props.setValue
+  const [envelope_parameters, set_envelope_parameters] = useState()
+  const [land_parameters, set_land_parameters] = useState()
   
   const row_color_scheme ={
     Bedroom: {
@@ -123,6 +125,12 @@ const GenerateDesignTab = withRouter((props) => {
           backgroundColor: '#ffddba'},
     "Dining Room" :{
         color: '#D32F2F',
+        backgroundColor: '#ffb5b5'},
+    "Living": {
+          color: '#F57C00',
+          backgroundColor: '#ffddba'},
+    "Dining" :{
+        color: '#D32F2F',
         backgroundColor: '#ffb5b5'}
   }
 
@@ -141,30 +149,52 @@ const GenerateDesignTab = withRouter((props) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-  //   const layers = JSON.parse(localStorage.getItem('layers'))
-  //   const layersEnvelope = JSON.parse(localStorage.getItem('layersEnvelope'))
+    setButtonText(false)
+    // getting land and envelope parameters in desired format
+    let lat_lngs_array_land = []    
+    land_parameters.forEach(coordinate => {
+      lat_lngs_array_land.push([coordinate.lat, coordinate.lng])
+    })
+    let lat_lngs_array_envelope = []
+    envelope_parameters.forEach(coordinate => {
+      lat_lngs_array_envelope.push([coordinate.lat, coordinate.lng])
+    })
 
-  //   let lat_lngs_array_land = []
-  //   layers.lat_lngs.forEach(coordinate => {
-  //     lat_lngs_array_land.push([coordinate.lat, coordinate.lng])
-  //   })
+    // getting room parameters in desired format
+    let constraints_floor_1 = {}
+    let constraints_floor_2 = {}
+    let adjacencyList_floor_1 = []
+    let adjacencyList_floor_2 = []
+    let adjacencyListWithId_floor_1 = []
+    let adjacencyListWithId_floor_2 = []
+    let roomIdList ={}
+    data.forEach((room, counter) => {
+      room.selectFloor === 1 ? 
+      room.adjacencies.forEach(adjacency => adjacencyList_floor_1.push(adjacency)) 
+      : room.adjacencies.forEach(adjacency => adjacencyList_floor_2.push(adjacency))
 
-  //   let lat_lngs_array_envelope = []
-  //   layersEnvelope.lat_lngs.forEach(coordinate => {
-  //     lat_lngs_array_envelope.push([coordinate.lat, coordinate.lng])
-  //   })
+      roomIdList[room.Rname] =counter+1
+      const room_constraints = {
+        "min_width": parseInt(room.Xvalue)-3,  
+        "max_width": parseInt(room.Xvalue)+3,
+        "min_area": (parseInt(room.Xvalue)-3)*parseInt(room.Yvalue),
+        "max_area": (parseInt(room.Xvalue)+3)*parseInt(room.Yvalue),
+        "adj_ref":counter+1,
+        "type": room.select,
+        "label": room.Rname
+      }
+        room.selectFloor === 1 ? constraints_floor_1[`${counter+1}`] = room_constraints : constraints_floor_2[`${counter+1}`] = room_constraints
+    })
 
-  //   let rooms = {}
-  //   data.forEach((room, i) => {
-  //     rooms[`room${i+1}`] = {
-  //         "type": room.select,
-  //         "type_floor": room.selectFloor,
-  //         "x_feet": room.Xvalue,
-  //         "y_feet": room.Yvalue,
-  //         "coordinates": null
-  //       }
-  //   })
+    // getting adjacency parameters in desired format
+    adjacencyList_floor_1.forEach(adjacency =>
+      adjacencyListWithId_floor_1.push([roomIdList[adjacency[0]],roomIdList[adjacency[1]]]))
+      constraints_floor_1["adjs"] = adjacencyListWithId_floor_1
 
+
+    // getting land and envelope parameters in desired format
+    constraints_floor_1["land"] = lat_lngs_array_land
+    constraints_floor_1["envelope"] = lat_lngs_array_envelope
     const designs = await axios.post(`/api/generate-design`, 
                     {
                       "userData": {
@@ -186,21 +216,6 @@ const GenerateDesignTab = withRouter((props) => {
     localStorage.setItem("parameter", JSON.stringify(designs.data.data.designs))
     setButtonText(true)
     setValue(1)
-    // console.log(layers, layersEnvelope, data );
-    // const { squarefeet, bed, bath, garages } = state
-    // const {data} = await axios.get(`/api/parameters?baths=${bath}&beds=${bed}&garages=${garages}&sqft=${squarefeet}`)
-    // .catch(error => console.log(error));
-    // if(!data.data.length) {
-    //   toast.error("Designs not found! Try using different values.")
-    //   return
-    // }
-    // setGeneratedData(data.data);
-    // setState({
-    //   squarefeet: "",
-    //   bed: "",
-    //   bath: "",
-    //   garages: ""
-    // })
   };
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -254,7 +269,6 @@ const GenerateDesignTab = withRouter((props) => {
       toast.error("Room name must be unique")
       return
     }
-    console.log(data)
 
     // add new room details
     setData(prev => [...prev, {
@@ -304,7 +318,10 @@ const GenerateDesignTab = withRouter((props) => {
   useEffect(() => {
     axios.get(`/api/projects/${projectId}`)
     .then(res =>   {
+      // fetch existing parameters form a project
       const search_parameters = res.data.data.search_parameters;
+      set_envelope_parameters(res.data.data.envelope_parameters[0].lat_lngs)
+      set_land_parameters(res.data.data.land_parameters[0].lat_lngs)
       // fetch existing parameters form a project
       search_parameters.forEach((item) => 
         setData(prev => [...prev, {
@@ -375,12 +392,18 @@ const GenerateDesignTab = withRouter((props) => {
                   label="room"
                   onChange={handleChange}
                 >
-                  <MenuItem value="Bedroom">Bedroom</MenuItem>
-                  <MenuItem value="Bathroom">Bathroom</MenuItem>
-                  <MenuItem value="Garage">Garage</MenuItem>
-                  <MenuItem value="Kitchen">Kitchen</MenuItem>
-                  <MenuItem value="Living_Room">Living Room</MenuItem>
-                  <MenuItem value="Dining_Room">Dining Room</MenuItem>
+                  <MenuItem 
+                  value="Bedroom">Bedroom</MenuItem>
+                  <MenuItem 
+                  value="Bathroom">Bathroom</MenuItem>
+                  <MenuItem 
+                  value="Garage">Garage</MenuItem>
+                  <MenuItem 
+                  value="Kitchen">Kitchen</MenuItem>
+                  <MenuItem 
+                  value="Living">Living Room</MenuItem>
+                  <MenuItem 
+                  value="Dining">Dining Room</MenuItem>
                 </Select>
               </FormControl>
               <Box component="form"
@@ -409,7 +432,6 @@ const GenerateDesignTab = withRouter((props) => {
                   label="floor"
                   onChange={handleChange}
                 >
-                  <MenuItem value={0}>0</MenuItem>
                   <MenuItem value={1}>1</MenuItem>
                   <MenuItem value={2}>2</MenuItem>
                 </Select>
@@ -428,6 +450,7 @@ const GenerateDesignTab = withRouter((props) => {
               onChange={handleChange}/>
               
               <Button 
+              type="button"
               variant="text"
               onClick={handleClick}
               sx={{color:'#1976D2'}}
@@ -508,7 +531,7 @@ const GenerateDesignTab = withRouter((props) => {
           </TableContainer>
           <Modal
             open={open}
-            // onClose={handleClose}
+            onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
           >
