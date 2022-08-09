@@ -128,13 +128,13 @@ export const PricingPlan = (props) =>{
                 borderRadius:"4px"}}>
                 <CardContent sx={{display: 'flex', justifyContent:"space-between", padding:0}}>
                     <Box >
-                        <Typography sx={{ alignSelf: 'flex-start' }} className={classes.cardName}> Professional </Typography>
-                        <Typography level="body2" className={classes.Info}>PERFECT FOR SMALL <br></br> FIRMS (1-5 EMPLOYEES)</Typography>
+                        <Typography sx={{ alignSelf: 'flex-start' }} className={classes.cardName}> Basic </Typography>
+                        <Typography level="body2" className={classes.Info}>PERFECT FOR SMALL FIRMS (1-5 EMPLOYEES)</Typography>
                     </Box>
-                    <Box >
+                    {/* <Box >
                         <Typography level="h4" className={classes.price}>$30USD</Typography>
                         <Typography level="body2" className={classes.Info}>per user per month</Typography>
-                    </Box>
+                    </Box> */}
                 </CardContent>
                 <Box>
                     <List>
@@ -144,23 +144,15 @@ export const PricingPlan = (props) =>{
                         </ListItem>
                         <ListItem disablePadding>
                             <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
-                            <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Unlimited access to 2D generation</Typography>}></ListItemText>
+                            <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Unlimited designs</Typography>}></ListItemText>
                         </ListItem>
                         <ListItem disablePadding>
                             <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
-                            <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Access to 3D renderings (14-21 Day delay)</Typography>}></ListItemText>
+                            <ListItemText primary={<Typography sx={{fontSize: "13px"}}>PDF & PNG Export </Typography>}></ListItemText>
                         </ListItem>
                         <ListItem disablePadding>
                             <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
-                            <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Download any design content</Typography>} ></ListItemText>
-                        </ListItem>
-                        <ListItem disablePadding>
-                            <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
-                            <ListItemText primary={<Typography sx={{fontSize: "13px"}}>PDF & PNG Export</Typography>}></ListItemText>
-                        </ListItem>
-                        <ListItem disablePadding>
-                            <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
-                            <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Real-Time Collaboration</Typography>}></ListItemText>
+                            <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Real-Time Collaboration </Typography>} ></ListItemText>
                         </ListItem>
                     </List>
                 </Box>
@@ -194,22 +186,14 @@ export const PricingPlan = (props) =>{
                 <CardContent sx={{display: 'flex', justifyContent:"space-between", padding:0}}>
                     <Box >
                         <Typography sx={{ alignSelf: 'flex-start' }} className={classes.cardName}> Premium </Typography>
-                        <Typography level="body2" className={classes.Info}>RIGHT FOR MEDIUM-LARGE <br></br> FIRMS (5+ EMPLOYEES)</Typography>
-                    </Box>
-                    <Box >
-                        <Typography level="body2" className={classes.price}>$75USD</Typography>
-                        <Typography level="body2" className={classes.Info}>per user per month</Typography>
+                        <Typography level="body2" className={classes.Info}>RIGHT FOR MEDIUM-LARGE FIRMS (15+ EMPLOYEES)</Typography>
                     </Box>
                 </CardContent>
                 <Box>
                     <List>
                         <ListItem disablePadding>
                             <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
-                            <ListItemText primary={<Typography sx={{fontSize: "13px"}}>All Professional features +</Typography>}></ListItemText>
-                        </ListItem>
-                        <ListItem disablePadding>
-                            <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
-                            <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Premium access to 3D renderings (5 Days or Less)</Typography>}></ListItemText>
+                            <ListItemText primary={<Typography sx={{fontSize: "13px"}}>All Basic features + </Typography>}></ListItemText>
                         </ListItem>
                         <ListItem disablePadding>
                             <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
@@ -217,7 +201,7 @@ export const PricingPlan = (props) =>{
                         </ListItem>
                         <ListItem disablePadding>
                             <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
-                            <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Voice-to-plan generation</Typography>}></ListItemText>
+                            <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Access to premium 3D content</Typography>}></ListItemText>
                         </ListItem>
                     </List>
                 </Box>
