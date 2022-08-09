@@ -3,10 +3,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 async function CreateStripeSession(req, res) {
   const { item } = req.body;
 
-  const redirectURL =
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:3000/dashboard/projects'
-      : 'https://stripe-checkout-next-js-demo.vercel.app';
+  const redirectURL = "/dashboard/projects";
 
   const transformedItem = {
     price_data: {
