@@ -254,7 +254,6 @@ const GenerateDesignTab = withRouter((props) => {
       toast.error("Room name must be unique")
       return
     }
-    console.log(data)
 
     // add new room details
     setData(prev => [...prev, {

@@ -57,6 +57,14 @@ const UserSchema = new mongoose.Schema(
     limnu_token: {
       type: String,
     },
+    isSubscribed: {
+      type: Boolean,
+      default:false
+    },
+    subscriptionTime : {
+      type: Date,
+      get: timestamp => dateFormat(timestamp)
+    },
     dateCreated: {
       type: Date,
       default: Date.now,

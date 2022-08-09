@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useEffect} from 'react'
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -13,7 +14,6 @@ import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import { makeStyles } from '@material-ui/styles';
 import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios'
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -51,6 +51,7 @@ export const PricingPlan = (props) =>{
     const [maxWidth, setMaxWidth] = React.useState('lg');
     const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
     const stripePromise = loadStripe(publishableKey);
+    const router = useRouter();
 
     const classes = useStyles();
     const styles = theme => ({
@@ -59,10 +60,19 @@ export const PricingPlan = (props) =>{
         }
       });
 
+      useEffect(() => {
+        const owner = localStorage.getItem("lab-user");          
+        router.query.status === "true" && setOpen(false)
+        axios.get(`/api/user/${owner}`)
+        .then(res =>  
+          res.data.data && res.data.data.isSubscribed && setOpen(false)
+        )
+        .catch(error => console.log(error));
+      },[]);
+
       const createCheckOutSession = async (plan_details) => {
-        console.log("Saved");
         const stripe = await stripePromise;
-        const checkoutSession = await axios.post('/api/stripe', {
+        const checkoutSession = await axios.post('/api/stripe_checkout_session', {
           item: plan_details,
         });
         const result = await stripe.redirectToCheckout({
@@ -95,7 +105,7 @@ export const PricingPlan = (props) =>{
         fullWidth={fullWidth}
         maxWidth={maxWidth}
         open={open}
-        onClose={handleClose}
+        // onClose={handleClose}
         aria-labelledby="responsive-dialog-title"
         // sx={{ borderRadius:0, minWidth:"800px", height:"100%"}}
       >
