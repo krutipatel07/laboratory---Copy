@@ -132,7 +132,7 @@ const importDesign = async (secure_url, designName, file_name) => {
           backgroundColor: '#fffff'
         }}
       >
-      <div 
+      {/* <div 
       style={{display:'block', marginLeft: 'auto', width: '112px'}}>
           <Button
             component="a"
@@ -142,7 +142,7 @@ const importDesign = async (secure_url, designName, file_name) => {
             <AddIcon/>
             IMPORT
           </Button>
-      </div>
+      </div> */}
 
       <Box sx={{ flexGrow: 1, }}>
         <IconButton 

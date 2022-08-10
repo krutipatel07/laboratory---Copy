@@ -89,7 +89,8 @@ export const ProductCreateForm = (props) => {
             toast.success('Project created!');
             setProjectId(data.data._id)
             setOpen(prev=>!prev)
-            setModal(prev=>!prev)
+            router.push(`/workspace?id=${data.data._id}&i=0`);
+            // setModal(prev=>!prev)
         } catch (err) {
           console.error(err);
           toast.error('Something went wrong!');

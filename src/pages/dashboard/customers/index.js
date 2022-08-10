@@ -248,7 +248,7 @@ const CustomerList = () => {
                   placeholder="Search customers"
                 />
               </Box>
-              <TextField
+              {/* <TextField
                 label="Sort By"
                 name="sort"
                 onChange={handleSortChange}
@@ -265,7 +265,7 @@ const CustomerList = () => {
                     {option.label}
                   </option>
                 ))}
-              </TextField>
+              </TextField> */}
             </Box>
             <CollaboratorListTable
               customers={paginatedCustomers}

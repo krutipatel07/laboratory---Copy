@@ -41,7 +41,7 @@ const sections = [
       // },
       {
         title: 'Contact',
-        href: '/contact'
+        href: 'https://calendly.com/maket/support'
       },
       {
         title: 'Email',

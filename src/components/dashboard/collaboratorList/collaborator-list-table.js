@@ -61,7 +61,7 @@ export const CollaboratorListTable = (props) => {
 
   return (
     <div {...other}>
-      <Box
+      {/* <Box
         sx={{
           backgroundColor: 'neutral.100',
           display: !enableBulkActions && 'none',
@@ -86,17 +86,17 @@ export const CollaboratorListTable = (props) => {
         >
           Edit
         </Button>
-      </Box>
+      </Box> */}
       <Scrollbar>
         <Table sx={{ minWidth: 700 }}>
           <TableHead sx={{ visibility: enableBulkActions ? 'collapse' : 'visible' }}>
             <TableRow>
               <TableCell padding="checkbox">
-                <Checkbox
+                {/* <Checkbox
                   checked={selectedAllCustomers}
                   indeterminate={selectedSomeCustomers}
                   onChange={handleSelectAllCustomers}
-                />
+                /> */}
               </TableCell>
               <TableCell>
                 Name
@@ -117,11 +117,11 @@ export const CollaboratorListTable = (props) => {
                   selected={isCustomerSelected}
                 >
                   <TableCell padding="checkbox">
-                    <Checkbox
+                    {/* <Checkbox
                       checked={isCustomerSelected}
                       onChange={(event) => handleSelectOneCustomer(event, customer.id)}
                       value={isCustomerSelected}
-                    />
+                    /> */}
                   </TableCell>
                   <TableCell>
                     <Box
@@ -140,17 +140,17 @@ export const CollaboratorListTable = (props) => {
                         {getInitials(customer.name)}
                       </Avatar>
                       <Box sx={{ ml: 1 }}>
-                        <NextLink
+                        {/* <NextLink
                           href="/dashboard/customers/1"
                           passHref
-                        >
+                        > */}
                           <Link
                             color="inherit"
                             variant="subtitle2"
                           >
                             {customer.name}
                           </Link>
-                        </NextLink>
+                        {/* </NextLink> */}
                         <Typography
                           color="textSecondary"
                           variant="body2"
