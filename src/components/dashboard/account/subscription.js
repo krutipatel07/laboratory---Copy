@@ -16,6 +16,7 @@ import {
 import { UserCircle as UserCircleIcon } from '../../../icons/user-circle';
 import { useAuth } from '../../../hooks/use-auth';
 import toast from 'react-hot-toast';
+import { fontSize } from '@mui/system';
 
 export const Subscription = (props) => {
   // To get the user from the authContext, you can use
@@ -65,34 +66,23 @@ export const Subscription = (props) => {
       {...props}>
       <Card>
         <CardContent>
-          <Grid
-            container
-            spacing={3}
-          >
-            <Grid
-              item
-              md={12}
-              xs={12}
-            >
-              <Typography 
-                style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:50}}>
-                  Your 14 days free trial period started!
-              </Typography>
-            </Grid>
-            {/* <Grid
-              item
-              md={12}
-              xs={12}>
-                <Box>
+            <Box>
+                <Typography 
+                    style={{fontSize:24}}>
+                    14 Day free trial
+                </Typography>
+                <span style={{fontSize:16, paddingTop:5, color: "rgba(0, 0, 0, 0.6)"}}>Started on August 10th, 2022</span>
+                <Box sx={{mt:2}}>
                     <Button 
                     variant="contained"
                     type="submit"
-                    sx={{mr:1, bgcolor:"#2E7D32", color:"#ffffff", borderRadius:16}}>
+                    sx={{bgcolor:"#2E7D32", color:"#ffffff", borderRadius:16, }}>
                         <Typography variant="body1" sx={{fontSize:13}}>
                         ACTIVE
                         </Typography>
                     </Button>
                     <Button 
+                    sx={{display:"block",pl:0, mt:1}}
                     color="primary"
                     type="submit">
                         <Typography variant="body1"  sx={{fontSize:13}}>
@@ -100,9 +90,7 @@ export const Subscription = (props) => {
                         </Typography>
                     </Button>
                 </Box>
-
-            </Grid> */}
-          </Grid>
+            </Box>
         </CardContent>
       </Card>
     </Box>

@@ -36,6 +36,13 @@ const getSections = (t) => [
     title: t('Workspace'),
     items: [
       {
+        title: t('Projects'),
+        // style: {backgroundColor: 'yellow'},
+        path: '/dashboard/projects',
+        // icon: <DesignServicesIcon fontSize="small" />,
+        children: JSON.parse(localStorage.getItem('project_list') || "[]").reverse()
+      },
+      {
         title: t('Collaborators'),
         path: '/dashboard/customers',
         // icon: <UsersIcon fontSize="small" />,
@@ -47,13 +54,7 @@ const getSections = (t) => [
 
         ]
       },
-      {
-        title: t('Projects'),
-        // style: {backgroundColor: 'yellow'},
-        path: '/dashboard/projects',
-        // icon: <DesignServicesIcon fontSize="small" />,
-        children: JSON.parse(localStorage.getItem('project_list') || "[]").reverse()
-      },
+
     ]
   },
 

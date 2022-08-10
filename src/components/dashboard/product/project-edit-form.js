@@ -221,7 +221,7 @@ export const ProjectEditForm = (props) => {
           </Grid>
         </CardContent>
       </Card>
-      <Card sx={{ mt: 3 }}>
+      {/* <Card sx={{ mt: 3 }}>
         <CardContent>
           <Grid
             container
@@ -270,7 +270,7 @@ export const ProjectEditForm = (props) => {
             </Grid>
           </Grid>
         </CardContent>
-      </Card>
+      </Card> */}
       <Box
         sx={{
           display: 'flex',
