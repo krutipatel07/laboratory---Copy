@@ -115,7 +115,7 @@ const ProductCard = (props) => {
           alt="Project cover image"
         />
       </NextLink>
-      <CardActions 
+      {/* <CardActions 
       sx={{
         px:"0",
         display: 'flex', 
@@ -130,7 +130,7 @@ const ProductCard = (props) => {
         <Chip label={`${members} Collaborators`} 
         variant="outlined" 
         sx={{borderWidth: '2px'}} />
-      </CardActions>
+      </CardActions> */}
     </Card>
     </>
   );

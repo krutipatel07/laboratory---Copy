@@ -76,7 +76,7 @@ const getBottomSections = (t) => [
       },
       {
         title: t('Contact us'),
-        path: '/contact',
+        path: 'https://calendly.com/maket/support',
         icon: <InfoOutlinedIcon fontSize="small" />
       },
 
@@ -313,7 +313,7 @@ export const DashboardSidebar = (props) => {
                 <Tooltip title='Info' 
                 placement="left-end">
                   <IconButton>
-                    <NextLink href="/contact">
+                    <NextLink href="https://calendly.com/maket/support">
                       <InfoOutlinedIcon 
                       fontSize="small" 
                       style={{display:'block', marginTop: 10, marginBottom: 10}}/>

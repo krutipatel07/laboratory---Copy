@@ -296,7 +296,7 @@ export const WorkspaceSidebar = (props) => {
               {t('Reach out to us')}
             </Typography>
             <NextLink
-              href="/contact"
+              href="https://calendly.com/maket/support"
               passHref
             >
               <Button

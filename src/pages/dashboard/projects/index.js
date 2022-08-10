@@ -116,10 +116,10 @@ const ProductList = () => {
         setModalShown={setModalShown}/> : ''
       }
       {/* display generate or import modal after creating project */}
-      {modal && <GenerateImportDialog 
+      {/* {modal && <GenerateImportDialog 
       modal={modal} 
       setModal={setModal} 
-      projectId={projectId}/>}
+      projectId={projectId}/>} */}
       {/* <PricingPlan/> */}
     </>
   );

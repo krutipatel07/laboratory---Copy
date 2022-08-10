@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import Head from 'next/head';
 import NextLink from 'next/link';
 import { Box, Card, Container, Divider, Link, Typography } from '@mui/material';
-// import { FirebasePasswordReset } from '../../components/authentication/firebase-reset-password';
+import { FirebasePasswordReset } from '../../components/authentication/firebase-reset-password';
 import { Logo } from '../../components/logo';
 import { gtm } from '../../lib/gtm';
 
@@ -79,7 +79,7 @@ const PasswordReset = () => {
                 mt: 3
               }}
             >
-              {/* <FirebasePasswordReset /> */}
+              <FirebasePasswordReset />
             </Box>
           </Card>
         </Container>

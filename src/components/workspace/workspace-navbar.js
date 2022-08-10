@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core';
 import axios from 'axios'
 import { useRouter } from 'next/router';
 import { withRouter} from 'next/router';
-import AssetSideBar from './projectAssetSidebar'
+// import AssetSideBar from './projectAssetSidebar'
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -103,7 +103,10 @@ export const WorkspaceNavbar = withRouter((props) => {
         >
           <Box sx={{ flexGrow: 1, pl: 1 }} 
           className={classes.projectName}>
-              <NextLink
+              {isInvited ? <Typography variant="h6"  
+                style={{fontSize:12, color:'rgba(0, 0, 0, 0.6)', cursor: 'pointer'}}>
+                  <span>Project/</span>
+                </Typography> : <NextLink
                 href="/dashboard/projects"
                 passHref
               >
@@ -111,13 +114,13 @@ export const WorkspaceNavbar = withRouter((props) => {
                 style={{fontSize:12, color:'rgba(0, 0, 0, 0.6)', cursor: 'pointer'}}>
                   <span>Project/</span>
                 </Typography>
-              </NextLink>   
+              </NextLink> }
               <Typography variant="h4" 
               className={classes.title}>
                 <span>{projectTitle && projectTitle}</span>
               </Typography>
           </Box>
-          <AssetSideBar/>
+          {/* <AssetSideBar/> */}
         </Toolbar>
       </WorkspaceNavbarRoot>
     </>
