@@ -596,7 +596,7 @@ const GenerateDesignTab = withRouter((props) => {
       </Accordion>
       <Button variant="contained" 
       sx={{mt:3}} 
-      onClick={handleSubmit}>{buttonText ? "GENERATE DESIGNS" : "Generating..."}</Button>
+      onClick={handleSubmit}>{buttonText ? "GENERATE DESIGNS" : "Generating"}</Button>
     </div>
 
       </Box>

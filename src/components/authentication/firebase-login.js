@@ -47,11 +47,6 @@ export const FirebaseLogin = (props) => {
         if (isMounted()) {    
           const {data} = await axios.get(`/api/owner/${values.email}`)
           .catch(error => console.log(error));
-        
-          data.data && !data.data.isSubscribed  && await axios.put(`/api/user/${data.data._id}`, {
-          isSubscribed : false
-        })
-        .catch(error => console.log(error));
           
           localStorage.setItem("lab-user", data.data._id); 
           localStorage.setItem("is-owner", "true"); 

@@ -13,7 +13,6 @@ import { Box, Button, ListItem, List, Typography, IconButton, ListItemIcon, Card
 import Card from '@mui/material/Card';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import { makeStyles } from '@material-ui/styles';
-import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios'
 
 const useStyles = makeStyles((theme) => ({
@@ -50,9 +49,6 @@ export const PricingPlan = (props) =>{
     const [open, setOpen] = React.useState(true);
     const [fullWidth, setFullWidth] = React.useState(true);
     const [maxWidth, setMaxWidth] = React.useState('lg');
-    const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-    const stripePromise = loadStripe(publishableKey);
-    const router = useRouter();
 
     const classes = useStyles();
     const styles = theme => ({
@@ -60,29 +56,6 @@ export const PricingPlan = (props) =>{
           fontSize:'0.7em',//Insert your required size
         }
       });
-
-      useEffect(() => {
-        const owner = localStorage.getItem("lab-user");          
-        router.query.status === "true" && setOpen(false)
-        axios.get(`/api/user/${owner}`)
-        .then(res =>  
-          res.data.data && res.data.data.isSubscribed && setOpen(false)
-        )
-        .catch(error => console.log(error));
-      },[]);
-
-      const createCheckOutSession = async (plan_details) => {
-        const stripe = await stripePromise;
-        const checkoutSession = await axios.post('/api/stripe_checkout_session', {
-          item: plan_details,
-        });
-        const result = await stripe.redirectToCheckout({
-          sessionId: checkoutSession.data.id,
-        });
-        if (result.error) {
-          alert(result.error.message);
-        }
-      };
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -156,28 +129,6 @@ export const PricingPlan = (props) =>{
                         </ListItem>
                     </List>
                 </Box>
-
-                <Link
-                        href="https://checkout.stripe.com/pay/cs_live_a1Wy9SBv7t7BzXoMVYOs397r3K2ff2LaU1HYTX9eWDu5bPHnMiDHbtadgv#fidkdWxOYHwnPyd1blppbHNgWjA0TWhOTExBMEtdQHFEf2xVSnByRGM1QWB%2FQ3J0fHBKZHdKY2Z0VV1%2FbWZEdHRPf3FJXzdvf2ZTQ3Y2UzNUVHI2QX1CYm1PQmFsRjdgN0t1Y2hdTWFvV393NTVXVlFXSms3aScpJ3VpbGtuQH11anZgYUxhJz8nZks3NmFWYVJ2NmkwZ2tsNmZtJ3gl"
-                        color="textPrimary"
-                        variant="subtitle2"
-                      > <CardActions sx={{padding: "16px 5px"}} 
-                
-                      >
-                          <Button className={classes.startbtn}>START NOW</Button>
-                      </CardActions>
-                      </Link>
-
-                {/* <CardActions sx={{padding: "16px 5px"}} onClick={()=> createCheckOutSession(
-                    {
-                        name : "Professional",
-                        price : 30,
-                        decription : "PERFECT FOR SMALL FIRMS (1-5 EMPLOYEES) ",
-                        quantity : "1",
-                    }
-                )}>
-                    <Button className={classes.startbtn}>START NOW</Button>
-                </CardActions> */}
             </Card>
             <Card 
             sx={{ maxWidth: 300, minWidth: 350, padding:"10px",
@@ -204,20 +155,7 @@ export const PricingPlan = (props) =>{
                             <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Access to premium 3D content</Typography>}></ListItemText>
                         </ListItem>
                     </List>
-                </Box>
-
-                <Link
-                        href="https://checkout.stripe.com/pay/cs_live_a1BYTD5Ssx4C2qXZ3skLmRlvB81Iijx3Xmrz8NpLlvOvJJjwTVKLELen3T#fidkdWxOYHwnPyd1blppbHNgWjA0TWhOTExBMEtdQHFEf2xVSnByRGM1QWB%2FQ3J0fHBKZHdKY2Z0VV1%2FbWZEdHRPf3FJXzdvf2ZTQ3Y2UzNUVHI2QX1CYm1PQmFsRjdgN0t1Y2hdTWFvV393NTVXVlFXSms3aScpJ3VpbGtuQH11anZgYUxhJz8nMnZMYFJEZlZqZlNDMzdcNz1mJ3gl"
-                        color="textPrimary"
-                        variant="subtitle2"
-                      > <CardActions sx={{padding: "16px 5px"}} 
-                
-                      >
-                          <Button className={classes.startbtn}>START NOW</Button>
-                      </CardActions>
-                      </Link>
-
-               
+                </Box>               
             </Card>
         </DialogContent>
 

@@ -11,7 +11,7 @@ import DashboardModalTutorial from '../../../components/modal/dashboard-modal-tu
 import CreateProjectModal from '../../../components/modal/createProject-modal'
 import {DashboardSidebar} from '../../../components/dashboard/dashboard-sidebar'
 import {GenerateImportDialog} from '../../../components/modal/generateImportModal'
-import {PricingPlan} from '../../../components/modal/pricingPlanModal'
+// import {PricingPlan} from '../../../components/modal/pricingPlanModal'
 import { useRouter } from 'next/router';
 
 const ProductList = () => {
@@ -30,20 +30,11 @@ const ProductList = () => {
   // Added a new column in the User Model 
   // Called the User Model 
   // useEffect should update when true to be false only once > PUT 
-  useEffect(async () => {
+  useEffect(() => {
     const owner = localStorage.getItem("lab-user");
     axios.get(`/api/user/${owner}`)
-    .then(res => {
-      setUserData(res.data.data)  
-      router.query.status === "true" && axios.put(`/api/user/${res.data.data._id}`, {
-        isSubscribed : true,
-        subscriptionTime : Date.now()
-      })
-      .catch(error => console.log(error));
-      res.data.data && !res.data.data.isSubscribed && console.log(res.data.data);
-    })
+    .then(res => setUserData(res.data.data))
     .catch(error => console.log(error));
-
   },[]);
 
   useEffect(() => {
@@ -129,7 +120,7 @@ const ProductList = () => {
       modal={modal} 
       setModal={setModal} 
       projectId={projectId}/>}
-      <PricingPlan/>
+      {/* <PricingPlan/> */}
     </>
   );
 };

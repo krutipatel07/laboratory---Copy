@@ -74,11 +74,12 @@ export const Subscription = (props) => {
               md={12}
               xs={12}
             >
-              <Typography variant="h3">
-                Professional
+              <Typography 
+                style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:50}}>
+                  Your 14 days free trial period started!
               </Typography>
             </Grid>
-            <Grid
+            {/* <Grid
               item
               md={12}
               xs={12}>
@@ -100,7 +101,7 @@ export const Subscription = (props) => {
                     </Button>
                 </Box>
 
-            </Grid>
+            </Grid> */}
           </Grid>
         </CardContent>
       </Card>
