@@ -249,7 +249,7 @@ export const DashboardSidebar = (props) => {
           </Box>) : <Box sx={{ flexGrow: 1 }}></Box>
           }
           
-          {!open && !isInvited && <Box>
+          {/* {!open && !isInvited && <Box>
             <Box sx={{ flexGrow: 1, }}>
               <IconButton 
               style={{width: '100%', justifyContent: 'flex-start'}}>
@@ -267,7 +267,8 @@ export const DashboardSidebar = (props) => {
           </Box>}
           {isModalShown && <DashboardModalTutorial open={isOpen} 
           setIsOpen={setIsOpen} 
-          setModalShown={setModalShown}/>}
+          setModalShown={setModalShown}/>} */}
+          
           <Box>
             {open ?
             <Box sx={{ flexGrow: 1 }}>

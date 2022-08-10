@@ -107,14 +107,14 @@ const ProductList = () => {
           </Card>
         </Container>
       </Box>
-      {
+      {/* {
         // display tutorial modal if user is the new first time user
         userData && userData.isFirstTime ? 
         <DashboardModalTutorial 
         open={isOpen} 
         setIsOpen={setIsOpen} 
         setModalShown={setModalShown}/> : ''
-      }
+      } */}
       {/* display generate or import modal after creating project */}
       {/* {modal && <GenerateImportDialog 
       modal={modal} 
