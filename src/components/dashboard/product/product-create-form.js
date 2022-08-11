@@ -147,7 +147,7 @@ export const ProductCreateForm = (props) => {
     <form sx={{p:1}}
       onSubmit={formik.handleSubmit}
       {...props}>
-      <Card sx={{boxShadow:'none', overflow:'auto', height:'80vh'}}>
+      <Card sx={{boxShadow:'none', overflow:'auto', height:"auto"}}>
         <CardContent>
           <Box sx={{
             display: 'block',
@@ -214,7 +214,7 @@ export const ProductCreateForm = (props) => {
               />
             </Grid>
 
-            <Grid
+            {/* <Grid
               item
               md={12}
               xs={12}
@@ -237,9 +237,9 @@ export const ProductCreateForm = (props) => {
                 onRemove={handleRemove}
                 onRemoveAll={handleRemoveAll}
               />
-            </Grid>
+            </Grid> */}
 
-            <Grid
+            {/* <Grid
               item
               md={12}
               xs={12}
@@ -264,7 +264,7 @@ export const ProductCreateForm = (props) => {
                 inputProps={{ min: "10000", step: "10000" }}
                 value={formik.values.newPrice}
               />
-            </Grid>
+            </Grid> */}
           </Grid>
         </CardContent>
       </Card>
