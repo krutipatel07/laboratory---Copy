@@ -320,8 +320,8 @@ const GenerateDesignTab = withRouter((props) => {
     .then(res =>   {
       // fetch existing parameters form a project
       const search_parameters = res.data.data.search_parameters;
-      set_envelope_parameters(res.data.data.envelope_parameters[0].lat_lngs)
-      set_land_parameters(res.data.data.land_parameters[0].lat_lngs)
+      res.data.data.envelope_parameters.length ? set_envelope_parameters(res.data.data.envelope_parameters[0].lat_lngs) : set_envelope_parameters([])
+      res.data.data.land_parameters.length ? set_land_parameters(res.data.data.land_parameters[0].lat_lngs) : set_land_parameters([])
       // fetch existing parameters form a project
       search_parameters.forEach((item) => 
         setData(prev => [...prev, {
@@ -433,19 +433,18 @@ const GenerateDesignTab = withRouter((props) => {
                   onChange={handleChange}
                 >
                   <MenuItem value={1}>1</MenuItem>
-                  <MenuItem value={2}>2</MenuItem>
                 </Select>
               </FormControl>
               <TextField id="Xvalue" 
               name="Xvalue" 
               value={state.Xvalue}  
-              label="X" 
+              label="X (feet)" 
               variant="outlined" 
               onChange={handleChange}/>
               <TextField id="Yvalue" 
               name="Yvalue"  
               value={state.Yvalue} 
-              label="Y" 
+              label="Y (feet)" 
               variant="outlined" 
               onChange={handleChange}/>
               
