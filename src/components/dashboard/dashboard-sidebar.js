@@ -276,12 +276,12 @@ export const DashboardSidebar = (props) => {
               style={{display: 'grid', width: '100%'}}>
                 {!isInvited ? 
                 <>
-                <Tooltip title="Tutorial">
+                {/* <Tooltip title="Tutorial">
                   <IconButton onClick={handleClick}>
                     <StarBorderIcon 
                     fontSize="small"></StarBorderIcon>
                   </IconButton>
-                </Tooltip>
+                </Tooltip> */}
                 <Tooltip title="Account">
                   <IconButton>
                     <NextLink href="/dashboard/account">

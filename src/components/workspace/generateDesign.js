@@ -29,7 +29,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import dynamic from "next/dynamic";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import AdjacencyModal from '../modal/roomAdjacency-modal'
+// import AdjacencyModal from '../modal/roomAdjacency-modal'
 import CheckIcon from '@mui/icons-material/Check';
 
 const useStyles = makeStyles({
@@ -472,7 +472,7 @@ const GenerateDesignTab = withRouter((props) => {
                   <TableCell align="right">X&nbsp;(feet)</TableCell>
                   <TableCell align="right">Y&nbsp;(feet)</TableCell>
                   <TableCell align="right">Floor</TableCell>
-                  <TableCell align="right">Adjacencies</TableCell>
+                  {/* <TableCell align="right">Adjacencies</TableCell> */}
                 </TableRow>
               </TableHead>
               {/* List of data table entered by user */}
@@ -514,21 +514,21 @@ const GenerateDesignTab = withRouter((props) => {
                     size="small" variant="filled" 
                     style={{color:row_color_scheme[row.select].color, backgroundColor:row_color_scheme[row.select].backgroundColor}}></Chip></TableCell>
                     <TableCell align="right"><Typography>{row.selectFloor}</Typography></TableCell>
-                    <TableCell align="right">
+                    {/* <TableCell align="right">
                       <Chip label="edit/set" 
                       onClick={() => {
                         setRoomId(row.id)
                         setOpen(true);
                       }} />
-                      {/* <CheckIcon fontSize="small" sx={{pt:'2px', ml:"7px"}}/> */}
-                    </TableCell>
+                      <CheckIcon fontSize="small" sx={{pt:'2px', ml:"7px"}}/>
+                    </TableCell> */}
                   </TableRow>
                 ))}
               </TableBody>
 
             </Table>
           </TableContainer>
-          <Modal
+          {/* <Modal
             open={open}
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
@@ -539,7 +539,7 @@ const GenerateDesignTab = withRouter((props) => {
               <AdjacencyModal setOpen={setOpen} 
               roomId={roomId} data={data} setData={setData} setChanged={setChanged}/>
             </Box>
-          </Modal>
+          </Modal> */}
 
           <Box 
           sx={{display:'flex', justifyContent:'space-between'}}>

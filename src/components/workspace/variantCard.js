@@ -16,6 +16,7 @@ import Chip from '@mui/material/Chip';
 import Popper from '@mui/material/Popper';
 import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
+import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import { Typography, 
   ListItemButton,
   ListItemIcon,
@@ -87,6 +88,25 @@ const VariantCard = (props) => {
       deleted && toast.success("Design deleted");
       setUpdate((prev) => !prev)
     }
+
+    const exportDesign = async file => {  
+      axios.get(file, {
+        responseType: "blob",
+      }).then(function (response) {
+        const url = window.URL.createObjectURL(
+          new Blob([response.data], {
+            type: response.headers["content-type"],
+          })
+        );
+  
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "maket-design.jpg");
+        document.body.appendChild(link);
+        link.click();
+      });
+      }
+  
     
   return (
     <>
@@ -100,6 +120,10 @@ const VariantCard = (props) => {
               <ListItemButton onClick={deleteDesign}>
                 <ListItemIcon><DeleteIcon /></ListItemIcon>
                 <ListItemText primary="Delete" />
+              </ListItemButton>
+              <ListItemButton onClick={() => exportDesign(image)}>
+                <ListItemIcon><SaveAltIcon /></ListItemIcon>
+                <ListItemText primary="Export" />
               </ListItemButton>
             </Paper>
           </Fade>

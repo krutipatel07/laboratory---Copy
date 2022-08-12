@@ -85,7 +85,7 @@ const Map = (props) => {
         const {layerType, layer} = e;
         if (layerType === "polygon") {
           const {_leaflet_id} = layer;
-          setPolygon(layers => [...layers, {id: _leaflet_id, lat_lngs: layer.getLatLngs()[0], zoom: layer._mapToAdd._animateToZoom}]);
+          setPolygon(layers => [...layers, {id: _leaflet_id, lat_lngs: layer.getLatLngs()[0], zoom: layer._mapToAdd._animateToZoom ? layer._mapToAdd._animateToZoom : 18}]);
           setSaved(false)
         }
     }
