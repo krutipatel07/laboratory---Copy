@@ -104,6 +104,9 @@ const VariantCard = (props) => {
         link.setAttribute("download", "maket-design.jpg");
         document.body.appendChild(link);
         link.click();
+        toast.success("Design downloaded!")
+      }).catch(function(e) {
+        toast.error("Something went wrong!")
       });
       }
   
