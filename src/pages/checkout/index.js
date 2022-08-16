@@ -41,9 +41,6 @@ const useStyles = makeStyles((theme) => ({
 
 const StripeCheckout = withRouter((props) => {
   const classes = useStyles();
-  const handleClick = () => {
-
-  }
   return (
     <>
     <Head>
@@ -73,12 +70,13 @@ const StripeCheckout = withRouter((props) => {
             <Box className={classes.content}>
               <h1>Payment Success !</h1>
               <Typography>Congratulations on becoming our member</Typography>
+
               
           <NextLink
             href="/dashboard/projects"
             passHref
           >
-            <a> <Button variant="contained" sx={{mt:"40px"}} onClick={handleClick}>Go to Dashboard</Button> </a>
+            <a> <Button variant="contained" sx={{mt:"40px"}}>Go to Dashboard</Button> </a>
             </NextLink>
             </Box>
           </Box>
