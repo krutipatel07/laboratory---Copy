@@ -127,6 +127,9 @@ export const PricingPlan = (props) =>{
                             <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
                             <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Real-Time Collaboration </Typography>} ></ListItemText>
                         </ListItem>
+                        <CardActions sx={{padding: "16px 5px"}}>
+                            <Button className={classes.startbtn}>START NOW</Button>
+                        </CardActions>
                     </List>
                 </Box>
             </Card>
@@ -153,13 +156,14 @@ export const PricingPlan = (props) =>{
                         <ListItem disablePadding>
                             <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
                             <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Access to premium 3D content</Typography>}></ListItemText>
-                        </ListItem>
+                        </ListItem>                        
+                        <CardActions sx={{padding: "16px 5px"}}>
+                            <Button className={classes.startbtn}>START NOW</Button>
+                        </CardActions>
                     </List>
                 </Box>               
             </Card>
         </DialogContent>
-
-
       </Dialog>
     </div>
   );

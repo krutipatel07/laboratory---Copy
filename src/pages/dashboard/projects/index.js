@@ -11,8 +11,9 @@ import DashboardModalTutorial from '../../../components/modal/dashboard-modal-tu
 import CreateProjectModal from '../../../components/modal/createProject-modal'
 import {DashboardSidebar} from '../../../components/dashboard/dashboard-sidebar'
 import {GenerateImportDialog} from '../../../components/modal/generateImportModal'
-// import {PricingPlan} from '../../../components/modal/pricingPlanModal'
+import {PricingPlan} from '../../../components/modal/pricingPlanModal'
 import { useRouter } from 'next/router';
+import extractDate from '../../../utils/extractDate';
 
 const ProductList = () => {
   const [open, setOpen] = useState(false);
@@ -21,6 +22,7 @@ const ProductList = () => {
   const [projectId, setProjectId] = useState()
   const [isOpen, setIsOpen] = useState(false);
   const [isModalShown, setModalShown] = useState(false)  
+  const [dateDiff, setDateDiff] = useState()
   const router = useRouter();
 
   useEffect(() => {
@@ -33,7 +35,16 @@ const ProductList = () => {
   useEffect(() => {
     const owner = localStorage.getItem("lab-user");
     axios.get(`/api/user/${owner}`)
-    .then(res => setUserData(res.data.data))
+    .then(res => {
+      setUserData(res.data.data)
+      // let dateCreated = res.data.data.dateCreated      
+      // dateCreated = extractDate(dateCreated)
+
+      // const date_1 = new Date(dateCreated);
+      // const date_2 = new Date();
+      // const difference = date_1.getTime() - date_2.getTime();
+      // setDateDiff(Math.ceil(difference / (1000 * 3600 * 24)))
+    })
     .catch(error => console.log(error));
   },[]);
 
@@ -120,7 +131,8 @@ const ProductList = () => {
       modal={modal} 
       setModal={setModal} 
       projectId={projectId}/>} */}
-      {/* <PricingPlan/> */}
+      
+      {/* {dateDiff <= -14 && <PricingPlan/>} */}
     </>
   );
 };
