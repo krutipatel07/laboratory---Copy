@@ -37,13 +37,13 @@ const ProductList = () => {
     axios.get(`/api/user/${owner}`)
     .then(res => {
       setUserData(res.data.data)
-      // let dateCreated = res.data.data.dateCreated      
-      // dateCreated = extractDate(dateCreated)
+      let dateCreated = res.data.data.dateCreated      
+      dateCreated = extractDate(dateCreated)
 
-      // const date_1 = new Date(dateCreated);
-      // const date_2 = new Date();
-      // const difference = date_1.getTime() - date_2.getTime();
-      // setDateDiff(Math.ceil(difference / (1000 * 3600 * 24)))
+      const date_1 = new Date(dateCreated);
+      const date_2 = new Date();
+      const difference = date_1.getTime() - date_2.getTime();
+      setDateDiff(Math.ceil(difference / (1000 * 3600 * 24)))
     })
     .catch(error => console.log(error));
   },[]);
@@ -132,7 +132,7 @@ const ProductList = () => {
       setModal={setModal} 
       projectId={projectId}/>} */}
       
-      {/* {dateDiff <= -14 && <PricingPlan/>} */}
+      {dateDiff <= -14 && <PricingPlan/>}
     </>
   );
 };
