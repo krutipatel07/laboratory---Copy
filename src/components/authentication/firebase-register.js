@@ -66,7 +66,6 @@ export const FirebaseRegister = (props) => {
             await axios.put(`/api/user/${data.data._id}`, {
               name: values.name,
               role: values.role,
-              isSubscribed: false,
             })
             .catch(error => console.log(error));
 
@@ -87,7 +86,6 @@ export const FirebaseRegister = (props) => {
                 name: values.name,
                 email: values.email,
                 role: values.role,
-                isSubscribed: false
               })
               .catch(error => console.log(error));
 

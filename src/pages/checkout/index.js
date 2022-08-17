@@ -7,6 +7,7 @@ import { withAuthGuard } from '../../hocs/with-auth-guard'
 import { makeStyles } from '@material-ui/core';
 import { useTheme } from '@mui/material/styles';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import NextLink from 'next/link';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,8 +23,13 @@ const useStyles = makeStyles((theme) => ({
     borderRadius:"20px",
     background:"#fff",
   },
-  payment_header: {
+  payment_header_check: {
     background:"#2E7D32",
+	  padding:"20px",
+    borderRadius:"20px 20px 0px 0px",
+  },
+  payment_header_cancel: {
+    background:"#DC143C",
 	  padding:"20px",
     borderRadius:"20px 20px 0px 0px",
   },
@@ -40,6 +46,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const StripeCheckout = withRouter((props) => {
+  const router = useRouter();
+  const {status} = router.query
   const classes = useStyles();
   return (
     <>
@@ -64,20 +72,20 @@ const StripeCheckout = withRouter((props) => {
       >
         <Grid item xs={8}>
           <Box className={classes.payment}>
-            <Box className={classes.payment_header}>
+            {status==="success" ? <Box className={classes.payment_header_check}>
               <Box className={classes.check}><CheckCircleOutlineIcon sx={{height:"50px", width:"50px", color:"#ffffff"}}/></Box>
-            </Box>
+            </Box>: <Box className={classes.payment_header_cancel}>
+              <Box className={classes.check}><CancelOutlinedIcon sx={{height:"50px", width:"50px", color:"#ffffff"}}/></Box>
+            </Box>}
             <Box className={classes.content}>
-              <h1>Payment Success !</h1>
-              <Typography>Congratulations on becoming our member</Typography>
-
-              
-          <NextLink
-            href="/dashboard/projects"
-            passHref
-          >
-            <a> <Button variant="contained" sx={{mt:"40px"}}>Go to Dashboard</Button> </a>
-            </NextLink>
+              <h1>{status==="success" ? "Payment Success !" : "Transaction incompleted!"}</h1>
+              <Typography>{status==="success" ? "Congratulations on becoming our member. " : "Something went wrong with your payment."}</Typography>
+              <NextLink
+                href="/dashboard/projects"
+                passHref
+              >
+                <Button variant="contained" sx={{mt:"40px"}}>Go to Dashboard</Button>
+              </NextLink>
             </Box>
           </Box>
           </Grid>
