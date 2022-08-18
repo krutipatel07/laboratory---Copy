@@ -106,7 +106,7 @@ export const PricingPlan = (props) =>{
 
         <DialogContent sx={{px:2, py:2, marginTop:"10px"}}>
           <DialogContentText style={{color:'#000', fontWeight:500, fontSize:12}}>
-          Please select your plan to continue.
+          Your free trial is over. Please select your plan to continue 
           </DialogContentText>
         </DialogContent>
 

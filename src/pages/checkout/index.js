@@ -19,30 +19,20 @@ const useStyles = makeStyles((theme) => ({
   },
   payment: {
     border:"1px solid #f2f2f2",
-		height:"340px",
-    borderRadius:"20px",
+		// height:"340px",
+    borderRadius:"15px",
     background:"#fff",
-  },
-  payment_header_check: {
-    background:"#2E7D32",
-	  padding:"20px",
-    borderRadius:"20px 20px 0px 0px",
-  },
-  payment_header_cancel: {
-    background:"#DC143C",
-	  padding:"20px",
-    borderRadius:"20px 20px 0px 0px",
-  },
-  check: {
-    margin: "0 auto",
-    verticalAlign: "middle",
-    height: "50px",
-    width: "50px"
+    padding:"10px",
+    margin: "auto",
+    maxWidth:480
   },
   content: {
-    textAlign: "center",
-    padding: "20px"
+    fontSize:34
   },
+  subcontent: {
+    fontSize:14,
+    color: "rgba(0, 0, 0, 0.6)"
+  }
 }));
 
 const StripeCheckout = withRouter((props) => {
@@ -65,31 +55,35 @@ const StripeCheckout = withRouter((props) => {
         display: 'flex'
       }}
     >
-      <Grid container spacing={0}  maxWidth="xl" direction="column"
-        alignItems="center"
-        justifyContent="center"
-        style={{ minHeight: '100vh' }}
-      >
-        <Grid item xs={8}>
           <Box className={classes.payment}>
-            {status==="success" ? <Box className={classes.payment_header_check}>
-              <Box className={classes.check}><CheckCircleOutlineIcon sx={{height:"50px", width:"50px", color:"#ffffff"}}/></Box>
-            </Box>: <Box className={classes.payment_header_cancel}>
-              <Box className={classes.check}><CancelOutlinedIcon sx={{height:"50px", width:"50px", color:"#ffffff"}}/></Box>
-            </Box>}
-            <Box className={classes.content}>
-              <h1>{status==="success" ? "Payment Success !" : "Transaction incompleted!"}</h1>
-              <Typography>{status==="success" ? "Congratulations on becoming our member. " : "Something went wrong with your payment."}</Typography>
+            <Grid container spacing={0}  maxWidth="xl">
+              <Grid item xs={2}>
+                {status === "success" ?
+                <CheckCircleOutlineIcon sx={{height:"50px", width:"50px", color:"#2E7D32", mt:2}}/> :
+                <CancelOutlinedIcon sx={{height:"50px", width:"50px",color:"#DC143C"}}/>
+                }
+              </Grid>
+              <Grid item xs={10}>
+                {status === "success" ?
+                <>
+                <Typography className={classes.content}>Payment Successful</Typography>
+                <span className={classes.subcontent}>You will recieve an invoice by email. Billing is on a 30 day cycle.</span></> :
+                <Typography className={classes.content}>Payment incompleted!</Typography>
+                }
+              </Grid>
+              {status === "success" &&
+              <Box>
+                <Typography sx={{fontSize:14, color: "rgba(0, 0, 0, 0.6)", mt:2}}>Thanks for signing up!  We’re excited to see what you accomplish with the worlds most advanced generative technology for architects.</Typography>
+              </Box>
+              }
               <NextLink
                 href="/dashboard/projects"
                 passHref
               >
-                <Button variant="contained" sx={{mt:"40px"}}>Go to Dashboard</Button>
+                <Button sx={{mt:"40px", color:"#ffffff", background:"#FFB800", width: "100%"}}>Go to Dashboard</Button>
               </NextLink>
-            </Box>
+            </Grid>
           </Box>
-          </Grid>
-      </Grid>
     </Box>
     </>
   );
