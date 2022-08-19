@@ -97,6 +97,35 @@ const StripeCheckout = withRouter((props) => {
           </NextLink>
         </Grid>
       </Box>
+          <Box className={classes.payment}>
+            <Grid container spacing={0}  maxWidth="xl">
+              <Grid item xs={2}>
+                {status === "success" ?
+                <CheckCircleOutlineIcon sx={{height:"50px", width:"50px", color:"#2E7D32", mt:2}}/> :
+                <CancelOutlinedIcon sx={{height:"50px", width:"50px",color:"#DC143C"}}/>
+                }
+              </Grid>
+              <Grid item xs={10}>
+                {status === "success" ?
+                <>
+                <Typography className={classes.content}>Payment Successful</Typography>
+                <span className={classes.subcontent}>You will recieve an invoice by email. Billing is on a 30 day cycle.</span></> :
+                <Typography className={classes.content}>Payment incompleted!</Typography>
+                }
+              </Grid>
+              {status === "success" &&
+              <Box>
+                <Typography sx={{fontSize:14, color: "rgba(0, 0, 0, 0.6)", mt:2}}>Thanks for signing up!  We’re excited to see what you accomplish with the worlds most advanced generative technology for architects.</Typography>
+              </Box>
+              }
+              <NextLink
+                href="/dashboard/projects"
+                passHref
+              >
+                <Button sx={{mt:"40px", color:"#ffffff", background:"#FFB800", width: "100%"}}>Go to Dashboard</Button>
+              </NextLink>
+            </Grid>
+          </Box>
     </Box>
     </>
   );
