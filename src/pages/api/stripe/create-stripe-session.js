@@ -6,7 +6,7 @@ async function CreateStripeSession(req, res) {
   const redirectURL =
     process.env.NODE_ENV === 'development'
       ? 'http://localhost:3000/checkout'
-      : 'https://laboratory-2kn1vu4hk-maket-development.vercel.app/checkout';
+      : 'https://laboratory-98k3k4tuq-maket-development.vercel.app/checkout';
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
