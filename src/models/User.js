@@ -57,6 +57,10 @@ const UserSchema = new mongoose.Schema(
     limnu_token: {
       type: String,
     },
+    // to check status of plan subscribed
+    subscription_id: {
+      type: String,
+    },
     dateCreated: {
       type: Date,
       default: Date.now,

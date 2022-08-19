@@ -1,7 +1,8 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 async function CreateStripeSession(req, res) {
-  const {priceId} = req.body;
+  // create stripe session for user to subscribe one of our plan using its priceId
+  const {priceId, email} = req.body;  
   const redirectURL =
     process.env.NODE_ENV === 'development'
       ? 'http://localhost:3000/checkout'
@@ -9,6 +10,7 @@ async function CreateStripeSession(req, res) {
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
+    customer_email: email,
     line_items: [{
         price: priceId,
         quantity: 1

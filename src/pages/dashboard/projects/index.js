@@ -12,7 +12,6 @@ import CreateProjectModal from '../../../components/modal/createProject-modal'
 import {DashboardSidebar} from '../../../components/dashboard/dashboard-sidebar'
 import {GenerateImportDialog} from '../../../components/modal/generateImportModal'
 import {PricingPlan} from '../../../components/modal/pricingPlanModal'
-import { useRouter } from 'next/router';
 import extractDate from '../../../utils/extractDate';
 
 const ProductList = () => {
@@ -23,11 +22,22 @@ const ProductList = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isModalShown, setModalShown] = useState(false)  
   const [dateDiff, setDateDiff] = useState()
-  const router = useRouter();
+  const [subscriptionStatus, setSubscriptionStatus] = useState("canceled")
+  const freetrialDays = 14;
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
   }, []);
+
+  // get difference in days between signup and current date to check if 14 days free trial is over
+  const getDiffs = date => {
+    let dateCreated = date      
+      dateCreated = extractDate(dateCreated)
+      const date_1 = new Date(dateCreated);
+      const date_2 = new Date();
+      const difference = date_1.getTime() - date_2.getTime();
+      return Math.ceil(difference / (1000 * 3600 * 24))
+  }
 
   // Added a new column in the User Model 
   // Called the User Model 
@@ -35,15 +45,14 @@ const ProductList = () => {
   useEffect(() => {
     const owner = localStorage.getItem("lab-user");
     axios.get(`/api/user/${owner}`)
-    .then(res => {
+    .then(async res => {
       setUserData(res.data.data)
-      let dateCreated = res.data.data.dateCreated      
-      dateCreated = extractDate(dateCreated)
-
-      const date_1 = new Date(dateCreated);
-      const date_2 = new Date();
-      const difference = date_1.getTime() - date_2.getTime();
-      setDateDiff(Math.ceil(difference / (1000 * 3600 * 24)))
+      // check the status of plan subscribed using its subscription id, if it is cancelled by user, display payment again
+      if(res.data.data.subscription_id){
+        const {data} = await axios.post('/api/stripe/retrieve-subscription', {subscription_id : res.data.data.subscription_id})
+        setSubscriptionStatus(data.status);
+      }
+      setDateDiff(getDiffs(res.data.data.dateCreated))
     })
     .catch(error => console.log(error));
   },[]);
@@ -132,7 +141,8 @@ const ProductList = () => {
       setModal={setModal} 
       projectId={projectId}/>} */}
       
-      {dateDiff <= -14 && <PricingPlan/>}
+      { // display payment modal if 14 days trial period is passed and subscription status is not active
+        dateDiff <= -(freetrialDays) && subscriptionStatus !== "active"  && <PricingPlan email={userData.email}/>}
     </>
   );
 };

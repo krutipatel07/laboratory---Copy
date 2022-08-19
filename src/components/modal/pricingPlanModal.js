@@ -1,14 +1,10 @@
 import * as React from 'react';
-import {useEffect} from 'react'
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Link from '@mui/material/Link';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import { useRouter } from 'next/router';
 import { Box, Button, ListItem, List, Typography, IconButton, ListItemIcon, CardContent, CardActions, ListItemText } from '@mui/material';
 import Card from '@mui/material/Card';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
@@ -46,7 +42,7 @@ const styles = theme => ({
   });
 
 export const PricingPlan = (props) =>{
-
+    const email = props.email;
     const [open, setOpen] = React.useState(true);
     const [fullWidth, setFullWidth] = React.useState(true);
     const [maxWidth, setMaxWidth] = React.useState('lg');
@@ -61,15 +57,15 @@ export const PricingPlan = (props) =>{
         }
       });
 
+    //   create checkout session and redirect user to checkout which is directly handled by stripe service
       const createCheckOutSession = async priceId => {
         const stripe = await stripePromise;
-        const checkoutSession = await axios.post('/api/create-stripe-session', { priceId });
+        const checkoutSession = await axios.post('/api/stripe/create-stripe-session', { priceId, email });
         const result = await stripe.redirectToCheckout({
           sessionId: checkoutSession.data.id,
         });
-        console.log(result);
         if (result.error) {
-          alert(result.error.message);
+          console.log(result.error.message);
         }
       };
 
@@ -106,7 +102,7 @@ export const PricingPlan = (props) =>{
 
         <DialogContent sx={{px:2, py:2, marginTop:"10px"}}>
           <DialogContentText style={{color:'#000', fontWeight:500, fontSize:12}}>
-          Please select your plan to continue.
+            Your free trial is over. Please select your plan to continue
           </DialogContentText>
         </DialogContent>
 
@@ -120,10 +116,6 @@ export const PricingPlan = (props) =>{
                         <Typography sx={{ alignSelf: 'flex-start' }} className={classes.cardName}> Basic </Typography>
                         <Typography level="body2" className={classes.Info}>PERFECT FOR SMALL FIRMS (1-5 EMPLOYEES)</Typography>
                     </Box>
-                    {/* <Box >
-                        <Typography level="h4" className={classes.price}>$30USD</Typography>
-                        <Typography level="body2" className={classes.Info}>per user per month</Typography>
-                    </Box> */}
                 </CardContent>
                 <Box>
                     <List>
