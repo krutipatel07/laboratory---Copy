@@ -30,6 +30,7 @@ export const Subscription = (props) => {
     }
   ])
   const [priceId, setPriceId] = useState(['price_1LUtZTD5NXEtAziPSaPiJqO1', 'price_1LUtchD5NXEtAziPEkhg4Ptd']);
+  const [signupDate, setSignupDate] = useState("")
 
   // handle cancel subscription dialog box
   const handleClose = () => {
@@ -45,6 +46,7 @@ export const Subscription = (props) => {
     const user = localStorage.getItem("lab-user");
     axios.get(`/api/user/${user}`)
     .then(async res => {
+      setSignupDate(res.data.data.dateCreated)
       if(res.data.data.subscription_id){
         const {data} = await axios.post('/api/stripe/retrieve-subscription', {subscription_id : res.data.data.subscription_id})
         setSubscriptionPlanId(data.plan)
@@ -103,7 +105,7 @@ export const Subscription = (props) => {
                     style={{fontSize:24}}>
                     14 Day free trial
                 </Typography>
-                <span style={{fontSize:16, paddingTop:5, color: "rgba(0, 0, 0, 0.6)"}}>Started on August 10th, 2022</span>
+                <span style={{fontSize:16, paddingTop:5, color: "rgba(0, 0, 0, 0.6)"}}>Started on {signupDate.slice(0,14)}</span>
                 <Box sx={{mt:2}}>
                   <Button 
                     variant="contained"
