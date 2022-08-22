@@ -59,6 +59,8 @@ export const Subscription = (props) => {
     data.status === "canceled" && router.push("/dashboard/projects")
    }
 
+   subscription_id && console.log(subscription_id);
+
   return (
     <>
     <Box
