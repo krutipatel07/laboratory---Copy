@@ -19,6 +19,15 @@ import { useAuth } from '../../hooks/use-auth';
 import { useMounted } from '../../hooks/use-mounted';
 import axios from 'axios'
 import toast from 'react-hot-toast';
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+  inputRoot: {
+    border: "1px solid rgba(255, 255, 255, 0.15)",
+    backgroundColor: "rgba(255, 255, 255, 0.15)",
+    borderRadius:"8px",
+  },
+}));
 
 export const FirebaseRegister = (props) => {
   const isMounted = useMounted();
@@ -140,29 +149,38 @@ export const FirebaseRegister = (props) => {
     }  
   };
 
+  const handleClick = async () => {
+    console.log("clicked...........")
+  };
+
+  const classes = useStyles();
+
+
   return (
     <div {...props}>
-      {/* <Button
-        fullWidth
+      <Button
+        // fullWidth
         onClick={handleGoogleClick}
         size="large"
         sx={{
-          backgroundColor: 'common.white',
-          color: 'common.black',
+          background: "linear-gradient(to left, #2B2824 0%, #D59C5A 100%)",
+          border: "1px solid #D59C5A",
+          color: 'secondary.contrastText',
           '&:hover': {
             backgroundColor: 'common.white',
             color: 'common.black'
-          }
+          },
+          display: 'block',
+          margin: "0 auto",
+          borderRadius:50
         }}
         variant="contained"
       >
         <Box
           alt="Google"
-          component="img"
-          src="/static/icons/google.svg"
           sx={{ mr: 1 }}
         />
-        Google
+        SIGN IN WITH GOOGLE
       </Button>
       <Box
         sx={{
@@ -175,7 +193,7 @@ export const FirebaseRegister = (props) => {
           <Divider orientation="horizontal" />
         </Box>
         <Typography
-          color="textSecondary"
+          color="#FFFFFF"
           sx={{ m: 2 }}
           variant="body1"
         >
@@ -184,34 +202,93 @@ export const FirebaseRegister = (props) => {
         <Box sx={{ flexGrow: 1 }}>
           <Divider orientation="horizontal" />
         </Box>
-      </Box> */}
+      </Box>
       <form
         noValidate
         onSubmit={formik.handleSubmit}
+        autoComplete="off"
       >
         <TextField
           error={Boolean(formik.touched.name && formik.touched.email && formik.errors.email)}
           fullWidth
           helperText={formik.touched.name}
-          label="Full Name"
+          label="First"
           margin="dense"
           name="name"
           onBlur={formik.handleBlur}
           onChange={formik.handleChange}
           type="text"
           value={formik.values.name}
+          color="primary"
+          variant="filled"
+          InputProps={{ classes: { root: classes.inputRoot } }}
+          sx={{
+            "& .MuiFormLabel-root": {
+                color: 'white'
+            },
+            "& .MuiFormLabel-root.Mui-focused": {
+                color: 'white'
+            },
+            "& .MuiInputBase-root.MuiFilledInput-root:hover": {
+              backgroundColor: "rgba(255, 255, 255, 0.15)",
+            },
+            input: {color:"white"},
+          }}
         />
+        {/* <TextField
+          id="standard-basic-lastname"
+          error={Boolean(formik.touched.name && formik.touched.email && formik.errors.email)}
+          fullWidth
+          helperText={formik.touched.name}
+          label="Last"
+          margin="dense"
+          name="name"
+          onBlur={formik.handleBlur}
+          onChange={formik.handleChange}
+          type="text"
+          value={formik.values.name}
+          color="primary"
+          variant="filled"
+          InputProps={{ classes: { root: classes.inputRoot } }}
+          sx={{
+            "& .MuiFormLabel-root": {
+                color: 'white'
+            },
+            "& .MuiFormLabel-root.Mui-focused": {
+                color: 'white'
+            },
+            "& .MuiInputBase-root.MuiFilledInput-root:hover": {
+              backgroundColor: "rgba(255, 255, 255, 0.15)",
+            },
+            input: {color:"white"},
+          }}
+        /> */}
         <TextField
           error={Boolean(formik.touched.name && formik.touched.email && formik.errors.email)}
           fullWidth
           helperText={formik.touched.email && formik.errors.email}
-          label="Email Address"
+          label="Email"
           margin="dense"
           name="email"
           onBlur={formik.handleBlur}
           onChange={formik.handleChange}
           type="email"
           value={formik.values.email}
+          color="primary"
+          variant="filled"
+          InputProps={{ classes: { root: classes.inputRoot } }}
+          sx={{
+            "& .MuiFormLabel-root": {
+                color: 'white'
+            },
+            "& .MuiFormLabel-root.Mui-focused": {
+                color: 'white'
+            },
+            "& .MuiInputBase-root.MuiFilledInput-root:hover": {
+              backgroundColor: "rgba(255, 255, 255, 0.15)",
+            },
+            input: {color:"white"},
+          }}
         />
         <TextField
           error={Boolean(formik.touched.name && formik.touched.password && formik.errors.password)}
@@ -224,58 +301,22 @@ export const FirebaseRegister = (props) => {
           onChange={formik.handleChange}
           type="password"
           value={formik.values.password}
-        />
-        <FormControl fullWidth 
-        style={{marginTop:8, marginBottom: 4}}>
-        <InputLabel id="demo-multiple-name-label">Role</InputLabel>
-        <Select
-          error={Boolean( formik.touched.name && formik.touched.role && formik.errors.role)}
-          fullWidth
-          margin="dense"
-          name="role"
-          type="text"
-          label="Role"
-          helperText={formik.touched.role && formik.errors.role}
-          value={formik.values.role}             
-          onBlur={formik.handleBlur}
-          onChange={formik.handleChange}
-          >
-          <MenuItem value="" 
-          disabled>
-            <em>select your role</em>
-          </MenuItem>
-          <MenuItem value="Student">Student</MenuItem>
-          <MenuItem value="Architect">Architect</MenuItem>
-          <MenuItem value="Enterprise">Enterprise</MenuItem>
-        </Select>
-        </FormControl>
-        <Box
+          color="primary"
+          variant="filled"
+          InputProps={{ classes: { root: classes.inputRoot } }}
           sx={{
-            alignItems: 'center',
-            display: 'flex',
-            ml: -1,
-            mt: 2
+            "& .MuiFormLabel-root": {
+                color: 'white'
+            },
+            "& .MuiFormLabel-root.Mui-focused": {
+                color: 'white'
+            },
+            "& .MuiInputBase-root.MuiFilledInput-root:hover": {
+              backgroundColor: "rgba(255, 255, 255, 0.15)",
+            },
+            input: {color:"white"},
           }}
-        >
-          <Checkbox
-            checked={formik.values.policy}
-            name="policy"
-            onChange={formik.handleChange}
-          />
-          <Typography
-            color="textSecondary"
-            variant="body2"
-          >
-            I have read the
-            {' '}
-            <Link
-              component="a"
-              href="#"
-            >
-              Terms and Conditions
-            </Link>
-          </Typography>
-        </Box>
+        />
         {Boolean(formik.touched.policy && formik.errors.policy) && (
           <FormHelperText error>
             {formik.errors.policy}
@@ -291,12 +332,21 @@ export const FirebaseRegister = (props) => {
         <Box sx={{ mt: 2 }}>
           <Button
             disabled={formik.isSubmitting}
-            fullWidth
             size="large"
             type="submit"
             variant="contained"
+            sx={{   
+            background: "linear-gradient(to left, #2B2824 0%, #D59C5A 100%)",
+            border: "1px solid #D59C5A",
+            color: '#ffffff',
+            display: 'block',
+            margin: "0 auto",
+            borderRadius:50,
+            minWidth: '220px',
+            }}
+            onClick={handleClick}
           >
-            Register
+            SIGN UP
           </Button>
         </Box>
       </form>

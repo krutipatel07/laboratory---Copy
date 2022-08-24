@@ -25,7 +25,9 @@ const Login = () => {
         </title>
       </Head>
       <Box
-        >
+      sx={{
+        backgroundColor: 'background.dark',
+      }}>
         <NextLink
         href="/"
         passHref
@@ -35,14 +37,14 @@ const Login = () => {
             component="a"
             variant="text"
           >
-            <ArrowBackOutlinedIcon/>
+            <ArrowBackOutlinedIcon sx={{color: "#ffffff"}}/>
           </Button>
         </NextLink>
-        </Box>
+      </Box>
       <Box
         component="main"
         sx={{
-          backgroundColor: 'background.default',
+          backgroundColor: 'background.dark',
           display: 'flex',
           flexDirection: 'column',
           minHeight: '100vh'
@@ -51,24 +53,23 @@ const Login = () => {
         <Container
           maxWidth="sm"
           sx={{
+            backgroundColor: 'background.dark',
             py: {
               xs: '60px'
             }
           }}
         >
-          <Card
-            elevation={16}
-            sx={{ p: 4 }}
-          >
+
             <Box
               sx={{
                 alignItems: 'center',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                color: '#ffffff'
               }}
             >
-              <NextLink
+              {/* <NextLink
                 href="/"
                 passHref
               >
@@ -80,56 +81,57 @@ const Login = () => {
                     }}
                   />
                 </a>
-              </NextLink>
+              </NextLink> */}
               <Typography variant="h4">
-                Log in
+                Welcome back 
               </Typography>
             </Box>
             <Box
               sx={{
                 flexGrow: 1,
-                mt: 3
+                mt: 8
               }}
             >
               {/* we are using firebase to authenticates signup and login */}
               <FirebaseLogin />
             </Box>
-            <Divider sx={{ my: 3 }} />
+            {/* <Divider sx={{ my: 3 }} /> */}
             
             <Box
               sx={{
-                display:'flex',
-                justifyContent: 'space-between',
+                textAlign: "center"
               }}
             >
-              {/* redirect to the sign up page */}
-            <NextLink
-              href={disableGuard
-                ? `/authentication/register?disableGuard=${disableGuard}`
-                : '/authentication/register'}
-              passHref
-            >
-              <Link
-                color="textSecondary"
-                variant="body2"
-              >
-                Create new account
-              </Link>
-            </NextLink>
+                  {/* redirect to the sign up page */}
+                <NextLink
+                  href={disableGuard
+                    ? `/authentication/register?disableGuard=${disableGuard}`
+                    : '/authentication/register'}
+                  passHref
+                >
+                  <Typography variant="body2" color="secondary.contrastText" sx={{mt:2}}>Don't have an account? 
+                    <Link
+                      color="#FFD19D"
+                      variant="body2"
+                    >
+                      Register
+                  </Link>
+                  </Typography>
+                </NextLink>
             {/* redirects to the password reset page */}
-            <NextLink
-              href={"/authentication/password-reset"}
-              passHref
-            >
-              <Link
-                color="textSecondary"
-                variant="body2"
+              <NextLink
+                href={"/authentication/password-reset"}
+                passHref
               >
-                Forgot your password?
-              </Link>
-            </NextLink>
+                <Link
+                  color="#FFD19D"
+                  variant="body2"
+                >
+                  Forgot password?
+                </Link>
+              </NextLink>
             </Box>
-          </Card>
+         
         </Container>
       </Box>
     </>

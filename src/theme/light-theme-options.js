@@ -15,6 +15,7 @@ const neutral = {
 
 const background = {
   // default: '#F9FAFC',
+  dark: '#000000',
   default: '#FFFFFF',
   paper: '#FFFFFF',
   hover: neutral[100],

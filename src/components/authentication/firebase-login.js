@@ -7,15 +7,26 @@ import { useMounted } from '../../hooks/use-mounted';
 import axios from 'axios'
 import { makeStyles } from '@material-ui/core';
 
-
 const useStyles = makeStyles((theme) => ({
   button: {
+    background: "linear-gradient(to left, #2B2824 0%, #D59C5A 100%)",
+    border: "1px solid #D59C5A",
+    color: '#ffffff',
+    display: 'block',
+    margin: "0 auto",
+    borderRadius:50,
+    minWidth: '220px',
     '&:hover': {
       backgroundColor: '#000',
       color: '#fff',
-      border: '1px solid #F0C88E'
+      border: '1px solid #F0C88E',
+    },
   },
-}
+  inputRoot: {
+    border: "1px solid rgba(255, 255, 255, 0.15)",
+    backgroundColor: "rgba(255, 255, 255, 0.15)",
+    borderRadius:"8px",
+  },
 }));
 
 export const FirebaseLogin = (props) => {
@@ -109,33 +120,111 @@ export const FirebaseLogin = (props) => {
 
   return (
     <div {...props}>
+      <Button
+        // fullWidth
+        onClick={handleGoogleClick}
+        size="large"
+        sx={{
+          background: "linear-gradient(to left, #2B2824 0%, #D59C5A 100%)",
+          border: "1px solid #D59C5A",
+          color: 'secondary.contrastText',
+          '&:hover': {
+            backgroundColor: 'common.white',
+            color: 'common.black'
+          },
+          display: 'block',
+          margin: "0 auto",
+          borderRadius:50
+        }}
+        variant="contained"
+      >
+        <Box
+          alt="Google"
+          sx={{ mr: 1 }}
+        />
+        SIGN IN WITH GOOGLE
+      </Button>
+      <Box
+        sx={{
+          alignItems: 'center',
+          display: 'flex',
+          mt: 2
+        }}
+      >
+        <Box sx={{ flexGrow: 1 }}>
+          <Divider orientation="horizontal" />
+        </Box>
+        <Typography
+          color="#FFFFFF"
+          sx={{ m: 2 }}
+          variant="body1"
+        >
+          OR
+        </Typography>
+        <Box sx={{ flexGrow: 1 }}>
+          <Divider orientation="horizontal" />
+        </Box>
+      </Box>
       <form
         noValidate
         onSubmit={formik.handleSubmit}
+        autoComplete="off"
       >
         <TextField
+          id="standard-basic"
           error={Boolean(formik.touched.email && formik.errors.email)}
           fullWidth
           helperText={formik.touched.email && formik.errors.email}
-          label="Email Address"
+          label="Email"
           margin="normal"
           name="email"
           onBlur={formik.handleBlur}
           onChange={formik.handleChange}
-          type="email"
           value={formik.values.email}
+          color="primary"
+          type="email"   
+          variant="filled"
+          InputProps={{ classes: { root: classes.inputRoot } }}
+          sx={{
+            "& .MuiFormLabel-root": {
+                color: 'white'
+            },
+            "& .MuiFormLabel-root.Mui-focused": {
+                color: 'white'
+            },
+            "& .MuiInputBase-root.MuiFilledInput-root:hover": {
+              backgroundColor: "rgba(255, 255, 255, 0.15)",
+            },
+            input: {color:"white"},
+          }}
         />
         <TextField
+          id="filled-password-input"
           error={Boolean(formik.touched.password && formik.errors.password)}
           fullWidth
           helperText={formik.touched.password && formik.errors.password}
           label="Password"
           margin="normal"
           name="password"
+          type="password"
           onBlur={formik.handleBlur}
           onChange={formik.handleChange}
-          type="password"
           value={formik.values.password}
+          variant="filled"
+          color="primary"
+          InputProps={{ classes: { root: classes.inputRoot } }}
+          sx={{
+            "& .MuiFormLabel-root": {
+                color: 'white'
+            },
+            "& .MuiFormLabel-root.Mui-focused": {
+                color: 'white'
+            },
+            "& .MuiInputBase-root.MuiFilledInput-root:hover": {
+              backgroundColor: "rgba(255, 255, 255, 0.15)",
+            },
+            input: {color:"white"},
+          }}
         />
         {formik.errors.submit && (
           <Box sx={{ mt: 3 }}>
@@ -147,14 +236,14 @@ export const FirebaseLogin = (props) => {
         <Box sx={{ mt: 2 }}>
           <Button
             disabled={formik.isSubmitting}
-            fullWidth
+            // fullWidth
             size="large"
             type="submit"
             variant="contained"
           className={classes.button}
 
           >
-            Log In
+            SIGN IN
           </Button>
         </Box>
       </form>

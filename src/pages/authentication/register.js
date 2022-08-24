@@ -24,7 +24,9 @@ const Register = () => {
         </title>
       </Head>
       <Box
-        >
+      sx={{
+        // backgroundColor: 'background.dark',
+      }}>
         <NextLink
         href="/"
         passHref
@@ -34,14 +36,16 @@ const Register = () => {
             component="a"
             variant="text"
           >
-          <ArrowBackOutlinedIcon/>
+            <ArrowBackOutlinedIcon 
+            // sx={{color: "#ffffff"}}
+            />
           </Button>
         </NextLink>
         </Box>
       <Box
         component="main"
         sx={{
-          backgroundColor: 'background.default',
+          // backgroundColor: 'background.dark',
           display: 'flex',
           flexDirection: 'column',
           minHeight: '100vh'
@@ -50,24 +54,22 @@ const Register = () => {
         <Container
           maxWidth="sm"
           sx={{
+            // backgroundColor: 'background.dark',
             py: {
               xs: '60px'
             }
           }}
         >
-          <Card
-            elevation={16}
-            sx={{ p: 4 }}
-          >
             <Box
               sx={{
                 alignItems: 'center',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                // color: 'secondary.contrastText',
               }}
             >
-              <NextLink
+              {/* <NextLink
                 href="/"
                 passHref
               >
@@ -79,39 +81,60 @@ const Register = () => {
                     }}
                   />
                 </a>
-              </NextLink>
+              </NextLink> */}
               <Typography variant="h4">
-                Sign Up
+                Create a new account
               </Typography>
             </Box>
             <Box
               sx={{
                 flexGrow: 1,
-                mt: 3
+                mt: 8
               }}
             >
             {/* we are using firebase to authenticates signup and login */}
               <FirebaseRegister />
             </Box>
-            <Divider sx={{ my: 3 }} />
-            <NextLink
-              href={disableGuard
-                ? `/authentication/login?disableGuard=${disableGuard}`
-                : '/authentication/login'}
-              passHref
+            {/* <Divider sx={{ my: 3 }} /> */}
+
+            <Box
+              sx={{
+                textAlign: "center"
+              }}
             >
-            <Typography variant="body2">
-                Aleady have an account?
-              
-              <Link
-                color="textSecondary"
-                variant="body2"
-              >
-                  Login
-              </Link>
-              </Typography>
-            </NextLink>
-          </Card>
+                <NextLink
+                  href={disableGuard
+                    ? `/authentication/login?disableGuard=${disableGuard}`
+                    : '/authentication/login'}
+                  passHref
+                >
+                <Typography variant="body2" sx={{mt:2, 
+                  // color: 'secondary.contrastText',
+                  }}>
+                    Aleady have an account?
+                  
+                  <Link
+                     color="#FFD19D"
+                    variant="body2"
+                  >
+                      Login
+                  </Link>
+                  </Typography>
+                </NextLink>
+              {/* redirects to the password reset page */}
+                <NextLink
+                  href={"/authentication/password-reset"}
+                  passHref
+                >
+                  <Link
+                    color="#FFD19D"
+                    variant="body2"
+                  >
+                    Forgot password?
+                  </Link>
+                </NextLink>
+            </Box>
+
           {/* <button type="button" onClick={() => {
               throw new Error("Sentry Frontend Error");
           }}>
