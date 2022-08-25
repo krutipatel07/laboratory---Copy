@@ -25,7 +25,7 @@ const Register = () => {
       </Head>
       <Box
       sx={{
-        // backgroundColor: 'background.dark',
+        backgroundColor: 'background.dark',
       }}>
         <NextLink
         href="/"
@@ -37,7 +37,7 @@ const Register = () => {
             variant="text"
           >
             <ArrowBackOutlinedIcon 
-            // sx={{color: "#ffffff"}}
+            sx={{color: "#ffffff"}}
             />
           </Button>
         </NextLink>
@@ -45,7 +45,7 @@ const Register = () => {
       <Box
         component="main"
         sx={{
-          // backgroundColor: 'background.dark',
+          backgroundColor: 'background.dark',
           display: 'flex',
           flexDirection: 'column',
           minHeight: '100vh'
@@ -54,7 +54,7 @@ const Register = () => {
         <Container
           maxWidth="sm"
           sx={{
-            // backgroundColor: 'background.dark',
+            backgroundColor: 'background.dark',
             py: {
               xs: '60px'
             }
@@ -66,22 +66,9 @@ const Register = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'center',
-                // color: 'secondary.contrastText',
+                color: 'secondary.contrastText',
               }}
             >
-              {/* <NextLink
-                href="/"
-                passHref
-              >
-                <a>
-                  <Logo
-                    sx={{
-                      height: 40,
-                      width: 40
-                    }}
-                  />
-                </a>
-              </NextLink> */}
               <Typography variant="h4">
                 Create a new account
               </Typography>
@@ -109,37 +96,20 @@ const Register = () => {
                   passHref
                 >
                 <Typography variant="body2" sx={{mt:2, 
-                  // color: 'secondary.contrastText',
+                  color: 'secondary.contrastText',
                   }}>
                     Aleady have an account?
                   
                   <Link
                      color="#FFD19D"
                     variant="body2"
+                    sx={{cursor:"pointer"}}
                   >
                       Login
                   </Link>
                   </Typography>
                 </NextLink>
-              {/* redirects to the password reset page */}
-                <NextLink
-                  href={"/authentication/password-reset"}
-                  passHref
-                >
-                  <Link
-                    color="#FFD19D"
-                    variant="body2"
-                  >
-                    Forgot password?
-                  </Link>
-                </NextLink>
             </Box>
-
-          {/* <button type="button" onClick={() => {
-              throw new Error("Sentry Frontend Error");
-          }}>
-              Throw error
-          </button> */}
         </Container>
       </Box>
     </>
