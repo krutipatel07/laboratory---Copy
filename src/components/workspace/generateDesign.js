@@ -31,6 +31,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 // import AdjacencyModal from '../modal/roomAdjacency-modal'
 import CheckIcon from '@mui/icons-material/Check';
+import Adjacency from './adjacency/adjacency';
 
 const useStyles = makeStyles({
   MuiInputBase: {
@@ -472,7 +473,7 @@ const GenerateDesignTab = withRouter((props) => {
                   <TableCell align="right">X&nbsp;(feet)</TableCell>
                   <TableCell align="right">Y&nbsp;(feet)</TableCell>
                   <TableCell align="right">Floor</TableCell>
-                  {/* <TableCell align="right">Adjacencies</TableCell> */}
+                  <TableCell align="right">Next to(optional)</TableCell>
                 </TableRow>
               </TableHead>
               {/* List of data table entered by user */}
@@ -514,6 +515,10 @@ const GenerateDesignTab = withRouter((props) => {
                     size="small" variant="filled" 
                     style={{color:row_color_scheme[row.select].color, backgroundColor:row_color_scheme[row.select].backgroundColor}}></Chip></TableCell>
                     <TableCell align="right"><Typography>{row.selectFloor}</Typography></TableCell>
+                    <TableCell align='right'>
+                      <Box> <Adjacency /></Box>
+                    </TableCell>
+
                     {/* <TableCell align="right">
                       <Chip label="edit/set" 
                       onClick={() => {

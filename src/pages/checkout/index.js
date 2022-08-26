@@ -71,45 +71,44 @@ const StripeCheckout = withRouter((props) => {
     >
       <Box className={classes.payment}>
         <Grid container spacing={0}  maxWidth="xl">
-          <Grid item xs={2}>
-            {status === "success" ?
-            <CheckCircleOutlineIcon sx={{height:"50px", width:"50px", color:"#2E7D32", mt:2}}/> :
-            <CloseIcon sx={{height:"50px", width:"50px",color:"#DC143C",  mt:2}}/>
-            }
-          </Grid>
-          <Grid item xs={10}>
-            
-            {status === "success" ?
-            <>
-            <Typography className={classes.content}>Payment Successful</Typography>
-            <span className={classes.subcontent}>You will recieve an invoice by email. Billing is on a 30 day cycle.</span></>:
-            <>
-            <Typography className={classes.content}>Payment Failed</Typography>
-            <span className={classes.subcontent}>Something went wrong</span>
-            </>
-            }
-          </Grid>
-          {status === "success" ?
 
-            <Typography sx={{fontSize:14, mt:2}}>Thanks for signing up!  We’re excited to see what you accomplish with the worlds most advanced generative technology for architects.</Typography> :
-            <Typography sx={{fontSize:14, mt:2}}>Oops! Your payment didn’t go through. Try again or contact us for support.</Typography>
 
-          }
           {status === "success" ?
           <>
+            <Grid item xs={2}>
+              <CheckCircleOutlineIcon sx={{height:"50px", width:"50px", color:"#2E7D32", mt:2}}/> 
+            </Grid>
+            <Grid item xs={10}>
+              <Typography className={classes.content}>Payment Successful</Typography>
+              <span className={classes.subcontent}>You will recieve an invoice by email. Billing is on a 30 day cycle.</span>
+            </Grid>
+            <Typography sx={{fontSize:14, mt:2}}>Thanks for signing up!  We’re excited to see what you accomplish with the worlds most advanced generative technology for architects.</Typography> 
             <NextLink
               href="/dashboard/projects"
               passHref
             >
               <Button sx={{mt:"40px", color:"#000000", background:"#FFB800", width: "100%"}}>GO TO DASHBOARD</Button>
-            </NextLink></> :
-            <>
+            </NextLink>
+          </>  
+          :
+          <>
+            <Grid item xs={2}>
+              <CloseIcon sx={{height:"50px", width:"50px",color:"#DC143C",  mt:2}}/>
+            </Grid>
+            <Grid item xs={10}>
+              <Typography className={classes.content}>Payment Failed</Typography>
+              <span className={classes.subcontent}>Something went wrong</span>
+            </Grid>
+            <Typography sx={{fontSize:14, mt:2}}>Oops! Your payment didn’t go through. Try again or contact us for support.</Typography>
             <NextLink
               href="/dashboard/projects"
               passHref
             >
               <Button sx={{mt:"40px", color:"#000000", background:"#FFB800", width: "100%"}}>GO BACK TO PAYMENT PAGE</Button>
-            </NextLink></>}
+            </NextLink>
+          </>
+          }
+
         </Grid>
       </Box>
     </Box>

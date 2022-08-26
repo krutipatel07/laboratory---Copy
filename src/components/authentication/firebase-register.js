@@ -8,6 +8,10 @@ import {
   FormHelperText,
   TextField,
   Typography,
+  FormControl,
+  InputLabel ,
+  Select,
+  MenuItem 
 } from '@mui/material';
 import { useAuth } from '../../hooks/use-auth';
 import { useMounted } from '../../hooks/use-mounted';
@@ -33,7 +37,8 @@ export const FirebaseRegister = (props) => {
       lname: '',
       email: '',
       password: '',
-      submit: null
+      role: '',
+      submit: null,
     },
     validationSchema: Yup.object({
       name: Yup
@@ -54,6 +59,9 @@ export const FirebaseRegister = (props) => {
         .min(7)
         .max(255)
         .required('Password is required'),
+      role: Yup
+        .string()
+        .required('Role is required'),
     }),
     onSubmit: async (values, helpers) => {
       try {
@@ -66,6 +74,7 @@ export const FirebaseRegister = (props) => {
             await axios.put(`/api/user/${data.data._id}`, {
               name: values.name,
               lname: values.lname,
+              role: values.role
             })
             .catch(error => console.log(error));
 
@@ -78,6 +87,7 @@ export const FirebaseRegister = (props) => {
                 name: values.name,
                 lname: values.lname,
                 email: values.email,
+                role: values.role
               })
               .catch(error => console.log(error));
 
@@ -303,6 +313,49 @@ export const FirebaseRegister = (props) => {
             input: {color:"white"},
           }}
         />
+        <FormControl fullWidth 
+          sx={{
+            marginTop:1, 
+            marginBottom: 4,
+            "& .MuiFormLabel-root": {
+              color: 'white'
+            },
+            "& .MuiInputLabel-root.Mui-focused": {
+              color: 'white'
+            },
+            "& .MuiSelect-select.MuiSelect-outlined": {
+                backgroundColor: 'rgba(255, 255, 255, 0.15)',
+            },
+            "& .MuiOutlinedInput-notchedOutline": {
+              borderColor: "rgba(255, 255, 255, 0.15)"
+            },
+            "& .MuiInputBase-root": {
+              color: "#ffffff"
+            },
+            input: {color:"white"},
+            }}>
+          <InputLabel id="demo-multiple-name-label">Role</InputLabel>
+          <Select
+            error={Boolean( formik.touched.name && formik.touched.role && formik.errors.role)}
+            fullWidth
+            margin="dense"
+            name="role"
+            type="text"
+            label="Role"
+            helperText={formik.touched.role && formik.errors.role}
+            value={formik.values.role}             
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+            >
+            <MenuItem value="" 
+            disabled>
+              <em>select your role</em>
+            </MenuItem>
+            <MenuItem value="Student">Student</MenuItem>
+            <MenuItem value="Architect">Architect</MenuItem>
+            <MenuItem value="Enterprise">Enterprise</MenuItem>
+          </Select>
+        </FormControl>
         {formik.errors.submit && (
           <Box sx={{ mt: 3 }}>
             <FormHelperText error>
