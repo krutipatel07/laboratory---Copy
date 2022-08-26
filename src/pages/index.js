@@ -4,6 +4,7 @@ import { Divider } from '@mui/material';
 import { HomeHero } from '../components/home/home-hero';
 import { withMainLayout } from '../hocs/with-main-layout';
 import { gtm } from '../lib/gtm';
+import HomePageSignUp from './authentication/register'
 
 const Home = () => {
   useEffect(() => {
@@ -18,11 +19,13 @@ const Home = () => {
         </title>
       </Head>
       <main>
-        <HomeHero />
+        {/* <HomeHero /> */}
+        <HomePageSignUp />
         <Divider />
       </main>
     </>
   );
 };
 
-export default withMainLayout(Home);
+// export default withMainLayout(Home);
+export default (Home);

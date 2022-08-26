@@ -17,9 +17,9 @@ const useStyles = makeStyles((theme) => ({
     borderRadius:50,
     minWidth: '220px',
     '&:hover': {
-      backgroundColor: '#000',
-      color: '#fff',
-      border: '1px solid #F0C88E',
+      '&:hover': {
+        outline: "2px solid #D59C5A"
+      }
     },
   },
   inputRoot: {
@@ -129,8 +129,7 @@ export const FirebaseLogin = (props) => {
           border: "1px solid #D59C5A",
           color: 'secondary.contrastText',
           '&:hover': {
-            backgroundColor: 'common.white',
-            color: 'common.black'
+            outline: "2px solid #D59C5A"
           },
           display: 'block',
           margin: "0 auto",

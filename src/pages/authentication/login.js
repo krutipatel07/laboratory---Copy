@@ -113,6 +113,7 @@ const Login = () => {
                     <Link
                       color="#FFD19D"
                       variant="body2"
+                      sx={{cursor:"pointer"}}
                     >
                       Register
                   </Link>
