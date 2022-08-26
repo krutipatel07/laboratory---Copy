@@ -1,7 +1,7 @@
 import * as React from "react";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
-import Badge from "./Badge.js";
+import Badge from "./badge";
 
 export default function GroupBadges(props) {
   return (
