@@ -26,7 +26,7 @@ export const ProjectEditForm = (props) => {
       cover_image: [],
       images: [],
       name: '',
-      newPrice: '',
+      // newPrice: '',
       sku: 'IYV-8745',
       submit: null
     },
@@ -34,7 +34,7 @@ export const ProjectEditForm = (props) => {
       cover_image: Yup.array(),
       images: Yup.array(),
       name: Yup.string().max(255).required(),
-      newPrice: Yup.number().min(0).required(),
+      // newPrice: Yup.number().min(0).required(),
       sku: Yup.string().max(255)
     }),
     onSubmit: async (values, helpers) => {
@@ -50,7 +50,7 @@ export const ProjectEditForm = (props) => {
               owner,
               title: values.name,
               cover_image: cover_image_url || project.cover_image,
-              budget: values.newPrice,
+              // budget: values.newPrice,
             })
             .catch(error => console.log(error));
 
@@ -221,56 +221,6 @@ export const ProjectEditForm = (props) => {
           </Grid>
         </CardContent>
       </Card>
-      {/* <Card sx={{ mt: 3 }}>
-        <CardContent>
-          <Grid
-            container
-            spacing={3}
-          >
-            <Grid
-              item
-              md={4}
-              xs={12}
-            >
-              <Typography variant="h6">
-                Budget
-              </Typography>
-              <Typography
-                color="textSecondary"
-                variant="body2"
-                sx={{ mt: 1 }}
-              >
-                Budget must be greater than or equal to $10000 and multiple of 10000.
-              </Typography>
-              <Typography
-                // color="textSecondary"
-                variant="body2"
-                sx={{ mt: 1 }}
-              >
-                  Current budget: {project.budget}
-              </Typography>
-            </Grid>
-            <Grid
-              item
-              md={8}
-              xs={12}
-            >
-              <TextField
-                error={Boolean(formik.touched.newPrice && formik.errors.newPrice)}
-                fullWidth
-                label="Price"
-                name="newPrice"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-                sx={{ mt: 2 }}
-                type="number"
-                inputProps={{ min: "10000", step: "10000" }}
-                value={formik.values.newPrice}
-              />
-            </Grid>
-          </Grid>
-        </CardContent>
-      </Card> */}
       <Box
         sx={{
           display: 'flex',

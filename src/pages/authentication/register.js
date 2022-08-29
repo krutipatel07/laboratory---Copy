@@ -23,7 +23,7 @@ const Register = () => {
           Register | Maket Colaboratory
         </title>
       </Head>
-      <Box
+      {/* <Box
       sx={{
         backgroundColor: 'background.dark',
       }}>
@@ -41,7 +41,7 @@ const Register = () => {
             />
           </Button>
         </NextLink>
-        </Box>
+        </Box> */}
       <Box
         component="main"
         sx={{
