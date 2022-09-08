@@ -12,8 +12,7 @@ async function CreateStripeSession(req, res) {
     payment_method_types: ['card'],
     customer_email: email,
     line_items: [{
-        // price: priceId,
-        price: "price_1LXrSqD5NXEtAziP472iviZR",
+        price: priceId,
         quantity: 1
       }],
     mode: 'subscription',

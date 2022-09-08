@@ -32,6 +32,8 @@ import * as Yup from 'yup';
 // import AdjacencyModal from '../modal/roomAdjacency-modal'
 import CheckIcon from '@mui/icons-material/Check';
 import Adjacency from './adjacency/adjacency';
+import CircularProgress from '@mui/material/CircularProgress';
+import Backdrop from '@mui/material/Backdrop';
 
 const useStyles = makeStyles({
   MuiInputBase: {
@@ -151,6 +153,7 @@ const GenerateDesignTab = withRouter((props) => {
   const handleSubmit = async (event) => {
     event.preventDefault()
     setButtonText(false)
+    setOpen(!open);
     // getting land and envelope parameters in desired format
     let lat_lngs_array_land = []    
     land_parameters.forEach(coordinate => {
@@ -209,9 +212,11 @@ const GenerateDesignTab = withRouter((props) => {
                   )
                   .catch(error => console.log(error));
                   
-    if(!designs.data.data.designs || !designs.data.data.designs.length) {
-      toast.error("Designs not found! Try using different values.")
+
+      if(!designs || !designs.data.data.designs || !designs.data.data.designs.length) {
+      toast.error("Oops, no design found, please try other constraints")
       setButtonText(true)
+      setOpen(false)
       return
     }
     localStorage.setItem("parameter", JSON.stringify(designs.data.data.designs))
@@ -598,9 +603,19 @@ const GenerateDesignTab = withRouter((props) => {
           projectId={projectId}/>
         </AccordionDetails>
       </Accordion>
-      <Button variant="contained" 
-      sx={{mt:3}} 
-      onClick={handleSubmit}>{buttonText ? "GENERATE DESIGNS" : "Generating"}</Button>
+
+      <div>
+        <Button variant="contained" sx={{mt:3, '&:hover': {backgroundColor: "#000000"}}} onClick={handleSubmit}>{buttonText ? "GENERATE DESIGNS" : "Generating"}</Button>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+          onClick={handleClose}
+        >
+          <CircularProgress color="inherit" />
+          <Typography sx={{position:"absolute", mt:"6%"}}>Generating floorplans...</Typography>
+        </Backdrop>
+      </div>
+
     </div>
 
       </Box>

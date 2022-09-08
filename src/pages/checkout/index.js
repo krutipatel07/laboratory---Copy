@@ -87,7 +87,7 @@ const StripeCheckout = withRouter((props) => {
               href="/dashboard/projects"
               passHref
             >
-              <Button sx={{mt:"40px", color:"#000000", background:"#FFB800", width: "100%"}}>GO TO DASHBOARD</Button>
+              <Button sx={{mt:"40px", color:"#000000", background:"#FFB800", width: "100%", '&:hover': {backgroundColor: "rgba(255, 184, 0, 1)"}}}>GO TO DASHBOARD</Button>
             </NextLink>
           </>  
           :
@@ -104,7 +104,7 @@ const StripeCheckout = withRouter((props) => {
               href="/dashboard/projects"
               passHref
             >
-              <Button sx={{mt:"40px", color:"#000000", background:"#FFB800", width: "100%"}}>GO BACK TO PAYMENT PAGE</Button>
+              <Button sx={{mt:"40px", color:"#000000", background:"#FFB800", width: "100%", '&:hover': {backgroundColor: "rgba(255, 184, 0, 1)"}}}>GO BACK TO PAYMENT PAGE</Button>
             </NextLink>
           </>
           }

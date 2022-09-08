@@ -5,7 +5,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import { Box, Button, ListItem, List, Typography, IconButton, ListItemIcon, CardContent, CardActions, ListItemText } from '@mui/material';
+import { Box, Button, ListItem, List, Typography, Grid, ListItemIcon, CardContent, CardActions, ListItemText } from '@mui/material';
 import Card from '@mui/material/Card';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import { makeStyles } from '@material-ui/styles';
@@ -31,7 +31,8 @@ const useStyles = makeStyles((theme) => ({
         width:"100%", 
         background:"#FFB800", 
         color:"#ffffff", 
-        padding:"10px"
+        padding:"10px",
+        '&:hover': {backgroundColor: "rgba(255, 184, 0, 1)"}
     }
 }));
 
@@ -69,23 +70,11 @@ export const PricingPlan = (props) =>{
         }
       };
 
-    const handleClickOpen = () => {
-        setOpen(true);
-      };
-    
-      const handleClose = () => {
-        setOpen(false);
-      };
-
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <div>
-        <Button variant="outlined" onClick={handleClickOpen}>
-        Open alert dialog
-      </Button>
-
       <Dialog
         // fullScreen={fullScreen}
         fullWidth={fullWidth}
@@ -112,12 +101,17 @@ export const PricingPlan = (props) =>{
                 boxShadow: "0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12)",
                 borderRadius:"4px"}}>
                 <CardContent sx={{display: 'flex', justifyContent:"space-between", padding:0}}>
-                    <Box >
+                  <Grid container>
+                    <Grid item xs={7}>
                         <Typography sx={{ alignSelf: 'flex-start' }} className={classes.cardName}> Basic </Typography>
                         <Typography level="body2" className={classes.Info}>PERFECT FOR SMALL FIRMS (1-5 EMPLOYEES)</Typography>
-                    </Box>
+                    </Grid>
+                    <Grid item xs={5}>
+                        <Typography sx={{fontSize:"28px", fontWeight:"500"}}>$30USD</Typography>
+                    </Grid>
+                  </Grid>
                 </CardContent>
-                <Box>
+                <Box sx={{minHeight:"150px"}}>
                     <List>
                         <ListItem disablePadding>
                             <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
@@ -135,23 +129,28 @@ export const PricingPlan = (props) =>{
                             <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
                             <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Real-Time Collaboration </Typography>} ></ListItemText>
                         </ListItem>
-                        <CardActions sx={{padding: "16px 5px"}}>
-                            <Button className={classes.startbtn} onClick={ () => createCheckOutSession(priceId[0])}>START NOW</Button>
-                        </CardActions>
                     </List>
                 </Box>
+                <CardActions sx={{padding: "16px 5px"}}>
+                    <Button className={classes.startbtn} onClick={ () => createCheckOutSession(priceId[0])}>START NOW</Button>
+                </CardActions>
             </Card>
             <Card 
             sx={{ maxWidth: 300, minWidth: 350, padding:"10px",
                 boxShadow: "0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12)",
                 borderRadius:"4px"}}>
                 <CardContent sx={{display: 'flex', justifyContent:"space-between", padding:0}}>
-                    <Box >
+                  <Grid container>
+                    <Grid item xs={7}>
                         <Typography sx={{ alignSelf: 'flex-start' }} className={classes.cardName}> Premium </Typography>
                         <Typography level="body2" className={classes.Info}>RIGHT FOR MEDIUM-LARGE FIRMS (15+ EMPLOYEES)</Typography>
-                    </Box>
+                    </Grid>
+                    <Grid item xs={5}>
+                        <Typography sx={{fontSize:"28px", fontWeight:"500"}}>$75USD</Typography>
+                    </Grid>
+                  </Grid>
                 </CardContent>
-                <Box>
+                <Box sx={{minHeight:"150px"}}>
                     <List>
                         <ListItem disablePadding>
                             <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
@@ -165,11 +164,11 @@ export const PricingPlan = (props) =>{
                             <ListItemIcon><CheckCircleRoundedIcon sx={{color:'black'}} fontSize="small"/></ListItemIcon>
                             <ListItemText primary={<Typography sx={{fontSize: "13px"}}>Access to premium 3D content</Typography>}></ListItemText>
                         </ListItem>                        
-                        <CardActions sx={{padding: "16px 5px"}}>
-                            <Button className={classes.startbtn} onClick={ () => createCheckOutSession(priceId[1])}>START NOW</Button>
-                        </CardActions>
                     </List>
-                </Box>               
+                </Box>     
+                <CardActions sx={{padding: "16px 5px"}}>
+                    <Button className={classes.startbtn} onClick={ () => createCheckOutSession(priceId[1])}>START NOW</Button>
+                </CardActions>          
             </Card>
         </DialogContent>
       </Dialog>
