@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Box, InputLabel, MenuItem, FormControl, Select, ListItemText, ModCheckbox, Checkbox , OutlinedInput, Grid } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Checkbox, FormControl, Grid, InputLabel, ListItemText, MenuItem, OutlinedInput, Select } from '@mui/material';
 import GroupBadges from './groupBadges'
 
 const ITEM_HEIGHT = 48;
@@ -13,50 +14,72 @@ const MenuProps = {
   },
 };
 
-const names = [
-    "bedroom 1",
-    "Bedroom 2",
-    "Bathroom 1",
-    "Bathroom 2",
-    "Living Room",
-    "Dining Rooms",
-    "Garage",
-    "Kitchen"
-];
-
-
-const types = [
-    "bedroom",
-    "Bedroom",
-    "Bathroom",
-    "Bathroom",
-    "living",
-    "dining",
-    "garage",
-    "kitchen"
-];
-// master list of rooms and their types
-
-// right now if you add or remove entries from this list you
-// see the presented badges change accordingly. For example add: ["living room", "living"]
-const rooms = [
-    ["bedroom 1", "bedroom"],
-    ["Bedroom 2", "bedroom"],
-    ["Bathroom 1", "bathroom"],
-    ["Bathroom 2", "bathroom"]
-];
-
 export default function Adjacency(props) {
-  const {setOpen,roomId, data, setData, setChanged} = props
 
   // nextTo is the list of rooms that the currenty room is next to
   const [nextTo, setNextTo] = React.useState([]);
-  // change this function to manage a list that is the same structure
-  // as the above "rooms" list. This list will always be a sub-list of the master rooms list
+  const {roomId, data, setData, setChanged} = props
+  const [names, setNames] = useState([])
+  const [rooms, setRooms] = useState([])
+  let roomsList = {}
 
-  // once you change this handle function the presented badges should be
-  // dynamic according to what is selected in the select list
-      
+  
+  // get rooms details which was clicked
+  const roomDetails = data.filter(room => room.id === roomId)
+
+  useEffect(() => {
+    data.forEach(room => {
+      roomsList[room.Rname] = room.select
+    })
+
+  // get other rooms list excluding existing adjacencies (left side non adjacent rooms list)
+    let filterItem = data.filter(room => room.id !== roomId)
+    if(roomDetails[0].adjacencies && roomDetails[0].adjacencies.length){
+      roomDetails[0].adjacencies.forEach ((adjacency,i) =>
+      {
+        const availableRoom = data.filter(room => room.Rname === adjacency[1])
+        // update room badge list if any adjacencies available
+        roomsList[adjacency[1]] && roomsList[adjacency[1]].length && setRooms(prev => [...prev, [adjacency[1], roomsList[adjacency[1]].toLowerCase()]])
+        
+        availableRoom.length && setNextTo( prev=> [...prev,
+          // On autofill we get a stringified value.
+          typeof adjacency[1] === 'string' ? adjacency[1].split(',')[0] : adjacency[1]
+        ])
+      }
+      )
+    }
+    const otherRooms =[]  
+    filterItem.forEach((item) => {
+      otherRooms.push(item.Rname)})
+    setNames(otherRooms)
+  
+  },[data])
+
+  const save = (value) => {
+    let filterAdjacency =[]
+    value.forEach(item => {      
+      data.forEach(room =>{
+        if(room.Rname === item){
+          filterAdjacency = room.adjacencies.filter(adjacency => adjacency[1]=== roomDetails[0].Rname)
+          !filterAdjacency.length && room.adjacencies.push([item, roomDetails[0].Rname])
+        }
+      })
+    })
+
+  // get adjacency list in proper format
+    let adjacencyList =[]
+    value.forEach(item => adjacencyList.push([roomDetails[0].Rname,item]));
+
+
+    // // update adjacencies list of the room clicked
+    data.forEach(room => {
+      if (room.id === roomId){
+        room.adjacencies = adjacencyList
+      }
+    })
+    setData(data)
+    setChanged(true)
+  }
 
     const handleChange = (event) => {
         const {
@@ -66,7 +89,30 @@ export default function Adjacency(props) {
         // On autofill we get a stringified value.
         typeof value === 'string' ? value.split(',') : value,
         );
+        save(value)
+        data.forEach(room => {
+          roomsList[room.Rname] = room.select
+        })
+        value.length && setRooms(prev => [...prev, [value[value.length-1], roomsList[value[value.length-1]].toLowerCase()]])
     };
+
+    const removeRoomBadge = (e,name) => {
+      if (e.target.checked === false) {
+        const checkedRoom = data.filter(room => room.Rname === name)
+        const checkedRoomAdjacencyList = checkedRoom[0].adjacencies.filter(adjacency => adjacency[1] !== roomDetails[0].Rname)
+
+        // if room name is unchecked, it will remove it from the room list
+        const updatedBadgeList = rooms.filter(room => name !== room[0])
+        setRooms(updatedBadgeList)
+
+        data.forEach(room => {
+          if (room.Rname === name) {
+            room.adjacencies = checkedRoomAdjacencyList
+          }
+        })
+        setData(data);
+      }
+    }
 
   return (
     <div>
@@ -97,7 +143,9 @@ export default function Adjacency(props) {
                     >
                     {names.map((name) => (
                         <MenuItem key={name} value={name}>
-                            <Checkbox checked={nextTo.indexOf(name) > -1} />
+                            <Checkbox 
+                            onChange={(e) => removeRoomBadge(e,name)}
+                            checked={nextTo.indexOf(name) > -1} />
                             <ListItemText primary={name} />
                         </MenuItem>
                     ))}

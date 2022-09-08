@@ -213,7 +213,7 @@ const GenerateDesignTab = withRouter((props) => {
                   .catch(error => console.log(error));
                   
 
-      if(!designs || !designs.data.data.designs || !designs.data.data.designs.length) {
+    if(!designs || !designs.data.data.designs || !designs.data.data.designs.length) {
       toast.error("Oops, no design found, please try other constraints")
       setButtonText(true)
       setOpen(false)
@@ -324,21 +324,12 @@ const GenerateDesignTab = withRouter((props) => {
   useEffect(() => {
     axios.get(`/api/projects/${projectId}`)
     .then(res =>   {
-      // fetch existing parameters form a project
-      const search_parameters = res.data.data.search_parameters;
-      res.data.data.envelope_parameters.length ? set_envelope_parameters(res.data.data.envelope_parameters[0].lat_lngs) : set_envelope_parameters([])
-      res.data.data.land_parameters.length ? set_land_parameters(res.data.data.land_parameters[0].lat_lngs) : set_land_parameters([])
-      // fetch existing parameters form a project
-      search_parameters.forEach((item) => 
-        setData(prev => [...prev, {
-          select: item.select,
-          Rname: item.Rname,
-          selectFloor: item.selectFloor,
-          Xvalue: item.Xvalue,
-          Yvalue: item.Yvalue,
-          adjacencies: item.adjacencies,
-          id: item.id
-        }]))
+        // fetch existing parameters form a project
+        const search_parameters = res.data.data.search_parameters;
+        res.data.data.envelope_parameters.length ? set_envelope_parameters(res.data.data.envelope_parameters[0].lat_lngs) : set_envelope_parameters([])
+        res.data.data.land_parameters.length ? set_land_parameters(res.data.data.land_parameters[0].lat_lngs) : set_land_parameters([])
+        // fetch existing parameters form a project
+        setData(search_parameters);
       }
      )
     .catch(error => console.log(error));
@@ -478,7 +469,7 @@ const GenerateDesignTab = withRouter((props) => {
                   <TableCell align="right">X&nbsp;(feet)</TableCell>
                   <TableCell align="right">Y&nbsp;(feet)</TableCell>
                   <TableCell align="right">Floor</TableCell>
-                  <TableCell align="right">Next to(optional)</TableCell>
+                  <TableCell align="right">Next to (optional)</TableCell>
                 </TableRow>
               </TableHead>
               {/* List of data table entered by user */}
@@ -521,7 +512,7 @@ const GenerateDesignTab = withRouter((props) => {
                     style={{color:row_color_scheme[row.select].color, backgroundColor:row_color_scheme[row.select].backgroundColor}}></Chip></TableCell>
                     <TableCell align="right"><Typography>{row.selectFloor}</Typography></TableCell>
                     <TableCell align='right'>
-                      <Box> <Adjacency /></Box>
+                      <Box> <Adjacency roomId={row.id} data={data} setData={setData} setChanged={setChanged}/></Box>
                     </TableCell>
 
                     {/* <TableCell align="right">
@@ -538,18 +529,6 @@ const GenerateDesignTab = withRouter((props) => {
 
             </Table>
           </TableContainer>
-          {/* <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box 
-            sx={style}>
-              <AdjacencyModal setOpen={setOpen} 
-              roomId={roomId} data={data} setData={setData} setChanged={setChanged}/>
-            </Box>
-          </Modal> */}
 
           <Box 
           sx={{display:'flex', justifyContent:'space-between'}}>
@@ -626,14 +605,9 @@ const GenerateDesignTab = withRouter((props) => {
           mb: 8, mt:4
         }}
       >
-        <Container maxWidth="xl">  
-            {generatedData.length ? 
-            <DesignGrid 
-            data={generatedData} 
-            setNewDesign={props.setNewDesign}/> 
-            : 
-            <Typography 
-            sx={{textAlign:'center', fontSize:'20px', paddingTop:'100px'}}>Set your design constraints to begin</Typography> }
+        <Container maxWidth="xl">
+          <Typography 
+            sx={{textAlign:'center', fontSize:'20px', paddingTop:'100px'}}>Set your design constraints to begin</Typography>
         </Container>
       </Box>
     </>
