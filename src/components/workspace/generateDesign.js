@@ -54,7 +54,7 @@ const useStyles = makeStyles({
   },
 });
 const style = {
-  position: 'absolute' ,
+  position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
@@ -63,7 +63,7 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 3,
-  };
+};
 
 const GenerateDesignTab = withRouter((props) => {
 
@@ -81,7 +81,7 @@ const GenerateDesignTab = withRouter((props) => {
     selectFloor: "",
     Xvalue: "",
     Yvalue: "",
-    adjacencies:[]
+    adjacencies: []
   });
   const [data, setData] = useState([])
   const classes = useStyles();
@@ -100,50 +100,60 @@ const GenerateDesignTab = withRouter((props) => {
   const [open, setOpen] = React.useState(false);
   const [buttonText, setButtonText] = useState(true)
   const userId = localStorage.getItem("lab-user")
-  const setValue= props.setValue
+  const setValue = props.setValue
   const [envelope_parameters, set_envelope_parameters] = useState()
   const [land_parameters, set_land_parameters] = useState()
-  
-  const row_color_scheme ={
+
+  const row_color_scheme = {
     Bedroom: {
       color: '#2E7D32',
-      backgroundColor: '#bff2c2'},
-    Bathroom : {
+      backgroundColor: '#bff2c2'
+    },
+    Bathroom: {
       color: '#0288D1',
-      backgroundColor: '#abe0fd'},
+      backgroundColor: '#abe0fd'
+    },
     Kitchen: {
       color: '#AB47BC',
-      backgroundColor: '#e7bbef'},
+      backgroundColor: '#e7bbef'
+    },
     Garage: {
       color: '#000000DE',
-      backgroundColor: 'rgb(157 154 154 / 87%)'},
+      backgroundColor: 'rgb(157 154 154 / 87%)'
+    },
     Living_Room: {
       color: '#F57C00',
-      backgroundColor: '#ffddba'},
-    Dining_Room :{
+      backgroundColor: '#ffddba'
+    },
+    Dining_Room: {
       color: '#D32F2F',
-      backgroundColor: '#ffb5b5'},
+      backgroundColor: '#ffb5b5'
+    },
     "Living Room": {
-          color: '#F57C00',
-          backgroundColor: '#ffddba'},
-    "Dining Room" :{
-        color: '#D32F2F',
-        backgroundColor: '#ffb5b5'},
+      color: '#F57C00',
+      backgroundColor: '#ffddba'
+    },
+    "Dining Room": {
+      color: '#D32F2F',
+      backgroundColor: '#ffb5b5'
+    },
     "Living": {
-          color: '#F57C00',
-          backgroundColor: '#ffddba'},
-    "Dining" :{
-        color: '#D32F2F',
-        backgroundColor: '#ffb5b5'}
+      color: '#F57C00',
+      backgroundColor: '#ffddba'
+    },
+    "Dining": {
+      color: '#D32F2F',
+      backgroundColor: '#ffb5b5'
+    }
   }
 
   const handleClose = () => {
     setOpen(false);
-  } 
+  }
 
   const handleChange = (event) => {
     const value = event.target.value;
-    setState({ 
+    setState({
       ...state,
       [event.target.name]: value
     });
@@ -155,7 +165,7 @@ const GenerateDesignTab = withRouter((props) => {
     setButtonText(false)
     setOpen(!open);
     // getting land and envelope parameters in desired format
-    let lat_lngs_array_land = []    
+    let lat_lngs_array_land = []
     land_parameters.forEach(coordinate => {
       lat_lngs_array_land.push([coordinate.lat, coordinate.lng])
     })
@@ -171,49 +181,49 @@ const GenerateDesignTab = withRouter((props) => {
     let adjacencyList_floor_2 = []
     let adjacencyListWithId_floor_1 = []
     let adjacencyListWithId_floor_2 = []
-    let roomIdList ={}
+    let roomIdList = {}
     data.forEach((room, counter) => {
-      room.selectFloor === 1 ? 
-      room.adjacencies.forEach(adjacency => adjacencyList_floor_1.push(adjacency)) 
-      : room.adjacencies.forEach(adjacency => adjacencyList_floor_2.push(adjacency))
+      room.selectFloor === 1 ?
+        room.adjacencies.forEach(adjacency => adjacencyList_floor_1.push(adjacency))
+        : room.adjacencies.forEach(adjacency => adjacencyList_floor_2.push(adjacency))
 
-      roomIdList[room.Rname] =counter+1
+      roomIdList[room.Rname] = counter + 1
       const room_constraints = {
-        "min_width": parseInt(room.Xvalue)-3,  
-        "max_width": parseInt(room.Xvalue)+3,
-        "min_area": (parseInt(room.Xvalue)-3)*parseInt(room.Yvalue),
-        "max_area": (parseInt(room.Xvalue)+3)*parseInt(room.Yvalue),
-        "adj_ref":counter+1,
+        "min_width": parseInt(room.Xvalue) - 3,
+        "max_width": parseInt(room.Xvalue) + 3,
+        "min_area": (parseInt(room.Xvalue) - 3) * parseInt(room.Yvalue),
+        "max_area": (parseInt(room.Xvalue) + 3) * parseInt(room.Yvalue),
+        "adj_ref": counter + 1,
         "type": room.select,
         "label": room.Rname
       }
-        room.selectFloor === 1 ? constraints_floor_1[`${counter+1}`] = room_constraints : constraints_floor_2[`${counter+1}`] = room_constraints
+      room.selectFloor === 1 ? constraints_floor_1[`${counter + 1}`] = room_constraints : constraints_floor_2[`${counter + 1}`] = room_constraints
     })
 
     // getting adjacency parameters in desired format
     adjacencyList_floor_1.forEach(adjacency =>
-      adjacencyListWithId_floor_1.push([roomIdList[adjacency[0]],roomIdList[adjacency[1]]]))
-      constraints_floor_1["adjs"] = adjacencyListWithId_floor_1
+      adjacencyListWithId_floor_1.push([roomIdList[adjacency[0]], roomIdList[adjacency[1]]]))
+    constraints_floor_1["adjs"] = adjacencyListWithId_floor_1
 
 
     // getting land and envelope parameters in desired format
     constraints_floor_1["land"] = lat_lngs_array_land
     constraints_floor_1["envelope"] = lat_lngs_array_envelope
-    const designs = await axios.post(`/api/generate-design`, 
-                    {
-                      "userData": {
-                          "userID": userId,
-                          "constraints": {
-                              "1": constraints_floor_1,
-                              "2":{}
-                            }
-                          }
-                      }
-                  )
-                  .catch(error => console.log(error));
-                  
+    const designs = await axios.post(`/api/generate-design`,
+      {
+        "userData": {
+          "userID": userId,
+          "constraints": {
+            "1": constraints_floor_1,
+            "2": {}
+          }
+        }
+      }
+    )
+      .catch(error => console.log(error));
 
-    if(!designs || !designs.data.data.designs || !designs.data.data.designs.length) {
+
+    if (!designs || !designs.data.data.designs || !designs.data.data.designs.length) {
       toast.error("Oops, no design found, please try other constraints")
       setButtonText(true)
       setOpen(false)
@@ -237,7 +247,7 @@ const GenerateDesignTab = withRouter((props) => {
     if (event.target.checked) {
       const ifIncluded = selectedrows.includes(id)
       if (!ifIncluded) {
-        setSelectedRows(prev=> [...prev, id])
+        setSelectedRows(prev => [...prev, id])
       }
       setCheckboxClicked(true)
       return;
@@ -260,18 +270,18 @@ const GenerateDesignTab = withRouter((props) => {
     const search_parameters_updated = await axios.put(`/api/projects/${projectId}`, {
       search_parameters: newFilterRows
     })
-    .catch(error => console.log(error));
+      .catch(error => console.log(error));
     setData([])
     setSelectedRows([])
     search_parameters_updated ? toast.success('Parameters deleted successfully') : toast.error('Something went wrong!');
-    search_parameters_updated && setUpdate((prev) => !prev) 
+    search_parameters_updated && setUpdate((prev) => !prev)
   }
 
   const handleClick = async (e) => {
 
     //check repetative room name
-    const repeatName = data.filter(rooms=>rooms.Rname === state.Rname)
-    if(repeatName.length){
+    const repeatName = data.filter(rooms => rooms.Rname === state.Rname)
+    if (repeatName.length) {
       toast.error("Room name must be unique")
       return
     }
@@ -285,7 +295,7 @@ const GenerateDesignTab = withRouter((props) => {
       Yvalue: state.Yvalue,
       adjacencies: [],
       id: Date.now(),
-    }]) 
+    }])
     // reset input textfields
     setState({
       select: "",
@@ -297,20 +307,20 @@ const GenerateDesignTab = withRouter((props) => {
     setChanged(true)
   };
 
-  const save = async () =>{
+  const save = async () => {
     // update project database with new search parameter using project id
     const search_parameters_added = await axios.put(`/api/projects/${projectId}`, {
       search_parameters: data
     })
-    .catch(error => console.log(error));
-    
+      .catch(error => console.log(error));
+
     setData([])
     setSelectedRows([])
-    
+
     search_parameters_added ? toast.success('Parameters saved successfully') : toast.error('Something went wrong!');
-    search_parameters_added && setUpdate((prev) => !prev) 
+    search_parameters_added && setUpdate((prev) => !prev)
     setChanged(false)
-    
+
   }
 
   const handleEdit = async () => {
@@ -319,203 +329,211 @@ const GenerateDesignTab = withRouter((props) => {
   useEffect(() => {
     // remove parameters from localStorage
     localStorage.removeItem('parameter');
-  },[])
-  
+  }, [])
+
   useEffect(() => {
     axios.get(`/api/projects/${projectId}`)
-    .then(res =>   {
-        // fetch existing parameters form a project
-        const search_parameters = res.data.data.search_parameters;
-        res.data.data.envelope_parameters.length ? set_envelope_parameters(res.data.data.envelope_parameters[0].lat_lngs) : set_envelope_parameters([])
-        res.data.data.land_parameters.length ? set_land_parameters(res.data.data.land_parameters[0].lat_lngs) : set_land_parameters([])
-        // fetch existing parameters form a project
-        setData(search_parameters);
-      }
-     )
-    .catch(error => console.log(error));
-  },[projectId, update]);
+      .then(res => {
+          // fetch existing parameters form a project
+          const search_parameters = res.data.data.search_parameters;
+          res.data.data.envelope_parameters.length ? set_envelope_parameters(res.data.data.envelope_parameters[0].lat_lngs) : set_envelope_parameters([])
+          res.data.data.land_parameters.length ? set_land_parameters(res.data.data.land_parameters[0].lat_lngs) : set_land_parameters([])
+          // fetch existing parameters form a project
+          setData(search_parameters);
+        }
+      )
+      .catch(error => console.log(error));
+  }, [projectId, update]);
 
   return (
     <>
       <Box component="form"
-        method="POST"
-        sx={{
-          alignItems: 'center',
-          display: 'flex',
-          flexWrap: 'wrap',
-          // p: 3,
-          // px:2,
-          mt: '-30px'
-        }}
+           method="POST"
+           sx={{
+             alignItems: 'center',
+             display: 'flex',
+             flexWrap: 'wrap',
+             // p: 3,
+             // px:2,
+             mt: '-30px'
+           }}
         // style={{marginTop:'-64px'}}
       >
 
-    <div align="right" 
-    style={{width:'100%'}}>
-      <Accordion>
-        <AccordionSummary
-          sx={{p:0}}
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-        <Typography 
-        sx={{  marginRight : 1}}>Rooms</Typography>
+        <div align="right"
+             style={{width: '100%'}}>
+          <Accordion>
+            <AccordionSummary
+              sx={{p: 0}}
+              expandIcon={<ExpandMoreIcon/>}
+              aria-controls="panel1a-content"
+              id="panel1a-header"
+            >
+              <Typography
+                sx={{marginRight: 1}}>Rooms</Typography>
 
-        {/* display warning of unsaved changes*/}
-        {changed && <><IconButton 
-        sx={{pt:'2px'}}><InfoOutlinedIcon fontSize="small" /></IconButton>  <Typography color='#E57373'>Unsaved Changes</Typography></>   }
+              {/* display warning of unsaved changes*/}
+              {changed && <><IconButton
+                sx={{pt: '2px'}}><InfoOutlinedIcon fontSize="small"/></IconButton> <Typography color='#E57373'>Unsaved
+                Changes</Typography></>}
 
-        </AccordionSummary>
-        <AccordionDetails 
-        sx={{p:0}}>
-          
-          <Stack spacing={2} 
-          direction="row" 
-          sx={{mb:1.5}}>
-            {/* <form 
+            </AccordionSummary>
+            <AccordionDetails
+              sx={{p: 0}}>
+
+              <Stack spacing={2}
+                     direction="row"
+                     sx={{mb: 1.5}}>
+                {/* <form
             onSubmit={handleClick}
             > */}
-              <FormControl 
-              fullWidth
-              sx={{width:'50% '}}>
-                <InputLabel id="demo-simple-select-label">Room type</InputLabel>
-                <Select
-                  // required
-                  labelId="demo-simple-select-label"
-                  id="select"
-                  name="select"
-                  value={state.select}
-                  label="room"
-                  onChange={handleChange}
-                >
-                  <MenuItem 
-                  value="Bedroom">Bedroom</MenuItem>
-                  <MenuItem 
-                  value="Bathroom">Bathroom</MenuItem>
-                  <MenuItem 
-                  value="Garage">Garage</MenuItem>
-                  <MenuItem 
-                  value="Kitchen">Kitchen</MenuItem>
-                  <MenuItem 
-                  value="Living">Living Room</MenuItem>
-                  <MenuItem 
-                  value="Dining">Dining Room</MenuItem>
-                </Select>
-              </FormControl>
-              <Box component="form"
-                sx={{
-                  // '& > :not(style)': { m: 1, width: '25ch' },
-                }}
-                noValidate
-                autoComplete="off">
-                <TextField 
-                  id="Rname" 
-                  name="Rname" 
-                  value={state.Rname} 
-                  label="Name" 
-                  variant="outlined" 
-                  onChange={handleChange}
-                />
-              </Box>
-              <FormControl 
-              sx={{width:'30%'}}>
-                <InputLabel id="demo-simple-select-label">Floor</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="select"
-                  name="selectFloor"
-                  value={state.selectFloor}
-                  label="floor"
-                  onChange={handleChange}
-                >
-                  <MenuItem value={1}>1</MenuItem>
-                </Select>
-              </FormControl>
-              <TextField id="Xvalue" 
-              name="Xvalue" 
-              value={state.Xvalue}  
-              label="X (feet)" 
-              variant="outlined" 
-              onChange={handleChange}/>
-              <TextField id="Yvalue" 
-              name="Yvalue"  
-              value={state.Yvalue} 
-              label="Y (feet)" 
-              variant="outlined" 
-              onChange={handleChange}/>
-              
-              <Button 
-              type="button"
-              variant="text"
-              onClick={handleClick}
-              sx={{color:'#1976D2'}}
-              // type='submit'
-              disabled={(checkboxClicked && selectedrows.length) || !state.select || !state.Rname || !state.selectFloor || !state.Xvalue || !state.Yvalue }
-              >
-                ADD
-              </Button> 
-            {/* </form> */}
-          </Stack>
-
-          <TableContainer component={Paper}>
-            <Table 
-            sx={{ minWidth: 650 }} 
-            size="small" aria-label="a dense table">
-              <TableHead>
-                <TableRow>
-                  <TableCell ></TableCell>
-                  <TableCell>Name</TableCell>
-                  <TableCell align="right">X&nbsp;(feet)</TableCell>
-                  <TableCell align="right">Y&nbsp;(feet)</TableCell>
-                  <TableCell align="right">Floor</TableCell>
-                  <TableCell align="right">Next to (optional)</TableCell>
-                </TableRow>
-              </TableHead>
-              {/* List of data table entered by user */}
-              <TableBody>
-                {data.map((row) => (
-                  <TableRow
-                    hover
-                    role="checkbox"
-                    tabIndex={-1}
-                    key={row.id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 },
-                    backgroundColor:`{data.select === 'Bathroom' && 'green'}`,
-                    }}
-                    options= {{selection:true}}
+                <FormControl
+                  fullWidth
+                  sx={{width: '50% '}}>
+                  <InputLabel id="demo-simple-select-label">Room type</InputLabel>
+                  <Select
+                    // required
+                    labelId="demo-simple-select-label"
+                    id="select"
+                    name="select"
+                    value={state.select}
+                    label="room"
+                    onChange={handleChange}
                   >
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        onClick={(event) => handleDeleteCheckbox(event, row.id)}
-                        color="primary"
-                        inputProps={{
-                           'aria-labelledby': row.id,
+                    <MenuItem
+                      value="Bedroom">Bedroom</MenuItem>
+                    <MenuItem
+                      value="Bathroom">Bathroom</MenuItem>
+                    <MenuItem
+                      value="Garage">Garage</MenuItem>
+                    <MenuItem
+                      value="Kitchen">Kitchen</MenuItem>
+                    <MenuItem
+                      value="Living">Living Room</MenuItem>
+                    <MenuItem
+                      value="Dining">Dining Room</MenuItem>
+                  </Select>
+                </FormControl>
+                <Box component="form"
+                     sx={{
+                       // '& > :not(style)': { m: 1, width: '25ch' },
+                     }}
+                     noValidate
+                     autoComplete="off">
+                  <TextField
+                    id="Rname"
+                    name="Rname"
+                    value={state.Rname}
+                    label="Name"
+                    variant="outlined"
+                    onChange={handleChange}
+                  />
+                </Box>
+                <FormControl
+                  sx={{width: '30%'}}>
+                  <InputLabel id="demo-simple-select-label">Floor</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="select"
+                    name="selectFloor"
+                    value={state.selectFloor}
+                    label="floor"
+                    onChange={handleChange}
+                  >
+                    <MenuItem value={1}>1</MenuItem>
+                  </Select>
+                </FormControl>
+                <TextField id="Xvalue"
+                           name="Xvalue"
+                           value={state.Xvalue}
+                           label="X (feet)"
+                           variant="outlined"
+                           onChange={handleChange}/>
+                <TextField id="Yvalue"
+                           name="Yvalue"
+                           value={state.Yvalue}
+                           label="Y (feet)"
+                           variant="outlined"
+                           onChange={handleChange}/>
+
+                <Button
+                  type="button"
+                  variant="text"
+                  onClick={handleClick}
+                  sx={{color: '#1976D2'}}
+                  // type='submit'
+                  disabled={(checkboxClicked && selectedrows.length) || !state.select || !state.Rname || !state.selectFloor || !state.Xvalue || !state.Yvalue}
+                >
+                  ADD
+                </Button>
+                {/* </form> */}
+              </Stack>
+
+              <TableContainer component={Paper}>
+                <Table
+                  sx={{minWidth: 650}}
+                  size="small" aria-label="a dense table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell></TableCell>
+                      <TableCell>Name</TableCell>
+                      <TableCell align="right">X&nbsp;(feet)</TableCell>
+                      <TableCell align="right">Y&nbsp;(feet)</TableCell>
+                      <TableCell align="right">Floor</TableCell>
+                      <TableCell align="right">Next to (optional)</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  {/* List of data table entered by user */}
+                  <TableBody>
+                    {data.map((row) => (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row.id}
+                        sx={{
+                          "&:last-child td, &:last-child th": {border: 0},
+                          backgroundColor: `{data.select === 'Bathroom' && 'green'}`,
                         }}
-                      />
-                    </TableCell>
+                        options={{selection: true}}
+                      >
+                        <TableCell padding="checkbox">
+                          <Checkbox
+                            onClick={(event) => handleDeleteCheckbox(event, row.id)}
+                            color="primary"
+                            inputProps={{
+                              'aria-labelledby': row.id,
+                            }}
+                          />
+                        </TableCell>
 
-                    <TableCell component="th" 
-                    scope="row">
-                        <Typography 
-                        style={{
-                          color: row_color_scheme[row.select].color
-                        }}>
-                          {row.Rname}
-                          </Typography> 
-                    </TableCell> 
-                    <TableCell align="right"><Chip label={row.Xvalue} 
-                    size="small" variant="filled" 
-                    style={{color:row_color_scheme[row.select].color, backgroundColor:row_color_scheme[row.select].backgroundColor}}></Chip></TableCell>
-                    <TableCell align="right"><Chip label={row.Yvalue} 
-                    size="small" variant="filled" 
-                    style={{color:row_color_scheme[row.select].color, backgroundColor:row_color_scheme[row.select].backgroundColor}}></Chip></TableCell>
-                    <TableCell align="right"><Typography>{row.selectFloor}</Typography></TableCell>
-                    <TableCell align='right'>
-                      <Box> <Adjacency roomId={row.id} data={data} setData={setData} setChanged={setChanged}/></Box>
-                    </TableCell>
+                        <TableCell component="th"
+                                   scope="row">
+                          <Typography
+                            style={{
+                              color: row_color_scheme[row.select].color
+                            }}>
+                            {row.Rname}
+                          </Typography>
+                        </TableCell>
+                        <TableCell align="right"><Chip label={row.Xvalue}
+                                                       size="small" variant="filled"
+                                                       style={{
+                                                         color: row_color_scheme[row.select].color,
+                                                         backgroundColor: row_color_scheme[row.select].backgroundColor
+                                                       }}></Chip></TableCell>
+                        <TableCell align="right"><Chip label={row.Yvalue}
+                                                       size="small" variant="filled"
+                                                       style={{
+                                                         color: row_color_scheme[row.select].color,
+                                                         backgroundColor: row_color_scheme[row.select].backgroundColor
+                                                       }}></Chip></TableCell>
+                        <TableCell align="right"><Typography>{row.selectFloor}</Typography></TableCell>
+                        <TableCell align='right'>
+                          <Box> <Adjacency roomId={row.id} data={data} setData={setData} setChanged={setChanged}/></Box>
+                        </TableCell>
 
-                    {/* <TableCell align="right">
+                        {/* <TableCell align="right">
                       <Chip label="edit/set" 
                       onClick={() => {
                         setRoomId(row.id)
@@ -523,91 +541,93 @@ const GenerateDesignTab = withRouter((props) => {
                       }} />
                       <CheckIcon fontSize="small" sx={{pt:'2px', ml:"7px"}}/>
                     </TableCell> */}
-                  </TableRow>
-                ))}
-              </TableBody>
+                      </TableRow>
+                    ))}
+                  </TableBody>
 
-            </Table>
-          </TableContainer>
+                </Table>
+              </TableContainer>
 
-          <Box 
-          sx={{display:'flex', justifyContent:'space-between'}}>
+              <Box
+                sx={{display: 'flex', justifyContent: 'space-between'}}>
 
-            {/* {saved ? <Button variant="text" sx={{color:'#C62828'}} 
+                {/* {saved ? <Button variant="text" sx={{color:'#C62828'}}
             onClick={deleteBulkSelection} 
             >DELETE SELECTED ROOMS</Button> :<Typography></Typography> } */}
 
-            {checkboxClicked && selectedrows.length && !changed ? <Button variant="text" 
-            sx={{color:'#C62828'}} 
-              onClick={deleteBulkSelection} 
-              >DELETE SELECTED ROOMS</Button>: <Typography></Typography> }
+                {checkboxClicked && selectedrows.length && !changed ? <Button variant="text"
+                                                                              sx={{color: '#C62828'}}
+                                                                              onClick={deleteBulkSelection}
+                >DELETE SELECTED ROOMS</Button> : <Typography></Typography>}
 
-            {changed && <Button variant="text" 
-            onClick={save}>SAVE</Button>}
-          </Box>
-          
-        </AccordionDetails>
-      </Accordion>
+                {changed && <Button variant="text"
+                                    onClick={save}>SAVE</Button>}
+              </Box>
 
-      <Accordion>
-        <AccordionSummary
-          sx={{p:0}}
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2a-content"
-          id="panel2a-header"
-        >
-          <Typography>Land</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <MapLandWithNoSSR 
-          mapUpdate={mapUpdate} 
-          setMapUpdate={setMapUpdate} 
-          projectId={projectId}/>
-        </AccordionDetails>
-      </Accordion>
+            </AccordionDetails>
+          </Accordion>
 
-      <Accordion>
-        <AccordionSummary
-          sx={{p:0}}
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2a-content"
-          id="panel2a-header"
-        >
-          <Typography>Envelope</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <MapEnvelopeWithNoSSR 
-          mapUpdate={mapUpdate} 
-          setMapUpdate={setMapUpdate} 
-          projectId={projectId}/>
-        </AccordionDetails>
-      </Accordion>
+          <Accordion>
+            <AccordionSummary
+              sx={{p: 0}}
+              expandIcon={<ExpandMoreIcon/>}
+              aria-controls="panel2a-content"
+              id="panel2a-header"
+            >
+              <Typography>Land</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <MapLandWithNoSSR
+                mapUpdate={mapUpdate}
+                setMapUpdate={setMapUpdate}
+                projectId={projectId}/>
+            </AccordionDetails>
+          </Accordion>
 
-      <div>
-        <Button variant="contained" sx={{mt:3, '&:hover': {backgroundColor: "#000000"}}} onClick={handleSubmit}>{buttonText ? "GENERATE DESIGNS" : "Generating"}</Button>
-        <Backdrop
-          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={open}
-          onClick={handleClose}
-        >
-          <CircularProgress color="inherit" />
-          <Typography sx={{position:"absolute", mt:"6%"}}>Generating floorplans...</Typography>
-        </Backdrop>
-      </div>
+          <Accordion>
+            <AccordionSummary
+              sx={{p: 0}}
+              expandIcon={<ExpandMoreIcon/>}
+              aria-controls="panel2a-content"
+              id="panel2a-header"
+            >
+              <Typography>Envelope</Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <MapEnvelopeWithNoSSR
+                mapUpdate={mapUpdate}
+                setMapUpdate={setMapUpdate}
+                projectId={projectId}/>
+            </AccordionDetails>
+          </Accordion>
 
-    </div>
+          <div>
+            <Button variant="contained" sx={{mt: 3, '&:hover': {backgroundColor: "#000000"}}}
+                    onClick={handleSubmit}>{buttonText ? "GENERATE DESIGNS" : "Generating"}</Button>
+            <Backdrop
+              sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
+              open={open}
+              onClick={handleClose}
+            >
+              <CircularProgress color="inherit"/>
+              <Typography sx={{position: "absolute", mt: "6%"}}>Generating floorplans...</Typography>
+            </Backdrop>
+          </div>
+
+        </div>
 
       </Box>
       <Box
         component="main"
         sx={{
           flexGrow: 1,
-          mb: 8, mt:4
+          mb: 8, mt: 4
         }}
       >
         <Container maxWidth="xl">
-          <Typography 
-            sx={{textAlign:'center', fontSize:'20px', paddingTop:'100px'}}>Set your design constraints to begin</Typography>
+          <Typography
+            sx={{textAlign: 'center', fontSize: '20px', paddingTop: '100px'}}>Set your design constraints to
+            begin</Typography>
         </Container>
       </Box>
     </>
