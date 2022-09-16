@@ -53,10 +53,11 @@ export const FirebaseLogin = (props) => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        await signInWithEmailAndPassword(values.email, values.password);
+        const token = await signInWithEmailAndPassword(values.email, values.password);
+        const jwtToken = await token.user.getIdToken();
 
         if (isMounted()) {    
-          const {data} = await axios.get(`/api/owner/${values.email}`)
+          const {data} = await axios.get(`/api/owner`, { headers: {'Authorization': `Bearer ${jwtToken}`} })
           .catch(error => console.log(error));
           
           localStorage.setItem("lab-user", data.data._id); 
@@ -102,10 +103,11 @@ export const FirebaseLogin = (props) => {
   const handleGoogleClick = async () => {
     try {
       const googleLogin = await signInWithGoogle();
+      const jwtToken = await googleLogin.user.getIdToken();
 
       if (isMounted()) {
-        const {data} = await axios.get(`/api/owner/${googleLogin.user.email}`)
-        .catch(error => console.log(error));
+        const {data} = await axios.get(`/api/owner`, { headers: {'Authorization': `Bearer ${jwtToken}`} })
+          .catch(error => console.log(error));
         localStorage.setItem("lab-user", data.data._id);
  
         localStorage.setItem("is-owner", "true"); 

@@ -30,6 +30,9 @@ const moduleExports = {
 // module.exports = withSentryConfig(moduleExports, sentryWebpackPluginOptions);
 
 module.exports = withTM({
+  env: {
+    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
+  },
   reactStrictMode: true,
   webpack(config) {
     config.module.rules.push({

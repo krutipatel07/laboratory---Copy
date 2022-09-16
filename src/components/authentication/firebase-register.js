@@ -65,11 +65,12 @@ export const FirebaseRegister = (props) => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        await createUserWithEmailAndPassword(values.email, values.password);
+        const token = await createUserWithEmailAndPassword(values.email, values.password);
+        const jwtToken = await token.user.getIdToken();
 
         try {
           if (isMounted()) {     
-            const {data} = await axios.get(`/api/owner/${values.email}`)
+            const {data} = await axios.get(`/api/owner`, { headers: {'Authorization': `Bearer ${jwtToken}`} })
             .catch(error => console.log(error));
             await axios.put(`/api/user/${data.data._id}`, {
               name: values.name,
@@ -95,7 +96,7 @@ export const FirebaseRegister = (props) => {
                 lname: values.lname,
                 email: values.email,
                 role: values.role
-              })
+              }, { headers: {'Authorization': `Bearer ${token}`} })
               .catch(error => console.log(error));
 
               localStorage.setItem("lab-user", data.data.id);
@@ -120,7 +121,7 @@ export const FirebaseRegister = (props) => {
             await axios.put(`/api/user/${user_id}`, {
               limnu_userId: limnu_userCreate.data.userId,
               limnu_token: limnu_userCreate.data.token
-            })
+            }, { headers: {'Authorization': `Bearer ${token}`} })
             .catch(error => console.log(error)); 
 
             await axios.post("/api/emails/welcome_email", {
@@ -145,17 +146,18 @@ export const FirebaseRegister = (props) => {
   const handleGoogleClick = async () => {
     try {
       const googleSignup = await signInWithGoogle();
-      
+      const token = await googleSignup.user.getIdToken();
+
       if (googleSignup.additionalUserInfo.isNewUser) {
         try { 
           if (isMounted()) {  
-            const {data} = await axios.get(`/api/owner/${googleSignup.user.email}`)
+            const {data} = await axios.get(`/api/owner`, { headers: {'Authorization': `Bearer ${token}`} })
             .catch(error => console.log(error));  
             await axios.put(`/api/user/${data.data._id}`, {
               name: values.name,
               lname: values.lname,
               role: values.role
-            })
+            }, { headers: {'Authorization': `Bearer ${token}`} })
             .catch(error => console.log(error));
 
             localStorage.setItem("lab-user", data.data.id);
@@ -176,7 +178,7 @@ export const FirebaseRegister = (props) => {
             email: googleSignup.user.email,
             lname: values.lname,
             role: values.role
-          })
+          }, { headers: {'Authorization': `Bearer ${token}`} })
           .catch(error => console.log(error));
 
           localStorage.setItem("lab-user", data.data.id);
@@ -201,7 +203,7 @@ export const FirebaseRegister = (props) => {
           await axios.put(`/api/user/${user_id}`, {
             limnu_userId: limnu_userCreate.data.userId,
             limnu_token: limnu_userCreate.data.token
-          })
+          }, { headers: {'Authorization': `Bearer ${token}`} })
           .catch(error => console.log(error)); 
 
           await axios.post("/api/emails/welcome_email", {

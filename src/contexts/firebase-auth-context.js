@@ -49,7 +49,8 @@ export const AuthProvider = (props) => {
             avatar: user.photoURL,
             email: user.email,
             name: user.displayName,
-            plan: 'Premium'
+            plan: 'Premium',
+            getIdToken: () => user.getIdToken()
           }
         }
       });

@@ -1,26 +1,13 @@
-import { useState, useEffect} from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import {
-  Avatar,
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Divider,
-  Grid,
-  Switch,
-  TextField,
-  Typography
-} from '@mui/material';
+import { Avatar, Box, Button, Card, CardContent, Grid, TextField, Typography } from '@mui/material';
 import { UserCircle as UserCircleIcon } from '../../../icons/user-circle';
 import { useAuth } from '../../../hooks/use-auth';
 import toast from 'react-hot-toast';
 
 export const AccountGeneralSettings = (props) => {
-  // To get the user from the authContext, you can use
-  // const { user } = useAuth();
-  
+  const { user: loggedInUser } = useAuth();
   const [user, setUser] = useState();
   const [name, setName] = useState();
   const [reload, setReload] = useState(false);
@@ -30,9 +17,11 @@ export const AccountGeneralSettings = (props) => {
   
   useEffect(() => {
     const user = localStorage.getItem("lab-user");
-    axios.get(`/api/user/${user}`)
-    .then(res => setUser(res.data.data))
-    .catch(error => console.log(error));
+    loggedInUser.getIdToken().then(async token => {
+      axios.get(`/api/user/${user}`, {headers: {'Authorization': `Bearer ${token}`}})
+        .then(res => setUser(res.data.data))
+        .catch(error => console.log(error));
+    });
   },[reload])
 
   const handleChange = (e) => {
@@ -40,10 +29,10 @@ export const AccountGeneralSettings = (props) => {
   }
   const updateName = async () => {
     const user = localStorage.getItem("lab-user");
-    await axios.put(`/api/user/${user}`, {
-      name
-    })
-    .catch(error => console.log(error));
+    loggedInUser.getIdToken().then(async token => {
+      await axios.put(`/api/user/${user}`, {name}, {headers: {'Authorization': `Bearer ${token}`}})
+        .catch(error => console.log(error));
+    });
 
     toast.success('Name updated successfully!');
     setReload(true);

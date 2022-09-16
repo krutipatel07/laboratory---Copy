@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Head from 'next/head';
 import { Box, Button, Card, Container, Grid, Typography } from '@mui/material';
@@ -7,14 +7,14 @@ import { withAuthGuard } from '../../../hocs/with-auth-guard';
 import { Plus as PlusIcon } from '../../../icons/plus';
 import { gtm } from '../../../lib/gtm';
 import ProjectGrid from '../../../components/dashboard/product/product-grid.js';
-import DashboardModalTutorial from '../../../components/modal/dashboard-modal-tutorial';
 import CreateProjectModal from '../../../components/modal/createProject-modal'
-import {DashboardSidebar} from '../../../components/dashboard/dashboard-sidebar'
-import {GenerateImportDialog} from '../../../components/modal/generateImportModal'
-import {PricingPlan} from '../../../components/modal/pricingPlanModal'
+import { DashboardSidebar } from '../../../components/dashboard/dashboard-sidebar'
+import { PricingPlan } from '../../../components/modal/pricingPlanModal'
 import extractDate from '../../../utils/extractDate';
+import { useAuth } from "../../../hooks/use-auth";
 
 const ProductList = () => {
+  const { user } = useAuth();
   const [open, setOpen] = useState(false);
   const [userData, setUserData] = useState();
   const [modal, setModal] = useState(false);  
@@ -39,33 +39,39 @@ const ProductList = () => {
       return Math.ceil(difference / (1000 * 3600 * 24))
   }
 
-  // Added a new column in the User Model 
+  // Added a new column in the User Model
   // Called the User Model 
   // useEffect should update when true to be false only once > PUT 
   useEffect(() => {
     const owner = localStorage.getItem("lab-user");
-    axios.get(`/api/user/${owner}`)
-    .then(async res => {
-      setUserData(res.data.data)
-      // check the status of plan subscribed using its subscription id, if it is cancelled by user, display payment again
-      if(res.data.data.subscription_id){
-        const {data} = await axios.post('/api/stripe/retrieve-subscription', {subscription_id : res.data.data.subscription_id})
-        setSubscriptionStatus(data.status);
-      }
-      setDateDiff(getDiffs(res.data.data.dateCreated))
+
+    user.getIdToken().then(async token => {
+      axios.get(`/api/user/${owner}`, { headers: {'Authorization': `Bearer ${token}`} })
+        .then(async res => {
+          setUserData(res.data.data)
+          // check the status of plan subscribed using its subscription id, if it is cancelled by user, display payment again
+          if(res.data.data.subscription_id){
+            const {data} = await axios.post('/api/stripe/retrieve-subscription', {subscription_id : res.data.data.subscription_id},
+              { headers: {'Authorization': `Bearer ${token}`} })
+            setSubscriptionStatus(data.status);
+          }
+          setDateDiff(getDiffs(res.data.data.dateCreated))
+        })
+        .catch(error => console.log(error));
     })
-    .catch(error => console.log(error));
   },[]);
 
   useEffect(() => {
     const owner = localStorage.getItem("lab-user");
     if (owner && userData && userData.isFirstTime === true) {
 
-      axios.put(`/api/user/${owner}`, {
-        isFirstTime:false
-      })
-      .catch(error => console.log(error));
-    } 
+      user.getIdToken().then(async token => {
+        axios.put(`/api/user/${owner}`, {
+          isFirstTime: false
+        }, {headers: {'Authorization': `Bearer ${token}`}})
+          .catch(error => console.log(error));
+      });
+    }
   }, [userData]);
   
   const createProject = (e) => {
@@ -140,10 +146,10 @@ const ProductList = () => {
       modal={modal} 
       setModal={setModal} 
       projectId={projectId}/>} */}
-      
 
-      { // display payment modal if 14 days trial period is passed and subscription status is not active
-        dateDiff <= -(freetrialDays) && subscriptionStatus !== "active"  && <PricingPlan email={userData.email}/>}
+      // TODO: uncomment this when Stripe endpoints are fixed
+      // display payment modal if 14 days trial period is passed and subscription status is not active
+      {/*{ dateDiff <= -(freetrialDays) && subscriptionStatus !== "active"  && <PricingPlan email={userData.email}/>}*/}
     </>
   );
 };

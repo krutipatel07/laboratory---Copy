@@ -17,6 +17,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useAuth } from "../../../hooks/use-auth";
 
 export const InvitedUserModal = (props) => {
   const isMounted = useMounted();
@@ -54,8 +55,9 @@ export const InvitedUserModal = (props) => {
       const isExisting = existingCollaboratorList.filter(collaborator => collaborator===values.email);
       if(isExisting.length){
         try {
-          if (isMounted()) {    
-            const {data} = await axios.get(`/api/owner/${values.email}`)
+          if (isMounted()) {
+            // TODO: need to send the authorization here as well
+            const {data} = await axios.get(`/api/owner`)
             .catch(error => console.log(error));
             const id = data.data.id;
             const projects = await axios.get(`/api/projects/${projectId}`)
@@ -95,6 +97,7 @@ export const InvitedUserModal = (props) => {
     }
   });
 
+  const { user: loggedInUser } = useAuth();
   const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
@@ -110,11 +113,13 @@ export const InvitedUserModal = (props) => {
       displayName: name
     })
     .catch(error => console.log(error));
-    await axios.put(`/api/user/${_id}`, {
-      limnu_userId: limnu_userCreate.data.userId,
-      limnu_token: limnu_userCreate.data.token
-    })
-    .catch(error => console.log(error));    
+    loggedInUser.getIdToken().then(async token => {
+      await axios.put(`/api/user/${_id}`, {
+        limnu_userId: limnu_userCreate.data.userId,
+        limnu_token: limnu_userCreate.data.token
+      }, {headers: {'Authorization': `Bearer ${token}`}})
+        .catch(error => console.log(error));
+    });
     localStorage.setItem('limnu_token', limnu_userCreate.data.token)
   }
 
@@ -126,25 +131,27 @@ export const InvitedUserModal = (props) => {
     .catch(error => console.log(error));
     localStorage.setItem('limnu_token', limnu_userCreate.data.token)
 
-    const {data} = await axios.post("/api/user", {
-      name: values.name,
-      email: values.email,
-      role: "Collaborator",
-      limnu_userId: limnu_userCreate.data.userId
-    })
-    .catch(error => {
-      toast.error("This name is already taken!")
-      return false
+    loggedInUser.getIdToken().then(async token => {
+      const {data} = await axios.post("/api/user", {
+        name: values.name,
+        email: values.email,
+        role: "Collaborator",
+        limnu_userId: limnu_userCreate.data.userId
+      }, {headers: {'Authorization': `Bearer ${token}`}})
+        .catch(error => {
+          toast.error("This name is already taken!")
+          return false
+        });
+
+      const id = data.data.id;
+      localStorage.setItem("lab-user", id);
+
+      await axios.put(`/api/projects/${projectId}`, {
+        collaborators : id,
+      })
+        .catch(error => console.log(error));
+      return true;
     });
-
-    const id = data.data.id;
-    localStorage.setItem("lab-user", id);
-
-    await axios.put(`/api/projects/${projectId}`, {
-     collaborators : id,
-   })
-   .catch(error => console.log(error));
-   return true;
   }
 
    return (

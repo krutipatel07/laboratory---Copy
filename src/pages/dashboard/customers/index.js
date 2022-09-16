@@ -1,21 +1,14 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Head from 'next/head';
-import {
-  Box,
-  Card,
-  Container,
-  Grid,
-  InputAdornment,
-  TextField,
-  Typography
-} from '@mui/material';
+import { Box, Card, Container, Grid, InputAdornment, TextField, Typography } from '@mui/material';
 import { CollaboratorListTable } from '../../../components/dashboard/collaboratorList/collaborator-list-table';
 import { withAuthGuard } from '../../../hocs/with-auth-guard';
 import { useMounted } from '../../../hooks/use-mounted';
 import { Search as SearchIcon } from '../../../icons/search';
 import { gtm } from '../../../lib/gtm';
 import axios from 'axios'
-import {DashboardSidebar} from '../../../components/dashboard/dashboard-sidebar'
+import { DashboardSidebar } from '../../../components/dashboard/dashboard-sidebar'
+import { useAuth } from "../../../hooks/use-auth";
 
 const sortOptions = [
   {
@@ -105,6 +98,7 @@ const applyPagination = (customers, page, rowsPerPage) => customers.slice(page *
   page * rowsPerPage + rowsPerPage);
 
 const CustomerList = () => {
+  const { user: loggedInUser } = useAuth();
   const isMounted = useMounted();
   const queryRef = useRef(null);
   const [customers, setCustomers] = useState([]);
@@ -126,14 +120,16 @@ const CustomerList = () => {
   const getCustomers = async () => {
     try {
       const user = localStorage.getItem("lab-user");
-      const {data} = await axios.get(`/api/user/${user}`);
-      const {projects} = data.data;
-      projects.forEach( project => {
-        project.collaborators && project.collaborators.forEach( async collaborator => {
-          const {data} = await axios.get(`/api/user/${collaborator}`);
-          setCustomers((prev) => [...prev, data.data])
+      loggedInUser.getIdToken().then(async token => {
+        const {data} = await axios.get(`/api/user/${user}`, { headers: {'Authorization': `Bearer ${token}`} });
+        const {projects} = data.data;
+        projects.forEach( project => {
+          project.collaborators && project.collaborators.forEach( async collaborator => {
+            const {data} = await axios.get(`/api/user/${collaborator}`, { headers: {'Authorization': `Bearer ${token}`} });
+            setCustomers((prev) => [...prev, data.data])
+          })
         })
-      })
+      });
     } catch (err) {
       console.error(err);
     }

@@ -9,6 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import NextLink from 'next/link';
 import axios from 'axios'
 import { color } from '@mui/system';
+import { useAuth } from "../../hooks/use-auth";
 
 const useStyles = makeStyles((theme) => ({
   font: {
@@ -36,22 +37,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const StripeCheckout = withRouter((props) => {
+  const { user: loggedInUser } = useAuth();
   const router = useRouter();
   const {status, session_id} = router.query
   const classes = useStyles();
 
   useEffect(async () => {
     // if subscription payment is successful, it will return the checkout session id, and using this id retrieve its data and save details like subscription id, cust id etc
-    if(status === "success" && session_id)
-    {const user = localStorage.getItem("lab-user"); 
-    const {data} = await axios.post('/api/stripe/get-stripe-session', {session_id, user});
-    await axios.put(`/api/user/${user}`, {
-      subscription_id: data.subscription_id,
-    })
-    .catch(error => console.log(error));
-    await axios.post('/api/stripe', data)
-    .catch(error => console.log(error));}
-  },[])
+    if (status === "success" && session_id) {
+      const user = localStorage.getItem("lab-user");
+      loggedInUser.getIdToken().then(async token => {
+        const {data} = await axios.post('/api/stripe/get-stripe-session', {session_id, user},
+          {headers: {'Authorization': `Bearer ${token}`}});
+        await axios.put(`/api/user/${user}`, {
+          subscription_id: data.subscription_id,
+        }, {headers: {'Authorization': `Bearer ${token}`}})
+          .catch(error => console.log(error));
+        await axios.post('/api/stripe', data, {headers: {'Authorization': `Bearer ${token}`}})
+          .catch(error => console.log(error));
+      });
+    }
+  }, [])
 
   return (
     <>

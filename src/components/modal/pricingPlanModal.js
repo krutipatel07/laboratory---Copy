@@ -11,6 +11,7 @@ import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import { makeStyles } from '@material-ui/styles';
 import { loadStripe } from '@stripe/stripe-js';
 import axios from 'axios';
+import { useAuth } from "../../hooks/use-auth";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -43,7 +44,7 @@ const styles = theme => ({
   });
 
 export const PricingPlan = (props) =>{
-    const email = props.email;
+    const { user } = useAuth();
     const [open, setOpen] = React.useState(true);
     const [fullWidth, setFullWidth] = React.useState(true);
     const [maxWidth, setMaxWidth] = React.useState('lg');
@@ -61,13 +62,16 @@ export const PricingPlan = (props) =>{
     //   create checkout session and redirect user to checkout which is directly handled by stripe service
       const createCheckOutSession = async priceId => {
         const stripe = await stripePromise;
-        const checkoutSession = await axios.post('/api/stripe/create-stripe-session', { priceId, email });
-        const result = await stripe.redirectToCheckout({
-          sessionId: checkoutSession.data.id,
+        user.getIdToken().then(async token => {
+          const checkoutSession = await axios.post('/api/stripe/create-stripe-session', {},
+            { headers: {'Authorization': `Bearer ${token}`} } );
+          const result = await stripe.redirectToCheckout({
+            sessionId: checkoutSession.data.id,
+          });
+          if (result.error) {
+            console.log(result.error.message);
+          }
         });
-        if (result.error) {
-          console.log(result.error.message);
-        }
       };
 
   const theme = useTheme();

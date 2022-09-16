@@ -1,21 +1,23 @@
-import { useState, useEffect} from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import {
   Box,
   Button,
   Card,
   CardContent,
-  Typography,
   Dialog,
   DialogActions,
   DialogContent,
   DialogContentText,
-  DialogTitle
+  DialogTitle,
+  Typography
 } from '@mui/material';
 import { useRouter } from 'next/router';
+import { useAuth } from "../../../hooks/use-auth";
 
 
-export const Subscription = (props) => {  
+export const Subscription = (props) => {
+  const { user: loggedInUser } = useAuth();
   const [subscription_id, setSubscription_id] = useState();
   const [open, setOpen] = useState(false);
   const [subscriptionPlanId, setSubscriptionPlanId] = useState()
@@ -44,21 +46,26 @@ export const Subscription = (props) => {
   useEffect(() => {
     // get subscription id of plan subscribed by user
     const user = localStorage.getItem("lab-user");
-    axios.get(`/api/user/${user}`)
-    .then(async res => {
-      setSignupDate(res.data.data.dateCreated)
-      if(res.data.data.subscription_id){
-        const {data} = await axios.post('/api/stripe/retrieve-subscription', {subscription_id : res.data.data.subscription_id})
-        setSubscriptionPlanId(data.plan)
-        setSubscription_id(res.data.data.subscription_id)
-      }}
-      )
-    .catch(error => console.log(error));
+    loggedInUser.getIdToken().then(async token => {
+      axios.get(`/api/user/${user}`, { headers: {'Authorization': `Bearer ${token}`} })
+        .then(async res => {
+          setSignupDate(res.data.data.dateCreated)
+          if(res.data.data.subscription_id){
+            const {data} = await axios.post('/api/stripe/retrieve-subscription', {subscription_id : res.data.data.subscription_id},
+              { headers: {'Authorization': `Bearer ${token}`} })
+            setSubscriptionPlanId(data.plan)
+            setSubscription_id(res.data.data.subscription_id)
+          }
+        }).catch(error => console.log(error));
+    });
   },[])
 
   const cancelSubscription = async () => {
-    const {data} = await axios.post('/api/stripe/cancel-stripe-subscription', {subscription_id})
-    data.status === "canceled" && router.push("/dashboard/projects")
+    loggedInUser.getIdToken().then(async token => {
+      const {data} = await axios.post('/api/stripe/cancel-stripe-subscription', {subscription_id},
+        { headers: {'Authorization': `Bearer ${token}`} });
+      data.status === "canceled" && router.push("/dashboard/projects");
+    });
    }
 
   return (
