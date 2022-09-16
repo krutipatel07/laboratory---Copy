@@ -145,17 +145,72 @@ export const FirebaseRegister = (props) => {
   const handleGoogleClick = async () => {
     try {
       const googleSignup = await signInWithGoogle();
+      
+      if (googleSignup.additionalUserInfo.isNewUser) {
+        try { 
+          if (isMounted()) {  
+            const {data} = await axios.get(`/api/owner/${googleSignup.user.email}`)
+            .catch(error => console.log(error));  
+            await axios.put(`/api/user/${data.data._id}`, {
+              name: values.name,
+              lname: values.lname,
+              role: values.role
+            })
+            .catch(error => console.log(error));
 
-      if (googleSignup.additionalUserInfo.isNewUser) {          
-        const {data} = await axios.post("/api/user", {
-          name: googleSignup.user.displayName,
-          email: googleSignup.user.email
-        })
-        .catch(error => console.log(error));
-        localStorage.setItem("lab-user", data.data.id);
+            localStorage.setItem("lab-user", data.data.id);
+            localStorage.setItem("is-owner", "true"); 
 
-        const returnUrl = router.query.returnUrl || '/dashboard/projects';
-        router.push(returnUrl);
+            const project_list = data.data.projects.map(project => ({
+              id: project._id,
+              title : project.title,
+              path : `/workspace?id=${project._id}`
+            }))
+            localStorage.setItem('project_list', JSON.stringify(project_list));
+            const returnUrl = router.query.returnUrl || '/dashboard/projects';
+            router.push(returnUrl);
+          }
+        } catch (err) {          
+          const {data} = await axios.post("/api/user", {
+            name: googleSignup.user.displayName,
+            email: googleSignup.user.email,
+            lname: values.lname,
+            role: values.role
+          })
+          .catch(error => console.log(error));
+
+          localStorage.setItem("lab-user", data.data.id);
+          localStorage.setItem("is-owner", "true"); 
+          const project_list = data.data.projects.map(project => ({
+            id: project._id,
+            title : project.title,
+            path : `/workspace?id=${project._id}`
+          }))
+          localStorage.setItem('project_list', JSON.stringify(project_list));
+          const returnUrl = router.query.returnUrl || '/dashboard/projects';
+          router.push(returnUrl);
+        } finally {
+          const user_id = localStorage.getItem("lab-user");
+          const limnu_userCreate = await axios.post("https://api.apix.limnu.com/v1/userCreate", {
+            apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
+            displayName: values.name
+          })
+          .catch(error => console.log(error));
+          localStorage.setItem('limnu_token', limnu_userCreate.data.token)
+
+          await axios.put(`/api/user/${user_id}`, {
+            limnu_userId: limnu_userCreate.data.userId,
+            limnu_token: limnu_userCreate.data.token
+          })
+          .catch(error => console.log(error)); 
+
+          await axios.post("/api/emails/welcome_email", {
+            name: values.name,
+            lname: values.lname,
+            email: values.email
+          })
+          .catch(error => console.log(error));
+        }
       }
       else {
         toast.error('User already have an account!');

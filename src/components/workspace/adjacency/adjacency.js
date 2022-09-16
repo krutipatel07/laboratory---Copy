@@ -28,6 +28,9 @@ export default function Adjacency(props) {
   const roomDetails = data.filter(room => room.id === roomId)
 
   useEffect(() => {
+    setNextTo([])
+    setNames([])
+    setRooms([])
     data.forEach(room => {
       roomsList[room.Rname] = room.select
     })
@@ -90,10 +93,14 @@ export default function Adjacency(props) {
         typeof value === 'string' ? value.split(',') : value,
         );
         save(value)
+        const nonRedundantRoomBadge = rooms.filter(room => room.indexOf(value[value.length - 1]) > -1)
+        const filteredRoomBadgeList = rooms.filter(room => value.indexOf(room[0])>-1)
+        setRooms(filteredRoomBadgeList)
+
         data.forEach(room => {
           roomsList[room.Rname] = room.select
         })
-        value.length && setRooms(prev => [...prev, [value[value.length-1], roomsList[value[value.length-1]].toLowerCase()]])
+        value.length && !(nonRedundantRoomBadge.length) && setRooms(prev => [...prev, [value[value.length-1], roomsList[value[value.length-1]].toLowerCase()]])
     };
 
     const removeRoomBadge = (e,name) => {

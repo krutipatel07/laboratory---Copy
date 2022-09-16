@@ -141,6 +141,7 @@ const ProductList = () => {
       setModal={setModal} 
       projectId={projectId}/>} */}
       
+
       { // display payment modal if 14 days trial period is passed and subscription status is not active
         dateDiff <= -(freetrialDays) && subscriptionStatus !== "active"  && <PricingPlan email={userData.email}/>}
     </>

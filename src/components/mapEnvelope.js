@@ -93,13 +93,26 @@ const Map = (props) => {
   }
 
   // create and update polygon coordinates on create, delete and edit
-    const _onCreated = (e) =>{
-        const {layerType, layer} = e;
-        if (layerType === "polygon") {
-          const {_leaflet_id} = layer;
-          setPolygon(layers => [...layers, {id: _leaflet_id, lat_lngs: layer.getLatLngs()[0], zoom: layer._mapToAdd._animateToZoom ? layer._mapToAdd._animateToZoom : 18}]);
-          setSaved(false)
+    const _onCreated = async (e) =>{
+      const {layerType, layer} = e;
+      if (layerType === "polygon") {
+        const {_leaflet_id} = layer;
+
+        // store last polygon drawn only
+        const envelope_parameters_added = await axios.put(`/api/projects/${projectId}`, {
+          envelope_parameters: {id: _leaflet_id, lat_lngs: layer.getLatLngs()[0], zoom: layer._mapToAdd._animateToZoom ? layer._mapToAdd._animateToZoom : 18}
+        })
+        .catch(error => console.log(error));
+
+        // update location display condition to false
+        const location = JSON.parse(localStorage.getItem('location'))
+        if (location){
+          location.display = false
+          localStorage.setItem('location', JSON.stringify(location))
         }
+        envelope_parameters_added ? toast.success("Saved!") : toast.error('Something went wrong!')
+        envelope_parameters_added && setMapUpdate((prev) => !prev)          
+      }
     }
 
     const _onDeleted = (e) =>{
@@ -119,24 +132,6 @@ const Map = (props) => {
               )
           )
         })
-    }
-    
-    const save = async () => {
-      // store last polygon drawn only
-      const envelope_parameters_added = await axios.put(`/api/projects/${projectId}`, {
-        envelope_parameters: polygon[polygon.length - 1]
-      })
-      .catch(error => console.log(error));
-
-      // update location display condition to false
-      const location = JSON.parse(localStorage.getItem('location'))
-      if (location){
-        location.display = false
-        localStorage.setItem('location', JSON.stringify(location))
-      }
-      envelope_parameters_added ? toast.success("Saved!") : toast.error('Something went wrong!')
-      envelope_parameters_added && setMapUpdate((prev) => !prev)
-      setSaved(true)
     }
 
     const getCoordinates = (e) => {
@@ -251,9 +246,6 @@ const Map = (props) => {
         </Popup>}
       </Marker>}
     </MapContainer>}
-    <Button variant="text" 
-    onClick={save}  
-    disabled={saved}>SAVE</Button>
     </>
     );
   };

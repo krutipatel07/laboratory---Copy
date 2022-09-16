@@ -164,6 +164,7 @@ const GenerateDesignTab = withRouter((props) => {
     event.preventDefault()
     setButtonText(false)
     setOpen(!open);
+    await save(false);
     // getting land and envelope parameters in desired format
     let lat_lngs_array_land = []
     land_parameters.forEach(coordinate => {
@@ -307,7 +308,7 @@ const GenerateDesignTab = withRouter((props) => {
     setChanged(true)
   };
 
-  const save = async () => {
+  const save = async (display) =>{
     // update project database with new search parameter using project id
     const search_parameters_added = await axios.put(`/api/projects/${projectId}`, {
       search_parameters: data
@@ -317,8 +318,11 @@ const GenerateDesignTab = withRouter((props) => {
     setData([])
     setSelectedRows([])
 
-    search_parameters_added ? toast.success('Parameters saved successfully') : toast.error('Something went wrong!');
-    search_parameters_added && setUpdate((prev) => !prev)
+    if (display === false) {
+      return
+    }
+    search_parameters_added ? toast.success('Parameters saved successfully') : toast.error('Something went wrong!')
+    search_parameters_added && setUpdate((prev) => !prev) 
     setChanged(false)
 
   }
