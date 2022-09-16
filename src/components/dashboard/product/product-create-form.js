@@ -74,7 +74,7 @@ export const ProductCreateForm = (props) => {
               owner,
               title: values.name,
               description: values.description,
-              cover_image: cover_image_url || "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2352&q=80",
+              cover_image: cover_image_url || "https://maket-generatedcontent.s3.ca-central-1.amazonaws.com/platform-content/maket-logo.jpg",
               assets: url_list,
               budget: values.newPrice,
             })

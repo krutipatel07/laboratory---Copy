@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 export default function ProjectGrid() {
 
   const [projectsData, setProjectsData] = useState();
-  const images = "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2352&q=80"
+  const images = "https://maket-generatedcontent.s3.ca-central-1.amazonaws.com/platform-content/maket-logo.jpg"
 
   useEffect(() => {
     const owner = localStorage.getItem("lab-user");
