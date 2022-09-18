@@ -147,10 +147,6 @@ const GenerateDesignTab = withRouter((props) => {
     }
   }
 
-  const handleClose = () => {
-    setOpen(false);
-  }
-
   const handleChange = (event) => {
     const value = event.target.value;
     setState({
@@ -611,7 +607,6 @@ const GenerateDesignTab = withRouter((props) => {
             <Backdrop
               sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
               open={open}
-              onClick={handleClose}
             >
               <CircularProgress color="inherit"/>
               <Typography sx={{position: "absolute", mt: "6%"}}>Generating floorplans...</Typography>
