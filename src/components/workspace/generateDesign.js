@@ -200,8 +200,7 @@ const GenerateDesignTab = withRouter((props) => {
     // getting adjacency parameters in desired format
     adjacencyList_floor_1.forEach(adjacency =>
       adjacencyListWithId_floor_1.push([roomIdList[adjacency[0]], roomIdList[adjacency[1]]]))
-    constraints_floor_1["adjs"] = adjacencyListWithId_floor_1
-
+    constraints_floor_1["adjs"] = adjacencyListWithId_floor_1.filter(adjacency => adjacency[0] !== undefined && adjacency[1] !== undefined)
 
     // getting land and envelope parameters in desired format
     constraints_floor_1["land"] = lat_lngs_array_land
