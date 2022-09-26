@@ -86,7 +86,7 @@ const StripeCheckout = withRouter((props) => {
             </Grid>
             <Grid item xs={10}>
               <Typography className={classes.content}>Payment Successful</Typography>
-              <span className={classes.subcontent}>You will recieve an invoice by email. Billing is on a 30 day cycle.</span>
+              <span className={classes.subcontent}>You will receive an invoice by email. Billing is on a 30 day cycle.</span>
             </Grid>
             <Typography sx={{fontSize:14, mt:2}}>Thanks for signing up!  We’re excited to see what you accomplish with the worlds most advanced generative technology for architects.</Typography> 
             <NextLink

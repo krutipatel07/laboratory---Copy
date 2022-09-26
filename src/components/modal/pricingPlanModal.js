@@ -37,12 +37,6 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const styles = theme => ({
-    listItemText:{
-      fontSize:'0.7em',//Insert your required size
-    }
-  });
-
 export const PricingPlan = (props) =>{
     const { user } = useAuth();
     const [open, setOpen] = React.useState(true);
@@ -50,32 +44,26 @@ export const PricingPlan = (props) =>{
     const [maxWidth, setMaxWidth] = React.useState('lg');
     const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
     const stripePromise = loadStripe(publishableKey);
-    const [priceId, setPriceId] = React.useState(['price_1LUtZTD5NXEtAziPSaPiJqO1', 'price_1LUtchD5NXEtAziPEkhg4Ptd']);
-
+    const prices = process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging' || process.env.NODE_ENV === 'preview'
+      ? ['price_1LUtZTD5NXEtAziPSaPiJqO1', 'price_1LUtchD5NXEtAziPEkhg4Ptd'] // products: prod_MDKDUUWZfhhpLS, prod_MDKHusWy9lI4hO
+      : ['price_1LkqjnD5NXEtAziPS5jF5LOe', 'price_1LkqlJD5NXEtAziPpbhdCT7d'] // products: prod_MToIB6q1feknUK, prod_MToJ78XEFcLT0c
+    const [priceId, setPriceId] = React.useState(prices);
     const classes = useStyles();
-    const styles = theme => ({
-        listItemText:{
-          fontSize:'0.7em',//Insert your required size
-        }
-      });
 
     //   create checkout session and redirect user to checkout which is directly handled by stripe service
-      const createCheckOutSession = async priceId => {
-        const stripe = await stripePromise;
-        user.getIdToken().then(async token => {
-          const checkoutSession = await axios.post('/api/stripe/create-stripe-session', {},
-            { headers: {'Authorization': `Bearer ${token}`} } );
-          const result = await stripe.redirectToCheckout({
-            sessionId: checkoutSession.data.id,
-          });
-          if (result.error) {
-            console.log(result.error.message);
-          }
+    const createCheckOutSession = async priceId => {
+      const stripe = await stripePromise;
+      user.getIdToken().then(async token => {
+        const checkoutSession = await axios.post('/api/stripe/create-stripe-session', { priceId },
+          { headers: {'Authorization': `Bearer ${token}`} } );
+        const result = await stripe.redirectToCheckout({
+          sessionId: checkoutSession.data.id,
         });
-      };
-
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+        if (result.error) {
+          console.log(result.error.message);
+        }
+      });
+    };
 
   return (
     <div>

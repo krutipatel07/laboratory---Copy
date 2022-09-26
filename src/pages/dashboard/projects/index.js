@@ -147,9 +147,7 @@ const ProductList = () => {
       setModal={setModal} 
       projectId={projectId}/>} */}
 
-      {/* TODO: uncomment this when Stripe endpoints are fixed */}
-       {/* display payment modal if 14 days trial period is passed and subscription status is not active */}
-      {/*{ dateDiff <= -(freetrialDays) && subscriptionStatus !== "active"  && <PricingPlan email={userData.email}/>}*/}
+      { dateDiff <= -(freetrialDays) && subscriptionStatus !== "active"  && <PricingPlan email={userData.email}/>}
     </>
   );
 };
