@@ -9,7 +9,10 @@ async function CreateStripeSession(req, res) {
   const {priceId} = req.body;
   const user = await authenticatedUser(req);
   if (user) {
-    const redirectURL = `${process.env.NEXTAUTH_URL}/checkout`;
+    const redirectURL =
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:3000/checkout'
+        : 'https://platform.maket.ai/checkout';
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       customer_email: user.email,
