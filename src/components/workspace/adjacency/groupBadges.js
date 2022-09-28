@@ -1,13 +1,12 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
 import Badge from "./badge";
 
 export default function GroupBadges(props) {
   return (
     <AvatarGroup max={30}>
-      {props.rooms.map((room) => (
-        <Badge name={room[0]} type={room[1]} />
+      {props.rooms.map(({key, room}) => (
+        <Badge key={key} name={room[0]} type={room[1]} />
       ))}
     </AvatarGroup>
   );
