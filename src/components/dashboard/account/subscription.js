@@ -77,9 +77,11 @@ export const Subscription = (props) => {
               { headers: {'Authorization': `Bearer ${token}`} })
             setSubscriptionPlanId(data.plan)
             setSubscription_id(res.data.data.subscription_id)
-            setLoading(false)
           }
-        }).catch(error => console.log(error));
+        }).then(() =>{
+          setLoading(false)
+        }).
+        catch(error => console.log(error));
     });
   },[])
 
