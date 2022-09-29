@@ -109,7 +109,7 @@ const Login = () => {
                     : '/authentication/register'}
                   passHref
                 >
-                  <Typography variant="body2" color="secondary.contrastText" sx={{mt:2}}>{"Don't have an account?"}
+                  <Typography variant="body2" color="secondary.contrastText" sx={{mt:2}}>Don't have an account? 
                     <Link
                       color="#FFD19D"
                       variant="body2"

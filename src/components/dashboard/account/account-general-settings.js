@@ -22,7 +22,7 @@ export const AccountGeneralSettings = (props) => {
         .then(res => setUser(res.data.data))
         .catch(error => console.log(error));
     });
-  },[loggedInUser, reload])
+  },[reload])
 
   const handleChange = (e) => {
     setName(e.target.value);
