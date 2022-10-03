@@ -1,13 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { Box, Container, Typography, Tabs, Tab } from '@mui/material/';
 import DesignSavedGrid from '../../components/workspace/savedDesign';
-import GenerateDesign from '../../components/workspace/generateDesign';
+import GenerateDesignTab from '../../components/workspace/generateDesignTab';
 import { withRouter, useRouter } from 'next/router';
 import { withAuthGuard } from '../../hocs/with-auth-guard'
 import { makeStyles } from '@material-ui/core';
-import { useTheme } from '@mui/material/styles';
 import {DashboardSidebar} from '../../components/dashboard/dashboard-sidebar';
 import {WorkspaceNavbar} from '../../components/workspace/workspace-navbar'
 
@@ -70,7 +69,6 @@ const ProjectWorkspace = withRouter((props) => {
   };
 
   const classes = useStyles();
-  const theme = useTheme();
 
   return (
     <>
@@ -83,7 +81,6 @@ const ProjectWorkspace = withRouter((props) => {
       component="main"
       sx={{
         flexGrow: 1,
-        // mb: 8,
         backgroundColor:'#ffffff',
         display: 'flex'
       }}
@@ -94,7 +91,6 @@ const ProjectWorkspace = withRouter((props) => {
         <Box sx={{ width: '100%' }}>
           <Box 
           sx={{ pl:1.1,
-            // borderBottom: 1, borderColor: 'divider', 
             marginBottom: '10px' }}>
             <Tabs value={value} 
             onChange={handleChange} 
@@ -110,7 +106,7 @@ const ProjectWorkspace = withRouter((props) => {
           <TabPanel value={value} 
           index={0} 
           classes={{ root: classes.tab }}>
-            <GenerateDesign projectId= {props.router.query.id} 
+            <GenerateDesignTab projectId= {props.router.query.id} 
             setNewDesign={setNewDesign} 
             setValue={setValue} 
             style={{p:0}}/>
