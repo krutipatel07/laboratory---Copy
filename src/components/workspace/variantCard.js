@@ -2,11 +2,8 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import NextLink from 'next/link';
-import { makeStyles } from '@material-ui/styles';
-import { styled } from '@mui/material/styles';
 import axios from 'axios'
 import toast from 'react-hot-toast';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -17,62 +14,18 @@ import Popper from '@mui/material/Popper';
 import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
-import { Typography, 
-  ListItemButton,
-  ListItemIcon,
-  ListItemText, } from '@mui/material';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  CardContent: {
-    display: 'flex',
-    padding: '7px 24px'
-  },
-  cardActions: {
-    marginLeft: 'auto',
-    order: '2',
-    padding: '12px 5px 12px 24px'
-  },
-  Button: {
-    // padding: '8px 10px',
-    "&.MuiButton-contained": {
-      color: "#64B6F7",
-      backgroundColor: 'rgba(0, 255, 255, 0.08)',
-      borderRadius: '16px'
-    },
-  },
-  image: {
-    padding: '0 24px'
-  },
-  title: {
-    paddingTop: '15px'
-  },
-  deletebtn: {
-    marginLeft: 'auto',
-    padding: '8px 10px'
-  },
-  btnStyle: {
-    padding: '8px 10px',
-  }
-
-}));
+import { ListItemButton, ListItemIcon, ListItemText, Typography, } from '@mui/material';
 
 const VariantCard = (props) => {
-    const {
-        designId,
-        title,
-        members,
-        link,
-        image,
-        file_name,
-        setUpdate,
-        versions
-    } = props;
-
-    const classes = useStyles();    
-
+  const {
+      designId,
+      title,
+      link,
+      image,
+      file_name,
+      setUpdate,
+      versions
+  } = props;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [placement, setPlacement] = React.useState();
@@ -83,32 +36,37 @@ const VariantCard = (props) => {
     setPlacement(newPlacement);
   };
 
-    const deleteDesign = async () => {
-      const deleted = await axios.delete(`/api/projects/_/design/${designId}`);
-      deleted && toast.success("Design deleted");
-      setUpdate((prev) => !prev)
-    }
+  const deleteDesign = async () => {
+    const deleted = await axios.delete(`/api/projects/_/design/${designId}`);
+    deleted && toast.success("Design deleted");
+    setUpdate((prev) => !prev)
+  }
 
-    const exportDesign = async file => {  
-      axios.get(file, {
-        responseType: "blob",
-      }).then(function (response) {
-        const url = window.URL.createObjectURL(
-          new Blob([response.data], {
-            type: response.headers["content-type"],
-          })
-        );
-  
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", "maket-design.jpg");
-        document.body.appendChild(link);
-        link.click();
-        toast.success("Design downloaded!")
-      }).catch(function(e) {
-        toast.error("Something went wrong!")
-      });
-      }
+  const exportDesign = async file => {
+    axios.get(`${file}?timestamp=${new Date().getTime()}`, {
+      responseType: "blob"
+    }).then(function (response) {
+      const link = document.createElement("a");
+      const blob = new Blob([response.data], {type: response.headers["content-type"]});
+      link.download = "maket-design.jpg";
+      link.href = URL.createObjectURL(blob);
+      document.body.appendChild(link);
+
+      link.dispatchEvent(
+        new MouseEvent('click', {
+          bubbles: true,
+          cancelable: true,
+          view: window
+        })
+      );
+
+      document.body.removeChild(link);
+      toast.success("Design downloaded!");
+    }).catch(function (e) {
+      toast.error("Something went wrong!");
+      console.log("Error:", e);
+    });
+  }
   
     
   return (
@@ -190,4 +148,4 @@ const VariantCard = (props) => {
   );
 };
 
-export default VariantCard
+export default VariantCard;
