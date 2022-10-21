@@ -63,7 +63,7 @@ const StripeCheckout = withRouter((props) => {
     <>
     <Head>
       <title>
-        Checkout | Maket Colaboratory
+        Checkout | Maket
       </title>
     </Head>
     <Box

@@ -17,7 +17,7 @@ const AuthorizationRequired = () => {
     <>
       <Head>
         <title>
-          Error: Authorization Required | Maket Colaboratory
+          Error: Authorization Required | Maket
         </title>
       </Head>
       <Box

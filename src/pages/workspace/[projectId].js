@@ -195,7 +195,7 @@ return (
     {/* <ThemeProvider theme={theme}> */}
       <Head>
         <title>
-          Variant | Maket Colaboratory
+          Variant | Maket
         </title>
       </Head>
       <Box

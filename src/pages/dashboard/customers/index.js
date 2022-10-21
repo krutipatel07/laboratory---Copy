@@ -186,7 +186,7 @@ const CustomerList = () => {
     <>
       <Head>
         <title>
-          Dashboard: Collaborator List | Maket Colaboratory
+          Dashboard: Collaborator List | Maket
         </title>
       </Head>
       <Box

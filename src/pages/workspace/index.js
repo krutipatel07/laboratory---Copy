@@ -74,7 +74,7 @@ const ProjectWorkspace = withRouter((props) => {
     <>
     <Head>
       <title>
-        Workspace | Maket Colaboratory
+        Workspace | Maket
       </title>
     </Head>
     <Box

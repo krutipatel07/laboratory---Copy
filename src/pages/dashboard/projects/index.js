@@ -82,7 +82,7 @@ const ProductList = () => {
     <>
       <Head>
         <title>
-          Dashboard: Project List | Maket Colaboratory
+          Dashboard: Project List | Maket
         </title>
       </Head>
       <Box

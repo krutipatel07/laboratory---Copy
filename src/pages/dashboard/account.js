@@ -58,7 +58,7 @@ const Account = () => {
     <>
       <Head>
         <title>
-          Dashboard: Account | Maket Colaboratory
+          Dashboard: Account | Maket
         </title>
       </Head>
       <Box

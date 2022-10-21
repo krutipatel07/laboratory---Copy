@@ -17,7 +17,7 @@ const NotFound = () => {
     <>
       <Head>
         <title>
-          Error: Not Found | Maket Colaboratory
+          Error: Not Found | Maket
         </title>
       </Head>
       <Box

@@ -15,7 +15,7 @@ const PasswordReset = () => {
     <>
       <Head>
         <title>
-          Password Reset | Maket Colaboratory
+          Password Reset | Maket
         </title>
       </Head>
       <Box

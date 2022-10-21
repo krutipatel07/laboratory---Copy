@@ -26,7 +26,7 @@ const ProjectEdit = () => {
     <>
       <Head>
         <title>
-          Dashboard: Edit Project | Maket Colaboratory
+          Dashboard: Edit Project | Maket
         </title>
       </Head>
       <Box

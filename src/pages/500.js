@@ -17,7 +17,7 @@ const ServerError = () => {
     <>
       <Head>
         <title>
-          Error: Server Error | Maket Colaboratory
+          Error: Server Error | Maket
         </title>
       </Head>
       <Box

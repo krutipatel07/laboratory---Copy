@@ -16,7 +16,7 @@ const Contact = () => {
     <>
       <Head>
         <title>
-          Contact | Maket Colaboratory
+          Contact | Maket
         </title>
       </Head>
       <Box

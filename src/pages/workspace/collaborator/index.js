@@ -103,7 +103,7 @@ const InvitedUSerPage = withRouter((props) => {
     <>
       <Head>
         <title>
-          Variant | Maket Colaboratory
+          Variant | Maket
         </title>
       </Head>
 
