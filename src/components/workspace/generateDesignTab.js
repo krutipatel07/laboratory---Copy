@@ -3,17 +3,14 @@ import { Box, Button, Container, Typography} from '@mui/material';
 import { withAuthGuard } from '../../hocs/with-auth-guard';
 import { withRouter, useRouter } from 'next/router'
 import { Logo } from '../logo';
-import ConstraintsFloor01 from './constraintsFloor01';
+import Constraints from './constraints';
 import axios from 'axios'
 
-
 const GenerateDesignTab = withRouter((props) => {
-  const [click, setClick] = useState(false)
   const router = useRouter();
-  const [length,setLength] = useState()
-  const projectId = router.query.id || router.query.projectId;
+  const [length, setLength] = useState()
   const [show, setShow] = useState(true)
-
+  const projectId = router.query.id || router.query.projectId;
 
   const handleClick = async (e) => {
     setShow(false)
@@ -54,7 +51,7 @@ const GenerateDesignTab = withRouter((props) => {
                 />
             <div><Button variant="contained" onClick={handleClick} sx={{mt: 3, '&:hover': {backgroundColor: "#000000"}}}>
                 GENERATE DESIGNS</Button></div>
-        </Container> : <ConstraintsFloor01 setValue={props.setValue} projectId= {props.router.query.id}/> }   
+        </Container> : <Constraints setValue={props.setValue} projectId= {props.router.query.id}/> }
 
       </Box>
     </>

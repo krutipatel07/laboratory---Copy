@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Button, TextField, Container, Typography, IconButton } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Button, Container, IconButton, Typography } from '@mui/material';
 import { withAuthGuard } from '../../hocs/with-auth-guard';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import { withRouter, useRouter } from 'next/router'
+import { useRouter, withRouter } from 'next/router'
 import axios from 'axios'
 import toast from 'react-hot-toast';
 import Accordion from "@mui/material/Accordion";
@@ -19,21 +15,25 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import Stack from "@mui/material/Stack";
-import Checkbox from '@mui/material/Checkbox';
-import Chip from '@mui/material/Chip';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import dynamic from "next/dynamic";
-import Adjacency from './adjacency/adjacency';
 import CircularProgress from '@mui/material/CircularProgress';
 import Backdrop from '@mui/material/Backdrop';
+import RoomsList from "./roomsList";
 
-const Constraints_floor_1 = withRouter((props) => {
+const allRoomTypes = [
+  { type: 'Bedroom', displayName: 'Bedroom'},
+  { type: 'Bathroom', displayName: 'Bathroom'},
+  { type: 'Kitchen', displayName: 'Kitchen'},
+  { type: 'Living', displayName: 'Living Room'},
+  { type: 'Dining', displayName: 'Dining Room'},
+  { type: 'Garage', displayName: 'Garage'},
+];
 
+const Constraints = withRouter((props) => {
   const MapLandWithNoSSR = dynamic(() => import("../mapLand"), {
     ssr: false
   });
-
   const MapEnvelopeWithNoSSR = dynamic(() => import("../mapEnvelope"), {
     ssr: false
   });
@@ -46,7 +46,7 @@ const Constraints_floor_1 = withRouter((props) => {
     Yvalue: "",
     adjacencies: []
   });
-  const [data, setData] = useState([])
+  const [data, setData] = useState({})
   const router = useRouter();
   const projectId = router.query.id || router.query.projectId;
   const [update, setUpdate] = useState(true);
@@ -63,43 +63,43 @@ const Constraints_floor_1 = withRouter((props) => {
 
   const row_color_scheme = {
     Bedroom: {
-      color: '#2E7D32',
+      color: '#74C36B',
       backgroundColor: '#bff2c2'
     },
     Bathroom: {
-      color: '#0288D1',
+      color: '#8BDDFD',
       backgroundColor: '#abe0fd'
     },
     Kitchen: {
-      color: '#AB47BC',
+      color: '#E5BDFF',
       backgroundColor: '#e7bbef'
     },
     Garage: {
-      color: '#000000DE',
+      color: '#C6A88E',
       backgroundColor: 'rgb(157 154 154 / 87%)'
     },
     Living_Room: {
-      color: '#F57C00',
+      color: '#FAC685',
       backgroundColor: '#ffddba'
     },
     Dining_Room: {
-      color: '#D32F2F',
+      color: '#FF8C8D',
       backgroundColor: '#ffb5b5'
     },
     "Living Room": {
-      color: '#F57C00',
+      color: '#FAC685',
       backgroundColor: '#ffddba'
     },
     "Dining Room": {
-      color: '#D32F2F',
+      color: '#FF8C8D',
       backgroundColor: '#ffb5b5'
     },
     "Living": {
-      color: '#F57C00',
+      color: '#FAC685',
       backgroundColor: '#ffddba'
     },
     "Dining": {
-      color: '#D32F2F',
+      color: '#FF8C8D',
       backgroundColor: '#ffb5b5'
     }
   }
@@ -137,7 +137,7 @@ const Constraints_floor_1 = withRouter((props) => {
     let adjacencyListWithId_floor_2 = []
     let roomIdList = {}
     data.forEach((room, counter) => {
-      room.selectFloor === 1 ?
+      room.selectFloor.toString() === '1' ?
         room.adjacencies.forEach(adjacency => adjacencyList_floor_1.push(adjacency))
         : room.adjacencies.forEach(adjacency => adjacencyList_floor_2.push(adjacency))
 
@@ -187,24 +187,6 @@ const Constraints_floor_1 = withRouter((props) => {
     setValue(1)
   };
 
-  const handleDeleteCheckbox = (event, id) => {
-    // filter rooms to delete from database according to checkbox state
-    if (event.target.checked) {
-      const ifIncluded = selectedrows.includes(id)
-      if (!ifIncluded) {
-        setSelectedRows(prev => [...prev, id])
-      }
-      setCheckboxClicked(true)
-      return;
-    }
-    const ifIncluded = selectedrows.includes(id)
-    if (ifIncluded) {
-      const filteredRows = selectedrows.filter(row => row !== id)
-      setSelectedRows(filteredRows)
-    }
-    // setCheckboxClicked(false)
-  };
-
   const deleteBulkSelection = async () => {
     let newFilterRows = data;
     selectedrows.forEach(row => {
@@ -221,36 +203,6 @@ const Constraints_floor_1 = withRouter((props) => {
     search_parameters_updated ? toast.success('Parameters deleted successfully') : toast.error('Something went wrong!');
     search_parameters_updated && setUpdate((prev) => !prev)
   }
-
-  const handleClick = async (e) => {
-
-    //check repetative room name
-    const repeatName = data.filter(rooms => rooms.Rname === state.Rname)
-    if (repeatName.length) {
-      toast.error("Room name must be unique")
-      return
-    }
-
-    // add new room details
-    setData(prev => [...prev, {
-      select: state.select,
-      Rname: state.Rname,
-      selectFloor: state.selectFloor,
-      Xvalue: state.Xvalue,
-      Yvalue: state.Yvalue,
-      adjacencies: [],
-      id: Date.now(),
-    }])
-    // reset input textfields
-    setState({
-      select: "",
-      Rname: "",
-      selectFloor: "",
-      Xvalue: "",
-      Yvalue: "",
-    })
-    setChanged(true)
-  };
 
   const save = async (display) =>{
     // update project database with new search parameter using project id
@@ -273,17 +225,15 @@ const Constraints_floor_1 = withRouter((props) => {
   useEffect(() => {
     // remove parameters from localStorage
     localStorage.removeItem('parameter');
-  }, [])
+  }, []);
 
   useEffect(() => {
     axios.get(`/api/projects/${projectId}`)
       .then(res => {
-          // fetch existing parameters form a project
-          const search_parameters = res.data.data.search_parameters;
+          const searchParameters = res.data.data.search_parameters;
           res.data.data.envelope_parameters.length ? set_envelope_parameters(res.data.data.envelope_parameters[0].lat_lngs) : set_envelope_parameters([])
           res.data.data.land_parameters.length ? set_land_parameters(res.data.data.land_parameters[0].lat_lngs) : set_land_parameters([])
-          // fetch existing parameters form a project
-          setData(search_parameters);
+          setData(searchParameters);
         }
       )
       .catch(error => console.log(error));
@@ -300,173 +250,121 @@ const Constraints_floor_1 = withRouter((props) => {
              mt: '-30px'
            }}
       >
-
         <div align="right"
              style={{width: '100%'}}>
-          <Accordion>
+          <Accordion expanded>
             <AccordionSummary
-              sx={{p: 0}}
+              sx={{p: 0, padding: "0px 10px 0px"}}
               expandIcon={<ExpandMoreIcon/>}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
               <Typography
-                sx={{marginRight: 1}}>Rooms</Typography>
-
-              {/* display warning of unsaved changes*/}
-              {changed && <><IconButton
-                sx={{pt: '2px'}}><InfoOutlinedIcon fontSize="small"/></IconButton> <Typography color='#E57373'>Unsaved
-                Changes</Typography></>}
-
+                sx={{fontWeight: 'bold'}}>Add rooms</Typography>
+              {changed && <>
+                <IconButton sx={{pt: '2px'}}>
+                  <InfoOutlinedIcon fontSize="small"/>
+                </IconButton>
+                <Typography color='#E57373'>Unsaved Changes</Typography>
+              </>}
             </AccordionSummary>
-            <AccordionDetails
-              sx={{p: 0}}>
-
-              <Stack spacing={2}
-                     direction="row"
-                     sx={{mb: 1.5}}>
-                <FormControl
-                  fullWidth
-                  sx={{width: '50% '}}>
-                  <InputLabel id="demo-simple-select-label">Room type</InputLabel>
-                  <Select
-                    // required
-                    labelId="demo-simple-select-label"
-                    id="select"
-                    name="select"
-                    value={state.select}
-                    label="room"
-                    onChange={handleChange}
-                  >
-                    <MenuItem
-                      value="Bedroom">Bedroom</MenuItem>
-                    <MenuItem
-                      value="Bathroom">Bathroom</MenuItem>
-                    <MenuItem
-                      value="Garage">Garage</MenuItem>
-                    <MenuItem
-                      value="Kitchen">Kitchen</MenuItem>
-                    <MenuItem
-                      value="Living">Living Room</MenuItem>
-                    <MenuItem
-                      value="Dining">Dining Room</MenuItem>
-                  </Select>
-                </FormControl>
-                <Box component="form"
-                     noValidate
-                     autoComplete="off">
-                  <TextField
-                    id="Rname"
-                    name="Rname"
-                    value={state.Rname}
-                    label="Name"
-                    variant="outlined"
-                    onChange={handleChange}
-                  />
-                </Box>
-                <FormControl
-                  sx={{width: '30%'}}>
-                  <InputLabel id="demo-simple-select-label">Floor</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="select"
-                    name="selectFloor"
-                    value={state.selectFloor}
-                    label="floor"
-                    onChange={handleChange}
-                  >
-                    <MenuItem value={1}>1</MenuItem>
-                  </Select>
-                </FormControl>
-                <TextField id="Xvalue"
-                           name="Xvalue"
-                           value={state.Xvalue}
-                           label="X (feet)"
-                           variant="outlined"
-                           onChange={handleChange}/>
-                <TextField id="Yvalue"
-                           name="Yvalue"
-                           value={state.Yvalue}
-                           label="Y (feet)"
-                           variant="outlined"
-                           onChange={handleChange}/>
-
-                <Button
-                  type="button"
-                  variant="text"
-                  onClick={handleClick}
-                  sx={{color: '#1976D2'}}
-                  disabled={(checkboxClicked && selectedrows.length) || !state.select || !state.Rname || !state.selectFloor || !state.Xvalue || !state.Yvalue}
-                >
-                  ADD
-                </Button>
-              </Stack>
-
+            <AccordionDetails sx={{p: 0}}>
+              {/*<Stack spacing={2}*/}
+              {/*       direction="row"*/}
+              {/*       sx={{mb: 1.5}}>*/}
+                {/*<FormControl*/}
+                {/*  fullWidth*/}
+                {/*  sx={{width: '50% '}}>*/}
+                {/*  <InputLabel id="demo-simple-select-label">Room type</InputLabel>*/}
+                {/*  <Select*/}
+                {/*    // required*/}
+                {/*    labelId="demo-simple-select-label"*/}
+                {/*    id="select"*/}
+                {/*    name="select"*/}
+                {/*    value={state.select}*/}
+                {/*    label="room"*/}
+                {/*    onChange={handleChange}*/}
+                {/*  >*/}
+                {/*    <MenuItem*/}
+                {/*      value="Bedroom">Bedroom</MenuItem>*/}
+                {/*    <MenuItem*/}
+                {/*      value="Bathroom">Bathroom</MenuItem>*/}
+                {/*    <MenuItem*/}
+                {/*      value="Garage">Garage</MenuItem>*/}
+                {/*    <MenuItem*/}
+                {/*      value="Kitchen">Kitchen</MenuItem>*/}
+                {/*    <MenuItem*/}
+                {/*      value="Living">Living Room</MenuItem>*/}
+                {/*    <MenuItem*/}
+                {/*      value="Dining">Dining Room</MenuItem>*/}
+                {/*  </Select>*/}
+                {/*</FormControl>*/}
+                {/*<Box component="form"*/}
+                {/*     noValidate*/}
+                {/*     autoComplete="off">*/}
+                {/*  <TextField*/}
+                {/*    id="Rname"*/}
+                {/*    name="Rname"*/}
+                {/*    value={state.Rname}*/}
+                {/*    label="Name"*/}
+                {/*    variant="outlined"*/}
+                {/*    onChange={handleChange}*/}
+                {/*  />*/}
+                {/*</Box>*/}
+                {/*<FormControl*/}
+                {/*  sx={{width: '30%'}}>*/}
+                {/*  <InputLabel id="demo-simple-select-label">Floor</InputLabel>*/}
+                {/*  <Select*/}
+                {/*    labelId="demo-simple-select-label"*/}
+                {/*    id="select"*/}
+                {/*    name="selectFloor"*/}
+                {/*    value={state.selectFloor}*/}
+                {/*    label="floor"*/}
+                {/*    onChange={handleChange}*/}
+                {/*  >*/}
+                {/*    <MenuItem value={1}>1</MenuItem>*/}
+                {/*  </Select>*/}
+                {/*</FormControl>*/}
+                {/*<TextField id="Xvalue"*/}
+                {/*           name="Xvalue"*/}
+                {/*           value={state.Xvalue}*/}
+                {/*           label="X (feet)"*/}
+                {/*           variant="outlined"*/}
+                {/*           onChange={handleChange}/>*/}
+                {/*<TextField id="Yvalue"*/}
+                {/*           name="Yvalue"*/}
+                {/*           value={state.Yvalue}*/}
+                {/*           label="Y (feet)"*/}
+                {/*           variant="outlined"*/}
+                {/*           onChange={handleChange}/>*/}
+              {/*</Stack>*/}
               <TableContainer component={Paper}>
                 <Table
                   sx={{minWidth: 650}}
-                  size="small" aria-label="a dense table">
+                  size="small"
+                  aria-label="a dense table">
                   <TableHead>
                     <TableRow>
                       <TableCell></TableCell>
-                      <TableCell>Name</TableCell>
+                      <TableCell sx={{width: "10%"}}>Type</TableCell>
                       <TableCell align="right">X&nbsp;(feet)</TableCell>
                       <TableCell align="right">Y&nbsp;(feet)</TableCell>
                       <TableCell align="right">Floor</TableCell>
                       <TableCell align="right">Next to (optional)</TableCell>
+                      <TableCell/>
                     </TableRow>
                   </TableHead>
                   {/* List of data table entered by user */}
-                  <TableBody>
-                    {data.map((row) => (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={row.id}
-                        sx={{
-                          "&:last-child td, &:last-child th": {border: 0},
-                          backgroundColor: `{data.select === 'Bathroom' && 'green'}`,
-                        }}
-                        options={{selection: true}}
-                      >
-                        <TableCell padding="checkbox">
-                          <Checkbox
-                            onClick={(event) => handleDeleteCheckbox(event, row.id)}
-                            color="primary"
-                            inputProps={{
-                              'aria-labelledby': row.id,
-                            }}
-                          />
-                        </TableCell>
-
-                        <TableCell component="th"
-                                   scope="row">
-                          <Typography
-                            style={{
-                              color: row_color_scheme[row.select].color
-                            }}>
-                            {row.Rname}
-                          </Typography>
-                        </TableCell>
-                        <TableCell align="right"><Chip label={row.Xvalue}
-                                                       size="small" variant="filled"
-                                                       style={{
-                                                         color: row_color_scheme[row.select].color,
-                                                         backgroundColor: row_color_scheme[row.select].backgroundColor
-                                                       }}></Chip></TableCell>
-                        <TableCell align="right"><Chip label={row.Yvalue}
-                                                       size="small" variant="filled"
-                                                       style={{
-                                                         color: row_color_scheme[row.select].color,
-                                                         backgroundColor: row_color_scheme[row.select].backgroundColor
-                                                       }}></Chip></TableCell>
-                        <TableCell align="right"><Typography>{row.selectFloor}</Typography></TableCell>
-                        <TableCell align='right'>
-                          <Box> <Adjacency roomId={row.id} data={data} setData={setData} setChanged={setChanged}/></Box>
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                  <TableBody sx={{borderBottom: "none"}}>
+                    <>{allRoomTypes.map((roomType) => (
+                      <RoomsList
+                        type={roomType.type}
+                        typeDisplayName={roomType.displayName}
+                        row_color_scheme={row_color_scheme}
+                        data={data}
+                        setData={setData}
+                        setChanged={setChanged}
+                      />))}</>
                   </TableBody>
 
                 </Table>
@@ -489,12 +387,12 @@ const Constraints_floor_1 = withRouter((props) => {
 
           <Accordion>
             <AccordionSummary
-              sx={{p: 0}}
+              sx={{p: 0, padding: "0px 10px 0px"}}
               expandIcon={<ExpandMoreIcon/>}
               aria-controls="panel2a-content"
               id="panel2a-header"
             >
-              <Typography>Land</Typography>
+              <Typography sx={{fontWeight: 'bold'}}>Add land (optional)</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <MapLandWithNoSSR
@@ -506,12 +404,12 @@ const Constraints_floor_1 = withRouter((props) => {
 
           <Accordion>
             <AccordionSummary
-              sx={{p: 0}}
+              sx={{p: 0, padding: "0px 10px 0px"}}
               expandIcon={<ExpandMoreIcon/>}
               aria-controls="panel2a-content"
               id="panel2a-header"
             >
-              <Typography>Envelope</Typography>
+              <Typography sx={{fontWeight: 'bold'}}>Envelope (optional)</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <MapEnvelopeWithNoSSR
@@ -553,4 +451,4 @@ const Constraints_floor_1 = withRouter((props) => {
   );
 })
 
-export default withAuthGuard(Constraints_floor_1);
+export default withAuthGuard(Constraints);

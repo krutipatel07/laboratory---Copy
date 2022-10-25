@@ -10,20 +10,17 @@ const MenuProps = {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
       width: 250,
+      fontSize: "0.8rem",
     },
   },
 };
 
-export default function Adjacency(props) {
-
-  // nextTo is the list of rooms that the currenty room is next to
+export default function Adjacency({ roomId, data, setData, setChanged }) {
   const [nextTo, setNextTo] = React.useState([]);
-  const {roomId, data, setData, setChanged} = props
   const [names, setNames] = useState([])
   const [rooms, setRooms] = useState([])
   let roomsList = {}
 
-  
   // get rooms details which was clicked
   const roomDetails = data.filter(room => room.id === roomId)
 
@@ -52,55 +49,50 @@ export default function Adjacency(props) {
       )
     }
     const otherRooms =[]  
-    filterItem.forEach((item) => {
-      otherRooms.push(item.Rname)})
-    setNames(otherRooms)
+    filterItem.forEach((item) => otherRooms.push(item.Rname));
+    setNames(otherRooms);
   
   },[data])
 
   const save = (value) => {
     let filterAdjacency =[]
-    value.forEach(item => {      
-      data.forEach(room =>{
-        if(room.Rname === item){
-          filterAdjacency = room.adjacencies.filter(adjacency => adjacency[1]=== roomDetails[0].Rname)
+    value.forEach(item => {
+      data.forEach(room => {
+        if (room.Rname === item) {
+          filterAdjacency = room.adjacencies.filter(adjacency => adjacency[1] === roomDetails[0].Rname)
           !filterAdjacency.length && room.adjacencies.push([item, roomDetails[0].Rname])
         }
       })
     })
 
-  // get adjacency list in proper format
-    let adjacencyList =[]
+    let adjacencyList =[];
     value.forEach(item => adjacencyList.push([roomDetails[0].Rname,item]));
-
-
-    // // update adjacencies list of the room clicked
     data.forEach(room => {
       if (room.id === roomId){
-        room.adjacencies = adjacencyList
+        room.adjacencies = adjacencyList;
       }
     })
-    setData(data)
-    setChanged(true)
+    setData(data);
+    setChanged(true);
   }
 
     const handleChange = (event) => {
-        const {
-        target: { value },
-        } = event;
-        setNextTo(
+      const {
+        target: {value},
+      } = event;
+      setNextTo(
         // On autofill we get a stringified value.
         typeof value === 'string' ? value.split(',') : value,
-        );
-        save(value)
-        const nonRedundantRoomBadge = rooms.filter(room => room.indexOf(value[value.length - 1]) > -1)
-        const filteredRoomBadgeList = rooms.filter(room => value.indexOf(room[0])>-1)
-        setRooms(filteredRoomBadgeList)
+      );
+      save(value)
+      const nonRedundantRoomBadge = rooms.filter(room => room.indexOf(value[value.length - 1]) > -1)
+      const filteredRoomBadgeList = rooms.filter(room => value.indexOf(room[0]) > -1)
+      setRooms(filteredRoomBadgeList)
 
-        data.forEach(room => {
-          roomsList[room.Rname] = room.select
-        })
-        value.length && !(nonRedundantRoomBadge.length) && setRooms(prev => [...prev, [value[value.length-1], roomsList[value[value.length-1]].toLowerCase()]])
+      data.forEach(room => {
+        roomsList[room.Rname] = room.select
+      })
+      value.length && !(nonRedundantRoomBadge.length) && setRooms(prev => [...prev, [value[value.length - 1], roomsList[value[value.length - 1]].toLowerCase()]])
     };
 
     const removeRoomBadge = (e,name) => {
@@ -136,17 +128,18 @@ export default function Adjacency(props) {
 
             <Grid item xs="auto">
                 <FormControl sx={{ m: 1, width: 300 }}>
-                    <InputLabel id="demo-multiple-checkbox-label">Select</InputLabel>
+                    <InputLabel id="demo-multiple-checkbox-label" sx={{fontSize: "0.8rem"}}>Select</InputLabel>
                     <Select
-                    //   labelId="demo-multiple-checkbox-label"
-                    id="demo-multiple-checkbox"
-                    displayEmpty
-                    multiple
-                    value={nextTo}
-                    onChange={handleChange}
-                    input={<OutlinedInput label="Select" />}
-                    renderValue={(selected) => selected.join(', ')}
-                    MenuProps={MenuProps}
+                      id="demo-multiple-checkbox"
+                      displayEmpty
+                      multiple
+                      size="small"
+                      value={nextTo}
+                      onChange={handleChange}
+                      input={<OutlinedInput label="Select" />}
+                      sx={{fontSize: "0.8rem"}}
+                      renderValue={(selected) => selected.join(', ')}
+                      MenuProps={MenuProps}
                     >
                     {names.map((name) => (
                         <MenuItem key={name} value={name}>
