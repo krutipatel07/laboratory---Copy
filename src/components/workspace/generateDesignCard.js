@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
     padding: '12px 5px 12px 24px'
   },
   Button: {
-    // padding: '8px 10px',
     "&.MuiButton-contained": {
       color: "#64B6F7",
       backgroundColor: 'rgba(0, 255, 255, 0.08)',
@@ -37,10 +36,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   image: {
-    padding: '24px 24px 0',
-    // '&:hover': {
-    //   transform: 'scale(1.5)'
-    // }
+    padding:  0,
+    objectFit: "contain"
   },
   title: {
     paddingTop: '15px'
@@ -52,11 +49,6 @@ const useStyles = makeStyles((theme) => ({
   },
   designAdded: {
     color: 'geen'
-    // backgroundColor: '#212121',
-    // color: '#F0C88E',
-    // '&:hover': {
-    //   backgroundColor: '#212121',
-    // },
   },
   buttonadd: {
     '&:hover': {
