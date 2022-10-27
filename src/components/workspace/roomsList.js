@@ -164,7 +164,7 @@ const RoomsList = ({ type, typeDisplayName, row_color_scheme, data, setData, set
               defaultValue={row.Xvalue}
               name="Xfeet"
               type="number"
-              inputProps={{ min: "10", step: "1" }}
+              inputProps={{ min: "0", step: "1" }}
               onChange={(event) => handleChange(event, row, 'Xvalue')}
             />
           </TableCell>
@@ -173,7 +173,7 @@ const RoomsList = ({ type, typeDisplayName, row_color_scheme, data, setData, set
               defaultValue={row.Yvalue}
               name="Yfeet"
               type="number"
-              inputProps={{ min: "10", step: "1" }}
+              inputProps={{ min: "0", step: "1" }}
               onChange={(event) => handleChange(event, row, 'Yvalue')}
             />
           </TableCell>
