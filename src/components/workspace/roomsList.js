@@ -1,7 +1,6 @@
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
-import { Box, Button, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
-import Chip from "@mui/material/Chip";
+import { Box, Button, MenuItem, Select, TextField, Typography } from "@mui/material";
 import Adjacency from "./adjacency/adjacency";
 import React from "react";
 import toast from "react-hot-toast";
