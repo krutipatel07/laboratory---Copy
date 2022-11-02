@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, Container, IconButton, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Button, IconButton, Tab, Typography } from '@mui/material';
 import { withAuthGuard } from '../../hocs/with-auth-guard';
 import { useRouter, withRouter } from 'next/router'
 import axios from 'axios'
@@ -98,6 +98,296 @@ const Constraints = withRouter((props) => {
     }
   }
 
+  const surprisePopulateOptions = [
+    [
+      {
+        "select":"Bedroom",
+        "Rname":"Bedroom 1",
+        "selectFloor":1,
+        "Xvalue":"12",
+        "Yvalue":"12",
+        "adjacencies":[["Bedroom 1","Bedroom 2"],["Bedroom 1","Bathroom 1"]],
+        "id":1663367893016
+      },
+      {
+        "select":"Bedroom",
+        "Rname":"Bedroom 2",
+        "selectFloor":1,
+        "Xvalue":"10",
+        "Yvalue":"10",
+        "adjacencies":[["Bedroom 2","Bedroom 1"]],
+        "id":1663367893017
+      },
+      {
+        "select":"Bathroom",
+        "Rname":"Bathroom 1",
+        "selectFloor":1,
+        "Xvalue":"8",
+        "Yvalue":"8",
+        "adjacencies":[["Bathroom 1","Bedroom 1"]],
+        "id":1663367893015
+      },
+      {
+        "select":"Bathroom",
+        "Rname":"Bathroom 2",
+        "selectFloor":1,
+        "Xvalue":"10",
+        "Yvalue":"10",
+        "adjacencies":[],
+        "id":1663367893018
+      },
+      {
+        "select":"Kitchen",
+        "Rname":"Kitchen",
+        "selectFloor":1,
+        "Xvalue":"13",
+        "Yvalue":"15",
+        "adjacencies":[["Kitchen","Dining Room"]],
+        "id":1663367912966
+      },
+      {
+        "select":"Dining",
+        "Rname":"Dining Room",
+        "selectFloor":1,
+        "Xvalue":"12",
+        "Yvalue":"12",
+        "adjacencies":[["Dining Room","Kitchen"], ["Dining Room", "Living Room"]],
+        "id":1663369449891
+      },
+      {
+        "select":"Living",
+        "Rname":"Living Room",
+        "selectFloor":1,
+        "Xvalue":"14",
+        "Yvalue":"14",
+        "adjacencies":[["Living Room","Dining Room"]],
+        "id":1663367936672
+      },
+      {
+        "select":"Garage",
+        "Rname":"Garage",
+        "selectFloor":1,
+        "Xvalue":"15",
+        "Yvalue":"20",
+        "adjacencies":[],
+        "id":1663368135457
+      }
+    ],
+    [
+      {
+        "select":"Bedroom",
+        "Rname":"Bedroom 1",
+        "selectFloor":1,
+        "Xvalue":"12",
+        "Yvalue":"12",
+        "adjacencies":[["Bedroom 1", "Bathroom 1"]],
+        "id":1663367893019
+      },
+      {
+        "select":"Bedroom",
+        "Rname":"Office",
+        "selectFloor":1,
+        "Xvalue":"12",
+        "Yvalue":"12",
+        "adjacencies":[["Office","Living Room"]],
+        "id":1663367893020
+      },
+      {
+        "select":"Bathroom",
+        "Rname":"Bathroom 1",
+        "selectFloor":1,
+        "Xvalue":"10",
+        "Yvalue":"10",
+        "adjacencies":[["Bathroom 1","Bedroom 1"]],
+        "id":1663367893021
+      },
+      {
+        "select":"Kitchen",
+        "Rname":"Kitchen",
+        "selectFloor":1,
+        "Xvalue":"14",
+        "Yvalue":"14",
+        "adjacencies":[["Kitchen","Dining Room"]],
+        "id":1663367912923
+      },
+      {
+        "select":"Dining",
+        "Rname":"Dining Room",
+        "selectFloor":1,
+        "Xvalue":"12",
+        "Yvalue":"12",
+        "adjacencies":[["Dining Room","Kitchen"], ["Dining Room", "Living Room"]],
+        "id":1663369449821
+      },
+      {
+        "select":"Living",
+        "Rname":"Living Room",
+        "selectFloor":1,
+        "Xvalue":"14",
+        "Yvalue":"14",
+        "adjacencies":[["Living Room","Dining Room"], ["Living Room", "Office"]],
+        "id":1663367936634
+      }
+    ],
+    [
+      {
+        "select":"Bedroom",
+        "Rname":"Bedroom 1",
+        "selectFloor":1,
+        "Xvalue":"12",
+        "Yvalue":"12",
+        "adjacencies":[["Bedroom 1","Bedroom 2"],["Bedroom 1","Bedroom 3"],["Bedroom 1", "Bathroom 1"]],
+        "id":1663367893016
+      },
+      {
+        "select":"Bedroom",
+        "Rname":"Bedroom 2",
+        "selectFloor":1,
+        "Xvalue":"12",
+        "Yvalue":"12",
+        "adjacencies":[["Bedroom 2","Bedroom 1"]],
+        "id":1663367893017
+      },
+      {
+        "select":"Bedroom",
+        "Rname":"Bedroom 3",
+        "selectFloor":1,
+        "Xvalue":"10",
+        "Yvalue":"10",
+        "adjacencies":[["Bedroom 3","Bedroom 1"]],
+        "id":1663367893117
+      },
+      {
+        "select":"Bathroom",
+        "Rname":"Bathroom 1",
+        "selectFloor":1,
+        "Xvalue":"10",
+        "Yvalue":"10",
+        "adjacencies":[["Bathroom 1","Bedroom 1"]],
+        "id":1663367893015
+      },
+      {
+        "select":"Kitchen",
+        "Rname":"Kitchen",
+        "selectFloor":1,
+        "Xvalue":"12",
+        "Yvalue":"15",
+        "adjacencies":[["Kitchen","Living Room"], ["Kitchen","Dining Room"]],
+        "id":1663367912966
+      },
+      {
+        "select":"Dining",
+        "Rname":"Dining Room",
+        "selectFloor":1,
+        "Xvalue":"12",
+        "Yvalue":"14",
+        "adjacencies":[["Dining Room","Kitchen"]],
+        "id":1663369449891
+      },
+      {
+        "select":"Living",
+        "Rname":"Living Room",
+        "selectFloor":1,
+        "Xvalue":"14",
+        "Yvalue":"12",
+        "adjacencies":[["Living Room","Kitchen"]],
+        "id":1663367936672
+      },
+      {
+        "select":"Garage",
+        "Rname":"Garage",
+        "selectFloor":1,
+        "Xvalue":"20",
+        "Yvalue":"20",
+        "adjacencies":[],
+        "id":1663368135457
+      }
+    ],
+    [
+      {
+        "select":"Bedroom",
+        "Rname":"Bedroom 1",
+        "selectFloor":1,
+        "Xvalue":"12",
+        "Yvalue":"12",
+        "adjacencies":[["Bedroom 1","Bedroom 2"],["Bedroom 1","Office"],["Bedroom 1", "Bathroom 1"]],
+        "id":1663367893016
+      },
+      {
+        "select":"Bedroom",
+        "Rname":"Bedroom 2",
+        "selectFloor":1,
+        "Xvalue":"12",
+        "Yvalue":"12",
+        "adjacencies":[["Bedroom 2","Bedroom 1"]],
+        "id":1663367893017
+      },
+      {
+        "select":"Bedroom",
+        "Rname":"Office",
+        "selectFloor":1,
+        "Xvalue":"10",
+        "Yvalue":"10",
+        "adjacencies":[["Office", "Bedroom 1"], ["Office", "Living Room"]],
+        "id":1663364893017
+      },
+      {
+        "select":"Bathroom",
+        "Rname":"Bathroom 1",
+        "selectFloor":1,
+        "Xvalue":"10",
+        "Yvalue":"10",
+        "adjacencies":[["Bathroom 1","Bedroom 1"]],
+        "id":1663367893015
+      },
+      {
+        "select":"Bathroom",
+        "Rname":"Half Bathroom",
+        "selectFloor":1,
+        "Xvalue":"6",
+        "Yvalue":"8",
+        "adjacencies":[["Half Bathroom","Living Room"]],
+        "id":1663367893018
+      },
+      {
+        "select":"Kitchen",
+        "Rname":"Kitchen",
+        "selectFloor":1,
+        "Xvalue":"12",
+        "Yvalue":"15",
+        "adjacencies":[["Kitchen","Dining Room"], ["Kitchen","Living Room"]],
+        "id":1663367912966
+      },
+      {
+        "select":"Dining",
+        "Rname":"Dining Room",
+        "selectFloor":1,
+        "Xvalue":"12",
+        "Yvalue":"14",
+        "adjacencies":[["Dining Room","Kitchen"]],
+        "id":1663369449891
+      },
+      {
+        "select":"Living",
+        "Rname":"Living Room",
+        "selectFloor":1,
+        "Xvalue":"14",
+        "Yvalue":"12",
+        "adjacencies":[["Living Room","Office"], ["Living Room", "Kitchen"], ["Living Room", "Half Bathroom"]],
+        "id":1663367936672
+      },
+      {
+        "select":"Garage",
+        "Rname":"Garage",
+        "selectFloor":1,
+        "Xvalue":"20",
+        "Yvalue":"20",
+        "adjacencies":[],
+        "id":1663368135457
+      }
+    ],
+  ]
+
   const handleSubmit = async (event) => {
     event.preventDefault()
     setButtonText(false)
@@ -172,22 +462,19 @@ const Constraints = withRouter((props) => {
   };
 
   const save = async (display) =>{
-    // update project database with new search parameter using project id
     const search_parameters_added = await axios.put(`/api/projects/${projectId}`, {
       search_parameters: data
-    })
-      .catch(error => console.log(error));
+    }).catch(error => console.log(error));
 
-    setData([])
-    setSelectedRows([])
+    setData([]);
+    setSelectedRows([]);
 
     if (display === false) {
-      return
+      return;
     }
     search_parameters_added ? toast.success('Parameters saved successfully') : toast.error('Something went wrong!');
     search_parameters_added && setUpdate((prev) => !prev);
     setChanged(false);
-    setRoomsExpanded(true);
   }
   useEffect(() => {
     // remove parameters from localStorage
@@ -206,6 +493,12 @@ const Constraints = withRouter((props) => {
       .catch(error => console.log(error));
   }, [projectId, update]);
 
+  const surprisePopulate = () => {
+    // choose random predefined room contraints
+    setData(surprisePopulateOptions[Math.floor(Math.random() * surprisePopulateOptions.length)])    
+    setChanged(true);
+  }
+
   return (
     <>
       <Box component="form"
@@ -219,17 +512,39 @@ const Constraints = withRouter((props) => {
       >
         <div align="right"
              style={{width: '100%'}}>
-          <Accordion expanded={roomsExpanded} onChange={() => setRoomsExpanded(!roomsExpanded)}>
+          <Accordion expanded={roomsExpanded}>
             <AccordionSummary
               sx={{p: 0, padding: "0px 10px 0px"}}
-              expandIcon={<ExpandMoreIcon/>}
+              expandIcon={<ExpandMoreIcon onClick={() => setRoomsExpanded(!roomsExpanded)}/>}
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
               <Typography
-                sx={{fontWeight: 'bold', whiteSpace: "nowrap", paddingTop: "6px"}}>Add rooms</Typography>
+                sx={{fontWeight: 'bold', whiteSpace: "nowrap", paddingTop: "6px", mr: "30px"}}>Add rooms</Typography>
+                              
+              <Button 
+                sx={{
+                  minWidth: "105px",
+
+                  alignItems: 'center',
+                  backgroundColor: 'rgba(225,225,225,255)',
+                }}
+              >
+                <Typography 
+                  sx={{
+                    fontWeight: 'bold', 
+                    fontSize : "14px", 
+                    whiteSpace: "nowrap"
+                  }}
+                  onClick={surprisePopulate} 
+                  variant="body1"
+                >
+                  Surprise me
+                </Typography>
+              </Button>
+
               {changed && <>
-                <IconButton sx={{pt: '2px'}}>
+                <IconButton sx={{pt: '2px', ml: '20px'}}>
                   <InfoOutlinedIcon fontSize="small"/>
                 </IconButton>
                 <Typography color='#E57373' sx={{whiteSpace: "nowrap", paddingTop: "6px"}}>
