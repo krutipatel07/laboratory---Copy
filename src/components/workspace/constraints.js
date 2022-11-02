@@ -466,14 +466,13 @@ const Constraints = withRouter((props) => {
       search_parameters: data
     }).catch(error => console.log(error));
 
-    setData([]);
     setSelectedRows([]);
-
     if (display === false) {
       return;
     }
     search_parameters_added ? toast.success('Parameters saved successfully') : toast.error('Something went wrong!');
     search_parameters_added && setUpdate((prev) => !prev);
+    setData([])
     setChanged(false);
   }
   useEffect(() => {
