@@ -16,6 +16,7 @@ import { withRouter} from 'next/router';
 // import AssetSideBar from './projectAssetSidebar'
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import { useAuth } from "../../hooks/use-auth";
 
 // const [click, setClick] = useState(false)
 
@@ -45,13 +46,16 @@ const useStyles = makeStyles((theme) => ({
 export const WorkspaceNavbar = withRouter((props) => {
   const { onOpenSidebar, ...other } = props;
   const router = useRouter();
+  const { user: loggedInUser } = useAuth();
 
   const projectId = router.query.id || router.query.projectId;
   const [projectTitle, setProjectTitle] = useState();
   useEffect(() => {
-    axios.get(`/api/projects/${projectId}`)
-    .then(res => setProjectTitle(res.data.data.title))
-    .catch(error => console.log(error));
+    loggedInUser.getIdToken().then(async token => {
+      axios.get(`/api/projects/${projectId}`, {headers: {'Authorization': `Bearer ${token}`}})
+      .then(res => setProjectTitle(res.data.data.title))
+      .catch(error => console.log(error));
+    });
   },[projectId]);
 
   const isInvited = router.query.invite

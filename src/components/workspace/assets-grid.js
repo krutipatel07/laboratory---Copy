@@ -11,6 +11,7 @@ import { useDropzone } from 'react-dropzone';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import ButtonBase from '@mui/material/ButtonBase';
+import { useAuth } from "../../../hooks/use-auth";
 import Typography from '@mui/material/Typography';import * as React from 'react';
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
@@ -96,8 +97,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AssetsGrid({projectId, props}) {
   const [assetData, setAssetData] = useState();
+  const { user: loggedInUser } = useAuth();
 
   const onDrop = useCallback(acceptedFiles => {
+    loggedInUser.getIdToken().then(async token => {
     let url ;
     let url_list = [];
     const formData = new FormData();
@@ -115,7 +118,7 @@ export default function AssetsGrid({projectId, props}) {
       try {
           await axios.put(`/api/projects/${projectId}`, {
             assets: url_list
-          })
+          }, {headers: {'Authorization': `Bearer ${token}`}})
           .catch(error => console.log(error));
           toast.success('Assets updated successfully!');
           location.reload();
@@ -125,6 +128,7 @@ export default function AssetsGrid({projectId, props}) {
         location.reload();
       }
     }).catch(err => console.log(err))
+  });
 }, [])
 
 const storeFiles = async (file, formData) => {
@@ -150,9 +154,11 @@ const storeFiles = async (file, formData) => {
   });
 
   useEffect(() => {
-    axios.get(`/api/projects/${projectId}`)
-    .then(res => setAssetData(res.data.data.assets))
-    .catch(error => console.log(error));
+    loggedInUser.getIdToken().then(async token => {
+      axios.get(`/api/projects/${projectId}`, {headers: {'Authorization': `Bearer ${token}`}})
+      .then(res => setAssetData(res.data.data.assets))
+      .catch(error => console.log(error));
+    });
   }, [projectId])
 
   const classes = useStyles();

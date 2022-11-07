@@ -57,17 +57,20 @@ export const InvitedUserModal = (props) => {
         try {
           if (isMounted()) {
             // TODO: need to send the authorization here as well
+            loggedInUser.getIdToken().then(async token => {
             const {data} = await axios.get(`/api/owner`)
             .catch(error => console.log(error));
             const id = data.data.id;
-            const projects = await axios.get(`/api/projects/${projectId}`)
+            const projects = 
+              await axios.get(`/api/projects/${projectId}`, {headers: {'Authorization': `Bearer ${token}`}})
+            
             const projectsCollaborators = projects.data.data.collaborators
             const filteredProjectsCollaborators = projectsCollaborators.filter(collaborator => collaborator._id === id)
             
             if(filteredProjectsCollaborators.length === 0) {
             await axios.put(`/api/projects/${projectId}`, {
               collaborators : id,
-            })
+            }, {headers: {'Authorization': `Bearer ${token}`}})
             .catch(error => console.log(error));
           }
 
@@ -78,6 +81,7 @@ export const InvitedUserModal = (props) => {
           }
 
           localStorage.setItem("lab-user", id);
+          });
           }
           setOpen(false);
           toast.success("Collaborator verified")
@@ -108,22 +112,23 @@ export const InvitedUserModal = (props) => {
   },[])
 
   const createLimnuUser = async ({name, _id }) => {
+    loggedInUser.getIdToken().then(async token => {
     const limnu_userCreate = await axios.post("https://api.apix.limnu.com/v1/userCreate", {
       apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
       displayName: name
     })
     .catch(error => console.log(error));
-    loggedInUser.getIdToken().then(async token => {
       await axios.put(`/api/user/${_id}`, {
         limnu_userId: limnu_userCreate.data.userId,
         limnu_token: limnu_userCreate.data.token
       }, {headers: {'Authorization': `Bearer ${token}`}})
         .catch(error => console.log(error));
-    });
     localStorage.setItem('limnu_token', limnu_userCreate.data.token)
+  });
   }
 
   const createCollaborator = async (values, projectId) => {
+    loggedInUser.getIdToken().then(async token => {
     const limnu_userCreate = await axios.post("https://api.apix.limnu.com/v1/userCreate", {
       apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
       displayName: values.name
@@ -131,7 +136,6 @@ export const InvitedUserModal = (props) => {
     .catch(error => console.log(error));
     localStorage.setItem('limnu_token', limnu_userCreate.data.token)
 
-    loggedInUser.getIdToken().then(async token => {
       const {data} = await axios.post("/api/user", {
         name: values.name,
         email: values.email,
@@ -148,7 +152,7 @@ export const InvitedUserModal = (props) => {
 
       await axios.put(`/api/projects/${projectId}`, {
         collaborators : id,
-      })
+      }, {headers: {'Authorization': `Bearer ${token}`}})
         .catch(error => console.log(error));
       return true;
     });

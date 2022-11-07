@@ -43,10 +43,10 @@ const StripeCheckout = withRouter((props) => {
   const classes = useStyles();
 
   useEffect(async () => {
+    loggedInUser.getIdToken().then(async token => {
     // if subscription payment is successful, it will return the checkout session id, and using this id retrieve its data and save details like subscription id, cust id etc
     if (status === "success" && session_id) {
       const user = localStorage.getItem("lab-user");
-      loggedInUser.getIdToken().then(async token => {
         const {data} = await axios.post('/api/stripe/get-stripe-session', {session_id, user},
           {headers: {'Authorization': `Bearer ${token}`}});
         await axios.put(`/api/user/${user}`, {
@@ -55,8 +55,8 @@ const StripeCheckout = withRouter((props) => {
           .catch(error => console.log(error));
         await axios.post('/api/stripe', data, {headers: {'Authorization': `Bearer ${token}`}})
           .catch(error => console.log(error));
-      });
     }
+  });
   }, [])
 
   return (

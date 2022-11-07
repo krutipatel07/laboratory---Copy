@@ -28,15 +28,15 @@ export const AccountGeneralSettings = (props) => {
     setName(e.target.value);
   }
   const updateName = async () => {
-    const user = localStorage.getItem("lab-user");
     loggedInUser.getIdToken().then(async token => {
+    const user = localStorage.getItem("lab-user");
       await axios.put(`/api/user/${user}`, {name}, {headers: {'Authorization': `Bearer ${token}`}})
         .catch(error => console.log(error));
-    });
 
     toast.success('Name updated successfully!');
     setReload(true);
     setName();
+  });
   }
   const handleLogout = async () => {
     try {

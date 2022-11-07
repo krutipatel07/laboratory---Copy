@@ -19,6 +19,7 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import {DashboardSidebar} from '../../components/dashboard/dashboard-sidebar';
 import {WorkspaceNavbar} from '../../components/workspace/workspace-navbar'
+import { useAuth } from "../../hooks/use-auth";
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -79,6 +80,7 @@ const ProductList = withRouter((props) => {
   const [email, setEmail] = useState('');
   const [designData, setDesignData] = useState();
   const [collaboratorData, setCollaboratorData] = useState();   
+  const { user: loggedInUser } = useAuth();
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
@@ -86,7 +88,8 @@ const ProductList = withRouter((props) => {
 
   useEffect(async () => {
     // get design information
-    await axios.get(`/api/projects/${projectId}/design/${designId}`)
+    loggedInUser.getIdToken().then(async token => {
+    await axios.get(`/api/projects/${projectId}/design/${designId}`, { headers: {'Authorization': `Bearer ${token}`} })
     .then(res => {
       setVariantData(res.data.data)
       setVersions(res.data.data.versions)
@@ -97,7 +100,7 @@ const ProductList = withRouter((props) => {
       message : "OOPS! This design is not available or deleted by owner of the project!"}));
     // get parent design versions if design itself is a version
     isVersion && getParentDesignVersions()
-
+    });
   },[designId]);
 
   useEffect(() => {
@@ -105,74 +108,82 @@ const ProductList = withRouter((props) => {
   }, []);
 
   useEffect(() => {
-    axios.get(`/api/projects/_/design/${designId}`)
-    .then(res => {
-      setCollaboratorData([...new Set(res.data.data.collaborators)]);
-      setDesignData(res.data.data)})
-    .catch(error => console.log(error));
+    loggedInUser.getIdToken().then(async token => {
+      axios.get(`/api/projects/_/design/${designId}`, { headers: {'Authorization': `Bearer ${token}`} })
+      .then(res => {
+        setCollaboratorData([...new Set(res.data.data.collaborators)]);
+        setDesignData(res.data.data)})
+      .catch(error => console.log(error));
+    });
   }, [email]);
 
 const addVariantDesign = async () => {
-  const {data} = await axios.get(`/api/projects/${projectId}/design/${designId}`);
-  const versionLength = data.data.versionOf ? data.data.versionOf.versions.length : data.data.versions.length;
-  const versionOf = data.data.versionOf ? data.data.versionOf.id : designId;
+  loggedInUser.getIdToken().then(async token => {  
+    const {data} = await axios.get(`/api/projects/${projectId}/design/${designId}`, { headers: {'Authorization': `Bearer ${token}`} });
+    const versionLength = data.data.versionOf ? data.data.versionOf.versions.length : data.data.versions.length;
+    const versionOf = data.data.versionOf ? data.data.versionOf.id : designId;
 
-  // create the limnu board and update its board image
-  const limnu_boardCreate = await axios.post("https://api.apix.limnu.com/v1/boardCreate", {
-    apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
-    boardName: `Board-${data.data._id}`,
-    whiteLabel: true
-  })
-  .catch(error => console.log(error));
-  
-  await axios.post("https://api.apix.limnu.com/v1/boardImageURLUpload", {
-    apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
-    boardId: limnu_boardCreate.data.boardId,
-    imageURL: data.data.url
+    // create the limnu board and update its board image
+    const limnu_boardCreate = await axios.post("https://api.apix.limnu.com/v1/boardCreate", {
+      apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
+      boardName: `Board-${data.data._id}`,
+      whiteLabel: true
     })
     .catch(error => console.log(error));
+    
+    await axios.post("https://api.apix.limnu.com/v1/boardImageURLUpload", {
+      apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
+      boardId: limnu_boardCreate.data.boardId,
+      imageURL: data.data.url
+      })
+      .catch(error => console.log(error));
 
-  const addVariant = await axios.post(`/api/projects/${projectId}/design`, {
-    title : `Variant ${versionLength+1}`,
-    versionOf : versionOf,
-    url: data.data.url,
-    limnu_boardUrl : limnu_boardCreate.data.boardUrl,
+    const addVariant = await axios.post(`/api/projects/${projectId}/design`, {
+      title : `Variant ${versionLength+1}`,
+      versionOf : versionOf,
+      url: data.data.url,
+      limnu_boardUrl : limnu_boardCreate.data.boardUrl,
+    }, { headers: {'Authorization': `Bearer ${token}`} });
+
+    addVariant ? toast.success('Variant design added!') : toast.error('Something went wrong!');
+    const returnUrl = `/workspace/${addVariant.data.data.project}?designId=${addVariant.data.data.id}&isVersion=true`
+    router.push(returnUrl);
   });
-
-  addVariant ? toast.success('Variant design added!') : toast.error('Something went wrong!');
-  const returnUrl = `/workspace/${addVariant.data.data.project}?designId=${addVariant.data.data.id}&isVersion=true`
-  router.push(returnUrl);
 }
 
 const getParentDesignVersions = () =>{
-  axios.get(`/api/projects/${projectId}/design/${designId}`)
-  .then(res => {
-    const designId = res.data.data.versionOf._id;
-    axios.get(`/api/projects/${projectId}/design/${designId}`)
-    .then(res => setVersions(res.data.data.versions))
+  loggedInUser.getIdToken().then(async token => {
+    axios.get(`/api/projects/${projectId}/design/${designId}`, { headers: {'Authorization': `Bearer ${token}`} })
+    .then(res => {
+      const designId = res.data.data.versionOf._id;
+      axios.get(`/api/projects/${projectId}/design/${designId}`, { headers: {'Authorization': `Bearer ${token}`} })
+      .then(res => setVersions(res.data.data.versions))
+      .catch(error => console.log(error))
+    })
     .catch(error => console.log(error))
-  })
-  .catch(error => console.log(error))
+  });
 }
 
 const handleSubmit = async event => {
-  event.preventDefault();
-  const designId = router.query.designId;
-  // send email invite to the collaborator and update it in design database
-  axios.post("/api/emails/invite", {
-   email,
-   projectId,
-   designId
- })
- .catch(error => console.log(error));
+  loggedInUser.getIdToken().then(async token => {
+    event.preventDefault();
+    const designId = router.query.designId;
+    // send email invite to the collaborator and update it in design database
+    axios.post("/api/emails/invite", {
+      email,
+      projectId,
+      designId
+    })
+    .catch(error => console.log(error));
 
- await axios.put(`/api/projects/${projectId}/design/${designId}`, {
-  collaborators : email,
-})
-.catch(error => console.log(error));
+    await axios.put(`/api/projects/${projectId}/design/${designId}`, {
+      collaborators : email,
+    }, { headers: {'Authorization': `Bearer ${token}`} })
+    .catch(error => console.log(error));
 
- toast.success('Collaborator invited!');
- setEmail('');
+    toast.success('Collaborator invited!');
+    setEmail('');
+  });
 }
 
 const [anchorEl, setAnchorEl] = React.useState(null);

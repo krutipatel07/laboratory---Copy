@@ -19,6 +19,7 @@ import {
   ListItemText,
 } from '@mui/material';
 import axios from "axios"
+import { useAuth } from "../hooks/use-auth";
 
 
 const Map = (props) => {
@@ -30,11 +31,13 @@ const Map = (props) => {
   const [searchQuery, setSearchQuery] = useState([]);
   const [placeName, setPlaceName] = useState("")
   const [markerLocations, setMarkerLocations] = useState()
+  const { user: loggedInUser } = useAuth();
   
   useEffect(async () => {
     // get layers and last searched location
-    const project_details = await axios.get(`/api/projects/${projectId}`)
-    .catch(error => console.log(error));
+    loggedInUser.getIdToken().then(async token => {
+    const project_details = await axios.get(`/api/projects/${projectId}`, {headers: {'Authorization': `Bearer ${token}`}})
+      .catch(error => console.log(error));
     const data = project_details.data.data.land_parameters[0]
     const location = JSON.parse(localStorage.getItem('location'))
 
@@ -59,6 +62,7 @@ const Map = (props) => {
         location && setZoom(18)
         location ? setCenter(location.center) : setCenter({lat: 45.53, lng:  -73.62})
       }
+    });
   },[mapUpdate])
   
   const mapRef = useRef()
@@ -80,15 +84,17 @@ const Map = (props) => {
 
   // create and update polygon coordinates on create, delete and edit
     const _onCreated = async (e) =>{
+      loggedInUser.getIdToken().then(async token => {
       const {layerType, layer} = e;
       if (layerType === "polygon") {
         const {_leaflet_id} = layer;
         
       // store last polygon drawn only
-      const land_parameters_added = await axios.put(`/api/projects/${projectId}`, {
-        land_parameters: {id: _leaflet_id, lat_lngs: layer.getLatLngs()[0], zoom: layer._mapToAdd._animateToZoom ? layer._mapToAdd._animateToZoom : 18}
-      })
-      .catch(error => console.log(error));
+      const land_parameters_added = 
+        await axios.put(`/api/projects/${projectId}`, {
+          land_parameters: {id: _leaflet_id, lat_lngs: layer.getLatLngs()[0], zoom: layer._mapToAdd._animateToZoom ? layer._mapToAdd._animateToZoom : 18}
+        }, {headers: {'Authorization': `Bearer ${token}`}})
+        .catch(error => console.log(error));
 
       // update location display condition to false
       const location = JSON.parse(localStorage.getItem('location'))
@@ -99,6 +105,7 @@ const Map = (props) => {
       land_parameters_added && setMapUpdate((prev) => !prev)
       land_parameters_added ? toast.success("Saved!") : toast.error('Something went wrong!')
       }
+    });
     }
 
     const _onDeleted = (e) =>{

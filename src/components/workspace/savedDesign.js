@@ -16,12 +16,14 @@ import { Divider } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import { IconButton } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useAuth } from "../../hooks/use-auth";
 
 export default function SavedDesign({projectId, setNewDesign}) {
   const [projectData, setProjectData] = useState([]);  
   const [files, setFiles] = useState([]);
   const [parameter, setParameter] = useState([]);
   const [update, setUpdate] = useState(true);
+  const { user: loggedInUser } = useAuth();
 
   useEffect(() => {
     {/* get generated design if available in localStorage */}
@@ -32,10 +34,12 @@ export default function SavedDesign({projectId, setNewDesign}) {
   }, [])  
 
   useEffect(() => {
-    setNewDesign(0)
-    axios.get(`/api/projects/${projectId}`)
-    .then(res => setProjectData(res.data.data))
-    .catch(error => console.log(error));
+    setNewDesign(0)    
+    loggedInUser.getIdToken().then(async token => {
+      axios.get(`/api/projects/${projectId}`, {headers: {'Authorization': `Bearer ${token}`}})
+      .then(res => setProjectData(res.data.data))
+      .catch(error => console.log(error));
+    });
   }, [projectId, update])
 
   const [openModal, setOpenModal] = useState(false);
@@ -114,11 +118,14 @@ const importDesign = async (secure_url, designName, file_name) => {
     })
     .catch(error => console.log(error));
 
-  const addDesign = await axios.post(`/api/projects/${projectId}/design`, {
-    title : designName,
-    url: secure_url,
-    file_name,
-    limnu_boardUrl : limnu_boardCreate.data.boardUrl,
+  const addDesign = 
+    loggedInUser.getIdToken().then(async token => {
+      await axios.post(`/api/projects/${projectId}/design`, {
+      title : designName,
+      url: secure_url,
+      file_name,
+      limnu_boardUrl : limnu_boardCreate.data.boardUrl,
+    }, { headers: {'Authorization': `Bearer ${token}`} });
   });
 
   addDesign ? toast.success('Design imported!') : toast.error('Something went wrong!');

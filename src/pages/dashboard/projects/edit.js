@@ -7,19 +7,23 @@ import { gtm } from '../../../lib/gtm';
 import {DashboardSidebar} from '../../../components/dashboard/dashboard-sidebar'
 import { useRouter } from 'next/router'
 import axios from 'axios'
+import { useAuth } from "../../../hooks/use-auth";
 
 
 const ProjectEdit = () => {
     const [project, setProject] = useState()
     const {query} = useRouter();
+    const { user: loggedInUser } = useAuth();
 
     useEffect(() => {
         gtm.push({ event: 'page_view' });
     }, []);
     
     useEffect(async () => {
-        const {data} = await axios.get(`/api/projects/${query.id}`).catch(error =>console.log(error))
+      loggedInUser.getIdToken().then(async token => {
+        const {data} = await axios.get(`/api/projects/${query.id}`, { headers: {'Authorization': `Bearer ${token}`} }).catch(error =>console.log(error))
         setProject(data.data)
+      });
     }, []);
   
   return (

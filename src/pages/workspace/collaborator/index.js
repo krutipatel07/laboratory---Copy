@@ -18,6 +18,7 @@ import { Logo } from '../../../components/logo';
 import {InvitedUserModal} from "../../../components/workspace/invitedUserModal/invitedUserModal"
 import {DashboardSidebar} from '../../../components/dashboard/dashboard-sidebar';
 import {WorkspaceNavbar} from '../../../components/workspace/workspace-navbar'
+import { useAuth } from "../../../hooks/use-auth";
   function TabPanel(props) {
     const { children, value, index, ...other } = props;
   
@@ -62,25 +63,27 @@ const InvitedUSerPage = withRouter((props) => {
   });  
   const limnu_token = localStorage.getItem("limnu_token");
   const [versions, setVersions] = useState();
+  const { user: loggedInUser } = useAuth();
 
   useEffect(() => {
     gtm.push({ event: 'page_view' });
   }, []);
 
   useEffect(async () => {
+    loggedInUser.getIdToken().then(async token => {
     // get design information
-    await axios.get(`/api/projects/${projectId}/design/${designId}`)
-    .then(res => {
-      setVariantData(res.data.data)
-      setVersions(res.data.data.versions)
-    })
-    // if design is not available, set error message
-    .catch(error => setError({
-      status: true,
-      message : "OOPS! This design is not available or deleted by owner of the project!"}));
-    // get parent design versions if design itself is a version
-    isVersion && getParentDesignVersions()
-
+      await axios.get(`/api/projects/${projectId}/design/${designId}`,{ headers: {'Authorization': `Bearer ${token}`} })
+      .then(res => {
+        setVariantData(res.data.data)
+        setVersions(res.data.data.versions)
+      })
+      // if design is not available, set error message
+      .catch(error => setError({
+        status: true,
+        message : "OOPS! This design is not available or deleted by owner of the project!"}));
+      // get parent design versions if design itself is a version
+      isVersion && getParentDesignVersions()
+    });
   },[designId]);
 
 
@@ -89,14 +92,16 @@ const InvitedUSerPage = withRouter((props) => {
   }, []);
 
   const getParentDesignVersions = () =>{
-    axios.get(`/api/projects/${projectId}/design/${designId}`)
-    .then(res => {
-      const designId = res.data.data.versionOf._id;
-      axios.get(`/api/projects/${projectId}/design/${designId}`)
-      .then(res => setVersions(res.data.data.versions))
+    loggedInUser.getIdToken().then(async token => {
+      axios.get(`/api/projects/${projectId}/design/${designId}`,{ headers: {'Authorization': `Bearer ${token}`} })
+      .then(res => {
+        const designId = res.data.data.versionOf._id;
+        axios.get(`/api/projects/${projectId}/design/${designId}`, { headers: {'Authorization': `Bearer ${token}`} })
+        .then(res => setVersions(res.data.data.versions))
+        .catch(error => console.log(error))
+      })
       .catch(error => console.log(error))
-    })
-    .catch(error => console.log(error))
+  });
   }
 
   return (

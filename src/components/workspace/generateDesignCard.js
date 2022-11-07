@@ -18,6 +18,7 @@ import { FormHelperText, TextField, Modal } from '@mui/material';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import CheckIcon from '@mui/icons-material/Check';
+import { useAuth } from "../../hooks/use-auth";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,6 +64,8 @@ const GenerateDesignCard = ({image, setNewDesign, setUpdate}) => {
   const time = dateFormat(new Date());
   const title = time.replaceAll(" ", "").replaceAll(",", "").replaceAll("pm", "").replaceAll("at", "").replaceAll("th", "");
   const [open, setOpen] = React.useState(false);
+  const { user: loggedInUser } = useAuth();
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -102,12 +105,15 @@ const GenerateDesignCard = ({image, setNewDesign, setUpdate}) => {
     }})
 
     const saveDesign = async (designName) => {   
+    loggedInUser.getIdToken().then(async token => {
     setClicked(true)
     setNewDesign((prev) => prev+1)
       const {data} = await axios.post(`/api/projects/${router.query.id}/design`, {
-        title: designName,
-        url: image
-      }).catch(error => 
+          title: designName,
+          url: image
+        },
+        { headers: {'Authorization': `Bearer ${token}`} }
+        ).catch(error => 
         setClicked(false))
 
       const limnu_boardCreate = await axios.post("https://api.apix.limnu.com/v1/boardCreate", {
@@ -126,10 +132,11 @@ const GenerateDesignCard = ({image, setNewDesign, setUpdate}) => {
       
      await axios.put(`/api/projects/_/design/${data.data._id}`, {
       limnu_boardUrl : limnu_boardCreate.data.boardUrl,
-    })
+      },{ headers: {'Authorization': `Bearer ${token}`} })
     .catch(error => console.log(error));
     setUpdate((prev) => !prev)
     toast.success(`Design added!`)
+    });
     }
 
     return (

@@ -17,6 +17,7 @@ import {
 } from '@mui/material';
 import { FileDropzone } from '../../file-dropzone';
 import axios from 'axios';
+import { useAuth } from "../../../hooks/use-auth";
 
 
 export const ProductCreateForm = (props) => {
@@ -26,6 +27,7 @@ export const ProductCreateForm = (props) => {
   const setProjectId = props.setProjectId
   const [files, setFiles] = useState([]);
   const [coverImage, setCoverImage] = useState([]);
+  const { user: loggedInUser } = useAuth();
 
   const formik = useFormik({
     initialValues: {
@@ -50,6 +52,7 @@ export const ProductCreateForm = (props) => {
       sku: Yup.string().max(255)
     }),
     onSubmit: async (values, helpers) => {
+      loggedInUser.getIdToken().then(async token => {
       let url, cover_image_url="";
       let url_list = [];
       const formData = new FormData();
@@ -77,7 +80,7 @@ export const ProductCreateForm = (props) => {
               cover_image: cover_image_url || "https://maket-generatedcontent.s3.ca-central-1.amazonaws.com/platform-content/maket-logo.jpg",
               assets: url_list,
               budget: values.newPrice,
-            })
+            }, {headers: {'Authorization': `Bearer ${token}`}})
             .catch(error => console.log(error));
 
             localStorage.project_list = JSON.stringify([... JSON.parse(localStorage.getItem('project_list') || "[]") , {
@@ -99,7 +102,8 @@ export const ProductCreateForm = (props) => {
           helpers.setSubmitting(false);
         }
       });
-    }
+    })
+  }
   });
 
   const storeFiles = async (file, formData) => {

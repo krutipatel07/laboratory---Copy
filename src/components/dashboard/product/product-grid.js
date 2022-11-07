@@ -9,15 +9,18 @@ import NextLink from 'next/link';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import { useAuth } from "../../../hooks/use-auth";
 
 export default function ProjectGrid() {
 
   const [projectsData, setProjectsData] = useState();
   const images = "https://maket-generatedcontent.s3.ca-central-1.amazonaws.com/platform-content/maket-logo.jpg"
+  const { user: loggedInUser } = useAuth();
 
   useEffect(() => {
+    loggedInUser.getIdToken().then(async token => {
     const owner = localStorage.getItem("lab-user");
-    axios.get(`/api/${owner}/projects`)
+    axios.get(`/api/${owner}/projects`, { headers: {'Authorization': `Bearer ${token}`} })
     .then(res => {
       const proj_list = JSON.parse(localStorage.getItem('project_list'))
       if (!proj_list) {
@@ -31,6 +34,7 @@ export default function ProjectGrid() {
       setProjectsData(res.data.data)
     })
     .catch(error => console.log(error));
+  });
   },[])
   return (
     <Box

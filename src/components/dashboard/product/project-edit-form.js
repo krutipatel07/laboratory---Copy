@@ -14,12 +14,14 @@ import {
 } from '@mui/material';
 import { FileDropzone } from '../../file-dropzone';
 import axios from 'axios'
+import { useAuth } from "../../../hooks/use-auth";
 
 
 export const ProjectEditForm = (props) => {
   const project = props.project
   const router = useRouter();
   const [coverImage, setCoverImage] = useState([]);
+  const { user: loggedInUser } = useAuth();
 
   const formik = useFormik({
     initialValues: {
@@ -38,6 +40,7 @@ export const ProjectEditForm = (props) => {
       sku: Yup.string().max(255)
     }),
     onSubmit: async (values, helpers) => {
+      loggedInUser.getIdToken().then(async token => {
       let cover_image_url="";
       const formData = new FormData();
       
@@ -46,13 +49,15 @@ export const ProjectEditForm = (props) => {
       }
         try {
           const owner = localStorage.getItem("lab-user");
-            const {data} = await axios.put(`/api/projects/${project.id}`, {
-              owner,
-              title: values.name,
-              cover_image: cover_image_url || project.cover_image,
-              // budget: values.newPrice,
-            })
-            .catch(error => console.log(error));
+            const {data} = 
+              await axios.put(`/api/projects/${project.id}`, {
+                owner,
+                title: values.name,
+                cover_image: cover_image_url || project.cover_image,
+                // budget: values.newPrice,
+              },
+              { headers: {'Authorization': `Bearer ${token}`} })
+              .catch(error => console.log(error)); 
 
             let updated_project_list = JSON.parse(localStorage.getItem('project_list') || "[]")
             updated_project_list.forEach(project_list => {
@@ -71,6 +76,7 @@ export const ProjectEditForm = (props) => {
           helpers.setErrors({ submit: err.message });
           helpers.setSubmitting(false);
         }
+      });
     }
   });
 

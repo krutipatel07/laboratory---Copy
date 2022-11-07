@@ -15,6 +15,7 @@ import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import { ListItemButton, ListItemIcon, ListItemText, Typography, } from '@mui/material';
+import { useAuth } from "../../hooks/use-auth";
 
 const VariantCard = (props) => {
   const {
@@ -29,6 +30,7 @@ const VariantCard = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [placement, setPlacement] = React.useState();
+  const { user: loggedInUser } = useAuth();
 
   const handleClick = (newPlacement) => (event) => {
     setAnchorEl(event.currentTarget);
@@ -37,9 +39,11 @@ const VariantCard = (props) => {
   };
 
   const deleteDesign = async () => {
-    const deleted = await axios.delete(`/api/projects/_/design/${designId}`);
-    deleted && toast.success("Design deleted");
-    setUpdate((prev) => !prev)
+    loggedInUser.getIdToken().then(async token => {
+      const deleted = await axios.delete(`/api/projects/_/design/${designId}` , { headers: {'Authorization': `Bearer ${token}`} });
+      deleted && toast.success("Design deleted");
+      setUpdate((prev) => !prev);
+    });
   }
 
   const exportDesign = async file => {

@@ -21,6 +21,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Backdrop from '@mui/material/Backdrop';
 import RoomsList from "./roomsList";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
+import { useAuth } from "../../hooks/use-auth";
 
 const allRoomTypes = [
   { type: 'Bedroom', displayName: 'Bedroom'},
@@ -32,13 +33,13 @@ const allRoomTypes = [
 ];
 
 const Constraints = withRouter((props) => {
+  const { user: loggedInUser } = useAuth();
   const MapLandWithNoSSR = dynamic(() => import("../mapLand"), {
     ssr: false
   });
   const MapEnvelopeWithNoSSR = dynamic(() => import("../mapEnvelope"), {
     ssr: false
   });
-
   const [data, setData] = useState({})
   const router = useRouter();
   const projectId = router.query.id || router.query.projectId;
@@ -461,19 +462,21 @@ const Constraints = withRouter((props) => {
     setValue(1)
   };
 
-  const save = async (display) =>{
-    const search_parameters_added = await axios.put(`/api/projects/${projectId}`, {
-      search_parameters: data
-    }).catch(error => console.log(error));
+  const save = async (display) => {
+    loggedInUser.getIdToken().then(async token => {
+      const search_parameters_added = await axios.put(`/api/projects/${projectId}`, {
+        search_parameters: data
+      }, {headers: {'Authorization': `Bearer ${token}`}}).catch(error => console.log(error));
 
-    setSelectedRows([]);
-    if (display === false) {
-      return;
-    }
-    search_parameters_added ? toast.success('Parameters saved successfully') : toast.error('Something went wrong!');
-    search_parameters_added && setUpdate((prev) => !prev);
-    setData([])
-    setChanged(false);
+      setSelectedRows([]);
+      if (display === false) {
+        return;
+      }
+      search_parameters_added ? toast.success('Parameters saved successfully') : toast.error('Something went wrong!');
+      search_parameters_added && setUpdate((prev) => !prev);
+      setData([])
+      setChanged(false);
+    });
   }
   useEffect(() => {
     // remove parameters from localStorage
@@ -481,15 +484,17 @@ const Constraints = withRouter((props) => {
   }, []);
 
   useEffect(() => {
-    axios.get(`/api/projects/${projectId}`)
-      .then(res => {
-          const searchParameters = res.data.data.search_parameters;
-          res.data.data.envelope_parameters.length ? set_envelope_parameters(res.data.data.envelope_parameters[0].lat_lngs) : set_envelope_parameters([])
-          res.data.data.land_parameters.length ? set_land_parameters(res.data.data.land_parameters[0].lat_lngs) : set_land_parameters([])
-          setData(searchParameters);
-        }
-      )
-      .catch(error => console.log(error));
+    loggedInUser.getIdToken().then(async token => {
+      axios.get(`/api/projects/${projectId}`, {headers: {'Authorization': `Bearer ${token}`}})
+        .then(res => {
+            const searchParameters = res.data.data.search_parameters;
+            res.data.data.envelope_parameters.length ? set_envelope_parameters(res.data.data.envelope_parameters[0].lat_lngs) : set_envelope_parameters([])
+            res.data.data.land_parameters.length ? set_land_parameters(res.data.data.land_parameters[0].lat_lngs) : set_land_parameters([])
+            setData(searchParameters);
+          }
+        )
+        .catch(error => console.log(error));
+    });
   }, [projectId, update]);
 
   const surprisePopulate = () => {

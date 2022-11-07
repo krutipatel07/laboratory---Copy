@@ -15,6 +15,7 @@ import Fade from '@mui/material/Fade';
 import Paper from '@mui/material/Paper';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { useAuth } from "../../../hooks/use-auth";
 import { ListItemButton, Typography, List, ListItemIcon, ListItemText  } from '@mui/material';
 
 const useStyles = makeStyles((theme) => ({
@@ -44,6 +45,7 @@ const ProductCard = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [placement, setPlacement] = React.useState();
+  const { user: loggedInUser } = useAuth();
 
   const handleClick = (newPlacement) => (event) => {
     setAnchorEl(event.currentTarget);
@@ -52,14 +54,16 @@ const ProductCard = (props) => {
   };
     
     const deleteProject = async () => {
-      const deleted = await axios.delete(`/api/projects/${id}`);
-      deleted && toast.success("Project deleted");
+      loggedInUser.getIdToken().then(async token => { 
+        const deleted = await axios.delete(`/api/projects/${id}`, {headers: {'Authorization': `Bearer ${token}`}});
+        deleted && toast.success("Project deleted");
 
-      const projectList = JSON.parse(localStorage.getItem('project_list'))
-      const newProjectList = projectList.filter(project => project.id !== id)
-      localStorage.project_list = JSON.stringify(newProjectList);
-      
-      location.reload();
+        const projectList = JSON.parse(localStorage.getItem('project_list'))
+        const newProjectList = projectList.filter(project => project.id !== id)
+        localStorage.project_list = JSON.stringify(newProjectList);
+        
+        location.reload();
+      });
     }
 
   return (
