@@ -229,13 +229,7 @@ const importDesign = async (secure_url, designName, file_name) => {
                       />
                   </Grid> )})
                  : 
-                 <Typography 
-                 style={{fontSize:20, textAlign:"center", width:'100%', paddingTop:100}}>
-                    You do not have any designs for this project <br/>
-                    To begin, return to the generate page and set your design constraints <br/>
-                    {/* or<br/>
-                    Import a design */}
-                 </Typography> }
+                 null }
             </Grid>
            : <Box sx={{ 
                 width: "100%",
