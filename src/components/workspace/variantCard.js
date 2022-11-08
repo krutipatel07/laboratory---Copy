@@ -1,21 +1,13 @@
 import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import NextLink from 'next/link';
 import axios from 'axios'
 import toast from 'react-hot-toast';
 import DeleteIcon from '@mui/icons-material/Delete';
-import CardHeader from '@mui/material/CardHeader';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import Chip from '@mui/material/Chip';
-import Popper from '@mui/material/Popper';
-import Fade from '@mui/material/Fade';
-import Paper from '@mui/material/Paper';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
-import { ListItemButton, ListItemIcon, ListItemText, Typography, } from '@mui/material';
 import { useAuth } from "../../hooks/use-auth";
+import EditIcon from '@mui/icons-material/Edit';
+import { ListItemButton, ListItemIcon, ListItemText, Typography, Backdrop, Box, Paper, Popper, Fade, Chip, Card, CardHeader, CardActions, CardMedia, Button} from '@mui/material';
 
 const VariantCard = (props) => {
   const {
@@ -30,7 +22,18 @@ const VariantCard = (props) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [placement, setPlacement] = React.useState();
+
   const { user: loggedInUser } = useAuth();
+
+  const [openBackdrop, setOpenBackdrop] = React.useState(false);
+
+  const handleClose = () => {
+    setOpenBackdrop(false);
+  };
+  const handleToggle = () => {
+    setOpenBackdrop(!openBackdrop);
+  };
+
 
   const handleClick = (newPlacement) => (event) => {
     setAnchorEl(event.currentTarget);
@@ -90,10 +93,39 @@ const VariantCard = (props) => {
                 <ListItemIcon><SaveAltIcon /></ListItemIcon>
                 <ListItemText primary="Export" />
               </ListItemButton>
+              <NextLink
+                href={link}
+                passHref
+              >
+                <ListItemButton>
+                  <ListItemIcon><EditIcon /></ListItemIcon>
+                  <ListItemText primary="Edit" />
+                </ListItemButton>
+              </NextLink>
             </Paper>
           </Fade>
         )}
       </Popper>
+      
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={openBackdrop}
+        onClick={handleClose}
+      >
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            height: '60%',
+            width: '60%',
+          }}
+        >
+          <img
+            alt=""
+            src={image}
+          />
+        </Box>
+      </Backdrop>
       <Card 
         sx={{ maxWidth: 345,
               cursor :"pointer",
@@ -110,28 +142,24 @@ const VariantCard = (props) => {
           style={{ padding: 1}}
           title={<Typography style={{fontSize: '15px' }}>{title}</Typography>}
         />
-        <NextLink
-            href={link}
-            passHref
-          >
-            {image.slice(-3) === "pdf" ? 
-              <CardMedia 
-              sx={{minHeight:"194px"}}>
-                <Typography 
-                variant="body2" 
-                align="center" 
-                sx={{pt:'80px'}}>
-                  {file_name ? file_name : "PDF"}
-                </Typography>
-              </CardMedia>:
-              <CardMedia
-                component="img"
-                height="194"
-                image={image}
-                alt="Design image"
-              />
-            }
-        </NextLink>
+        {image.slice(-3) === "pdf" ? 
+          <CardMedia 
+          sx={{minHeight:"194px"}}>
+            <Typography 
+            variant="body2" 
+            align="center" 
+            sx={{pt:'80px'}}>
+              {file_name ? file_name : "PDF"}
+            </Typography>
+          </CardMedia>:
+          <CardMedia
+            onClick={handleToggle}
+            component="img"
+            height="194"
+            image={image}
+            alt="Design image"
+          />
+        }
         <CardActions 
           sx={{
             px:"0",
