@@ -21,11 +21,13 @@ const RoomsList = ({ type, typeDisplayName, row_color_scheme, data, setData, set
   }
 
   const handleAddButton = async (type, counter, setChanged) => {
-    const newRname = `${type} ${counter + 1}`;
-    const repeatName = data.filter(rooms => newRname === rooms.Rname);
-    if (repeatName.length > 0) {
-      toast.error("Room name must be unique");
-      return
+    let newRname = `${type} ${counter + 1}`;
+    let repeatName = data.filter(rooms => newRname === rooms.Rname);
+
+    while (repeatName.length > 0) {
+      const number = parseInt(newRname.split(' ')[1]);
+      newRname = `${type} ${number+1}`;
+      repeatName = data.filter(rooms => newRname === rooms.Rname);
     }
 
     let xValue = '10';
