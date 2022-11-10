@@ -154,9 +154,8 @@ export const FirebaseRegister = (props) => {
             const {data} = await axios.get(`/api/owner`, { headers: {'Authorization': `Bearer ${token}`} })
             .catch(error => console.log(error));  
             await axios.put(`/api/user/${data.data._id}`, {
-              name: values.name,
-              lname: values.lname,
-              role: values.role
+              name: googleSignup.user.displayName,
+              lname: googleSignup.additionalUserInfo.profile.family_name,
             }, { headers: {'Authorization': `Bearer ${token}`} })
             .catch(error => console.log(error));
 
@@ -176,8 +175,7 @@ export const FirebaseRegister = (props) => {
           const {data} = await axios.post("/api/user", {
             name: googleSignup.user.displayName,
             email: googleSignup.user.email,
-            lname: values.lname,
-            role: values.role
+            lname: googleSignup.additionalUserInfo.profile.family_name
           }, { headers: {'Authorization': `Bearer ${token}`} })
           .catch(error => console.log(error));
 
@@ -195,7 +193,7 @@ export const FirebaseRegister = (props) => {
           const user_id = localStorage.getItem("lab-user");
           const limnu_userCreate = await axios.post("https://api.apix.limnu.com/v1/userCreate", {
             apiKey: 'K_zZbXKpBQT6dp4DvHcClqQxq2sDkiRO',
-            displayName: values.name
+            displayName: googleSignup.user.displayName
           })
           .catch(error => console.log(error));
           localStorage.setItem('limnu_token', limnu_userCreate.data.token)
@@ -207,9 +205,9 @@ export const FirebaseRegister = (props) => {
           .catch(error => console.log(error)); 
 
           await axios.post("/api/emails/welcome_email", {
-            name: values.name,
-            lname: values.lname,
-            email: values.email
+            name: googleSignup.user.displayName,
+            lname: "",
+            email: googleSignup.user.email
           })
           .catch(error => console.log(error));
         }
@@ -246,7 +244,7 @@ export const FirebaseRegister = (props) => {
           alt="Google"
           sx={{ mr: 1 }}
         />
-        SIGN IN WITH GOOGLE
+        SIGN UP WITH GOOGLE
       </Button>
       
       <Box
